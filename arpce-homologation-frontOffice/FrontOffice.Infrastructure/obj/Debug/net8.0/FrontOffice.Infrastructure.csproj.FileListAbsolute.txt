@@ -1,0 +1,17 @@
+D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Infrastructure\bin\Debug\net8.0\FrontOffice.Infrastructure.deps.json
+D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Infrastructure\bin\Debug\net8.0\FrontOffice.Infrastructure.dll
+D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Infrastructure\bin\Debug\net8.0\FrontOffice.Infrastructure.pdb
+D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Infrastructure\bin\Debug\net8.0\FrontOffice.Application.dll
+D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Infrastructure\bin\Debug\net8.0\FrontOffice.Domain.dll
+D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Infrastructure\bin\Debug\net8.0\FrontOffice.Application.pdb
+D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Infrastructure\bin\Debug\net8.0\FrontOffice.Domain.pdb
+D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Infrastructure\obj\Debug\net8.0\FrontOffice.Infrastructure.csproj.AssemblyReference.cache
+D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Infrastructure\obj\Debug\net8.0\FrontOffice.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Infrastructure\obj\Debug\net8.0\FrontOffice.Infrastructure.AssemblyInfoInputs.cache
+D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Infrastructure\obj\Debug\net8.0\FrontOffice.Infrastructure.AssemblyInfo.cs
+D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Infrastructure\obj\Debug\net8.0\FrontOffice.Infrastructure.csproj.CoreCompileInputs.cache
+D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Infrastructure\obj\Debug\net8.0\FrontOff.1C9483DB.Up2Date
+D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Infrastructure\obj\Debug\net8.0\FrontOffice.Infrastructure.dll
+D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Infrastructure\obj\Debug\net8.0\refint\FrontOffice.Infrastructure.dll
+D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Infrastructure\obj\Debug\net8.0\FrontOffice.Infrastructure.pdb
+D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Infrastructure\obj\Debug\net8.0\ref\FrontOffice.Infrastructure.dll

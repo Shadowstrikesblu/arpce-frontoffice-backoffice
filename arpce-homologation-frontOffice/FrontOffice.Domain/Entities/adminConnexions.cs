@@ -1,0 +1,8 @@
+﻿namespace FrontOffice.Domain.Entities;
+
+public class AdminConnexions
+{
+    public string Utilisateur { get; set; } = string.Empty; 
+    public DateTime DateConnexion { get; set; } 
+    public string? Ip { get; set; } 
+}
