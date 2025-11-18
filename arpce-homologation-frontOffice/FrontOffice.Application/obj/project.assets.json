@@ -835,11 +835,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj",
+      "projectUniqueName": "c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj",
       "projectName": "FrontOffice.Application",
-      "projectPath": "C:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj",
+      "projectPath": "c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj",
       "packagesPath": "C:\\Users\\hmoul\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Application\\obj\\",
+      "outputPath": "c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Application\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\hmoul\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -854,8 +854,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj": {
-              "projectPath": "C:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj"
+            "c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj": {
+              "projectPath": "c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj"
             }
           }
         }
@@ -915,5 +915,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.416/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Application\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

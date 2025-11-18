@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "16a+IYsX9go=",
+  "dgSpecHash": "tyxQNBfw9H0=",
   "success": true,
-  "projectFilePath": "C:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj",
+  "projectFilePath": "c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\hmoul\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\hmoul\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
@@ -77,5 +77,12 @@
     "C:\\Users\\hmoul\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "C:\\Users\\hmoul\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

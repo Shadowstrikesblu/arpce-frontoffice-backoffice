@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj": {}
+    "c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj": {
+    "c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj",
+        "projectUniqueName": "c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj",
         "projectName": "FrontOffice.Domain",
-        "projectPath": "C:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj",
+        "projectPath": "c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj",
         "packagesPath": "C:\\Users\\hmoul\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\obj\\",
+        "outputPath": "c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hmoul\\AppData\\Roaming\\NuGet\\NuGet.Config"

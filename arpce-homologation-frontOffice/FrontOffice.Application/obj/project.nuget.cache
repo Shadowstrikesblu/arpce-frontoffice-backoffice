@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FE6QgVYl1cM=",
+  "dgSpecHash": "tMEeZzZWcvw=",
   "success": true,
-  "projectFilePath": "C:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj",
+  "projectFilePath": "c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\hmoul\\.nuget\\packages\\fluentvalidation\\11.9.1\\fluentvalidation.11.9.1.nupkg.sha512",
     "C:\\Users\\hmoul\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.9.1\\fluentvalidation.dependencyinjectionextensions.11.9.1.nupkg.sha512",
@@ -23,5 +23,12 @@
     "C:\\Users\\hmoul\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512",
     "C:\\Users\\hmoul\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Application\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
