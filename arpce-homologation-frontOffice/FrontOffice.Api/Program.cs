@@ -31,7 +31,7 @@ try
 
     // --- Configuration des Services ---
 
-    // Accesseur au contexte HTTP (nécessaire pour ICurrentUserService)
+    // Accesseur au contexte HTTP (nï¿½cessaire pour ICurrentUserService)
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddScoped<IFileStorageProvider, LocalFileStorageProvider>();
     // Enregistrement du service pour l'utilisateur courant
@@ -50,14 +50,14 @@ try
                           });
     });
 
-    // Base de données avec SQL Server
+    // Base de donnï¿½es avec SQL Server
     builder.Services.AddDbContext<FrontOfficeDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
     builder.Services.AddScoped<IApplicationDbContext>(provider =>
         provider.GetRequiredService<FrontOfficeDbContext>());
 
-    // Contrôleurs
+    // Contrï¿½leurs
     builder.Services.AddControllers();
 
     // Documentation API (Swagger UI avec support JWT)
@@ -68,10 +68,10 @@ try
         {
             Title = "ARPCE Homologation - FrontOffice API",
             Version = "v1",
-            Description = "API pour la gestion des demandes d'homologation côté client."
+            Description = "API pour la gestion des demandes d'homologation cï¿½tï¿½ client."
         });
 
-        // Configuration pour la sécurité JWT dans Swagger
+        // Configuration pour la sï¿½curitï¿½ JWT dans Swagger
         options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
             In = ParameterLocation.Header,
@@ -116,19 +116,19 @@ try
             };
         });
 
-    // Injection des services personnalisés
+    // Injection des services personnalisï¿½s
     builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
     builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
 
 
-    // --- Pipeline de Requêtes HTTP ---
+    // --- Pipeline de Requï¿½tes HTTP ---
 
     var app = builder.Build();
 
-    // Le middleware de gestion d'erreurs doit être l'un des premiers
+    // Le middleware de gestion d'erreurs doit ï¿½tre l'un des premiers
     app.UseMiddleware<ErrorHandlingMiddleware>();
 
-    // Middleware Serilog pour logger les requêtes HTTP
+    // Middleware Serilog pour logger les requï¿½tes HTTP
     app.UseSerilogRequestLogging();
 
     if (app.Environment.IsDevelopment())
@@ -153,6 +153,8 @@ try
     app.UseAuthorization();
 
     app.MapControllers();
+    var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+    app.Urls.Add($"http://*:{port}");
 
     app.Run();
 }
