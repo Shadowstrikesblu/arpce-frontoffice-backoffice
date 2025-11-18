@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1dpw2lIu9SI=",
+  "dgSpecHash": "nBk2Fw/EV0s=",
   "success": true,
-  "projectFilePath": "D:\\CDS\\work_space\\arpce-microservice-frontOffice\\Arpce.Homologation.FrontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj",
+  "projectFilePath": "D:\\CDS\\work_space\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

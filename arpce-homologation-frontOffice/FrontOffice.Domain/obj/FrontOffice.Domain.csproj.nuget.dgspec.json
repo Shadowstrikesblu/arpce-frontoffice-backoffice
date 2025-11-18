@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\CDS\\work_space\\arpce-microservice-frontOffice\\Arpce.Homologation.FrontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj": {}
+    "D:\\CDS\\work_space\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj": {}
   },
   "projects": {
-    "D:\\CDS\\work_space\\arpce-microservice-frontOffice\\Arpce.Homologation.FrontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj": {
+    "D:\\CDS\\work_space\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CDS\\work_space\\arpce-microservice-frontOffice\\Arpce.Homologation.FrontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj",
+        "projectUniqueName": "D:\\CDS\\work_space\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj",
         "projectName": "FrontOffice.Domain",
-        "projectPath": "D:\\CDS\\work_space\\arpce-microservice-frontOffice\\Arpce.Homologation.FrontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj",
+        "projectPath": "D:\\CDS\\work_space\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\CDS\\work_space\\arpce-microservice-frontOffice\\Arpce.Homologation.FrontOffice\\FrontOffice.Domain\\obj\\",
+        "outputPath": "D:\\CDS\\work_space\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
