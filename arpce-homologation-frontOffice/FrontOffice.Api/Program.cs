@@ -142,6 +142,7 @@ try
         {
             options.SwaggerEndpoint("/swagger/v1/swagger.json", "FrontOffice API V1");
             options.RoutePrefix = string.Empty;
+            options.InjectStylesheet("/css/swagger-custom.css");
         });
 
         Log.Information("Swagger enabled.");
