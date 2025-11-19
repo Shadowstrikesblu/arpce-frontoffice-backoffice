@@ -1,0 +1,10 @@
+﻿namespace FrontOffice.Domain.Entities;
+
+public class AdminProfilsUtilisateursLDAP
+{
+    public string Utilisateur { get; set; } = string.Empty; 
+    public Guid IdProfil { get; set; } 
+
+    public AdminProfils? Profil { get; set; }
+   
+}

@@ -1,0 +1,136 @@
+﻿/*
+ * Thème sombre pour Swagger UI 
+ */
+
+body {
+    background-color: #1c1c1c;
+}
+
+.swagger-ui {
+    color: #ffffff;
+}
+
+    /* --- Barre supérieure --- */
+    .swagger-ui .topbar {
+        background-color: #2a2a2a;
+        border-bottom: 2px solid #000;
+    }
+
+    /* --- Titre principal de l'API --- */
+    .swagger-ui .info .title {
+        color: #ffffff;
+        font-family: sans-serif;
+    }
+
+    .swagger-ui .info .description, .swagger-ui .info a {
+        color: #cccccc;
+    }
+
+    /* --- Sections des Contrôleurs --- */
+    .swagger-ui .opblock-tag-section .opblock-tag {
+        color: #ffffff;
+        border-bottom: 1px solid #444;
+    }
+
+    /* --- Lignes des Endpoints --- */
+    .swagger-ui .opblock {
+        border: 1px solid #444;
+        background: #2a2a2a;
+        box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        color: #ffffff;
+    }
+
+        .swagger-ui .opblock .opblock-summary {
+            border-color: #444;
+            color: #ffffff;
+        }
+
+        /* --- Détails des Endpoints (quand on clique dessus) --- */
+        .swagger-ui .opblock .opblock-body {
+            background: #333333;
+            color: #ffffff;
+        }
+
+    .swagger-ui .opblock-section-header {
+        background: #3a3a3a;
+        border-top: 1px solid #444;
+        border-bottom: 1px solid #444;
+        color: #ffffff;
+    }
+
+        .swagger-ui .opblock-section-header h4 {
+            color: #ffffff;
+        }
+
+    /* --- Sections Schemas --- */
+    .swagger-ui .scheme-container {
+        background: #2a2a2a;
+        box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        color: #ffffff;
+    }
+
+    .swagger-ui .schemas-overview {
+        color: #ffffff;
+    }
+
+    .swagger-ui .model-container {
+        background: #333333;
+    }
+
+    .swagger-ui .model-title {
+        color: #ffffff;
+    }
+
+    /* --- Textes et champs de saisie --- */
+    .swagger-ui input, .swagger-ui select, .swagger-ui textarea {
+        background: #1c1c1c;
+        color: #ffffff;
+        border: 1px solid #555;
+    }
+
+    .swagger-ui .parameters-col_description, .swagger-ui .response-col_description {
+        color: #ffffff;
+    }
+
+    /* --- Boutons --- */
+    .swagger-ui .btn {
+        border: 2px solid #555;
+        color: #ffffff;
+        background: #000;
+    }
+
+        .swagger-ui .btn.execute {
+            background-color: #007bff;
+            color: #ffffff;
+            border-color: #007bff;
+        }
+
+    .swagger-ui .opblock .opblock-summary-operation-id, .swagger-ui .opblock .opblock-summary-path, .swagger-ui .opblock .opblock-summary-path__deprecated {
+        color: #ffffff;
+    }
+
+
+    .swagger-ui .opblock-description-wrapper p, .swagger-ui .opblock-external-docs-wrapper p, .swagger-ui .opblock-title_normal p {
+        color: #ffffff;
+    }
+
+    .swagger-ui .tab li button.tablinks {
+        color: #ffffff;
+    }
+
+    .swagger-ui .response-col_status {
+        color: #ffffff;
+    }
+
+    .swagger-ui .markdown p, .swagger-ui .markdown pre, .swagger-ui .renderedMarkdown p, .swagger-ui .renderedMarkdown pre {
+        color: #ffffff;
+    }
+
+    .swagger-ui .auth-container input[type=password], .swagger-ui .auth-container input[type=text]
+    {
+        color:#000;
+    }
+
+    .swagger-ui .parameters-col_description input {
+        color: #000;
+    }

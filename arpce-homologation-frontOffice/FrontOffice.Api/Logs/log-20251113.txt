@@ -1,0 +1,659 @@
+2025-11-13 02:20:20.374 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-13 02:20:20.460 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-13 02:20:20.980 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-13 02:20:20.991 +01:00 [INF] Hosting environment: Development
+2025-11-13 02:20:21.003 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api
+2025-11-13 02:20:27.154 +01:00 [INF] HTTP GET /index.html responded 200 in 312.0289 ms
+2025-11-13 02:20:27.276 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 304 in 57.9652 ms
+2025-11-13 02:20:27.487 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 14.4137 ms
+2025-11-13 02:25:33.967 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 200 in 116.7802 ms
+2025-11-13 02:25:42.156 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-13 02:25:42.217 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-13 02:25:42.318 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-13 02:25:42.323 +01:00 [INF] Hosting environment: Development
+2025-11-13 02:25:42.329 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api
+2025-11-13 02:25:50.756 +01:00 [INF] HTTP GET /index.html responded 200 in 180.3559 ms
+2025-11-13 02:25:51.076 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 20.9542 ms
+2025-11-13 02:26:28.635 +01:00 [INF] HTTP GET /.well-known/appspecific/com.chrome.devtools.json responded 404 in 2762.3505 ms
+2025-11-13 02:27:49.216 +01:00 [INF] HTTP GET /.well-known/appspecific/com.chrome.devtools.json responded 404 in 12.7217 ms
+2025-11-13 02:30:36.653 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-13 02:30:36.715 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-13 02:30:37.072 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-13 02:30:37.078 +01:00 [INF] Hosting environment: Development
+2025-11-13 02:30:37.082 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api
+2025-11-13 02:30:46.856 +01:00 [INF] HTTP GET /index.html responded 200 in 177.5860 ms
+2025-11-13 02:30:47.149 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 25.5880 ms
+2025-11-13 02:31:01.335 +01:00 [INF] HTTP GET /index.html responded 200 in 31.6174 ms
+2025-11-13 02:31:01.694 +01:00 [INF] HTTP GET /swagger-ui-standalone-preset.js responded 200 in 200.7508 ms
+2025-11-13 02:31:01.695 +01:00 [INF] HTTP GET /swagger-ui.css responded 200 in 236.3138 ms
+2025-11-13 02:31:01.745 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 200 in 254.5129 ms
+2025-11-13 02:31:01.771 +01:00 [INF] HTTP GET /swagger-ui-bundle.js responded 200 in 282.6214 ms
+2025-11-13 02:31:01.982 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 5.6673 ms
+2025-11-13 02:31:01.986 +01:00 [INF] HTTP GET /favicon-32x32.png responded 200 in 8.9420 ms
+2025-11-13 02:31:15.878 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 304 in 3.4487 ms
+2025-11-13 02:31:16.037 +01:00 [INF] HTTP GET /.well-known/appspecific/com.chrome.devtools.json responded 404 in 131.2800 ms
+2025-11-13 02:32:12.031 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-13 02:32:12.107 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-13 02:32:12.464 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-13 02:32:12.468 +01:00 [INF] Hosting environment: Development
+2025-11-13 02:32:12.472 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api
+2025-11-13 02:32:20.477 +01:00 [INF] HTTP GET /index.html responded 200 in 398.8116 ms
+2025-11-13 02:32:20.770 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 200 in 235.6423 ms
+2025-11-13 02:32:20.778 +01:00 [INF] HTTP GET /swagger-ui-standalone-preset.js responded 200 in 245.1572 ms
+2025-11-13 02:32:20.770 +01:00 [INF] HTTP GET /swagger-ui.css responded 200 in 229.0426 ms
+2025-11-13 02:32:20.836 +01:00 [INF] HTTP GET /swagger-ui-bundle.js responded 200 in 319.4404 ms
+2025-11-13 02:32:20.862 +01:00 [INF] HTTP GET /.well-known/appspecific/com.chrome.devtools.json responded 404 in 351.3080 ms
+2025-11-13 02:32:21.447 +01:00 [INF] HTTP GET /favicon-32x32.png responded 200 in 0.9134 ms
+2025-11-13 02:32:21.456 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 19.9898 ms
+2025-11-13 02:32:27.328 +01:00 [INF] HTTP GET /index.html responded 200 in 6.4790 ms
+2025-11-13 02:32:27.450 +01:00 [INF] HTTP GET /.well-known/appspecific/com.chrome.devtools.json responded 404 in 13.6853 ms
+2025-11-13 02:32:27.491 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 200 in 8.0993 ms
+2025-11-13 02:32:27.514 +01:00 [INF] HTTP GET /swagger-ui.css responded 200 in 39.0841 ms
+2025-11-13 02:32:27.522 +01:00 [INF] HTTP GET /swagger-ui-standalone-preset.js responded 200 in 38.8044 ms
+2025-11-13 02:32:27.557 +01:00 [INF] HTTP GET /swagger-ui-bundle.js responded 200 in 73.2504 ms
+2025-11-13 02:32:28.086 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 7.6644 ms
+2025-11-13 02:32:28.091 +01:00 [INF] HTTP GET /favicon-32x32.png responded 200 in 0.2871 ms
+2025-11-13 02:33:01.983 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 304 in 3.1904 ms
+2025-11-13 02:33:02.027 +01:00 [INF] HTTP GET /.well-known/appspecific/com.chrome.devtools.json responded 404 in 4.4190 ms
+2025-11-13 02:33:58.790 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-13 02:33:58.867 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-13 02:33:58.996 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-13 02:33:59.003 +01:00 [INF] Hosting environment: Development
+2025-11-13 02:33:59.011 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api
+2025-11-13 02:34:13.997 +01:00 [INF] HTTP GET /index.html responded 200 in 236.7765 ms
+2025-11-13 02:34:14.254 +01:00 [INF] HTTP GET /swagger-ui-standalone-preset.js responded 200 in 186.5529 ms
+2025-11-13 02:34:14.254 +01:00 [INF] HTTP GET /swagger-ui.css responded 200 in 201.5943 ms
+2025-11-13 02:34:14.254 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 200 in 200.8869 ms
+2025-11-13 02:34:14.411 +01:00 [INF] HTTP GET /swagger-ui-bundle.js responded 200 in 341.1426 ms
+2025-11-13 02:34:14.445 +01:00 [INF] HTTP GET /.well-known/appspecific/com.chrome.devtools.json responded 404 in 393.2548 ms
+2025-11-13 02:34:14.987 +01:00 [INF] HTTP GET /favicon-32x32.png responded 200 in 0.4313 ms
+2025-11-13 02:34:14.996 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 32.1845 ms
+2025-11-13 02:35:43.253 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 200 in 100.9698 ms
+2025-11-13 02:35:50.446 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-13 02:35:50.512 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-13 02:35:51.072 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-13 02:35:51.079 +01:00 [INF] Hosting environment: Development
+2025-11-13 02:35:51.085 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api
+2025-11-13 02:35:58.076 +01:00 [INF] HTTP GET /index.html responded 200 in 198.9654 ms
+2025-11-13 02:35:58.271 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 200 in 160.2093 ms
+2025-11-13 02:35:58.297 +01:00 [INF] HTTP GET /swagger-ui-standalone-preset.js responded 200 in 149.0354 ms
+2025-11-13 02:35:58.290 +01:00 [INF] HTTP GET /swagger-ui.css responded 200 in 190.2074 ms
+2025-11-13 02:35:58.444 +01:00 [INF] HTTP GET /swagger-ui-bundle.js responded 200 in 297.1236 ms
+2025-11-13 02:35:58.449 +01:00 [INF] HTTP GET /.well-known/appspecific/com.chrome.devtools.json responded 404 in 371.7068 ms
+2025-11-13 02:35:59.025 +01:00 [INF] HTTP GET /favicon-32x32.png responded 200 in 0.4705 ms
+2025-11-13 02:35:59.036 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 29.2091 ms
+2025-11-13 02:36:13.868 +01:00 [INF] HTTP GET /index.html responded 200 in 7.4533 ms
+2025-11-13 02:36:13.992 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 200 in 10.0933 ms
+2025-11-13 02:36:14.012 +01:00 [INF] HTTP GET /swagger-ui.css responded 200 in 35.4425 ms
+2025-11-13 02:36:14.022 +01:00 [INF] HTTP GET /swagger-ui-standalone-preset.js responded 200 in 37.3304 ms
+2025-11-13 02:36:14.055 +01:00 [INF] HTTP GET /swagger-ui-bundle.js responded 200 in 70.6436 ms
+2025-11-13 02:36:14.441 +01:00 [INF] HTTP GET /favicon-32x32.png responded 200 in 0.7470 ms
+2025-11-13 02:36:14.445 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 10.6869 ms
+2025-11-13 02:37:17.304 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-13 02:37:17.440 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-13 02:37:18.089 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-13 02:37:18.100 +01:00 [INF] Hosting environment: Development
+2025-11-13 02:37:18.111 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api
+2025-11-13 02:37:33.577 +01:00 [INF] HTTP GET /index.html responded 200 in 266.7954 ms
+2025-11-13 02:37:33.922 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 200 in 250.3914 ms
+2025-11-13 02:37:33.931 +01:00 [INF] HTTP GET /swagger-ui.css responded 200 in 264.9115 ms
+2025-11-13 02:37:33.931 +01:00 [INF] HTTP GET /swagger-ui-standalone-preset.js responded 200 in 262.8602 ms
+2025-11-13 02:37:33.955 +01:00 [INF] HTTP GET /swagger-ui-bundle.js responded 200 in 288.5419 ms
+2025-11-13 02:37:34.212 +01:00 [INF] HTTP GET /favicon-32x32.png responded 200 in 0.5873 ms
+2025-11-13 02:37:34.231 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 25.9972 ms
+2025-11-13 02:37:56.009 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 304 in 2.5161 ms
+2025-11-13 02:37:56.163 +01:00 [INF] HTTP GET /.well-known/appspecific/com.chrome.devtools.json responded 404 in 114.6678 ms
+2025-11-13 02:40:13.712 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-13 02:40:13.838 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-13 02:40:14.293 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-13 02:40:14.298 +01:00 [INF] Hosting environment: Development
+2025-11-13 02:40:14.304 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api
+2025-11-13 02:40:34.089 +01:00 [INF] HTTP GET /.well-known/appspecific/com.chrome.devtools.json responded 404 in 181.3413 ms
+2025-11-13 02:40:52.459 +01:00 [INF] HTTP GET /.well-known/appspecific/com.chrome.devtools.json responded 404 in 4.0217 ms
+2025-11-13 02:41:15.768 +01:00 [INF] HTTP GET /.well-known/appspecific/com.chrome.devtools.json responded 404 in 27.8532 ms
+2025-11-13 02:42:05.651 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-13 02:42:05.734 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-13 02:42:06.226 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-13 02:42:06.229 +01:00 [INF] Hosting environment: Development
+2025-11-13 02:42:06.233 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api
+2025-11-13 02:42:17.423 +01:00 [INF] HTTP GET /.well-known/appspecific/com.chrome.devtools.json responded 404 in 133.0584 ms
+2025-11-13 02:42:59.627 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-13 02:42:59.690 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-13 02:43:00.340 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-13 02:43:00.351 +01:00 [INF] Hosting environment: Development
+2025-11-13 02:43:00.362 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api
+2025-11-13 02:43:20.514 +01:00 [INF] HTTP GET /.well-known/appspecific/com.chrome.devtools.json responded 404 in 168.2457 ms
+2025-11-13 02:43:53.268 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-13 02:43:53.333 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-13 02:43:54.020 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-13 02:43:54.027 +01:00 [INF] Hosting environment: Development
+2025-11-13 02:43:54.035 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api
+2025-11-13 02:44:06.905 +01:00 [INF] HTTP GET /.well-known/appspecific/com.chrome.devtools.json responded 404 in 146.7105 ms
+2025-11-13 02:44:48.427 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-13 02:44:48.530 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-13 02:44:49.014 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-13 02:44:49.020 +01:00 [INF] Hosting environment: Development
+2025-11-13 02:44:49.027 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api
+2025-11-13 02:45:00.487 +01:00 [INF] HTTP GET /index.html responded 200 in 378.9028 ms
+2025-11-13 02:45:00.694 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 200 in 104.7813 ms
+2025-11-13 02:45:01.075 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 18.2372 ms
+2025-11-13 02:46:57.011 +01:00 [INF] Executed DbCommand (288ms) [Parameters=[@__request_Email_0='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [clients] AS [c]
+        WHERE [c].[Email] = @__request_Email_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-11-13 02:46:59.186 +01:00 [ERR] Failed executing DbCommand (70ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 512), @p2='?' (Size = 60), @p3='?' (DbType = Byte), @p4='?' (Size = 12), @p5='?' (Size = 60), @p6='?' (Size = 60), @p7='?' (Size = 30), @p8='?' (DbType = DateTime), @p9='?' (DbType = DateTime), @p10='?' (DbType = Byte), @p11='?' (Size = 60), @p12='?' (Size = 4000), @p13='?' (Size = 60), @p14='?' (Size = 120), @p15='?' (Size = 60), @p16='?' (Size = 512), @p17='?' (Size = 60), @p18='?' (Size = 60), @p19='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [clients] ([Id], [Adresse], [Bp], [ChangementMotPasse], [Code], [ContactFonction], [ContactNom], [ContactTelephone], [DateCreation], [DateModification], [Desactive], [Email], [MotPasse], [Pays], [RaisonSociale], [RegistreCommerce], [Remarques], [UtilisateurCreation], [UtilisateurModification], [Ville])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19);
+2025-11-13 02:46:59.330 +01:00 [ERR] An exception occurred in the database while saving changes for context type 'FrontOffice.Infrastructure.Persistence.FrontOfficeDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Les données de chaîne ou binaires seraient tronquées dans la table 'ArpceHomologation_FrontOffice.dbo.clients', colonne 'MotPasse'. Valeur tronquée : '$2a$11$/1q5dJj8vUYDL'.
+L'instruction a été arrêtée.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:d7318707-2fca-4dbb-99bb-6de4625f3a2f
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Les données de chaîne ou binaires seraient tronquées dans la table 'ArpceHomologation_FrontOffice.dbo.clients', colonne 'MotPasse'. Valeur tronquée : '$2a$11$/1q5dJj8vUYDL'.
+L'instruction a été arrêtée.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:d7318707-2fca-4dbb-99bb-6de4625f3a2f
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-11-13 02:46:59.891 +01:00 [ERR] HTTP POST /api/auth/register responded 500 in 16414.9221 ms
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Les données de chaîne ou binaires seraient tronquées dans la table 'ArpceHomologation_FrontOffice.dbo.clients', colonne 'MotPasse'. Valeur tronquée : '$2a$11$/1q5dJj8vUYDL'.
+L'instruction a été arrêtée.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:d7318707-2fca-4dbb-99bb-6de4625f3a2f
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.Handle(RegisterClientCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 47
+   at FrontOffice.Api.Controllers.AuthenticationController.Register(RegisterClientCommand command) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 21
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-11-13 02:47:00.159 +01:00 [ERR] An unhandled exception has occurred while executing the request.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Les données de chaîne ou binaires seraient tronquées dans la table 'ArpceHomologation_FrontOffice.dbo.clients', colonne 'MotPasse'. Valeur tronquée : '$2a$11$/1q5dJj8vUYDL'.
+L'instruction a été arrêtée.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:d7318707-2fca-4dbb-99bb-6de4625f3a2f
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.Handle(RegisterClientCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 47
+   at FrontOffice.Api.Controllers.AuthenticationController.Register(RegisterClientCommand command) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 21
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2025-11-13 02:53:16.793 +01:00 [FTL] Application terminated unexpectedly
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\Program.cs:line 117
+2025-11-13 02:54:04.123 +01:00 [FTL] Application terminated unexpectedly
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\Program.cs:line 117
+2025-11-13 02:54:16.379 +01:00 [FTL] Application terminated unexpectedly
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\Program.cs:line 117
+2025-11-13 02:58:16.245 +01:00 [FTL] Application terminated unexpectedly
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\Program.cs:line 117
+2025-11-13 02:59:54.117 +01:00 [FTL] Application terminated unexpectedly
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\Program.cs:line 117
+2025-11-13 03:02:41.993 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-13 03:02:42.068 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-13 03:02:42.392 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-13 03:02:42.401 +01:00 [INF] Hosting environment: Development
+2025-11-13 03:02:42.413 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api
+2025-11-13 03:03:38.275 +01:00 [INF] HTTP GET /index.html responded 200 in 191.3895 ms
+2025-11-13 03:03:38.446 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 304 in 44.3301 ms
+2025-11-13 03:03:38.665 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 20.1755 ms
+2025-11-13 03:04:53.177 +01:00 [INF] Executed DbCommand (131ms) [Parameters=[@__request_Email_0='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [clients] AS [c]
+        WHERE [c].[Email] = @__request_Email_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-11-13 03:04:54.369 +01:00 [INF] Executed DbCommand (14ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 512), @p2='?' (Size = 60), @p3='?' (DbType = Byte), @p4='?' (Size = 12), @p5='?' (Size = 60), @p6='?' (Size = 60), @p7='?' (Size = 30), @p8='?' (DbType = DateTime), @p9='?' (DbType = DateTime), @p10='?' (DbType = Byte), @p11='?' (Size = 60), @p12='?' (Size = 100), @p13='?' (Size = 60), @p14='?' (Size = 120), @p15='?' (Size = 60), @p16='?' (Size = 512), @p17='?' (Size = 60), @p18='?' (Size = 60), @p19='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [clients] ([Id], [Adresse], [Bp], [ChangementMotPasse], [Code], [ContactFonction], [ContactNom], [ContactTelephone], [DateCreation], [DateModification], [Desactive], [Email], [MotPasse], [Pays], [RaisonSociale], [RegistreCommerce], [Remarques], [UtilisateurCreation], [UtilisateurModification], [Ville])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19);
+2025-11-13 03:04:54.558 +01:00 [INF] HTTP POST /api/auth/register responded 200 in 8553.9262 ms
+2025-11-13 03:19:25.189 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-13 03:19:25.329 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-13 03:19:25.583 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-13 03:19:25.596 +01:00 [INF] Hosting environment: Development
+2025-11-13 03:19:25.608 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api
+2025-11-13 03:19:30.945 +01:00 [INF] HTTP GET /index.html responded 200 in 199.5492 ms
+2025-11-13 03:19:31.028 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 304 in 42.7408 ms
+2025-11-13 03:19:31.563 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 36.4279 ms
+2025-11-13 03:20:22.361 +01:00 [INF] Executed DbCommand (132ms) [Parameters=[@__request_Email_0='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[MotPasse], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-11-13 03:20:24.327 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 9078.3640 ms
+2025-11-13 03:21:24.648 +01:00 [INF] Executed DbCommand (10ms) [Parameters=[@__request_Email_0='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[MotPasse], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-11-13 03:21:25.533 +01:00 [ERR] HTTP POST /api/auth/login responded 500 in 950.2962 ms
+System.UnauthorizedAccessException: Email ou mot de passe invalide.
+   at FrontOffice.Application.Features.Authentication.Queries.Login.LoginClientQueryHandler.Handle(LoginClientQuery request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Application\Features\Authentication\Queries\Login\LoginClientQueryHandler.cs:line 41
+   at FrontOffice.Api.Controllers.AuthenticationController.Login(LoginClientQuery query) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 31
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-11-13 03:38:14.964 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-13 03:38:15.025 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-13 03:38:15.134 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-13 03:38:15.139 +01:00 [INF] Hosting environment: Development
+2025-11-13 03:38:15.146 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api
+2025-11-13 03:42:00.334 +01:00 [INF] HTTP GET /index.html responded 200 in 349.0848 ms
+2025-11-13 03:42:00.425 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 304 in 43.5580 ms
+2025-11-13 03:42:01.197 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 32.6565 ms
+2025-11-13 03:42:37.906 +01:00 [INF] Executed DbCommand (242ms) [Parameters=[@__request_Email_0='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[MotPasse], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-11-13 03:42:40.187 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 9408.9110 ms
+2025-11-13 03:54:50.858 +01:00 [FTL] Application terminated unexpectedly
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\Program.cs:line 118
+2025-11-13 03:55:29.340 +01:00 [FTL] Application terminated unexpectedly
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\Program.cs:line 118
+2025-11-13 03:55:57.980 +01:00 [FTL] Application terminated unexpectedly
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\Program.cs:line 118
+2025-11-13 03:56:12.581 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-13 03:56:12.664 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-13 03:56:13.052 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-13 03:56:13.055 +01:00 [INF] Hosting environment: Development
+2025-11-13 03:56:13.059 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api
+2025-11-13 03:57:14.533 +01:00 [INF] HTTP GET /index.html responded 200 in 217.1425 ms
+2025-11-13 03:57:14.599 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 304 in 45.9517 ms
+2025-11-13 03:57:15.231 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 48.1004 ms
+2025-11-13 03:59:08.625 +01:00 [INF] Executed DbCommand (124ms) [Parameters=[@__request_Email_0='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [clients] AS [c]
+        WHERE [c].[Email] = @__request_Email_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-11-13 03:59:11.593 +01:00 [ERR] Failed executing DbCommand (62ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 512), @p2='?' (Size = 60), @p3='?' (Size = 1) (DbType = Byte), @p4='?' (Size = 4000), @p5='?' (Size = 60), @p6='?' (Size = 60), @p7='?' (Size = 30), @p8='?' (DbType = DateTime), @p9='?' (DbType = DateTime), @p10='?' (Size = 1) (DbType = Byte), @p11='?' (Size = 60), @p12='?' (Size = 100), @p13='?' (Size = 60), @p14='?' (Size = 120), @p15='?' (Size = 60), @p16='?' (Size = 512), @p17='?' (Size = 60), @p18='?' (Size = 60), @p19='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [clients] ([Id], [Adresse], [Bp], [ChangementMotPasse], [Code], [ContactFonction], [ContactNom], [ContactTelephone], [DateCreation], [DateModification], [Desactive], [Email], [MotPasse], [Pays], [RaisonSociale], [RegistreCommerce], [Remarques], [UtilisateurCreation], [UtilisateurModification], [Ville])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19);
+2025-11-13 03:59:11.729 +01:00 [ERR] An exception occurred in the database while saving changes for context type 'FrontOffice.Infrastructure.Persistence.FrontOfficeDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Les données de chaîne ou binaires seraient tronquées dans la table 'ArpceHomologation_FrontOffice.dbo.clients', colonne 'Code'. Valeur tronquée : 'CLT-63898599'.
+L'instruction a été arrêtée.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:62d7da7f-f612-491f-ad0d-ebe0840970e9
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Les données de chaîne ou binaires seraient tronquées dans la table 'ArpceHomologation_FrontOffice.dbo.clients', colonne 'Code'. Valeur tronquée : 'CLT-63898599'.
+L'instruction a été arrêtée.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:62d7da7f-f612-491f-ad0d-ebe0840970e9
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-11-13 03:59:12.504 +01:00 [ERR] HTTP POST /api/auth/register responded 500 in 11875.5333 ms
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Les données de chaîne ou binaires seraient tronquées dans la table 'ArpceHomologation_FrontOffice.dbo.clients', colonne 'Code'. Valeur tronquée : 'CLT-63898599'.
+L'instruction a été arrêtée.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:62d7da7f-f612-491f-ad0d-ebe0840970e9
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at FrontOffice.Infrastructure.Persistence.FrontOfficeDbContext.SaveChangesAsync(CancellationToken cancellationToken) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Infrastructure\Persistence\FrontOfficeDbContext.cs:line 65
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.Handle(RegisterClientCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 74
+   at FrontOffice.Api.Controllers.AuthenticationController.Register(RegisterClientCommand command) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 23
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-11-13 03:59:12.893 +01:00 [ERR] An unhandled exception has occurred.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Les données de chaîne ou binaires seraient tronquées dans la table 'ArpceHomologation_FrontOffice.dbo.clients', colonne 'Code'. Valeur tronquée : 'CLT-63898599'.
+L'instruction a été arrêtée.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:62d7da7f-f612-491f-ad0d-ebe0840970e9
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at FrontOffice.Infrastructure.Persistence.FrontOfficeDbContext.SaveChangesAsync(CancellationToken cancellationToken) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Infrastructure\Persistence\FrontOfficeDbContext.cs:line 65
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.Handle(RegisterClientCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 74
+   at FrontOffice.Api.Controllers.AuthenticationController.Register(RegisterClientCommand command) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 23
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at FrontOffice.Api.Middleware.ErrorHandlingMiddleware.Invoke(HttpContext context) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\Middleware\ErrorHandlingMiddleware.cs:line 21
+2025-11-13 04:05:46.918 +01:00 [FTL] Application terminated unexpectedly
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\Program.cs:line 118
+2025-11-13 04:06:16.059 +01:00 [FTL] Application terminated unexpectedly
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\Program.cs:line 118
+2025-11-13 04:06:30.072 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-13 04:06:30.227 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-13 04:06:30.806 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-13 04:06:30.817 +01:00 [INF] Hosting environment: Development
+2025-11-13 04:06:30.829 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api
+2025-11-13 04:07:00.285 +01:00 [INF] HTTP GET /index.html responded 200 in 178.7545 ms
+2025-11-13 04:07:00.391 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 304 in 53.9959 ms
+2025-11-13 04:07:00.856 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 27.5008 ms
+2025-11-13 04:08:29.632 +01:00 [INF] Executed DbCommand (104ms) [Parameters=[@__request_Email_0='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [clients] AS [c]
+        WHERE [c].[Email] = @__request_Email_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-11-13 04:08:31.284 +01:00 [INF] Executed DbCommand (39ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 512), @p2='?' (Size = 60), @p3='?' (Size = 1) (DbType = Byte), @p4='?' (Size = 30), @p5='?' (Size = 60), @p6='?' (Size = 60), @p7='?' (Size = 30), @p8='?' (DbType = DateTime), @p9='?' (DbType = DateTime), @p10='?' (Size = 1) (DbType = Byte), @p11='?' (Size = 60), @p12='?' (Size = 100), @p13='?' (Size = 60), @p14='?' (Size = 120), @p15='?' (Size = 60), @p16='?' (Size = 512), @p17='?' (Size = 60), @p18='?' (Size = 60), @p19='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [clients] ([Id], [Adresse], [Bp], [ChangementMotPasse], [Code], [ContactFonction], [ContactNom], [ContactTelephone], [DateCreation], [DateModification], [Desactive], [Email], [MotPasse], [Pays], [RaisonSociale], [RegistreCommerce], [Remarques], [UtilisateurCreation], [UtilisateurModification], [Ville])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19);
+2025-11-13 04:08:31.491 +01:00 [INF] HTTP POST /api/auth/register responded 200 in 7567.2433 ms
+2025-11-13 04:10:16.492 +01:00 [INF] Executed DbCommand (14ms) [Parameters=[@__request_Email_0='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[MotPasse], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-11-13 04:10:17.752 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 1461.4600 ms
+2025-11-13 04:11:22.243 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-13 04:11:22.289 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-13 04:11:22.646 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-13 04:11:22.657 +01:00 [INF] Hosting environment: Development
+2025-11-13 04:11:22.669 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api
+2025-11-13 04:11:31.115 +01:00 [INF] HTTP GET /index.html responded 200 in 170.0030 ms
+2025-11-13 04:11:31.633 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 21.3190 ms
+2025-11-13 04:12:45.310 +01:00 [INF] Executed DbCommand (246ms) [Parameters=[@__request_Email_0='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [clients] AS [c]
+        WHERE [c].[Email] = @__request_Email_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-11-13 04:12:47.701 +01:00 [INF] Executed DbCommand (52ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 512), @p2='?' (Size = 60), @p3='?' (Size = 1) (DbType = Byte), @p4='?' (Size = 30), @p5='?' (Size = 60), @p6='?' (Size = 60), @p7='?' (Size = 30), @p8='?' (DbType = DateTime), @p9='?' (DbType = DateTime), @p10='?' (Size = 1) (DbType = Byte), @p11='?' (Size = 60), @p12='?' (Size = 100), @p13='?' (Size = 60), @p14='?' (Size = 120), @p15='?' (Size = 60), @p16='?' (Size = 512), @p17='?' (Size = 60), @p18='?' (Size = 60), @p19='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [clients] ([Id], [Adresse], [Bp], [ChangementMotPasse], [Code], [ContactFonction], [ContactNom], [ContactTelephone], [DateCreation], [DateModification], [Desactive], [Email], [MotPasse], [Pays], [RaisonSociale], [RegistreCommerce], [Remarques], [UtilisateurCreation], [UtilisateurModification], [Ville])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19);
+2025-11-13 04:12:47.840 +01:00 [INF] HTTP POST /api/auth/register responded 200 in 8987.8893 ms

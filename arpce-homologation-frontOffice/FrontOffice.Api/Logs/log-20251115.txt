@@ -1,0 +1,85 @@
+2025-11-15 11:48:52.483 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-15 11:48:52.524 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-15 11:48:52.706 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-15 11:48:52.709 +01:00 [INF] Hosting environment: Development
+2025-11-15 11:48:52.712 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api
+2025-11-15 11:51:46.244 +01:00 [INF] HTTP GET /index.html responded 200 in 113.7732 ms
+2025-11-15 11:51:46.302 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 304 in 23.2352 ms
+2025-11-15 11:51:46.556 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 44.9791 ms
+2025-11-15 11:53:12.523 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-15 11:53:12.586 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-15 11:53:12.771 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-15 11:53:12.773 +01:00 [INF] Hosting environment: Development
+2025-11-15 11:53:12.776 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api
+2025-11-15 11:53:31.885 +01:00 [INF] HTTP GET /index.html responded 200 in 119.8451 ms
+2025-11-15 11:53:32.051 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 29.0984 ms
+2025-11-15 11:53:48.197 +01:00 [INF] HTTP GET /api/demandes/apercu responded 401 in 1712.9336 ms
+2025-11-15 11:54:39.772 +01:00 [INF] HTTP GET /api/demandes/paiements-en-attente responded 401 in 4.5540 ms
+2025-11-15 16:01:31.070 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-15 16:01:31.100 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-15 16:01:31.160 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-15 16:01:31.163 +01:00 [INF] Hosting environment: Development
+2025-11-15 16:01:31.165 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api
+2025-11-15 16:01:49.789 +01:00 [INF] HTTP GET /index.html responded 200 in 113.8315 ms
+2025-11-15 16:01:50.028 +01:00 [ERR] HTTP GET /swagger/v1/swagger.json responded 500 in 23.6640 ms
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Failed to generate Operation for action - FrontOffice.Api.Controllers.DemandesController.CreateDossier (FrontOffice.Api). See inner exception
+ ---> Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Error reading parameter(s) for action FrontOffice.Api.Controllers.DemandesController.CreateDossier (FrontOffice.Api) as [FromForm] attribute used with IFormFile. Please refer to https://github.com/domaindrivendev/Swashbuckle.AspNetCore#handle-forms-and-file-uploads for more information
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateParameters(ApiDescription apiDescription, SchemaRepository schemaRespository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperation(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   --- End of inner exception stack trace ---
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperation(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerDocumentWithoutFilters(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerAsync(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-11-15 16:01:50.097 +01:00 [ERR] An unhandled exception has occurred.
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Failed to generate Operation for action - FrontOffice.Api.Controllers.DemandesController.CreateDossier (FrontOffice.Api). See inner exception
+ ---> Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Error reading parameter(s) for action FrontOffice.Api.Controllers.DemandesController.CreateDossier (FrontOffice.Api) as [FromForm] attribute used with IFormFile. Please refer to https://github.com/domaindrivendev/Swashbuckle.AspNetCore#handle-forms-and-file-uploads for more information
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateParameters(ApiDescription apiDescription, SchemaRepository schemaRespository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperation(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   --- End of inner exception stack trace ---
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperation(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerDocumentWithoutFilters(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerAsync(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at FrontOffice.Api.Middleware.ErrorHandlingMiddleware.Invoke(HttpContext context) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\Middleware\ErrorHandlingMiddleware.cs:line 21
+2025-11-15 16:02:04.435 +01:00 [INF] HTTP GET /index.html responded 200 in 10.7503 ms
+2025-11-15 16:02:04.742 +01:00 [ERR] HTTP GET /swagger/v1/swagger.json responded 500 in 19.3256 ms
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Failed to generate Operation for action - FrontOffice.Api.Controllers.DemandesController.CreateDossier (FrontOffice.Api). See inner exception
+ ---> Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Error reading parameter(s) for action FrontOffice.Api.Controllers.DemandesController.CreateDossier (FrontOffice.Api) as [FromForm] attribute used with IFormFile. Please refer to https://github.com/domaindrivendev/Swashbuckle.AspNetCore#handle-forms-and-file-uploads for more information
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateParameters(ApiDescription apiDescription, SchemaRepository schemaRespository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperation(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   --- End of inner exception stack trace ---
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperation(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerDocumentWithoutFilters(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerAsync(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-11-15 16:02:04.788 +01:00 [ERR] An unhandled exception has occurred.
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Failed to generate Operation for action - FrontOffice.Api.Controllers.DemandesController.CreateDossier (FrontOffice.Api). See inner exception
+ ---> Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Error reading parameter(s) for action FrontOffice.Api.Controllers.DemandesController.CreateDossier (FrontOffice.Api) as [FromForm] attribute used with IFormFile. Please refer to https://github.com/domaindrivendev/Swashbuckle.AspNetCore#handle-forms-and-file-uploads for more information
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateParameters(ApiDescription apiDescription, SchemaRepository schemaRespository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperation(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   --- End of inner exception stack trace ---
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperation(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerDocumentWithoutFilters(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerAsync(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at FrontOffice.Api.Middleware.ErrorHandlingMiddleware.Invoke(HttpContext context) in D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\Middleware\ErrorHandlingMiddleware.cs:line 21
+2025-11-15 16:34:31.761 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-15 16:34:31.792 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-15 16:34:31.857 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-15 16:34:31.860 +01:00 [INF] Hosting environment: Development
+2025-11-15 16:34:31.862 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api
+2025-11-15 16:34:43.478 +01:00 [INF] HTTP GET /index.html responded 200 in 88.8924 ms
+2025-11-15 16:34:43.795 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 55.0801 ms

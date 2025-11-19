@@ -1,0 +1,19 @@
+﻿using FrontOffice.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+public class MotifRejetConfiguration : IEntityTypeConfiguration<MotifRejet>
+{
+    public void Configure(EntityTypeBuilder<MotifRejet> builder)
+    {
+        builder.ToTable("motifsRejets");
+        builder.HasKey(m => m.Id);
+        builder.Property(m => m.Code).HasMaxLength(12).IsRequired();
+        builder.Property(m => m.Libelle).HasMaxLength(120).IsRequired();
+        builder.Property(m => m.Remarques).HasMaxLength(512);
+        builder.Property(m => m.UtilisateurCreation).HasMaxLength(60);
+        builder.Property(m => m.DateCreation).HasColumnType("smalldatetime");
+        builder.Property(m => m.UtilisateurModification).HasMaxLength(60);
+        builder.Property(m => m.DateModification).HasColumnType("smalldatetime");
+    }
+}
