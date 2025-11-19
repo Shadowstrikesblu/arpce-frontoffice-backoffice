@@ -768,8 +768,11 @@ LEFT JOIN [devis] AS [d1] ON [d].[Id] = [d1].[IdDossier]
 WHERE [d].[IdClient] = @__userId_Value_0
 ORDER BY [d].[Id], [s].[Id], [d0].[Id]
 2025-11-17 11:22:33.938 +01:00 [INF] HTTP GET /api/dossiers/apercu responded 200 in 13.6627 ms
+<<<<<<< HEAD
 2025-11-17 18:26:55.597 +01:00 [INF] Now listening on: http://[::]:8080
 2025-11-17 18:26:55.629 +01:00 [INF] Application started. Press Ctrl+C to shut down.
 2025-11-17 18:26:55.632 +01:00 [INF] Hosting environment: Development
 2025-11-17 18:26:55.635 +01:00 [INF] Content root path: C:\Users\hmoul\OneDrive\Bureau\CODESTUFF\homogation-frontend-backend\arpce-homologation\arpce-homologation-frontOffice\FrontOffice.Api
 2025-11-17 18:28:01.536 +01:00 [INF] Application is shutting down...
+=======
+>>>>>>> ba50e5adcea7f9534963efefde2fb3c819d57c3a

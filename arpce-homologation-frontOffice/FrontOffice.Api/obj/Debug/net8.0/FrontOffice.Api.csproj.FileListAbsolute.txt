@@ -161,6 +161,7 @@ D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\
 D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.pdb
 D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.genruntimeconfig.cache
 D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\obj\Debug\net8.0\ref\FrontOffice.Api.dll
+<<<<<<< HEAD
 C:\Users\hmoul\OneDrive\Bureau\CODESTUFF\homogation-frontend-backend\arpce-homologation\arpce-homologation-frontOffice\FrontOffice.Api\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\hmoul\OneDrive\Bureau\CODESTUFF\homogation-frontend-backend\arpce-homologation\arpce-homologation-frontOffice\FrontOffice.Api\bin\Debug\net8.0\appsettings.json
 C:\Users\hmoul\OneDrive\Bureau\CODESTUFF\homogation-frontend-backend\arpce-homologation\arpce-homologation-frontOffice\FrontOffice.Api\bin\Debug\net8.0\FrontOffice.Api.staticwebassets.runtime.json
@@ -322,3 +323,5 @@ C:\Users\hmoul\OneDrive\Bureau\CODESTUFF\homogation-frontend-backend\arpce-homol
 C:\Users\hmoul\OneDrive\Bureau\CODESTUFF\homogation-frontend-backend\arpce-homologation\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.pdb
 C:\Users\hmoul\OneDrive\Bureau\CODESTUFF\homogation-frontend-backend\arpce-homologation\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.genruntimeconfig.cache
 C:\Users\hmoul\OneDrive\Bureau\CODESTUFF\homogation-frontend-backend\arpce-homologation\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\ref\FrontOffice.Api.dll
+=======
+>>>>>>> ba50e5adcea7f9534963efefde2fb3c819d57c3a

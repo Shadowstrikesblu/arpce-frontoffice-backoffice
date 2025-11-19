@@ -1,5 +1,6 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "Mw4tr6TWjy0=",
   "success": true,
   "projectFilePath": "c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj",
@@ -12,4 +13,11 @@
       "message": "Problem reading the cache file c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
     }
   ]
+=======
+  "dgSpecHash": "aSbk6/ELnJ0=",
+  "success": true,
+  "projectFilePath": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj",
+  "expectedPackageFiles": [],
+  "logs": []
+>>>>>>> ba50e5adcea7f9534963efefde2fb3c819d57c3a
 }

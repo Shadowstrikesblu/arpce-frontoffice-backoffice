@@ -726,7 +726,11 @@
         },
         "runtime": {
           "FrontOffice.Application.dll": {
+<<<<<<< HEAD
             "assemblyVersion": "1.0.0",
+=======
+            "assemblyVersion": "1.0.0.0",
+>>>>>>> ba50e5adcea7f9534963efefde2fb3c819d57c3a
             "fileVersion": "1.0.0.0"
           }
         }
@@ -734,7 +738,11 @@
       "FrontOffice.Domain/1.0.0": {
         "runtime": {
           "FrontOffice.Domain.dll": {
+<<<<<<< HEAD
             "assemblyVersion": "1.0.0",
+=======
+            "assemblyVersion": "1.0.0.0",
+>>>>>>> ba50e5adcea7f9534963efefde2fb3c819d57c3a
             "fileVersion": "1.0.0.0"
           }
         }

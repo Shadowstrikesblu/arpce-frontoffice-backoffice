@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Api\\FrontOffice.Api.csproj": {}
   },
   "projects": {
@@ -15,22 +16,55 @@
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hmoul\\AppData\\Roaming\\NuGet\\NuGet.Config"
+=======
+    "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Api\\FrontOffice.Api.csproj": {}
+  },
+  "projects": {
+    "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Api\\FrontOffice.Api.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Api\\FrontOffice.Api.csproj",
+        "projectName": "FrontOffice.Api",
+        "projectPath": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Api\\FrontOffice.Api.csproj",
+        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
+        "outputPath": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Api\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+>>>>>>> ba50e5adcea7f9534963efefde2fb3c819d57c3a
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+<<<<<<< HEAD
+=======
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+>>>>>>> ba50e5adcea7f9534963efefde2fb3c819d57c3a
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
+<<<<<<< HEAD
               "c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj": {
                 "projectPath": "c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj"
               },
               "c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj": {
                 "projectPath": "c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj"
+=======
+              "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj": {
+                "projectPath": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj"
+              },
+              "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj": {
+                "projectPath": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj"
+>>>>>>> ba50e5adcea7f9534963efefde2fb3c819d57c3a
               }
             }
           }
@@ -44,7 +78,12 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
+<<<<<<< HEAD
         }
+=======
+        },
+        "SdkAnalysisLevel": "9.0.300"
+>>>>>>> ba50e5adcea7f9534963efefde2fb3c819d57c3a
       },
       "frameworks": {
         "net8.0": {
@@ -88,6 +127,7 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.416/PortableRuntimeIdentifierGraph.json"
         }
       }
@@ -103,19 +143,50 @@
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hmoul\\AppData\\Roaming\\NuGet\\NuGet.Config"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.307/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj",
+        "projectName": "FrontOffice.Application",
+        "projectPath": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj",
+        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
+        "outputPath": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+>>>>>>> ba50e5adcea7f9534963efefde2fb3c819d57c3a
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+<<<<<<< HEAD
+=======
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+>>>>>>> ba50e5adcea7f9534963efefde2fb3c819d57c3a
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
+<<<<<<< HEAD
               "c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj": {
                 "projectPath": "c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj"
+=======
+              "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj": {
+                "projectPath": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj"
+>>>>>>> ba50e5adcea7f9534963efefde2fb3c819d57c3a
               }
             }
           }
@@ -129,7 +200,12 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
+<<<<<<< HEAD
         }
+=======
+        },
+        "SdkAnalysisLevel": "9.0.300"
+>>>>>>> ba50e5adcea7f9534963efefde2fb3c819d57c3a
       },
       "frameworks": {
         "net8.0": {
@@ -172,6 +248,7 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.416/PortableRuntimeIdentifierGraph.json"
         }
       }
@@ -187,11 +264,37 @@
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hmoul\\AppData\\Roaming\\NuGet\\NuGet.Config"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.307/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj",
+        "projectName": "FrontOffice.Domain",
+        "projectPath": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj",
+        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
+        "outputPath": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+>>>>>>> ba50e5adcea7f9534963efefde2fb3c819d57c3a
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+<<<<<<< HEAD
+=======
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+>>>>>>> ba50e5adcea7f9534963efefde2fb3c819d57c3a
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -209,7 +312,12 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
+<<<<<<< HEAD
         }
+=======
+        },
+        "SdkAnalysisLevel": "9.0.300"
+>>>>>>> ba50e5adcea7f9534963efefde2fb3c819d57c3a
       },
       "frameworks": {
         "net8.0": {
@@ -230,6 +338,7 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.416/PortableRuntimeIdentifierGraph.json"
         }
       }
@@ -245,19 +354,50 @@
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hmoul\\AppData\\Roaming\\NuGet\\NuGet.Config"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.307/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj",
+        "projectName": "FrontOffice.Infrastructure",
+        "projectPath": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
+        "outputPath": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+>>>>>>> ba50e5adcea7f9534963efefde2fb3c819d57c3a
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+<<<<<<< HEAD
+=======
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+>>>>>>> ba50e5adcea7f9534963efefde2fb3c819d57c3a
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
+<<<<<<< HEAD
               "c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj": {
                 "projectPath": "c:\\Users\\hmoul\\OneDrive\\Bureau\\CODESTUFF\\homogation-frontend-backend\\arpce-homologation\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj"
+=======
+              "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj": {
+                "projectPath": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj"
+>>>>>>> ba50e5adcea7f9534963efefde2fb3c819d57c3a
               }
             }
           }
@@ -271,7 +411,12 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
+<<<<<<< HEAD
         }
+=======
+        },
+        "SdkAnalysisLevel": "9.0.300"
+>>>>>>> ba50e5adcea7f9534963efefde2fb3c819d57c3a
       },
       "frameworks": {
         "net8.0": {
@@ -310,7 +455,11 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.416/PortableRuntimeIdentifierGraph.json"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.307/PortableRuntimeIdentifierGraph.json"
+>>>>>>> ba50e5adcea7f9534963efefde2fb3c819d57c3a
         }
       }
     }

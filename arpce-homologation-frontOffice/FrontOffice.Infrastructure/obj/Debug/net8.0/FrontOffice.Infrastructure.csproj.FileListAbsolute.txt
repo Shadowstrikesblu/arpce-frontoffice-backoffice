@@ -15,6 +15,7 @@ D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\
 D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Infrastructure\obj\Debug\net8.0\refint\FrontOffice.Infrastructure.dll
 D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Infrastructure\obj\Debug\net8.0\FrontOffice.Infrastructure.pdb
 D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Infrastructure\obj\Debug\net8.0\ref\FrontOffice.Infrastructure.dll
+<<<<<<< HEAD
 C:\Users\hmoul\OneDrive\Bureau\CODESTUFF\homogation-frontend-backend\arpce-homologation\arpce-homologation-frontOffice\FrontOffice.Infrastructure\bin\Debug\net8.0\FrontOffice.Infrastructure.deps.json
 C:\Users\hmoul\OneDrive\Bureau\CODESTUFF\homogation-frontend-backend\arpce-homologation\arpce-homologation-frontOffice\FrontOffice.Infrastructure\bin\Debug\net8.0\FrontOffice.Infrastructure.dll
 C:\Users\hmoul\OneDrive\Bureau\CODESTUFF\homogation-frontend-backend\arpce-homologation\arpce-homologation-frontOffice\FrontOffice.Infrastructure\bin\Debug\net8.0\FrontOffice.Infrastructure.pdb
@@ -33,3 +34,5 @@ C:\Users\hmoul\OneDrive\Bureau\CODESTUFF\homogation-frontend-backend\arpce-homol
 C:\Users\hmoul\OneDrive\Bureau\CODESTUFF\homogation-frontend-backend\arpce-homologation\arpce-homologation-frontOffice\FrontOffice.Infrastructure\obj\Debug\net8.0\refint\FrontOffice.Infrastructure.dll
 C:\Users\hmoul\OneDrive\Bureau\CODESTUFF\homogation-frontend-backend\arpce-homologation\arpce-homologation-frontOffice\FrontOffice.Infrastructure\obj\Debug\net8.0\FrontOffice.Infrastructure.pdb
 C:\Users\hmoul\OneDrive\Bureau\CODESTUFF\homogation-frontend-backend\arpce-homologation\arpce-homologation-frontOffice\FrontOffice.Infrastructure\obj\Debug\net8.0\ref\FrontOffice.Infrastructure.dll
+=======
+>>>>>>> ba50e5adcea7f9534963efefde2fb3c819d57c3a
