@@ -8,7 +8,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FrontOffice.Infrastructure.Migrations
 {
     /// <inheritdoc />
+<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251119193206_InitialCreate_BackOfficeSchema.cs
     public partial class InitialCreate_BackOfficeSchema : Migration
+========
+    public partial class Initialisation : Migration
+>>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251121014407_Initialisation.cs
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -169,22 +173,25 @@ namespace FrontOffice.Infrastructure.Migrations
                     Code = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     RaisonSociale = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     RegistreCommerce = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    MotPasse = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    MotPasse = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     ChangementMotPasse = table.Column<byte>(type: "tinyint", nullable: true),
                     Desactive = table.Column<byte>(type: "tinyint", nullable: true),
                     ContactNom = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     ContactTelephone = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     ContactFonction = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: true),
                     Adresse = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
                     Bp = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     Ville = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     Pays = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     Remarques = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
+                    IsVerified = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    VerificationCode = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: true),
+                    VerificationTokenExpiry = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UtilisateurCreation = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateCreation = table.Column<DateTime>(type: "smalldatetime", nullable: true),
+                    DateCreation = table.Column<DateTime>(type: "datetime", nullable: true),
                     UtilisateurModification = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateModification = table.Column<DateTime>(type: "smalldatetime", nullable: true)
+                    DateModification = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -371,7 +378,11 @@ namespace FrontOffice.Infrastructure.Migrations
                     IdModeReglement = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DateOuverture = table.Column<DateTime>(type: "date", nullable: false),
                     Numero = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Libelle = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false)
+                    Libelle = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    UtilisateurCreation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateCreation = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UtilisateurModification = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateModification = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -468,30 +479,6 @@ namespace FrontOffice.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "devis",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdDossier = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Date = table.Column<DateTime>(type: "date", nullable: false),
-                    MontantEtude = table.Column<decimal>(type: "money", nullable: false),
-                    MontantHomologation = table.Column<decimal>(type: "money", nullable: true),
-                    MontantControle = table.Column<decimal>(type: "money", nullable: true),
-                    PaiementOk = table.Column<byte>(type: "tinyint", nullable: true),
-                    PaiementMobileId = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_devis", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_devis_dossiers_IdDossier",
-                        column: x => x.IdDossier,
-                        principalTable: "dossiers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "documentsDossiers",
                 columns: table => new
                 {
@@ -537,6 +524,40 @@ namespace FrontOffice.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "devis",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdDemande = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Date = table.Column<DateTime>(type: "date", nullable: false),
+                    MontantEtude = table.Column<decimal>(type: "money", nullable: false),
+                    MontantHomologation = table.Column<decimal>(type: "money", nullable: true),
+                    MontantControle = table.Column<decimal>(type: "money", nullable: true),
+                    PaiementOk = table.Column<byte>(type: "tinyint", nullable: true),
+                    PaiementMobileId = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
+                    DossierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UtilisateurCreation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateCreation = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UtilisateurModification = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateModification = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_devis", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_devis_demandes_IdDemande",
+                        column: x => x.IdDemande,
+                        principalTable: "demandes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_devis_dossiers_DossierId",
+                        column: x => x.DossierId,
+                        principalTable: "dossiers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "documentsDemandes",
                 columns: table => new
                 {
@@ -563,10 +584,17 @@ namespace FrontOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "DateCreation", "DateModification", "Libelle", "MobileBanking", "Remarques", "UtilisateurCreation", "UtilisateurModification" },
                 values: new object[,]
                 {
+<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251119193206_InitialCreate_BackOfficeSchema.cs
                     { new Guid("26b8b24b-e8dd-434b-8056-ec2d49d364df"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
                     { new Guid("286d2363-bd2c-46da-8b98-afacf1836d3c"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
                     { new Guid("c815fbda-22d4-4ab3-9634-1d981bb97753"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
                     { new Guid("e897f4f5-33b3-42f9-bd4d-8be4459ce41e"), "Cheque", null, null, "Chèque", (byte)0, null, null, null }
+========
+                    { new Guid("1b42d14f-d7ee-4d60-b345-d354d608914c"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
+                    { new Guid("6550f86a-5c03-4499-93aa-0a57a3b6a385"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
+                    { new Guid("812e6d16-649c-4228-9a98-69a80c9c6632"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
+                    { new Guid("d2ed2835-5242-4034-86c7-e84fdf5837e7"), "Especes", null, null, "Espèces", (byte)0, null, null, null }
+>>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251121014407_Initialisation.cs
                 });
 
             migrationBuilder.InsertData(
@@ -574,6 +602,7 @@ namespace FrontOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "Libelle" },
                 values: new object[,]
                 {
+<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251119193206_InitialCreate_BackOfficeSchema.cs
                     { new Guid("326a0077-9738-4dc3-9d47-71a0e3cf00d3"), "ApprouveAttentePaiement", "Approuvé, en attente de paiement" },
                     { new Guid("906a450d-372d-4d42-86e1-61c4bb5b84c8"), "Rejetee", "Rejetée" },
                     { new Guid("abb00050-4e87-4b9d-b1ab-69d76e270590"), "ApprouvePaiementEffectue", "Approuvé, paiement effectué" },
@@ -583,6 +612,17 @@ namespace FrontOffice.Infrastructure.Migrations
                     { new Guid("d84090a8-295a-46e5-94d4-91b2b78b30e3"), "EnCoursInstruction", "En cours d'instruction" },
                     { new Guid("f1ca4ef7-f3fc-438c-9573-e574ab578ee0"), "EnvoyePourApprobation", "Envoyé pour approbation" },
                     { new Guid("f69fb147-8726-4a2e-b67f-4d2377437e17"), "NouvelleDemande", "Nouvelle demande" }
+========
+                    { new Guid("0c112e7d-977d-47ff-a08b-58a533c18567"), "ApprouvePaiementEffectue", "Approuvé, paiement effectué" },
+                    { new Guid("507af0f0-9948-43ec-b8f8-bbe566bdc17b"), "AnnulationInstruction", "Annulation de l'instruction" },
+                    { new Guid("555cbc46-e324-4c0d-887b-625ea8440979"), "NouvelleDemande", "Nouvelle demande" },
+                    { new Guid("6375d13c-7bd1-4708-94a8-90d5e301df88"), "ApprouveAttentePaiement", "Approuvé, en attente de paiement" },
+                    { new Guid("64260924-d732-40f4-8d17-1de65714a34d"), "EnCoursInstruction", "En cours d'instruction" },
+                    { new Guid("6ce02420-1123-4304-94ad-4c7d1000aab1"), "Rejetee", "Rejetée" },
+                    { new Guid("78ed942b-f6dd-43e2-9173-7255712b9073"), "EnvoyePourApprobation", "Envoyé pour approbation" },
+                    { new Guid("dbc00037-ebdf-46cb-9c07-3920d98b6238"), "EquipementNonSoumisAHomologation", "Équipement non soumis à homologation" },
+                    { new Guid("e220ff51-ecd4-4558-834b-b589ddb8d292"), "ApprouveAttestationSignee", "Approuvé, attestation signée" }
+>>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251121014407_Initialisation.cs
                 });
 
             migrationBuilder.CreateIndex(
@@ -641,9 +681,14 @@ namespace FrontOffice.Infrastructure.Migrations
                 column: "IdProposition");
 
             migrationBuilder.CreateIndex(
-                name: "IX_devis_IdDossier",
+                name: "IX_devis_DossierId",
                 table: "devis",
-                column: "IdDossier");
+                column: "DossierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_devis_IdDemande",
+                table: "devis",
+                column: "IdDemande");
 
             migrationBuilder.CreateIndex(
                 name: "IX_documentsDemandes_IdDemande",

@@ -2,6 +2,8 @@
 using FrontOffice.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Security.Cryptography;
 
 namespace FrontOffice.Application.Features.Authentication.Commands.Register;
 
@@ -13,74 +15,108 @@ public class RegisterClientCommandHandler : IRequestHandler<RegisterClientComman
     private readonly IApplicationDbContext _context;
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
     private readonly IPasswordHasher _passwordHasher;
+    private readonly IEmailService _emailService;
 
-    /// <summary>
-    /// Initialise une nouvelle instance du handler.
-    /// </summary>
-    /// <param name="context">Le contexte de la base de données.</param>
-    /// <param name="jwtTokenGenerator">Le service de génération de token JWT.</param>
-    /// <param name="passwordHasher">Le service de hachage de mot de passe.</param>
     public RegisterClientCommandHandler(
         IApplicationDbContext context,
         IJwtTokenGenerator jwtTokenGenerator,
-        IPasswordHasher passwordHasher)
+        IPasswordHasher passwordHasher,
+        IEmailService emailService)
     {
         _context = context;
         _jwtTokenGenerator = jwtTokenGenerator;
         _passwordHasher = passwordHasher;
+        _emailService = emailService;
     }
 
-    /// <summary>
-    /// Exécute la logique de la commande d'inscription.
-    /// </summary>
-    /// <param name="request">La commande d'inscription contenant les informations du client.</param>
-    /// <param name="cancellationToken">Le token d'annulation.</param>
-    /// <returns>Un résultat d'authentification contenant un message de succès et un token JWT.</returns>
-    /// <exception cref="InvalidOperationException">Levée si un client avec le même email existe déjà.</exception>
     public async Task<AuthenticationResult> Handle(RegisterClientCommand request, CancellationToken cancellationToken)
     {
-        // Vérifie si un client avec le même email existe déjà
-        if (await _context.Clients.AnyAsync(c => c.Email == request.Email, cancellationToken))
+        var existingClient = await _context.Clients
+            .FirstOrDefaultAsync(c => c.Email == request.Email, cancellationToken);
+
+        if (existingClient != null)
         {
-            // Exception
-            throw new InvalidOperationException("Un client avec cet email existe déjà.");
+            if (existingClient.IsVerified)
+            {
+                throw new InvalidOperationException("Un compte client avec cet e-mail existe déjà et est actif.");
+            }
+            return await ResendVerificationAsync(existingClient, cancellationToken);
         }
 
-        // Hashe le mot de passe en utilisant le service BCrypt
-        var hashedPassword = _passwordHasher.Hash(request.Password);
+        return await CreateNewClientAsync(request, cancellationToken);
+    }
 
-        // Crée une nouvelle instance de l'entité Client
-        var client = new Client
+    private async Task<AuthenticationResult> CreateNewClientAsync(RegisterClientCommand request, CancellationToken cancellationToken)
+    {
+        var hashedPassword = _passwordHasher.Hash(request.Password);
+        var verificationCode = GenerateVerificationCode();
+        var verificationTokenExpiry = DateTime.UtcNow.AddMinutes(30);
+
+        var newClient = new Client
         {
-            Id = Guid.NewGuid(),
             RaisonSociale = request.RaisonSociale,
             Email = request.Email,
             MotPasse = hashedPassword,
             ContactNom = request.ContactNom,
             ContactTelephone = request.ContactTelephone,
-            // Génération de code temporaire
-            Code = $"CLT-{DateTime.UtcNow.Ticks}", 
-            DateCreation = DateTime.UtcNow,
-            // Le client est actif par défaut
+
+            Code = $"CLT-{DateTime.UtcNow.Ticks}",
             Desactive = 0,
-            // Changement de mot de passe à la première connexion
-            ChangementMotPasse = 1 
+            ChangementMotPasse = 1,
+            IsVerified = false,
+            VerificationCode = verificationCode,
+            VerificationTokenExpiry = verificationTokenExpiry
         };
+        // -----------------------------------------------------------------------------------
 
-        // Ajout du nouveau client au contexte de la base de données
-        _context.Clients.Add(client);
-
-        // Sauvegarde les changements dans la base de données
+        _context.Clients.Add(newClient);
         await _context.SaveChangesAsync(cancellationToken);
 
-        // Génére un token JWT pour la session de l'utilisateur nouvellement créé
-        var token = _jwtTokenGenerator.GenerateToken(client.Id, client.Email);
+        var verificationToken = _jwtTokenGenerator.GenerateToken(newClient.Id, newClient.Email);
 
-        // Retourne le résultat avec un message de succès et le token
+        await SendVerificationEmailAsync(newClient.Email, verificationCode);
+
         return new AuthenticationResult
         {
-            Message = "Inscription réussie.",
-            Token = token
+            Message = "Inscription réussie. Veuillez vérifier votre e-mail pour le code de confirmation.",
+            Token = verificationToken
         };
+    }
+
+    private async Task<AuthenticationResult> ResendVerificationAsync(Client client, CancellationToken cancellationToken)
+    {
+        client.VerificationCode = GenerateVerificationCode();
+        client.VerificationTokenExpiry = DateTime.UtcNow.AddMinutes(30);
+
+        await _context.SaveChangesAsync(cancellationToken);
+
+        var verificationToken = _jwtTokenGenerator.GenerateToken(client.Id, client.Email!);
+
+        await SendVerificationEmailAsync(client.Email!, client.VerificationCode);
+
+        return new AuthenticationResult
+        {
+            Message = "Un nouveau code de confirmation a été envoyé à votre adresse e-mail.",
+            Token = verificationToken
+        };
+    }
+
+    private string GenerateVerificationCode()
+    {
+        return RandomNumberGenerator.GetInt32(100000, 999999).ToString("D6");
+    }
+
+    private async Task SendVerificationEmailAsync(string email, string code)
+    {
+        var subject = "Votre code de vérification pour vous connecter sur l'espace client de la plateforme ARPCE Homologation";
+        var body = $@"
+            <h1>Bienvenue sur la plateforme d'homologation de l'ARPCE</h1>
+            <p>Merci de vous être inscrit. Veuillez utiliser le code ci-dessous pour activer votre compte :</p>
+            <h2><strong>{code}</strong></h2>
+            <p>Ce code expirera dans 30 minutes.</p>
+            <p>Si vous n'êtes pas à l'origine de cette inscription, veuillez ignorer cet e-mail.</p>
+            <p>Cordialement,<br/>L'équipe ARPCE</p>";
+
+        await _emailService.SendEmailAsync(email, subject, body);
     }
 }

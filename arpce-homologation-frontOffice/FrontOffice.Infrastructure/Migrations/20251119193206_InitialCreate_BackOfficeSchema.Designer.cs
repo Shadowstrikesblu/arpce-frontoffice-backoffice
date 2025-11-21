@@ -12,8 +12,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FrontOffice.Infrastructure.Migrations
 {
     [DbContext(typeof(FrontOfficeDbContext))]
+<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251119193206_InitialCreate_BackOfficeSchema.Designer.cs
     [Migration("20251119193206_InitialCreate_BackOfficeSchema")]
     partial class InitialCreate_BackOfficeSchema
+========
+    [Migration("20251121014407_Initialisation")]
+    partial class Initialisation
+>>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251121014407_Initialisation.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +29,58 @@ namespace FrontOffice.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Devis", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime?>("DateCreation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateModification")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DossierId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdDemande")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("MontantControle")
+                        .HasColumnType("money");
+
+                    b.Property<decimal>("MontantEtude")
+                        .HasColumnType("money");
+
+                    b.Property<decimal?>("MontantHomologation")
+                        .HasColumnType("money");
+
+                    b.Property<string>("PaiementMobileId")
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<byte?>("PaiementOk")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("UtilisateurCreation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UtilisateurModification")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DossierId");
+
+                    b.HasIndex("IdDemande");
+
+                    b.ToTable("devis", (string)null);
+                });
 
             modelBuilder.Entity("FrontOffice.Domain.Entities.AdminAccess", b =>
                 {
@@ -541,21 +598,26 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<DateTime?>("DateCreation")
-                        .HasColumnType("smalldatetime");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime?>("DateModification")
-                        .HasColumnType("smalldatetime");
+                        .HasColumnType("datetime");
 
                     b.Property<byte?>("Desactive")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<bool>("IsVerified")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("MotPasse")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Pays")
                         .HasMaxLength(60)
@@ -581,6 +643,13 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Property<string>("UtilisateurModification")
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("VerificationCode")
+                        .HasMaxLength(6)
+                        .HasColumnType("nvarchar(6)");
+
+                    b.Property<DateTime?>("VerificationTokenExpiry")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Ville")
                         .HasMaxLength(60)
@@ -692,41 +761,6 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.ToTable("demandes", (string)null);
                 });
 
-            modelBuilder.Entity("FrontOffice.Domain.Entities.Devis", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("date");
-
-                    b.Property<Guid>("IdDossier")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal?>("MontantControle")
-                        .HasColumnType("money");
-
-                    b.Property<decimal>("MontantEtude")
-                        .HasColumnType("money");
-
-                    b.Property<decimal?>("MontantHomologation")
-                        .HasColumnType("money");
-
-                    b.Property<string>("PaiementMobileId")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.Property<byte?>("PaiementOk")
-                        .HasColumnType("tinyint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdDossier");
-
-                    b.ToTable("devis", (string)null);
-                });
-
             modelBuilder.Entity("FrontOffice.Domain.Entities.DocumentDemande", b =>
                 {
                     b.Property<Guid>("Id")
@@ -800,6 +834,12 @@ namespace FrontOffice.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("DateCreation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateModification")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("DateOuverture")
                         .HasColumnType("date");
 
@@ -821,6 +861,12 @@ namespace FrontOffice.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("UtilisateurCreation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UtilisateurModification")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -877,28 +923,44 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
+<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251119193206_InitialCreate_BackOfficeSchema.Designer.cs
                             Id = new Guid("26b8b24b-e8dd-434b-8056-ec2d49d364df"),
+========
+                            Id = new Guid("6550f86a-5c03-4499-93aa-0a57a3b6a385"),
+>>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251121014407_Initialisation.Designer.cs
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
+<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251119193206_InitialCreate_BackOfficeSchema.Designer.cs
                             Id = new Guid("e897f4f5-33b3-42f9-bd4d-8be4459ce41e"),
+========
+                            Id = new Guid("812e6d16-649c-4228-9a98-69a80c9c6632"),
+>>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251121014407_Initialisation.Designer.cs
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
+<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251119193206_InitialCreate_BackOfficeSchema.Designer.cs
                             Id = new Guid("c815fbda-22d4-4ab3-9634-1d981bb97753"),
+========
+                            Id = new Guid("d2ed2835-5242-4034-86c7-e84fdf5837e7"),
+>>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251121014407_Initialisation.Designer.cs
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
+<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251119193206_InitialCreate_BackOfficeSchema.Designer.cs
                             Id = new Guid("286d2363-bd2c-46da-8b98-afacf1836d3c"),
+========
+                            Id = new Guid("1b42d14f-d7ee-4d60-b345-d354d608914c"),
+>>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251121014407_Initialisation.Designer.cs
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1
@@ -988,58 +1050,109 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
+<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251119193206_InitialCreate_BackOfficeSchema.Designer.cs
                             Id = new Guid("f69fb147-8726-4a2e-b67f-4d2377437e17"),
+========
+                            Id = new Guid("555cbc46-e324-4c0d-887b-625ea8440979"),
+>>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251121014407_Initialisation.Designer.cs
                             Code = "NouvelleDemande",
                             Libelle = "Nouvelle demande"
                         },
                         new
                         {
+<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251119193206_InitialCreate_BackOfficeSchema.Designer.cs
                             Id = new Guid("d84090a8-295a-46e5-94d4-91b2b78b30e3"),
+========
+                            Id = new Guid("64260924-d732-40f4-8d17-1de65714a34d"),
+>>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251121014407_Initialisation.Designer.cs
                             Code = "EnCoursInstruction",
                             Libelle = "En cours d'instruction"
                         },
                         new
                         {
+<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251119193206_InitialCreate_BackOfficeSchema.Designer.cs
                             Id = new Guid("f1ca4ef7-f3fc-438c-9573-e574ab578ee0"),
+========
+                            Id = new Guid("78ed942b-f6dd-43e2-9173-7255712b9073"),
+>>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251121014407_Initialisation.Designer.cs
                             Code = "EnvoyePourApprobation",
                             Libelle = "Envoyé pour approbation"
                         },
                         new
                         {
+<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251119193206_InitialCreate_BackOfficeSchema.Designer.cs
                             Id = new Guid("326a0077-9738-4dc3-9d47-71a0e3cf00d3"),
+========
+                            Id = new Guid("6375d13c-7bd1-4708-94a8-90d5e301df88"),
+>>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251121014407_Initialisation.Designer.cs
                             Code = "ApprouveAttentePaiement",
                             Libelle = "Approuvé, en attente de paiement"
                         },
                         new
                         {
+<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251119193206_InitialCreate_BackOfficeSchema.Designer.cs
                             Id = new Guid("906a450d-372d-4d42-86e1-61c4bb5b84c8"),
+========
+                            Id = new Guid("6ce02420-1123-4304-94ad-4c7d1000aab1"),
+>>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251121014407_Initialisation.Designer.cs
                             Code = "Rejetee",
                             Libelle = "Rejetée"
                         },
                         new
                         {
+<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251119193206_InitialCreate_BackOfficeSchema.Designer.cs
                             Id = new Guid("b271b54f-ce39-4d8d-b873-a2e4a90c600e"),
+========
+                            Id = new Guid("dbc00037-ebdf-46cb-9c07-3920d98b6238"),
+>>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251121014407_Initialisation.Designer.cs
                             Code = "EquipementNonSoumisAHomologation",
                             Libelle = "Équipement non soumis à homologation"
                         },
                         new
                         {
+<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251119193206_InitialCreate_BackOfficeSchema.Designer.cs
                             Id = new Guid("abb00050-4e87-4b9d-b1ab-69d76e270590"),
+========
+                            Id = new Guid("0c112e7d-977d-47ff-a08b-58a533c18567"),
+>>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251121014407_Initialisation.Designer.cs
                             Code = "ApprouvePaiementEffectue",
                             Libelle = "Approuvé, paiement effectué"
                         },
                         new
                         {
+<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251119193206_InitialCreate_BackOfficeSchema.Designer.cs
                             Id = new Guid("c7f7cd8f-ce25-4b14-93db-7582936a7c35"),
+========
+                            Id = new Guid("e220ff51-ecd4-4558-834b-b589ddb8d292"),
+>>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251121014407_Initialisation.Designer.cs
                             Code = "ApprouveAttestationSignee",
                             Libelle = "Approuvé, attestation signée"
                         },
                         new
                         {
+<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251119193206_InitialCreate_BackOfficeSchema.Designer.cs
                             Id = new Guid("cd3bf70b-e67e-4c19-b2c4-9f6017f27b53"),
+========
+                            Id = new Guid("507af0f0-9948-43ec-b8f8-bbe566bdc17b"),
+>>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251121014407_Initialisation.Designer.cs
                             Code = "AnnulationInstruction",
                             Libelle = "Annulation de l'instruction"
                         });
+                });
+
+            modelBuilder.Entity("Devis", b =>
+                {
+                    b.HasOne("FrontOffice.Domain.Entities.Dossier", null)
+                        .WithMany("Devis")
+                        .HasForeignKey("DossierId");
+
+                    b.HasOne("FrontOffice.Domain.Entities.Demande", "Demande")
+                        .WithMany()
+                        .HasForeignKey("IdDemande")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Demande");
                 });
 
             modelBuilder.Entity("FrontOffice.Domain.Entities.AdminJournal", b =>
@@ -1153,17 +1266,6 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Navigation("MotifRejet");
 
                     b.Navigation("Proposition");
-                });
-
-            modelBuilder.Entity("FrontOffice.Domain.Entities.Devis", b =>
-                {
-                    b.HasOne("FrontOffice.Domain.Entities.Dossier", "Dossier")
-                        .WithMany("Devis")
-                        .HasForeignKey("IdDossier")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Dossier");
                 });
 
             modelBuilder.Entity("FrontOffice.Domain.Entities.DocumentDemande", b =>

@@ -1,0 +1,423 @@
+2025-11-21 01:29:04.123 +01:00 [FTL] Application terminated unexpectedly
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Program.cs:line 126
+2025-11-21 01:42:49.062 +01:00 [FTL] Application terminated unexpectedly
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Program.cs:line 126
+2025-11-21 02:43:59.828 +01:00 [FTL] Application terminated unexpectedly
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Program.cs:line 128
+2025-11-21 02:44:39.701 +01:00 [FTL] Application terminated unexpectedly
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Program.cs:line 128
+2025-11-21 02:45:55.234 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-21 02:45:55.291 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-21 02:45:55.419 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-21 02:45:55.425 +01:00 [INF] Hosting environment: Development
+2025-11-21 02:45:55.430 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2025-11-21 02:46:02.361 +01:00 [INF] HTTP GET / responded 301 in 12.5054 ms
+2025-11-21 02:46:02.657 +01:00 [INF] HTTP GET /index.html responded 200 in 223.9897 ms
+2025-11-21 02:46:02.784 +01:00 [INF] HTTP GET /swagger-ui-standalone-preset.js responded 200 in 113.9099 ms
+2025-11-21 02:46:02.794 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 200 in 118.3526 ms
+2025-11-21 02:46:02.786 +01:00 [INF] HTTP GET /swagger-ui.css responded 200 in 115.9281 ms
+2025-11-21 02:46:02.831 +01:00 [INF] HTTP GET /swagger-ui-bundle.js responded 200 in 159.6190 ms
+2025-11-21 02:46:03.267 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 90.4685 ms
+2025-11-21 02:47:32.407 +01:00 [INF] Executed DbCommand (367ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-11-21 02:47:34.394 +01:00 [INF] Executed DbCommand (21ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 512), @p2='?' (Size = 60), @p3='?' (DbType = Byte), @p4='?' (Size = 30), @p5='?' (Size = 60), @p6='?' (Size = 60), @p7='?' (Size = 30), @p8='?' (DbType = DateTime), @p9='?' (DbType = DateTime), @p10='?' (DbType = Byte), @p11='?' (Size = 120), @p12='?' (Size = 255), @p13='?' (Size = 60), @p14='?' (Size = 120), @p15='?' (Size = 60), @p16='?' (Size = 512), @p17='?' (Size = 60), @p18='?' (Size = 60), @p19='?' (Size = 6), @p20='?' (DbType = DateTime2), @p21='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [clients] ([Id], [Adresse], [Bp], [ChangementMotPasse], [Code], [ContactFonction], [ContactNom], [ContactTelephone], [DateCreation], [DateModification], [Desactive], [Email], [MotPasse], [Pays], [RaisonSociale], [RegistreCommerce], [Remarques], [UtilisateurCreation], [UtilisateurModification], [VerificationCode], [VerificationTokenExpiry], [Ville])
+OUTPUT INSERTED.[IsVerified]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21);
+2025-11-21 02:47:35.243 +01:00 [ERR] HTTP POST /api/auth/register responded 500 in 11716.8017 ms
+System.ArgumentNullException: Value cannot be null. (Parameter 'value')
+   at System.ArgumentNullException.Throw(String paramName)
+   at System.ArgumentNullException.ThrowIfNull(Object argument, String paramName)
+   at System.Security.Claims.Claim..ctor(String type, String value, String valueType, String issuer, String originalIssuer, ClaimsIdentity subject, String propertyKey, String propertyValue)
+   at System.Security.Claims.Claim..ctor(String type, String value)
+   at FrontOffice.Infrastructure.Security.JwtTokenGenerator.GenerateToken(Guid userId, String email) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Infrastructure\Security\JwtTokenGenerator.cs:line 21
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.CreateNewClientAsync(RegisterClientCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 62
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.Handle(RegisterClientCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 43
+   at FrontOffice.Api.Controllers.AuthenticationController.Register(RegisterClientCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 27
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-11-21 02:47:35.924 +01:00 [ERR] Une exception non gérée a été interceptée par le middleware.
+System.ArgumentNullException: Value cannot be null. (Parameter 'value')
+   at System.ArgumentNullException.Throw(String paramName)
+   at System.ArgumentNullException.ThrowIfNull(Object argument, String paramName)
+   at System.Security.Claims.Claim..ctor(String type, String value, String valueType, String issuer, String originalIssuer, ClaimsIdentity subject, String propertyKey, String propertyValue)
+   at System.Security.Claims.Claim..ctor(String type, String value)
+   at FrontOffice.Infrastructure.Security.JwtTokenGenerator.GenerateToken(Guid userId, String email) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Infrastructure\Security\JwtTokenGenerator.cs:line 21
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.CreateNewClientAsync(RegisterClientCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 62
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.Handle(RegisterClientCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 43
+   at FrontOffice.Api.Controllers.AuthenticationController.Register(RegisterClientCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 27
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at FrontOffice.Api.Middleware.ErrorHandlingMiddleware.Invoke(HttpContext context) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Middleware\ErrorHandlingMiddleware.cs:line 33
+2025-11-21 03:05:25.220 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-21 03:05:25.358 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-21 03:05:25.660 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-21 03:05:25.672 +01:00 [INF] Hosting environment: Development
+2025-11-21 03:05:25.683 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2025-11-21 03:05:30.403 +01:00 [INF] HTTP GET /index.html responded 200 in 354.5683 ms
+2025-11-21 03:05:31.044 +01:00 [INF] HTTP GET /favicon-32x32.png responded 200 in 13.3729 ms
+2025-11-21 03:05:31.092 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 85.0406 ms
+2025-11-21 03:07:16.918 +01:00 [INF] Executed DbCommand (110ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-11-21 03:07:18.088 +01:00 [INF] Executed DbCommand (14ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 512), @p2='?' (Size = 60), @p3='?' (Size = 1) (DbType = Byte), @p4='?' (Size = 30), @p5='?' (Size = 60), @p6='?' (Size = 60), @p7='?' (Size = 30), @p8='?' (DbType = DateTime), @p9='?' (DbType = DateTime), @p10='?' (Size = 1) (DbType = Byte), @p11='?' (Size = 120), @p12='?' (Size = 255), @p13='?' (Size = 60), @p14='?' (Size = 120), @p15='?' (Size = 60), @p16='?' (Size = 512), @p17='?' (Size = 60), @p18='?' (Size = 60), @p19='?' (Size = 6), @p20='?' (DbType = DateTime2), @p21='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [clients] ([Id], [Adresse], [Bp], [ChangementMotPasse], [Code], [ContactFonction], [ContactNom], [ContactTelephone], [DateCreation], [DateModification], [Desactive], [Email], [MotPasse], [Pays], [RaisonSociale], [RegistreCommerce], [Remarques], [UtilisateurCreation], [UtilisateurModification], [VerificationCode], [VerificationTokenExpiry], [Ville])
+OUTPUT INSERTED.[IsVerified]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21);
+2025-11-21 03:07:20.485 +01:00 [ERR] HTTP POST /api/auth/register responded 500 in 11241.9380 ms
+System.ArgumentNullException: Value cannot be null. (Parameter 's')
+   at System.Int32.Parse(String s)
+   at FrontOffice.Infrastructure.Services.EmailService.SendEmailAsync(String toEmail, String subject, String body) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Infrastructure\Services\EmailService.cs:line 28
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.SendVerificationEmailAsync(String email, String code) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 120
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.CreateNewClientAsync(RegisterClientCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 77
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.Handle(RegisterClientCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 46
+   at FrontOffice.Api.Controllers.AuthenticationController.Register(RegisterClientCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 27
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-11-21 03:07:21.222 +01:00 [ERR] Une exception non gérée a été interceptée par le middleware.
+System.ArgumentNullException: Value cannot be null. (Parameter 's')
+   at System.Int32.Parse(String s)
+   at FrontOffice.Infrastructure.Services.EmailService.SendEmailAsync(String toEmail, String subject, String body) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Infrastructure\Services\EmailService.cs:line 28
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.SendVerificationEmailAsync(String email, String code) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 120
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.CreateNewClientAsync(RegisterClientCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 77
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.Handle(RegisterClientCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 46
+   at FrontOffice.Api.Controllers.AuthenticationController.Register(RegisterClientCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 27
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at FrontOffice.Api.Middleware.ErrorHandlingMiddleware.Invoke(HttpContext context) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Middleware\ErrorHandlingMiddleware.cs:line 33
+2025-11-21 03:15:48.588 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-21 03:15:48.631 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-21 03:15:48.704 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-21 03:15:48.707 +01:00 [INF] Hosting environment: Development
+2025-11-21 03:15:48.709 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2025-11-21 03:16:25.496 +01:00 [INF] HTTP GET /index.html responded 200 in 94.7884 ms
+2025-11-21 03:16:25.814 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 51.2388 ms
+2025-11-21 03:17:02.846 +01:00 [INF] Executed DbCommand (67ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-11-21 03:17:03.161 +01:00 [INF] Executed DbCommand (13ms) [Parameters=[@p3='?' (DbType = Guid), @p0='?' (DbType = DateTime), @p1='?' (Size = 6), @p2='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [clients] SET [DateModification] = @p0, [VerificationCode] = @p1, [VerificationTokenExpiry] = @p2
+OUTPUT 1
+WHERE [Id] = @p3;
+2025-11-21 03:17:03.565 +01:00 [ERR] HTTP POST /api/auth/register responded 500 in 3105.9278 ms
+System.ArgumentNullException: Value cannot be null. (Parameter 'EmailSettings:SmtpServer')
+   at System.ArgumentNullException.Throw(String paramName)
+   at System.ArgumentNullException.ThrowIfNull(Object argument, String paramName)
+   at System.ArgumentException.ThrowNullOrWhiteSpaceException(String argument, String paramName)
+   at System.ArgumentException.ThrowIfNullOrWhiteSpace(String argument, String paramName)
+   at FrontOffice.Infrastructure.Services.EmailService.SendEmailAsync(String toEmail, String subject, String body) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Infrastructure\Services\EmailService.cs:line 26
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.SendVerificationEmailAsync(String email, String code) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 120
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.ResendVerificationAsync(Client client, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 95
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.Handle(RegisterClientCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 43
+   at FrontOffice.Api.Controllers.AuthenticationController.Register(RegisterClientCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 27
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-11-21 03:17:03.743 +01:00 [ERR] Une exception non gérée a été interceptée par le middleware.
+System.ArgumentNullException: Value cannot be null. (Parameter 'EmailSettings:SmtpServer')
+   at System.ArgumentNullException.Throw(String paramName)
+   at System.ArgumentNullException.ThrowIfNull(Object argument, String paramName)
+   at System.ArgumentException.ThrowNullOrWhiteSpaceException(String argument, String paramName)
+   at System.ArgumentException.ThrowIfNullOrWhiteSpace(String argument, String paramName)
+   at FrontOffice.Infrastructure.Services.EmailService.SendEmailAsync(String toEmail, String subject, String body) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Infrastructure\Services\EmailService.cs:line 26
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.SendVerificationEmailAsync(String email, String code) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 120
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.ResendVerificationAsync(Client client, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 95
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.Handle(RegisterClientCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 43
+   at FrontOffice.Api.Controllers.AuthenticationController.Register(RegisterClientCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 27
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at FrontOffice.Api.Middleware.ErrorHandlingMiddleware.Invoke(HttpContext context) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Middleware\ErrorHandlingMiddleware.cs:line 33
+2025-11-21 03:24:26.431 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-21 03:24:26.466 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-21 03:24:26.537 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-21 03:24:26.542 +01:00 [INF] Hosting environment: Development
+2025-11-21 03:24:26.545 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2025-11-21 03:24:46.707 +01:00 [INF] HTTP GET /index.html responded 200 in 92.4627 ms
+2025-11-21 03:24:47.022 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 49.5769 ms
+2025-11-21 03:25:12.509 +01:00 [INF] Executed DbCommand (72ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-11-21 03:25:12.843 +01:00 [INF] Executed DbCommand (15ms) [Parameters=[@p3='?' (DbType = Guid), @p0='?' (DbType = DateTime), @p1='?' (Size = 6), @p2='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [clients] SET [DateModification] = @p0, [VerificationCode] = @p1, [VerificationTokenExpiry] = @p2
+OUTPUT 1
+WHERE [Id] = @p3;
+2025-11-21 03:25:16.543 +01:00 [INF] HTTP POST /api/auth/register responded 200 in 6645.7492 ms
+2025-11-21 03:28:19.273 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@__get_Item_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Id] = @__get_Item_0
+2025-11-21 03:28:19.290 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@p5='?' (DbType = Guid), @p0='?' (DbType = DateTime), @p1='?' (DbType = Boolean), @p2='?' (Size = 60), @p3='?' (Size = 6), @p4='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [clients] SET [DateModification] = @p0, [IsVerified] = @p1, [UtilisateurModification] = @p2, [VerificationCode] = @p3, [VerificationTokenExpiry] = @p4
+OUTPUT 1
+WHERE [Id] = @p5;
+2025-11-21 03:28:19.302 +01:00 [INF] HTTP POST /api/auth/confirm-account responded 200 in 210.4452 ms
+2025-11-21 03:30:55.773 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-11-21 03:30:56.268 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 600.7754 ms
+2025-11-21 03:31:37.560 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Id] = @__userId_Value_0
+2025-11-21 03:31:37.572 +01:00 [INF] HTTP POST /api/auth/connect-by-token responded 200 in 36.4721 ms
+2025-11-21 03:33:35.256 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@__request_Libelle_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [dossiers] AS [d]
+        WHERE [d].[Libelle] = @__request_Libelle_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-11-21 03:33:35.296 +01:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Code], [s].[Libelle]
+FROM [statuts] AS [s]
+WHERE [s].[Code] = N'NouvelleDemande'
+2025-11-21 03:33:35.331 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [m].[Id], [m].[Code], [m].[DateCreation], [m].[DateModification], [m].[Libelle], [m].[MobileBanking], [m].[Remarques], [m].[UtilisateurCreation], [m].[UtilisateurModification]
+FROM [modesReglements] AS [m]
+WHERE [m].[Code] = N'Virement'
+2025-11-21 03:33:35.558 +01:00 [INF] Executed DbCommand (12ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = DateTime2), @p3='?' (DbType = Date), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?' (Size = 120), @p8='?' (Size = 30), @p9='?' (Size = 4000), @p10='?' (Size = 4000), @p11='?' (DbType = Guid), @p12='?' (Size = 8000) (DbType = Binary), @p13='?' (Size = 12), @p14='?' (Size = 512), @p15='?' (DbType = Guid), @p16='?' (Size = 60), @p17='?' (Size = 1) (DbType = Byte)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [dossiers] ([Id], [DateCreation], [DateModification], [DateOuverture], [IdClient], [IdModeReglement], [IdStatut], [Libelle], [Numero], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10);
+INSERT INTO [documentsDossiers] ([Id], [Donnees], [Extension], [FilePath], [IdDossier], [Nom], [Type])
+VALUES (@p11, @p12, @p13, @p14, @p15, @p16, @p17);
+2025-11-21 03:33:35.613 +01:00 [INF] HTTP POST /api/dossiers responded 201 in 434.0630 ms
+2025-11-21 03:36:42.092 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@__request_IdDossier_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+FROM [dossiers] AS [d]
+WHERE [d].[Id] = @__request_IdDossier_0 AND [d].[IdClient] = @__userId_Value_1
+2025-11-21 03:36:42.193 +01:00 [INF] Executed DbCommand (10ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 60), @p2='?' (Size = 60), @p3='?' (Size = 512), @p4='?' (Size = 120), @p5='?' (Size = 120), @p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (Size = 120), @p11='?' (Size = 120), @p12='?' (Size = 12), @p13='?' (DbType = Int32), @p14='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [demandes] ([Id], [ContactEmail], [ContactNom], [Description], [Equipement], [Fabricant], [IdCategorie], [IdDossier], [IdMotifRejet], [IdProposition], [Marque], [Modele], [NumeroDemande], [QuantiteEquipements], [Type])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-11-21 03:36:42.229 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 8000) (DbType = Binary), @p2='?' (Size = 12), @p3='?' (Size = 512), @p4='?' (DbType = Guid), @p5='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [documentsDemandes] ([Id], [Donnees], [Extension], [FilePath], [IdDemande], [Nom])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+2025-11-21 03:36:42.241 +01:00 [INF] HTTP POST /api/dossiers/a056ea49-4627-42d8-b1e7-6f2d82d4dd6c/equipements responded 200 in 228.6587 ms
+2025-11-21 03:37:29.368 +01:00 [INF] Executed DbCommand (16ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[IdClient], [d].[IdStatut], [d].[IdModeReglement], [d].[DateOuverture], [d].[Numero], [d].[Libelle], CAST(1 AS bit), [s].[Id], [s].[Code], [s].[Libelle], [d0].[Id], [d0].[IdDossier], [d0].[NumeroDemande], [d0].[Equipement], [d0].[Modele], [d0].[Marque]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+LEFT JOIN [demandes] AS [d0] ON [d].[Id] = [d0].[IdDossier]
+WHERE [d].[IdClient] = @__userId_Value_0
+ORDER BY [d].[Id], [s].[Id]
+2025-11-21 03:37:29.399 +01:00 [INF] HTTP GET /api/dossiers/recents responded 200 in 197.2702 ms
+2025-11-21 03:38:03.901 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+WHERE [d].[IdClient] = @__userId_Value_0
+2025-11-21 03:38:03.962 +01:00 [INF] Executed DbCommand (12ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [s].[Id], [s].[Code], [s].[Libelle], [d0].[Id], [d0].[ContactEmail], [d0].[ContactNom], [d0].[Description], [d0].[Equipement], [d0].[Fabricant], [d0].[IdCategorie], [d0].[IdDossier], [d0].[IdMotifRejet], [d0].[IdProposition], [d0].[Marque], [d0].[Modele], [d0].[NumeroDemande], [d0].[QuantiteEquipements], [d0].[Type]
+FROM (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[IdClient] = @__userId_Value_0
+    ORDER BY [d].[DateOuverture] DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [t]
+INNER JOIN [statuts] AS [s] ON [t].[IdStatut] = [s].[Id]
+LEFT JOIN [demandes] AS [d0] ON [t].[Id] = [d0].[IdDossier]
+ORDER BY [t].[DateOuverture] DESC, [t].[Id], [s].[Id]
+2025-11-21 03:38:03.987 +01:00 [INF] HTTP GET /api/dossiers responded 200 in 152.3236 ms
+2025-11-21 03:38:16.968 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+WHERE [d].[IdClient] = @__userId_Value_0
+2025-11-21 03:38:16.978 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [s].[Id], [s].[Code], [s].[Libelle], [d0].[Id], [d0].[ContactEmail], [d0].[ContactNom], [d0].[Description], [d0].[Equipement], [d0].[Fabricant], [d0].[IdCategorie], [d0].[IdDossier], [d0].[IdMotifRejet], [d0].[IdProposition], [d0].[Marque], [d0].[Modele], [d0].[NumeroDemande], [d0].[QuantiteEquipements], [d0].[Type]
+FROM (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[IdClient] = @__userId_Value_0
+    ORDER BY [d].[DateOuverture] DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [t]
+INNER JOIN [statuts] AS [s] ON [t].[IdStatut] = [s].[Id]
+LEFT JOIN [demandes] AS [d0] ON [t].[Id] = [d0].[IdDossier]
+ORDER BY [t].[DateOuverture] DESC, [t].[Id], [s].[Id]
+2025-11-21 03:38:16.983 +01:00 [INF] HTTP GET /api/dossiers responded 200 in 41.1024 ms
+2025-11-21 03:38:33.423 +01:00 [INF] Executed DbCommand (11ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__searchTerm_1_contains='?' (Size = 30), @__searchTerm_1_contains_1='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[IdClient] = @__userId_Value_0 AND (LOWER([d].[Numero]) LIKE @__searchTerm_1_contains ESCAPE N'\' OR LOWER([d].[Libelle]) LIKE @__searchTerm_1_contains_1 ESCAPE N'\' OR LOWER([s].[Libelle]) LIKE @__searchTerm_1_contains_1 ESCAPE N'\')
+2025-11-21 03:38:33.455 +01:00 [INF] Executed DbCommand (12ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__searchTerm_1_contains='?' (Size = 30), @__searchTerm_1_contains_1='?' (Size = 120), @__p_2='?' (DbType = Int32), @__p_3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [t].[Id0], [t].[Code], [t].[Libelle0], [d0].[Id], [d0].[ContactEmail], [d0].[ContactNom], [d0].[Description], [d0].[Equipement], [d0].[Fabricant], [d0].[IdCategorie], [d0].[IdDossier], [d0].[IdMotifRejet], [d0].[IdProposition], [d0].[Marque], [d0].[Modele], [d0].[NumeroDemande], [d0].[QuantiteEquipements], [d0].[Type]
+FROM (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification], [s].[Id] AS [Id0], [s].[Code], [s].[Libelle] AS [Libelle0]
+    FROM [dossiers] AS [d]
+    INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+    WHERE [d].[IdClient] = @__userId_Value_0 AND (LOWER([d].[Numero]) LIKE @__searchTerm_1_contains ESCAPE N'\' OR LOWER([d].[Libelle]) LIKE @__searchTerm_1_contains_1 ESCAPE N'\' OR LOWER([s].[Libelle]) LIKE @__searchTerm_1_contains_1 ESCAPE N'\')
+    ORDER BY [d].[DateOuverture] DESC
+    OFFSET @__p_2 ROWS FETCH NEXT @__p_3 ROWS ONLY
+) AS [t]
+LEFT JOIN [demandes] AS [d0] ON [t].[Id] = [d0].[IdDossier]
+ORDER BY [t].[DateOuverture] DESC, [t].[Id], [t].[Id0]
+2025-11-21 03:38:33.464 +01:00 [INF] HTTP GET /api/dossiers responded 200 in 85.1404 ms
+2025-11-21 03:38:44.452 +01:00 [INF] Executed DbCommand (22ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__searchTerm_1_contains='?' (Size = 30), @__searchTerm_1_contains_1='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[IdClient] = @__userId_Value_0 AND (LOWER([d].[Numero]) LIKE @__searchTerm_1_contains ESCAPE N'\' OR LOWER([d].[Libelle]) LIKE @__searchTerm_1_contains_1 ESCAPE N'\' OR LOWER([s].[Libelle]) LIKE @__searchTerm_1_contains_1 ESCAPE N'\')
+2025-11-21 03:38:44.467 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__searchTerm_1_contains='?' (Size = 30), @__searchTerm_1_contains_1='?' (Size = 120), @__p_2='?' (DbType = Int32), @__p_3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [t].[Id0], [t].[Code], [t].[Libelle0], [d0].[Id], [d0].[ContactEmail], [d0].[ContactNom], [d0].[Description], [d0].[Equipement], [d0].[Fabricant], [d0].[IdCategorie], [d0].[IdDossier], [d0].[IdMotifRejet], [d0].[IdProposition], [d0].[Marque], [d0].[Modele], [d0].[NumeroDemande], [d0].[QuantiteEquipements], [d0].[Type]
+FROM (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification], [s].[Id] AS [Id0], [s].[Code], [s].[Libelle] AS [Libelle0]
+    FROM [dossiers] AS [d]
+    INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+    WHERE [d].[IdClient] = @__userId_Value_0 AND (LOWER([d].[Numero]) LIKE @__searchTerm_1_contains ESCAPE N'\' OR LOWER([d].[Libelle]) LIKE @__searchTerm_1_contains_1 ESCAPE N'\' OR LOWER([s].[Libelle]) LIKE @__searchTerm_1_contains_1 ESCAPE N'\')
+    ORDER BY [d].[DateOuverture] DESC
+    OFFSET @__p_2 ROWS FETCH NEXT @__p_3 ROWS ONLY
+) AS [t]
+LEFT JOIN [demandes] AS [d0] ON [t].[Id] = [d0].[IdDossier]
+ORDER BY [t].[DateOuverture] DESC, [t].[Id], [t].[Id0]
+2025-11-21 03:38:44.474 +01:00 [INF] HTTP GET /api/dossiers responded 200 in 44.7338 ms
+2025-11-21 03:39:16.776 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-11-21 03:39:16.792 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification], [s].[Id], [d0].[Id], [d0].[ContactEmail], [d0].[ContactNom], [d0].[Description], [d0].[Equipement], [d0].[Fabricant], [d0].[IdCategorie], [d0].[IdDossier], [d0].[IdMotifRejet], [d0].[IdProposition], [d0].[Marque], [d0].[Modele], [d0].[NumeroDemande], [d0].[QuantiteEquipements], [d0].[Type], [s].[Code], [s].[Libelle], [d1].[Id], [d1].[Date], [d1].[DateCreation], [d1].[DateModification], [d1].[DossierId], [d1].[IdDemande], [d1].[MontantControle], [d1].[MontantEtude], [d1].[MontantHomologation], [d1].[PaiementMobileId], [d1].[PaiementOk], [d1].[UtilisateurCreation], [d1].[UtilisateurModification]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+LEFT JOIN [demandes] AS [d0] ON [d].[Id] = [d0].[IdDossier]
+LEFT JOIN [devis] AS [d1] ON [d].[Id] = [d1].[DossierId]
+WHERE [d].[IdClient] = @__userId_Value_0
+ORDER BY [d].[Id], [s].[Id], [d0].[Id]
+2025-11-21 03:39:16.807 +01:00 [INF] HTTP GET /api/dossiers/apercu responded 200 in 60.9378 ms
+2025-11-21 03:40:23.627 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-11-21 03:40:23.668 +01:00 [INF] Executed DbCommand (28ms) [Parameters=[@__request_DossierId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [t].[Id0], [t].[Code], [t].[Libelle0], [t].[Id1], [t].[Code0], [t].[DateCreation0], [t].[DateModification0], [t].[Libelle1], [t].[MobileBanking], [t].[Remarques], [t].[UtilisateurCreation0], [t].[UtilisateurModification0], [c].[Id], [c].[commentaire], [c].[DateCommentaire], [c].[IdDossier], [c].[NomInstructeur], [c].[Proposition], [d0].[Id], [d0].[Date], [d0].[DateCreation], [d0].[DateModification], [d0].[DossierId], [d0].[IdDemande], [d0].[MontantControle], [d0].[MontantEtude], [d0].[MontantHomologation], [d0].[PaiementMobileId], [d0].[PaiementOk], [d0].[UtilisateurCreation], [d0].[UtilisateurModification], [d1].[Id], [d1].[Donnees], [d1].[Extension], [d1].[FilePath], [d1].[IdDossier], [d1].[Nom], [d1].[Type], [t0].[Id], [t0].[ContactEmail], [t0].[ContactNom], [t0].[Description], [t0].[Equipement], [t0].[Fabricant], [t0].[IdCategorie], [t0].[IdDossier], [t0].[IdMotifRejet], [t0].[IdProposition], [t0].[Marque], [t0].[Modele], [t0].[NumeroDemande], [t0].[QuantiteEquipements], [t0].[Type], [t0].[Id0], [t0].[DateDelivrance], [t0].[DateExpiration], [t0].[Donnees], [t0].[Extension], [t0].[IdDemande]
+FROM (
+    SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification], [s].[Id] AS [Id0], [s].[Code], [s].[Libelle] AS [Libelle0], [m].[Id] AS [Id1], [m].[Code] AS [Code0], [m].[DateCreation] AS [DateCreation0], [m].[DateModification] AS [DateModification0], [m].[Libelle] AS [Libelle1], [m].[MobileBanking], [m].[Remarques], [m].[UtilisateurCreation] AS [UtilisateurCreation0], [m].[UtilisateurModification] AS [UtilisateurModification0]
+    FROM [dossiers] AS [d]
+    INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+    INNER JOIN [modesReglements] AS [m] ON [d].[IdModeReglement] = [m].[Id]
+    WHERE [d].[Id] = @__request_DossierId_0 AND [d].[IdClient] = @__userId_Value_1
+) AS [t]
+LEFT JOIN [commentaires] AS [c] ON [t].[Id] = [c].[IdDossier]
+LEFT JOIN [devis] AS [d0] ON [t].[Id] = [d0].[DossierId]
+LEFT JOIN [documentsDossiers] AS [d1] ON [t].[Id] = [d1].[IdDossier]
+LEFT JOIN (
+    SELECT [d2].[Id], [d2].[ContactEmail], [d2].[ContactNom], [d2].[Description], [d2].[Equipement], [d2].[Fabricant], [d2].[IdCategorie], [d2].[IdDossier], [d2].[IdMotifRejet], [d2].[IdProposition], [d2].[Marque], [d2].[Modele], [d2].[NumeroDemande], [d2].[QuantiteEquipements], [d2].[Type], [a].[Id] AS [Id0], [a].[DateDelivrance], [a].[DateExpiration], [a].[Donnees], [a].[Extension], [a].[IdDemande]
+    FROM [demandes] AS [d2]
+    LEFT JOIN [attestations] AS [a] ON [d2].[Id] = [a].[IdDemande]
+) AS [t0] ON [t].[Id] = [t0].[IdDossier]
+ORDER BY [t].[Id], [t].[Id0], [t].[Id1], [c].[Id], [d0].[Id], [d1].[Id], [t0].[Id]
+2025-11-21 03:40:23.706 +01:00 [INF] HTTP GET /api/dossiers/a056ea49-4627-42d8-b1e7-6f2d82d4dd6c responded 200 in 123.3940 ms

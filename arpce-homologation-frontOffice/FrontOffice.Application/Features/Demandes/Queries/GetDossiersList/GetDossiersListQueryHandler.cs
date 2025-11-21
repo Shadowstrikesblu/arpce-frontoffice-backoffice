@@ -1,12 +1,14 @@
 ﻿using FrontOffice.Application.Common.DTOs;
 using FrontOffice.Application.Common.Interfaces;
+using FrontOffice.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace FrontOffice.Application.Features.Dossiers.Queries.GetDossiersList;
 
 /// <summary>
-/// Gère la logique de la requête pour obtenir la liste paginée des dossiers.
+/// Gère la logique de la requête pour obtenir la liste paginée des dossiers du client.
+/// Cette version inclut la liste des demandes (équipements) pour chaque dossier.
 /// </summary>
 public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery, DossiersListVm>
 {
@@ -30,16 +32,16 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
         var userId = _currentUserService.UserId;
         if (!userId.HasValue)
         {
-            throw new UnauthorizedAccessException("Utilisateur non authentifié.");
+            throw new UnauthorizedAccessException("Accès non autorisé. L'authentification est requise.");
         }
 
         // Construire la requête de base (IQueryable)
-        var query = _context.Dossiers
-            .Where(d => d.IdClient == userId.Value)
-            .Include(d => d.Statut) 
-            .AsQueryable();
+        IQueryable<Dossier> query = _context.Dossiers.AsQueryable();
 
-        // Applique le filtre de recherche (si fourni)
+        // On filtre d'abord par client.
+        query = query.Where(d => d.IdClient == userId.Value);
+
+        // Applique le filtre de recherche
         if (!string.IsNullOrWhiteSpace(request.Parameters.Recherche))
         {
             var searchTerm = request.Parameters.Recherche.Trim().ToLower();
@@ -50,7 +52,7 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
             );
         }
 
-        // Applique le tri (si fourni)
+        // Applique le tri
         if (!string.IsNullOrWhiteSpace(request.Parameters.TrierPar))
         {
             bool isDescending = request.Parameters.Ordre?.ToLower() == "desc";
@@ -60,31 +62,37 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
                 "date_creation" or "dateouverture" => isDescending
                     ? query.OrderByDescending(d => d.DateOuverture)
                     : query.OrderBy(d => d.DateOuverture),
+
                 "libelle" => isDescending
                     ? query.OrderByDescending(d => d.Libelle)
                     : query.OrderBy(d => d.Libelle),
-                "statut" => isDescending
-                    ? query.OrderByDescending(d => d.Statut.Libelle)
-                    : query.OrderBy(d => d.Statut.Libelle),
-                _ => query.OrderByDescending(d => d.DateOuverture) 
+
+                "date-update" => isDescending
+                    ? query.OrderByDescending(d => d.DateModification)
+                    : query.OrderBy(d => d.DateModification),
+
+                _ => query.OrderByDescending(d => d.DateOuverture)
             };
         }
         else
         {
-            // Applique un tri par défaut si aucun n'est spécifié, pour garantir un ordre constant.
             query = query.OrderByDescending(d => d.DateOuverture);
         }
 
-        // Calcule le nombre total d'éléments (avant la pagination)
+        // Étape 4 : Calculer le nombre total d'éléments
         var totalCount = await query.CountAsync(cancellationToken);
 
-        // Applique la pagination
+        // Étape 5 : Appliquer la pagination et charger les données associées
+        // On applique les Include() juste avant l'exécution finale (ToListAsync).
         var dossiersPaged = await query
+            .Include(d => d.Statut)
+            .Include(d => d.Demandes)
             .Skip((request.Parameters.Page - 1) * request.Parameters.TaillePage)
             .Take(request.Parameters.TaillePage)
+            .AsNoTracking() // Appliqué ici pour optimiser
             .ToListAsync(cancellationToken);
 
-        // Mappe les résultats vers le DTO
+        // Étape 6 : Mapper les résultats vers les DTOs
         var dossierDtos = dossiersPaged.Select(dossier => new DossierListItemDto
         {
             Id = dossier.Id,
@@ -96,10 +104,18 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
                 Id = dossier.Statut.Id,
                 Code = dossier.Statut.Code,
                 Libelle = dossier.Statut.Libelle
-            } : null
+            } : null,
+            Demandes = dossier.Demandes.Select(demande => new DemandeDto
+            {
+                Id = demande.Id,
+                IdDossier = demande.IdDossier,
+                Equipement = demande.Equipement,
+                Modele = demande.Modele,
+                Marque = demande.Marque
+            }).ToList()
         }).ToList();
 
-        // Construction du ViewModel de réponse final
+        // Étape 7 : Construire le ViewModel de réponse
         var viewModel = new DossiersListVm
         {
             Dossiers = dossierDtos,

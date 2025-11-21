@@ -32,4 +32,9 @@ public class DossierListItemDto
     /// L'objet Statut associé au dossier.
     /// </summary>
     public StatutDto? Statut { get; set; }
+
+    /// <summary>
+    /// La liste des équipements (demandes) associés à ce dossier.
+    /// </summary>
+    public List<DemandeDto> Demandes { get; set; } = new List<DemandeDto>();
 }

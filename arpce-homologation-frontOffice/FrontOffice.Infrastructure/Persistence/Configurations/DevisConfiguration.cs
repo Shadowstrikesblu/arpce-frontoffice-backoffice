@@ -13,6 +13,11 @@ public class DevisConfiguration : IEntityTypeConfiguration<Devis>
         builder.Property(d => d.MontantHomologation).HasColumnType("money");
         builder.Property(d => d.MontantControle).HasColumnType("money");
         builder.Property(d => d.PaiementMobileId).HasMaxLength(60);
-        builder.HasOne(d => d.Dossier).WithMany(dossier => dossier.Devis).HasForeignKey(d => d.IdDossier);
+
+        builder.HasOne(d => d.Demande)
+            .WithMany() 
+            .HasForeignKey(d => d.IdDemande) 
+            .OnDelete(DeleteBehavior.Cascade);
+
     }
 }

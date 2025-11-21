@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 // Fichier : FrontOffice.Api/Program.cs
 
+=======
+>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259
 using FrontOffice.Api.Middleware;
 using FrontOffice.Api.Services;
 using FrontOffice.Application;
@@ -14,6 +17,7 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Text;
 <<<<<<< HEAD
+<<<<<<< HEAD
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting; // Ajoutï¿½ pour GetValue<bool> plus loin
 using System; // Ajoutï¿½ pour ArgumentNullException.ThrowIfNullOrWhiteSpace
@@ -22,15 +26,23 @@ using System; // Ajoutï¿½ pour ArgumentNullException.ThrowIfNullOrWhiteSpace
 =======
 
 >>>>>>> 4b5b167010a3556e8d77ae5c4146198c8d8167a2
+=======
+
+// --- Configuration initiale de Serilog ---
+>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateBootstrapLogger();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Log.Information("Dï¿½marrage du microservice FrontOffice API...");
 =======
 Log.Information("DÃ©marrage du microservice FrontOffice API...");
 >>>>>>> 4b5b167010a3556e8d77ae5c4146198c8d8167a2
+=======
+Log.Information("Starting up the FrontOffice API");
+>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259
 
 try
 {
@@ -43,11 +55,45 @@ try
         .WriteTo.Console());
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // --- Configuration des Services (Injection de Dï¿½pendances) ---
 
 =======
 >>>>>>> 4b5b167010a3556e8d77ae5c4146198c8d8167a2
+=======
+    // --- Configuration des Services ---
+
+    // Accesseur au contexte HTTP (nécessaire pour ICurrentUserService)
+    builder.Services.AddHttpContextAccessor();
+    builder.Services.AddScoped<IFileStorageProvider, LocalFileStorageProvider>();
+    // Enregistrement du service pour l'utilisateur courant
+    builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+    // Politique CORS
+    var corsPolicyName = "AllowWebApp";
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy(name: corsPolicyName,
+                          policy =>
+                          {
+                              policy.AllowAnyOrigin()
+                                    .AllowAnyHeader()
+                                    .AllowAnyMethod();
+                          });
+    });
+
+    // Base de données avec SQL Server
+    builder.Services.AddDbContext<FrontOfficeDbContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+    builder.Services.AddScoped<IApplicationDbContext>(provider =>
+        provider.GetRequiredService<FrontOfficeDbContext>());
+
+    // Contrôleurs
+>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259
     builder.Services.AddControllers();
+
+    // Documentation API (Swagger UI avec support JWT)
     builder.Services.AddEndpointsApiExplorer();
 
     builder.Services.AddSwaggerGen(options =>
@@ -63,14 +109,23 @@ try
 >>>>>>> 4b5b167010a3556e8d77ae5c4146198c8d8167a2
         });
 
+<<<<<<< HEAD
         options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
             In = ParameterLocation.Header,
             Description = "Veuillez entrer 'Bearer' suivi d'un espace et du token JWT.",
+=======
+        // Configuration pour la sécurité JWT dans Swagger
+        options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+        {
+            In = ParameterLocation.Header,
+            Description = "Veuillez entrer 'Bearer' suivi d'un espace et du token JWT",
+>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259
             Name = "Authorization",
             Type = SecuritySchemeType.ApiKey,
             Scheme = "Bearer"
         });
+<<<<<<< HEAD
 
         options.AddSecurityRequirement(new OpenApiSecurityRequirement
         {
@@ -141,12 +196,39 @@ try
             ArgumentNullException.ThrowIfNullOrWhiteSpace(jwtIssuer, nameof(jwtIssuer));
             ArgumentNullException.ThrowIfNullOrWhiteSpace(jwtAudience, nameof(jwtAudience));
 
+=======
+        options.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                },
+                new string[] {}
+            }
+        });
+    });
+
+    // MediatR (pour CQRS)
+    builder.Services.AddMediatR(cfg =>
+        cfg.RegisterServicesFromAssembly(typeof(AssemblyReference).Assembly));
+
+    // Configuration de l'Authentification JWT
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = true,
                 ValidateAudience = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
+<<<<<<< HEAD
                 ValidIssuer = jwtIssuer,
                 ValidAudience = jwtAudience,
 <<<<<<< HEAD
@@ -154,17 +236,23 @@ try
 =======
 >>>>>>> 4b5b167010a3556e8d77ae5c4146198c8d8167a2
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
+=======
+                ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+                ValidAudience = builder.Configuration["JwtSettings:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
+>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259
             };
         });
 
+    // Injection des services personnalisés
     builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
     builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
-    builder.Services.AddHttpContextAccessor();
-    builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
-    builder.Services.AddScoped<IFileStorageProvider, LocalFileStorageProvider>();
+
+    builder.Services.AddTransient<IEmailService, EmailService>();
 
 <<<<<<< HEAD
 
+<<<<<<< HEAD
     // --- Construction de l'application et du Pipeline de Requï¿½tes HTTP ---
     builder.WebHost.ConfigureKestrel(options =>
     {
@@ -172,16 +260,27 @@ try
     });
 =======
 >>>>>>> 4b5b167010a3556e8d77ae5c4146198c8d8167a2
+=======
+    // --- Pipeline de Requêtes HTTP ---
+
+>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259
     var app = builder.Build();
 
+    // Le middleware de gestion d'erreurs doit être l'un des premiers
     app.UseMiddleware<ErrorHandlingMiddleware>();
+
+    // Middleware Serilog pour logger les requêtes HTTP
     app.UseSerilogRequestLogging();
 
+<<<<<<< HEAD
     // Enable Swagger conditionally
     bool enableSwagger = app.Environment.IsDevelopment() ||
                          builder.Configuration.GetValue<bool>("EnableSwaggerUI", false);
 
     if (enableSwagger)
+=======
+    if (app.Environment.IsDevelopment())
+>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259
     {
         app.UseSwagger();
         app.UseSwaggerUI(options =>
@@ -198,6 +297,7 @@ try
         Log.Information("Swagger disabled.");
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     // --- Configuration du dï¿½marrage de la base de donnï¿½es (Migrations) ---
     bool applyMigrationsOnStartup = app.Environment.IsDevelopment() ||
@@ -243,21 +343,32 @@ try
         Log.Warning("EF migrations skipped.");
     }
 
+=======
+>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259
     app.UseHttpsRedirection();
+
     app.UseStaticFiles();
+
     app.UseCors(corsPolicyName);
+
+    // Activer l'authentification avant l'autorisation
     app.UseAuthentication();
     app.UseAuthorization();
+
     app.MapControllers();
     app.Run();
 }
 catch (Exception ex)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
     Log.Fatal(ex, "L'application FrontOffice s'est arrï¿½tï¿½e de maniï¿½re inattendue.");
 =======
     Log.Fatal(ex, "L'application FrontOffice s'est arrÃªtÃ©e de maniÃ¨re inattendue.");
 >>>>>>> 4b5b167010a3556e8d77ae5c4146198c8d8167a2
+=======
+    Log.Fatal(ex, "Application terminated unexpectedly");
+>>>>>>> ef9cf890f4f01614af24ffed8b9ec300917d1259
 }
 finally
 {
