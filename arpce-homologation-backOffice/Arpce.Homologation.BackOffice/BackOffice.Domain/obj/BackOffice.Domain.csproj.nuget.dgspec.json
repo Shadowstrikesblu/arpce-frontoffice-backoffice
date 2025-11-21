@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\CDS\\work_space\\arpce-homologation\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Domain\\BackOffice.Domain.csproj": {}
+    "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Domain\\BackOffice.Domain.csproj": {}
   },
   "projects": {
-    "D:\\CDS\\work_space\\arpce-homologation\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Domain\\BackOffice.Domain.csproj": {
+    "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Domain\\BackOffice.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CDS\\work_space\\arpce-homologation\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Domain\\BackOffice.Domain.csproj",
+        "projectUniqueName": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Domain\\BackOffice.Domain.csproj",
         "projectName": "BackOffice.Domain",
-        "projectPath": "D:\\CDS\\work_space\\arpce-homologation\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Domain\\BackOffice.Domain.csproj",
+        "projectPath": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Domain\\BackOffice.Domain.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\CDS\\work_space\\arpce-homologation\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Domain\\obj\\",
+        "outputPath": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

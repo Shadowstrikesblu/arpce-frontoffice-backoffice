@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BackOffice.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+56c9cc531431b6355eb6b429a7d16f4f62edb707")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ba50e5adcea7f9534963efefde2fb3c819d57c3a")]
 [assembly: System.Reflection.AssemblyProductAttribute("BackOffice.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BackOffice.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

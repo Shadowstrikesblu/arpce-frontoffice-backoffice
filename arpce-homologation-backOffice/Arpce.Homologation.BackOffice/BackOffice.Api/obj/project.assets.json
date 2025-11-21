@@ -5553,11 +5553,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\CDS\\work_space\\arpce-homologation\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Api\\BackOffice.Api.csproj",
+      "projectUniqueName": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Api\\BackOffice.Api.csproj",
       "projectName": "BackOffice.Api",
-      "projectPath": "D:\\CDS\\work_space\\arpce-homologation\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Api\\BackOffice.Api.csproj",
+      "projectPath": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Api\\BackOffice.Api.csproj",
       "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-      "outputPath": "D:\\CDS\\work_space\\arpce-homologation\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Api\\obj\\",
+      "outputPath": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -5578,11 +5578,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\CDS\\work_space\\arpce-homologation\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Application\\BackOffice.Application.csproj": {
-              "projectPath": "D:\\CDS\\work_space\\arpce-homologation\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Application\\BackOffice.Application.csproj"
+            "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Application\\BackOffice.Application.csproj": {
+              "projectPath": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Application\\BackOffice.Application.csproj"
             },
-            "D:\\CDS\\work_space\\arpce-homologation\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Infrastructure\\BackOffice.Infrastructure.csproj": {
-              "projectPath": "D:\\CDS\\work_space\\arpce-homologation\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Infrastructure\\BackOffice.Infrastructure.csproj"
+            "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Infrastructure\\BackOffice.Infrastructure.csproj": {
+              "projectPath": "D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Infrastructure\\BackOffice.Infrastructure.csproj"
             }
           }
         }

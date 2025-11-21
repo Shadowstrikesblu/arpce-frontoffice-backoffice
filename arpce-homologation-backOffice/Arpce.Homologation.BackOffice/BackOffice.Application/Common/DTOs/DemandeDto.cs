@@ -1,0 +1,2 @@
+﻿namespace BackOffice.Application.Common.DTOs;
+public class DemandeDto { public Guid Id { get; set; } public string? Equipement { get; set; } public string? Modele { get; set; } public string? Marque { get; set; } }

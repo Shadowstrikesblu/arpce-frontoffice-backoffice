@@ -6,6 +6,7 @@ namespace FrontOffice.Application.Features.Authentication.Queries.Login;
 
 /// <summary>
 /// Gère la logique de la requête de connexion d'un client.
+/// Cette version inclut la vérification du statut d'activation du compte.
 /// </summary>
 public class LoginClientQueryHandler : IRequestHandler<LoginClientQuery, AuthenticationResult>
 {
@@ -16,9 +17,6 @@ public class LoginClientQueryHandler : IRequestHandler<LoginClientQuery, Authent
     /// <summary>
     /// Initialise une nouvelle instance du handler.
     /// </summary>
-    /// <param name="context">Le contexte de la base de données.</param>
-    /// <param name="jwtTokenGenerator">Le service de génération de token JWT.</param>
-    /// <param name="passwordHasher">Le service de vérification de mot de passe.</param>
     public LoginClientQueryHandler(
         IApplicationDbContext context,
         IJwtTokenGenerator jwtTokenGenerator,
@@ -34,44 +32,42 @@ public class LoginClientQueryHandler : IRequestHandler<LoginClientQuery, Authent
     /// </summary>
     /// <param name="request">La requête de connexion contenant l'email et le mot de passe.</param>
     /// <param name="cancellationToken">Le token d'annulation.</param>
-    /// <returns>Un résultat d'authentification contenant un message de succès et un token JWT.</returns>
-    /// <exception cref="UnauthorizedAccessException">Levée si les informations d'identification sont invalides.</exception>
+    /// <returns>Un résultat d'authentification contenant un message de succès et un token de connexion.</returns>
+    /// <exception cref="UnauthorizedAccessException">Levée si les informations d'identification sont invalides, si le compte est désactivé ou non vérifié.</exception>
     public async Task<AuthenticationResult> Handle(LoginClientQuery request, CancellationToken cancellationToken)
     {
-        // Recherche le client dans la base de données par son email
+        // Recherche le client dans la base de données par son e-mail.
         var client = await _context.Clients
             .FirstOrDefaultAsync(c => c.Email == request.Email, cancellationToken);
 
-        // Vérifie si le client existe et si son mot de passe est défini
-        if (client is null || string.IsNullOrEmpty(client.MotPasse))
+        // Valide l'existence du client et la correspondance du mot de passe.
+        if (client is null || string.IsNullOrEmpty(client.MotPasse) || !_passwordHasher.Verify(request.Password, client.MotPasse))
         {
-            // Retourne une erreur d'autorisation générique pour des raisons de sécurité
-            throw new UnauthorizedAccessException("Email ou mot de passe invalide.");
+            // Leve une exception avec un message générique pour la sécurité.
+            throw new UnauthorizedAccessException("L'adresse e-mail ou le mot de passe est incorrect.");
         }
 
-        // Vérifie si le client est désactivé
+        // Vérifie si le compte client est désactivé par un administrateur.
         if (client.Desactive == 1)
         {
-            throw new UnauthorizedAccessException("Ce compte client est désactivé.");
+            throw new UnauthorizedAccessException("Ce compte client a été désactivé.");
         }
 
-        // Vérifie si le mot de passe fourni correspond au hash stocké
-        var isPasswordValid = _passwordHasher.Verify(request.Password, client.MotPasse);
-
-        if (!isPasswordValid)
+        if (!client.IsVerified)
         {
-            // Retourne la même erreur générique pour ne pas indiquer quelle partie est incorrecte
-            throw new UnauthorizedAccessException("Email ou mot de passe invalide.");
+            // Si le compte n'est pas vérifié, on refuse la connexion et on donne une instruction claire.
+            // L'utilisateur devra refaire le processus d'inscription pour recevoir un nouveau code.
+            throw new UnauthorizedAccessException("Votre compte n'a pas encore été vérifié. Veuillez vérifier votre e-mail ou vous réinscrire pour recevoir un nouveau code de confirmation.");
         }
 
-        // Si l'authentification est réussie, génére un nouveau token JWT
+        // Si l'authentification est réussie, générer un nouveau token de connexion.
         var token = _jwtTokenGenerator.GenerateToken(client.Id, client.Email);
 
-        // Retourne le résultat avec un message de succès et le token
+        //  Retourne le résultat avec un message de succès et le token.
         return new AuthenticationResult
         {
             Message = "Connexion réussie.",
-            Token = token
+            Token = token 
         };
     }
 }

@@ -1,8 +1,16 @@
-﻿using System.Net;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Net;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace FrontOffice.Api.Middleware;
 
+/// <summary>
+/// Middleware pour intercepter de manière centralisée toutes les exceptions non gérées
+/// et les transformer en une réponse HTTP JSON standardisée et compréhensible.
+/// </summary>
 public class ErrorHandlingMiddleware
 {
     private readonly RequestDelegate _next;
@@ -14,35 +22,78 @@ public class ErrorHandlingMiddleware
         _logger = logger;
     }
 
+    /// <summary>
+    /// Méthode principale du middleware, appelée pour chaque requête HTTP.
+    /// </summary>
     public async Task Invoke(HttpContext context)
     {
         try
         {
+            // Tente d'exécuter le reste du pipeline de la requête.
             await _next(context);
         }
         catch (Exception ex)
         {
-            await HandleExceptionAsync(context, ex, _logger);
+            // Si une exception se produit n'importe où dans le pipeline, elle est interceptée ici.
+            await HandleExceptionAsync(context, ex);
         }
     }
 
-    private static async Task HandleExceptionAsync(HttpContext context, Exception exception, ILogger logger)
+    /// <summary>
+    /// Gère une exception interceptée en générant une réponse HTTP appropriée.
+    /// </summary>
+    private async Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        var (statusCode, message) = exception switch
-        {
-            UnauthorizedAccessException => (HttpStatusCode.Unauthorized, exception.Message),
-           
-            _ => (HttpStatusCode.InternalServerError, "Une erreur interne est survenue.") 
-        };
+        // Objet qui sera sérialisé en JSON pour la réponse.
+        object errorResponse;
+        // Code de statut HTTP à retourner.
+        HttpStatusCode statusCode;
 
-        if (statusCode == HttpStatusCode.InternalServerError)
+        // On utilise un 'switch' sur le type de l'exception pour adapter la réponse.
+        switch (exception)
         {
-            logger.LogError(exception, "An unhandled exception has occurred.");
+            // --- Cas des erreurs d'autorisation ---
+            case UnauthorizedAccessException:
+                statusCode = HttpStatusCode.Unauthorized; 
+                errorResponse = new
+                {
+                    title = "Accès Non Autorisé, vérifier vos infos de connexion",
+                    detail = exception.Message, 
+                    status = (int)HttpStatusCode.Unauthorized
+                };
+                break;
+
+            // --- Cas des erreurs de validation ou métier prévues ---
+            case InvalidOperationException:
+                statusCode = HttpStatusCode.UnprocessableEntity; 
+                errorResponse = new
+                {
+                    title = "Opération Invalide",
+                    detail = exception.Message,
+                    status = (int)HttpStatusCode.UnprocessableEntity
+                };
+                break;
+
+            // --- Cas par défaut pour toutes les autres erreurs inattendues ---
+            default:
+                statusCode = HttpStatusCode.InternalServerError; 
+                errorResponse = new
+                {
+                    title = "Erreur Interne du Serveur",
+                    detail = "Une erreur inattendue est survenue. Veuillez contacter le support technique de CDS.",
+                    status = (int)HttpStatusCode.InternalServerError
+                };
+
+                // On logue l'exception complète côté serveur pour le débogage,
+                _logger.LogError(exception, "Une exception non gérée a été interceptée par le middleware.");
+                break;
         }
 
-        var result = JsonSerializer.Serialize(new { error = message });
+        // Configuration de la réponse HTTP
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)statusCode;
-        await context.Response.WriteAsync(result);
+
+        // Écriture de la réponse JSON
+        await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
     }
 }

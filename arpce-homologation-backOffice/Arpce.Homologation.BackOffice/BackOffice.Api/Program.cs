@@ -34,7 +34,9 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo // Pas besoin de Microsoft.OpenApi.Models ici
     {
         Title = "ARPCE Homologation - BackOffice API",
-        Version = "v1"
+        Version = "v1",
+        Description = "API pour la gestion des demandes d'homologation interne de ARPCE."
+
     });
 
     // Configuration pour la sécurité JWT dans Swagger (identique au Front Office)

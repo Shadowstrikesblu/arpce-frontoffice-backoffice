@@ -1,8 +1,9 @@
-﻿namespace FrontOffice.Domain.Entities;
+﻿using FrontOffice.Domain.Common;
 
-public class Dossier
+namespace FrontOffice.Domain.Entities;
+
+public class Dossier : AuditableEntity
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
     public Guid IdClient { get; set; }
     public Guid IdStatut { get; set; }
     public Guid IdModeReglement { get; set; }

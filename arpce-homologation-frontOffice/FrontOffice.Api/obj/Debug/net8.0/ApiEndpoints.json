@@ -1,6 +1,79 @@
 [
   {
     "ContainingType": "FrontOffice.Api.Controllers.AuthenticationController",
+    "Method": "ConfirmAccount",
+    "RelativePath": "api/auth/confirm-account",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "FrontOffice.Application.Features.Authentication.Commands.ConfirmAccount.ConfirmAccountCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FrontOffice.Application.Features.Authentication.AuthenticationResult",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 401
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 422
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.AuthenticationController",
+    "Method": "ConnectByToken",
+    "RelativePath": "api/auth/connect-by-token",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "FrontOffice.Application.Features.Authentication.Queries.ConnectByToken.ConnectByTokenResult",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 401
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.AuthenticationController",
     "Method": "Login",
     "RelativePath": "api/auth/login",
     "HttpMethod": "POST",
@@ -25,7 +98,7 @@
     "Parameters": [
       {
         "Name": "command",
-        "Type": "FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommand",
+        "Type": "RegisterClientCommand",
         "IsRequired": true
       }
     ],
