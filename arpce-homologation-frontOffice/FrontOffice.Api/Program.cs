@@ -15,15 +15,15 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting; // Ajouté pour GetValue<bool> plus loin
-using System; // Ajouté pour ArgumentNullException.ThrowIfNullOrWhiteSpace
+using Microsoft.Extensions.Hosting; // Ajoutï¿½ pour GetValue<bool> plus loin
+using System; // Ajoutï¿½ pour ArgumentNullException.ThrowIfNullOrWhiteSpace
 
-// --- Configuration initiale de Serilog (logger de démarrage) ---
+// --- Configuration initiale de Serilog (logger de dï¿½marrage) ---
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateBootstrapLogger();
 
-Log.Information("Démarrage du microservice FrontOffice API...");
+Log.Information("Dï¿½marrage du microservice FrontOffice API...");
 
 try
 {
@@ -35,7 +35,7 @@ try
         .Enrich.FromLogContext()
         .WriteTo.Console());
 
-    // --- Configuration des Services (Injection de Dépendances) ---
+    // --- Configuration des Services (Injection de Dï¿½pendances) ---
 
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
@@ -45,7 +45,7 @@ try
         {
             Title = "ARPCE Homologation - FrontOffice API",
             Version = "v1",
-            Description = "API pour la gestion des demandes d'homologation côté client."
+            Description = "API pour la gestion des demandes d'homologation cï¿½tï¿½ client."
         });
         options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
@@ -81,18 +81,18 @@ try
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
         {
-            // --- NOUVEAU : Lecture robuste et validation des paramètres JWT ---
+            // --- NOUVEAU : Lecture robuste et validation des paramï¿½tres JWT ---
             var jwtSecret = builder.Configuration["JwtSettings:Secret"];
             var jwtIssuer = builder.Configuration["JwtSettings:Issuer"];
             var jwtAudience = builder.Configuration["JwtSettings:Audience"];
 
-            // AJOUT DU LOG ET VALIDATION : Pour le débogage sur Azure, cela va nous dire explicitement si c'est null.
+            // AJOUT DU LOG ET VALIDATION : Pour le dï¿½bogage sur Azure, cela va nous dire explicitement si c'est null.
             Log.Information("Configuration JWT - Secret: {Secret}, Issuer: {Issuer}, Audience: {Audience}",
                             jwtSecret != null ? "CONFIGURED (length " + jwtSecret.Length + ")" : "NOT CONFIGURED",
                             jwtIssuer ?? "NOT CONFIGURED",
                             jwtAudience ?? "NOT CONFIGURED");
 
-            // Lève une ArgumentNullException plus tôt et plus clairement si le secret est manquant.
+            // Lï¿½ve une ArgumentNullException plus tï¿½t et plus clairement si le secret est manquant.
             ArgumentNullException.ThrowIfNullOrWhiteSpace(jwtSecret, nameof(jwtSecret));
             ArgumentNullException.ThrowIfNullOrWhiteSpace(jwtIssuer, nameof(jwtIssuer));
             ArgumentNullException.ThrowIfNullOrWhiteSpace(jwtAudience, nameof(jwtAudience));
@@ -106,7 +106,7 @@ try
 
                 ValidIssuer = jwtIssuer,
                 ValidAudience = jwtAudience,
-                // Utilise maintenant le secret validé
+                // Utilise maintenant le secret validï¿½
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
             };
         });
@@ -118,8 +118,11 @@ try
     builder.Services.AddScoped<IFileStorageProvider, LocalFileStorageProvider>();
 
 
-    // --- Construction de l'application et du Pipeline de Requêtes HTTP ---
-
+    // --- Construction de l'application et du Pipeline de Requï¿½tes HTTP ---
+    builder.WebHost.ConfigureKestrel(options =>
+    {
+        options.ListenAnyIP(5000);
+    });
     var app = builder.Build();
 
     app.UseMiddleware<ErrorHandlingMiddleware>();
@@ -135,10 +138,11 @@ try
         {
             options.SwaggerEndpoint("/swagger/v1/swagger.json", "FrontOffice API V1");
             options.RoutePrefix = string.Empty;
+            options.InjectStylesheet("/css/swagger-custom.css");
         });
     }
 
-    // --- Configuration du démarrage de la base de données (Migrations) ---
+    // --- Configuration du dï¿½marrage de la base de donnï¿½es (Migrations) ---
     bool applyMigrationsOnStartup = app.Environment.IsDevelopment() ||
                                     app.Environment.EnvironmentName == "Staging" ||
                                     builder.Configuration.GetValue<bool>("ApplyMigrationsOnStartup", false);
@@ -152,7 +156,7 @@ try
             {
                 var context = services.GetRequiredService<FrontOfficeDbContext>();
                 context.Database.Migrate();
-                Log.Information("Migrations EF Core appliquées avec succès au FrontOffice.");
+                Log.Information("Migrations EF Core appliquï¿½es avec succï¿½s au FrontOffice.");
             }
             catch (Exception ex)
             {
@@ -172,7 +176,7 @@ try
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "L'application FrontOffice s'est arrêtée de manière inattendue.");
+    Log.Fatal(ex, "L'application FrontOffice s'est arrï¿½tï¿½e de maniï¿½re inattendue.");
 }
 finally
 {
