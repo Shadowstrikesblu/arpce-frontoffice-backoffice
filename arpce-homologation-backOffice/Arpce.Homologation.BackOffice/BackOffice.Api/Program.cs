@@ -17,7 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // --- Configuration des Services ---
 
-// Logique de Serilog (identique au Front Office)
+// Logique de Serilog
 builder.Host.UseSerilog((context, services, configuration) => configuration
     .ReadFrom.Configuration(context.Configuration)
     .ReadFrom.Services(services)
@@ -27,19 +27,18 @@ builder.Host.UseSerilog((context, services, configuration) => configuration
 // Ajouter les contrôleurs
 builder.Services.AddControllers();
 
-// Configuration Swagger/OpenAPI (corrigée)
+// Configuration Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo // Pas besoin de Microsoft.OpenApi.Models ici
+    options.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "ARPCE Homologation - BackOffice API",
         Version = "v1",
         Description = "API pour la gestion des demandes d'homologation interne de ARPCE."
-
     });
 
-    // Configuration pour la sécurité JWT dans Swagger (identique au Front Office)
+    // Configuration pour la sécurité JWT dans Swagger
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
@@ -64,7 +63,6 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-
 // Configuration de la base de données
 builder.Services.AddDbContext<BackOfficeDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -83,8 +81,7 @@ builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
-// Configuration de l'Authentification JWT (identique au Front Office)
-// N'oubliez pas d'ajouter les JwtSettings dans appsettings.json
+// Configuration de l'Authentification JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -100,6 +97,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+// Politique CORS
+var corsPolicyName = "AllowWebApp";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: corsPolicyName,
+                      policy =>
+                      {
+                          policy.AllowAnyOrigin()
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                      });
+});
+
 var app = builder.Build();
 
 // --- Configuration du Pipeline HTTP ---
@@ -110,10 +120,22 @@ app.UseMiddleware<ErrorHandlingMiddleware>();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "BackOffice API V1");
+        options.RoutePrefix = string.Empty; // Swagger à la racine
+
+        // INJECTION DU CSS PERSONNALISÉ
+        options.InjectStylesheet("/css/swagger-custom.css");
+    });
 }
 
 app.UseHttpsRedirection();
+
+// IMPORTANT : Permet de servir les fichiers statiques (comme le fichier CSS dans wwwroot)
+app.UseStaticFiles();
+
+app.UseCors(corsPolicyName);
 
 // Activer l'authentification et l'autorisation
 app.UseAuthentication();

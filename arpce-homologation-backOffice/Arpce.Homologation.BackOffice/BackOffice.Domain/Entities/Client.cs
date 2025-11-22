@@ -82,6 +82,19 @@ public class Client : AuditableEntity
     /// Remarques diverses concernant le client.
     /// </summary>
     public string? Remarques { get; set; }
+    /// <summary>
+    /// Indique si le compte du client a été vérifié par e-mail.
+    /// Par défaut, un nouveau compte n'est pas vérifié.
+    /// </summary>
+    public bool IsVerified { get; set; } = false;
+    /// <summary>
+    /// Le code de vérification à 6 chiffres envoyé par e-mail.
+    /// </summary>
+    public string? VerificationCode { get; set; }
+    /// <summary>
+    /// La date d'expiration du code/token de vérification.
+    /// </summary>
+    public DateTime? VerificationTokenExpiry { get; set; }
 
     /// <summary>
     /// Collection des dossiers d'homologation soumis par ce client.

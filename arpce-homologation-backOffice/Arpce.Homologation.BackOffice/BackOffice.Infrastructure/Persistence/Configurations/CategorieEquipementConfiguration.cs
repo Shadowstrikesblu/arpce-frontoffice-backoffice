@@ -24,6 +24,11 @@ public class CategorieEquipementConfiguration : IEntityTypeConfiguration<Categor
             .HasMaxLength(120)
             .IsRequired();
 
+        builder.Property(c => c.TypeEquipement).HasMaxLength(50).IsRequired();
+        builder.Property(c => c.TypeClient).HasMaxLength(50).IsRequired();
+        builder.Property(c => c.FormuleHomologation).HasMaxLength(255);
+        builder.Property(c => c.QuantiteReference);
+
         builder.Property(c => c.TarifEtude).HasColumnType("money"); 
         builder.Property(c => c.TarifHomologation).HasColumnType("money");
         builder.Property(c => c.TarifHomologationParLot).HasColumnType("tinyint"); 

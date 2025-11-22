@@ -13,7 +13,7 @@ public class DemandeConfiguration : IEntityTypeConfiguration<Demande>
     {
         builder.ToTable("demandes"); 
 
-        builder.HasKey(d => d.Id); 
+        builder.HasKey(d => d.Id);
 
         builder.Property(d => d.NumeroDemande).HasMaxLength(12);
         builder.Property(d => d.Equipement).HasMaxLength(120);
@@ -29,7 +29,8 @@ public class DemandeConfiguration : IEntityTypeConfiguration<Demande>
         // Définition des relations
         builder.HasOne(d => d.Dossier)
             .WithMany(dossier => dossier.Demandes)
-            .HasForeignKey(d => d.IdDossier)
+            .HasForeignKey(c => c.IdDossier) 
+            .IsRequired()
             .OnDelete(DeleteBehavior.Cascade); 
 
         builder.HasOne(d => d.CategorieEquipement)

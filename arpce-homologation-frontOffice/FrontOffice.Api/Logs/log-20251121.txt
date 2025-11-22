@@ -421,3 +421,44 @@ LEFT JOIN (
 ) AS [t0] ON [t].[Id] = [t0].[IdDossier]
 ORDER BY [t].[Id], [t].[Id0], [t].[Id1], [c].[Id], [d0].[Id], [d1].[Id], [t0].[Id]
 2025-11-21 03:40:23.706 +01:00 [INF] HTTP GET /api/dossiers/a056ea49-4627-42d8-b1e7-6f2d82d4dd6c responded 200 in 123.3940 ms
+2025-11-21 19:20:58.711 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-21 19:20:58.753 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-21 19:20:58.835 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-21 19:20:58.838 +01:00 [INF] Hosting environment: Development
+2025-11-21 19:20:58.842 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2025-11-21 19:21:10.777 +01:00 [INF] HTTP GET / responded 301 in 22.6248 ms
+2025-11-21 19:21:11.143 +01:00 [INF] HTTP GET /index.html responded 200 in 267.1847 ms
+2025-11-21 19:21:11.333 +01:00 [INF] HTTP GET /swagger-ui-standalone-preset.js responded 200 in 145.3691 ms
+2025-11-21 19:21:11.349 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 200 in 164.4520 ms
+2025-11-21 19:21:11.334 +01:00 [INF] HTTP GET /swagger-ui.css responded 200 in 152.1071 ms
+2025-11-21 19:21:11.412 +01:00 [INF] HTTP GET /swagger-ui-bundle.js responded 200 in 228.9665 ms
+2025-11-21 19:21:11.767 +01:00 [INF] HTTP GET /favicon-32x32.png responded 200 in 0.3672 ms
+2025-11-21 19:21:11.791 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 69.8670 ms
+2025-11-21 19:22:02.105 +01:00 [INF] Executed DbCommand (283ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-11-21 19:22:03.532 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 13342.4741 ms
+2025-11-21 19:23:35.219 +01:00 [INF] Executed DbCommand (20ms) [Parameters=[@__request_Libelle_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [dossiers] AS [d]
+        WHERE [d].[Libelle] = @__request_Libelle_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-11-21 19:23:35.280 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Code], [s].[Libelle]
+FROM [statuts] AS [s]
+WHERE [s].[Code] = N'NouvelleDemande'
+2025-11-21 19:23:35.334 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [m].[Id], [m].[Code], [m].[DateCreation], [m].[DateModification], [m].[Libelle], [m].[MobileBanking], [m].[Remarques], [m].[UtilisateurCreation], [m].[UtilisateurModification]
+FROM [modesReglements] AS [m]
+WHERE [m].[Code] = N'Virement'
+2025-11-21 19:23:35.998 +01:00 [INF] Executed DbCommand (22ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = DateTime2), @p3='?' (DbType = Date), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?' (Size = 120), @p8='?' (Size = 30), @p9='?' (Size = 4000), @p10='?' (Size = 4000), @p11='?' (DbType = Guid), @p12='?' (Size = 8000) (DbType = Binary), @p13='?' (Size = 12), @p14='?' (Size = 512), @p15='?' (DbType = Guid), @p16='?' (Size = 60), @p17='?' (Size = 1) (DbType = Byte)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [dossiers] ([Id], [DateCreation], [DateModification], [DateOuverture], [IdClient], [IdModeReglement], [IdStatut], [Libelle], [Numero], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10);
+INSERT INTO [documentsDossiers] ([Id], [Donnees], [Extension], [FilePath], [IdDossier], [Nom], [Type])
+VALUES (@p11, @p12, @p13, @p14, @p15, @p16, @p17);
+2025-11-21 19:23:36.114 +01:00 [INF] HTTP POST /api/dossiers responded 201 in 1313.0106 ms
