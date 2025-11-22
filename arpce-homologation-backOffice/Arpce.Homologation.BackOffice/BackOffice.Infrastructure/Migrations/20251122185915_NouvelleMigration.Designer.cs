@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackOffice.Infrastructure.Migrations
 {
     [DbContext(typeof(BackOfficeDbContext))]
-    [Migration("20251121040506_Initialisation")]
-    partial class Initialisation
+    [Migration("20251122185915_NouvelleMigration")]
+    partial class NouvelleMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -315,11 +315,11 @@ namespace BackOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("99e9e71c-5619-4029-9565-cedc4eb686e1"),
+                            Id = new Guid("68704e19-a5c9-412c-bbb3-6295a8a3e87a"),
                             ChangementMotPasse = true,
                             Compte = "admin",
                             Desactive = false,
-                            MotPasse = "$2a$11$fCM3iFack2OFvNImjHdDUufN2mgkH7s.Z8ZBldl5eny.02CYD/U6C",
+                            MotPasse = "$2a$11$TvFBDJVDzh2sNw2DAfRTm.PWc0CI5S8hyWYcl0Btj6kO4RFqwu8MK",
                             Nom = "Administrateur",
                             Prenoms = "Système"
                         });
@@ -388,10 +388,17 @@ namespace BackOffice.Infrastructure.Migrations
                     b.Property<DateTime?>("DateModification")
                         .HasColumnType("datetime");
 
+                    b.Property<string>("FormuleHomologation")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<string>("Libelle")
                         .IsRequired()
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
+
+                    b.Property<int?>("QuantiteReference")
+                        .HasColumnType("int");
 
                     b.Property<string>("Remarques")
                         .HasMaxLength(512)
@@ -411,6 +418,16 @@ namespace BackOffice.Infrastructure.Migrations
 
                     b.Property<int?>("TarifHomologationQuantiteParLot")
                         .HasColumnType("int");
+
+                    b.Property<string>("TypeClient")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("TypeEquipement")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("UtilisateurCreation")
                         .HasMaxLength(60)
@@ -469,8 +486,13 @@ namespace BackOffice.Infrastructure.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<bool>("IsVerified")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("MotPasse")
                         .HasMaxLength(255)
@@ -501,6 +523,13 @@ namespace BackOffice.Infrastructure.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
+                    b.Property<string>("VerificationCode")
+                        .HasMaxLength(6)
+                        .HasColumnType("nvarchar(6)");
+
+                    b.Property<DateTime?>("VerificationTokenExpiry")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Ville")
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
@@ -528,9 +557,6 @@ namespace BackOffice.Infrastructure.Migrations
                     b.Property<DateTime?>("DateModification")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DossierId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("IdDossier")
                         .HasColumnType("uniqueidentifier");
 
@@ -548,7 +574,7 @@ namespace BackOffice.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DossierId");
+                    b.HasIndex("IdDossier");
 
                     b.ToTable("Commentaires");
                 });
@@ -883,28 +909,28 @@ namespace BackOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5266d314-c2a7-46dc-b592-d5042c346541"),
+                            Id = new Guid("b7ea58fd-c06f-4937-b390-0063fa7a347a"),
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("2aa47244-4cd2-4c9b-a2dc-c8c57e53d410"),
+                            Id = new Guid("f24e54d8-fb46-44f5-9180-f7ec47b1ba84"),
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("b2e63f47-dbad-4292-bb4c-2ef2f6f09b96"),
+                            Id = new Guid("5f365b52-de45-4e39-a89d-5e0a8eb7f768"),
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("77863094-0e5b-40ac-9ac1-cfa10f6d46fa"),
+                            Id = new Guid("e4f7c49a-8f50-4ded-b18f-df336a40229c"),
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1
@@ -1008,55 +1034,55 @@ namespace BackOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3b6c0126-9a9b-4e82-96f8-b785362a11e1"),
+                            Id = new Guid("055a2678-3b45-4299-9ce7-0ffed0d00171"),
                             Code = "NouvelleDemande",
                             Libelle = "Nouvelle demande"
                         },
                         new
                         {
-                            Id = new Guid("da816f4f-77ec-42b6-b2fb-e02c91e4474c"),
+                            Id = new Guid("c3aa1ddc-3875-4f49-a11f-57fe5db602d2"),
                             Code = "EnCoursInstruction",
                             Libelle = "En cours d'instruction"
                         },
                         new
                         {
-                            Id = new Guid("4e35f925-c5d8-41a8-b8b1-ea3a6109d3b8"),
+                            Id = new Guid("b7a06734-2829-4d2b-98bc-25096ff4aabc"),
                             Code = "EnvoyePourApprobation",
                             Libelle = "Envoyé pour approbation"
                         },
                         new
                         {
-                            Id = new Guid("a2c98529-ac01-447e-af03-627ffc8c21c8"),
+                            Id = new Guid("00831631-a621-4e77-a71c-cd4f1fc3dba1"),
                             Code = "ApprouveAttentePaiement",
                             Libelle = "Approuvé, en attente de paiement"
                         },
                         new
                         {
-                            Id = new Guid("7534eab1-e74f-4cfa-93f3-c9fe2e7bbc62"),
+                            Id = new Guid("d5691c64-3f9b-43e7-ad78-ab56ca24cb45"),
                             Code = "Rejetee",
                             Libelle = "Rejetée"
                         },
                         new
                         {
-                            Id = new Guid("33d264ec-6b37-49b8-837a-f2ac5e8709ae"),
+                            Id = new Guid("7de5cc1a-ec1d-456e-8567-27e3e49cfc5f"),
                             Code = "EquipementNonSoumisAHomologation",
                             Libelle = "Équipement non soumis à homologation"
                         },
                         new
                         {
-                            Id = new Guid("bf8e0dd0-f39a-4a70-9e8f-c2cc43f7dc07"),
+                            Id = new Guid("5c3edd6f-a7ce-4d22-bf85-27957a60124e"),
                             Code = "ApprouvePaiementEffectue",
                             Libelle = "Approuvé, paiement effectué"
                         },
                         new
                         {
-                            Id = new Guid("9025ffb0-dfcd-4e60-a57d-d39fc8e64bb4"),
+                            Id = new Guid("a2db1ba1-4ec9-4b45-9206-eaba350e9ece"),
                             Code = "ApprouveAttestationSignee",
                             Libelle = "Approuvé, attestation signée"
                         },
                         new
                         {
-                            Id = new Guid("b89fac12-213e-45dd-90d1-cf301cf6629b"),
+                            Id = new Guid("4fe936ec-ded7-49f4-a17f-2547f5a9f445"),
                             Code = "AnnulationInstruction",
                             Libelle = "Annulation de l'instruction"
                         });
@@ -1088,7 +1114,7 @@ namespace BackOffice.Infrastructure.Migrations
                 {
                     b.HasOne("BackOffice.Domain.Entities.Dossier", "Dossier")
                         .WithMany("Commentaires")
-                        .HasForeignKey("DossierId")
+                        .HasForeignKey("IdDossier")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

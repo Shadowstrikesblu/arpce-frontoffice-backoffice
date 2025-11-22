@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BackOffice.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initialisation : Migration
+    public partial class NouvelleMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -146,6 +146,10 @@ namespace BackOffice.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
                     Libelle = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    TypeEquipement = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    TypeClient = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    FormuleHomologation = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    QuantiteReference = table.Column<int>(type: "int", nullable: true),
                     TarifEtude = table.Column<decimal>(type: "money", nullable: true),
                     TarifHomologation = table.Column<decimal>(type: "money", nullable: true),
                     TarifHomologationParLot = table.Column<byte>(type: "tinyint", nullable: true),
@@ -176,12 +180,15 @@ namespace BackOffice.Infrastructure.Migrations
                     ContactNom = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     ContactTelephone = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     ContactFonction = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: true),
                     Adresse = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
                     Bp = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     Ville = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     Pays = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     Remarques = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
+                    IsVerified = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    VerificationCode = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: true),
+                    VerificationTokenExpiry = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UtilisateurCreation = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     DateCreation = table.Column<DateTime>(type: "datetime", nullable: true),
                     UtilisateurModification = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
@@ -339,7 +346,6 @@ namespace BackOffice.Infrastructure.Migrations
                     CommentaireTexte = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NomInstructeur = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Proposition = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DossierId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UtilisateurCreation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreation = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UtilisateurModification = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -349,8 +355,8 @@ namespace BackOffice.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Commentaires", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Commentaires_dossiers_DossierId",
-                        column: x => x.DossierId,
+                        name: "FK_Commentaires_dossiers_IdDossier",
+                        column: x => x.IdDossier,
                         principalTable: "dossiers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -515,17 +521,17 @@ namespace BackOffice.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "AdminUtilisateurs",
                 columns: new[] { "Id", "ChangementMotPasse", "Compte", "DerniereConnexion", "Desactive", "MotPasse", "Nom", "Prenoms" },
-                values: new object[] { new Guid("99e9e71c-5619-4029-9565-cedc4eb686e1"), true, "admin", null, false, "$2a$11$fCM3iFack2OFvNImjHdDUufN2mgkH7s.Z8ZBldl5eny.02CYD/U6C", "Administrateur", "Système" });
+                values: new object[] { new Guid("68704e19-a5c9-412c-bbb3-6295a8a3e87a"), true, "admin", null, false, "$2a$11$TvFBDJVDzh2sNw2DAfRTm.PWc0CI5S8hyWYcl0Btj6kO4RFqwu8MK", "Administrateur", "Système" });
 
             migrationBuilder.InsertData(
                 table: "modesReglements",
                 columns: new[] { "Id", "Code", "DateCreation", "DateModification", "Libelle", "MobileBanking", "Remarques", "UtilisateurCreation", "UtilisateurModification" },
                 values: new object[,]
                 {
-                    { new Guid("2aa47244-4cd2-4c9b-a2dc-c8c57e53d410"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
-                    { new Guid("5266d314-c2a7-46dc-b592-d5042c346541"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
-                    { new Guid("77863094-0e5b-40ac-9ac1-cfa10f6d46fa"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
-                    { new Guid("b2e63f47-dbad-4292-bb4c-2ef2f6f09b96"), "Especes", null, null, "Espèces", (byte)0, null, null, null }
+                    { new Guid("5f365b52-de45-4e39-a89d-5e0a8eb7f768"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
+                    { new Guid("b7ea58fd-c06f-4937-b390-0063fa7a347a"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
+                    { new Guid("e4f7c49a-8f50-4ded-b18f-df336a40229c"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
+                    { new Guid("f24e54d8-fb46-44f5-9180-f7ec47b1ba84"), "Cheque", null, null, "Chèque", (byte)0, null, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -533,15 +539,15 @@ namespace BackOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "Libelle" },
                 values: new object[,]
                 {
-                    { new Guid("33d264ec-6b37-49b8-837a-f2ac5e8709ae"), "EquipementNonSoumisAHomologation", "Équipement non soumis à homologation" },
-                    { new Guid("3b6c0126-9a9b-4e82-96f8-b785362a11e1"), "NouvelleDemande", "Nouvelle demande" },
-                    { new Guid("4e35f925-c5d8-41a8-b8b1-ea3a6109d3b8"), "EnvoyePourApprobation", "Envoyé pour approbation" },
-                    { new Guid("7534eab1-e74f-4cfa-93f3-c9fe2e7bbc62"), "Rejetee", "Rejetée" },
-                    { new Guid("9025ffb0-dfcd-4e60-a57d-d39fc8e64bb4"), "ApprouveAttestationSignee", "Approuvé, attestation signée" },
-                    { new Guid("a2c98529-ac01-447e-af03-627ffc8c21c8"), "ApprouveAttentePaiement", "Approuvé, en attente de paiement" },
-                    { new Guid("b89fac12-213e-45dd-90d1-cf301cf6629b"), "AnnulationInstruction", "Annulation de l'instruction" },
-                    { new Guid("bf8e0dd0-f39a-4a70-9e8f-c2cc43f7dc07"), "ApprouvePaiementEffectue", "Approuvé, paiement effectué" },
-                    { new Guid("da816f4f-77ec-42b6-b2fb-e02c91e4474c"), "EnCoursInstruction", "En cours d'instruction" }
+                    { new Guid("00831631-a621-4e77-a71c-cd4f1fc3dba1"), "ApprouveAttentePaiement", "Approuvé, en attente de paiement" },
+                    { new Guid("055a2678-3b45-4299-9ce7-0ffed0d00171"), "NouvelleDemande", "Nouvelle demande" },
+                    { new Guid("4fe936ec-ded7-49f4-a17f-2547f5a9f445"), "AnnulationInstruction", "Annulation de l'instruction" },
+                    { new Guid("5c3edd6f-a7ce-4d22-bf85-27957a60124e"), "ApprouvePaiementEffectue", "Approuvé, paiement effectué" },
+                    { new Guid("7de5cc1a-ec1d-456e-8567-27e3e49cfc5f"), "EquipementNonSoumisAHomologation", "Équipement non soumis à homologation" },
+                    { new Guid("a2db1ba1-4ec9-4b45-9206-eaba350e9ece"), "ApprouveAttestationSignee", "Approuvé, attestation signée" },
+                    { new Guid("b7a06734-2829-4d2b-98bc-25096ff4aabc"), "EnvoyePourApprobation", "Envoyé pour approbation" },
+                    { new Guid("c3aa1ddc-3875-4f49-a11f-57fe5db602d2"), "EnCoursInstruction", "En cours d'instruction" },
+                    { new Guid("d5691c64-3f9b-43e7-ad78-ab56ca24cb45"), "Rejetee", "Rejetée" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -561,9 +567,9 @@ namespace BackOffice.Infrastructure.Migrations
                 column: "IdDemande");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Commentaires_DossierId",
+                name: "IX_Commentaires_IdDossier",
                 table: "Commentaires",
-                column: "DossierId");
+                column: "IdDossier");
 
             migrationBuilder.CreateIndex(
                 name: "IX_demandes_IdCategorie",

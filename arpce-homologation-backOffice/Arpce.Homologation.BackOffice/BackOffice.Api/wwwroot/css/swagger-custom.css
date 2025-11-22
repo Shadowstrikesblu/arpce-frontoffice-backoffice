@@ -1,7 +1,61 @@
-﻿.swagger-ui .topbar {
-    background-color: rgb(183 62 51 / var(--tw-text-opacity, 1));
+﻿/* --- Personnalisation Swagger UI pour le Back Office ARPCE --- */
+
+/* Barre supérieure (Header) */
+.swagger-ui .topbar {
+    background-color: rgb(183 62 51);
+    border-bottom: 4px solid rgb(139 167 85); /* Orange ARPCE */
 }
 
+/* Corps de la page */
 body {
-    background-color: rgb(139 167 85 / var(--tw-bg-opacity, 1));
+    background-color: #f4f4f4; /* Gris très clair pour le fond général */
+}
+
+/* Conteneur principal */
+.swagger-ui .info {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+    /* Titres principaux */
+    .swagger-ui .info .title {
+        color: rgb(139 167 85); /* Rouge brique (votre première couleur) */
+    }
+
+/* Boutons "Authorize" */
+.swagger-ui .btn.authorize {
+    color: rgb(139 167 85); /* Vert olive (votre deuxième couleur) */
+    border-color: rgb(139 167 85);
+}
+
+    .swagger-ui .btn.authorize svg {
+        fill: rgb(139 167 85);
+    }
+
+/* Boutons d'exécution (Execute) */
+.swagger-ui .btn.execute {
+    background-color: #ea5b0c; /* Orange ARPCE */
+    border-color: #ea5b0c;
+    color: white;
+}
+
+    .swagger-ui .btn.execute:hover {
+        background-color: rgb(183 62 51); /* Rouge brique au survol */
+        border-color: rgb(183 62 51);
+    }
+
+/* Sections (Opérations) */
+.swagger-ui .opblock .opblock-summary-method {
+    background-color: rgb(7 53 102); /* Bleu foncé pour les badges de méthode */
+}
+
+.swagger-ui .opblock.opblock-post .opblock-summary-method {
+    background-color: rgb(139 167 85); /* Vert pour POST */
+}
+
+.swagger-ui .opblock.opblock-delete .opblock-summary-method {
+    background-color: rgb(183 62 51); /* Rouge pour DELETE */
 }
