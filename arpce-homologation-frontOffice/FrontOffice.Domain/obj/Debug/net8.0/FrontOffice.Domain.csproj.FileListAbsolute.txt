@@ -21,3 +21,15 @@ D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Domain\obj\Debug\net8.0\refint\FrontOffice.Domain.dll
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Domain\obj\Debug\net8.0\FrontOffice.Domain.pdb
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Domain\obj\Debug\net8.0\ref\FrontOffice.Domain.dll
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-frontOffice\FrontOffice.Domain\bin\Debug\net8.0\FrontOffice.Domain.deps.json
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-frontOffice\FrontOffice.Domain\bin\Debug\net8.0\FrontOffice.Domain.dll
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-frontOffice\FrontOffice.Domain\bin\Debug\net8.0\FrontOffice.Domain.pdb
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-frontOffice\FrontOffice.Domain\obj\Debug\net8.0\FrontOffice.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-frontOffice\FrontOffice.Domain\obj\Debug\net8.0\FrontOffice.Domain.AssemblyInfoInputs.cache
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-frontOffice\FrontOffice.Domain\obj\Debug\net8.0\FrontOffice.Domain.AssemblyInfo.cs
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-frontOffice\FrontOffice.Domain\obj\Debug\net8.0\FrontOffice.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-frontOffice\FrontOffice.Domain\obj\Debug\net8.0\FrontOffice.Domain.sourcelink.json
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-frontOffice\FrontOffice.Domain\obj\Debug\net8.0\FrontOffice.Domain.dll
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-frontOffice\FrontOffice.Domain\obj\Debug\net8.0\refint\FrontOffice.Domain.dll
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-frontOffice\FrontOffice.Domain\obj\Debug\net8.0\FrontOffice.Domain.pdb
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-frontOffice\FrontOffice.Domain\obj\Debug\net8.0\ref\FrontOffice.Domain.dll

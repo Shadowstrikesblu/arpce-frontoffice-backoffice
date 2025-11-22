@@ -21,31 +21,30 @@ public class FrontOfficeDbContext : DbContext, IApplicationDbContext
     }
 
     // --- Déclaration de toutes les tables de la base de données ---
-
-    public DbSet<AdminAccess> AdminAccesses { get; set; }
-    public DbSet<AdminConnexions> AdminConnexions { get; set; } 
-    public DbSet<AdminEvenementsTypes> AdminEvenementsTypes { get; set; }
-    public DbSet<AdminJournal> AdminJournals { get; set; }
-    public DbSet<AdminOptions> AdminOptions { get; set; } 
-    public DbSet<AdminProfils> AdminProfils { get; set; }
-    public DbSet<AdminProfilsAcces> AdminProfilsAcces { get; set; }
-    public DbSet<AdminProfilsUtilisateursLDAP> AdminProfilsUtilisateursLDAP { get; set; }
-    public DbSet<AdminReporting> AdminReporting { get; set; }
-    public DbSet<AdminUtilisateurs> AdminUtilisateurs { get; set; }
-    public DbSet<AdminUtilisateurTypes> AdminUtilisateurTypes { get; set; }
-    public DbSet<Attestation> Attestations { get; set; }
-    public DbSet<CategorieEquipement> CategoriesEquipements { get; set; }
-    public DbSet<Client> Clients { get; set; }
-    public DbSet<Commentaire> Commentaires { get; set; }
-    public DbSet<Demande> Demandes { get; set; }
-    public DbSet<Devis> Devis { get; set; }
-    public DbSet<DocumentDemande> DocumentsDemandes { get; set; }
-    public DbSet<DocumentDossier> DocumentsDossiers { get; set; }
-    public DbSet<Dossier> Dossiers { get; set; }
-    public DbSet<ModeReglement> ModesReglements { get; set; }
-    public DbSet<MotifRejet> MotifsRejets { get; set; }
-    public DbSet<Proposition> Propositions { get; set; }
-    public DbSet<Statut> Statuts { get; set; }
+    public DbSet<AdminAccess> AdminAccesses => Set<AdminAccess>();
+    public DbSet<AdminConnexions> AdminConnexions => Set<AdminConnexions>(); 
+    public DbSet<AdminEvenementsTypes> AdminEvenementsTypes => Set<AdminEvenementsTypes>();
+    public DbSet<AdminJournal> AdminJournals => Set<AdminJournal>();
+    public DbSet<AdminOptions> AdminOptions => Set<AdminOptions>(); 
+    public DbSet<AdminProfils> AdminProfils => Set<AdminProfils>();
+    public DbSet<AdminProfilsAcces> AdminProfilsAcces => Set<AdminProfilsAcces>();
+    public DbSet<AdminProfilsUtilisateursLDAP> AdminProfilsUtilisateursLDAP => Set<AdminProfilsUtilisateursLDAP>();
+    public DbSet<AdminReporting> AdminReporting => Set<AdminReporting>();
+    public DbSet<AdminUtilisateurs> AdminUtilisateurs => Set<AdminUtilisateurs>();
+    public DbSet<AdminUtilisateurTypes> AdminUtilisateurTypes => Set<AdminUtilisateurTypes>();
+    public DbSet<Attestation> Attestations => Set<Attestation>();
+    public DbSet<CategorieEquipement> CategoriesEquipements => Set<CategorieEquipement>();
+    public DbSet<Client> Clients => Set<Client>();
+    public DbSet<Commentaire> Commentaires => Set<Commentaire>();
+    public DbSet<Demande> Demandes => Set<Demande>();
+    public DbSet<Devis> Devis => Set<Devis>();
+    public DbSet<DocumentDemande> DocumentsDemandes => Set<DocumentDemande>();
+    public DbSet<DocumentDossier> DocumentsDossiers => Set<DocumentDossier>();
+    public DbSet<Dossier> Dossiers => Set<Dossier>();
+    public DbSet<ModeReglement> ModesReglements => Set<ModeReglement>();
+    public DbSet<MotifRejet> MotifsRejets => Set<MotifRejet>();
+    public DbSet<Proposition> Propositions => Set<Proposition>();
+    public DbSet<Statut> Statuts => Set<Statut>();
 
 
     /// <summary>
@@ -61,13 +60,11 @@ public class FrontOfficeDbContext : DbContext, IApplicationDbContext
         {
             switch (entry.State)
             {
-                // Cas où une nouvelle entité est ajoutée à la base de données
                 case EntityState.Added:
                     entry.Entity.UtilisateurCreation = currentUserId; 
                     entry.Entity.DateCreation = DateTime.UtcNow;
                     break;
 
-                // Cas où une entité existante est modifiée
                 case EntityState.Modified:
                     entry.Entity.UtilisateurModification = currentUserId; 
                     entry.Entity.DateModification = DateTime.UtcNow;
@@ -76,18 +73,12 @@ public class FrontOfficeDbContext : DbContext, IApplicationDbContext
         }
 
         var result = await base.SaveChangesAsync(cancellationToken);
-
         return result;
     }
 
-    /// <summary>
-    /// Les configurations des entités (Fluent API) lors de la création du modèle.
-    /// Il scanne l'assembly actuel (Infrastructure) pour trouver toutes les classes qui implémentent IEntityTypeConfiguration.
-    /// </summary>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
         base.OnModelCreating(builder);
     }
 }
