@@ -312,11 +312,11 @@ namespace BackOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("68704e19-a5c9-412c-bbb3-6295a8a3e87a"),
+                            Id = new Guid("27cb80c3-471f-4e80-976b-eb4efb687b32"),
                             ChangementMotPasse = true,
                             Compte = "admin",
                             Desactive = false,
-                            MotPasse = "$2a$11$TvFBDJVDzh2sNw2DAfRTm.PWc0CI5S8hyWYcl0Btj6kO4RFqwu8MK",
+                            MotPasse = "$2a$11$n0a2eU6srTHUrMdVeqJRVOv8jwq2EqjtStpOVBOppqZVU7XIwWPL2",
                             Nom = "Administrateur",
                             Prenoms = "Système"
                         });
@@ -906,28 +906,28 @@ namespace BackOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b7ea58fd-c06f-4937-b390-0063fa7a347a"),
+                            Id = new Guid("290afe73-94ab-4f0d-aca4-f53b33964c4f"),
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("f24e54d8-fb46-44f5-9180-f7ec47b1ba84"),
+                            Id = new Guid("3219e6c3-1aea-4f1d-84df-c48a440e8cef"),
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("5f365b52-de45-4e39-a89d-5e0a8eb7f768"),
+                            Id = new Guid("ebd06f01-40c7-4698-89a5-a228d81d3c9a"),
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("e4f7c49a-8f50-4ded-b18f-df336a40229c"),
+                            Id = new Guid("3e5a1703-2df3-4955-9fa2-5bc9d486452f"),
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1
@@ -1031,55 +1031,55 @@ namespace BackOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("055a2678-3b45-4299-9ce7-0ffed0d00171"),
+                            Id = new Guid("ee7a61da-ba2c-45de-9c45-2047e1388dfb"),
                             Code = "NouvelleDemande",
                             Libelle = "Nouvelle demande"
                         },
                         new
                         {
-                            Id = new Guid("c3aa1ddc-3875-4f49-a11f-57fe5db602d2"),
+                            Id = new Guid("ed910965-ec6f-4075-b08c-96456f79be9d"),
                             Code = "EnCoursInstruction",
                             Libelle = "En cours d'instruction"
                         },
                         new
                         {
-                            Id = new Guid("b7a06734-2829-4d2b-98bc-25096ff4aabc"),
+                            Id = new Guid("d18867b9-9641-436d-a771-156d1d10c2e7"),
                             Code = "EnvoyePourApprobation",
                             Libelle = "Envoyé pour approbation"
                         },
                         new
                         {
-                            Id = new Guid("00831631-a621-4e77-a71c-cd4f1fc3dba1"),
+                            Id = new Guid("933b8a15-4447-4d0b-b7ff-bc5ab51f9b10"),
                             Code = "ApprouveAttentePaiement",
                             Libelle = "Approuvé, en attente de paiement"
                         },
                         new
                         {
-                            Id = new Guid("d5691c64-3f9b-43e7-ad78-ab56ca24cb45"),
+                            Id = new Guid("a215e09b-3037-4bef-8a9f-951d0d9d8d94"),
                             Code = "Rejetee",
                             Libelle = "Rejetée"
                         },
                         new
                         {
-                            Id = new Guid("7de5cc1a-ec1d-456e-8567-27e3e49cfc5f"),
+                            Id = new Guid("dbc201a1-aa60-4925-8ab5-5c826c51a1a1"),
                             Code = "EquipementNonSoumisAHomologation",
                             Libelle = "Équipement non soumis à homologation"
                         },
                         new
                         {
-                            Id = new Guid("5c3edd6f-a7ce-4d22-bf85-27957a60124e"),
+                            Id = new Guid("c0b35cf5-8374-4c78-a85c-60b6090f4e68"),
                             Code = "ApprouvePaiementEffectue",
                             Libelle = "Approuvé, paiement effectué"
                         },
                         new
                         {
-                            Id = new Guid("a2db1ba1-4ec9-4b45-9206-eaba350e9ece"),
+                            Id = new Guid("0b9facde-34f4-4adb-8ef3-bbb929a47c71"),
                             Code = "ApprouveAttestationSignee",
                             Libelle = "Approuvé, attestation signée"
                         },
                         new
                         {
-                            Id = new Guid("4fe936ec-ded7-49f4-a17f-2547f5a9f445"),
+                            Id = new Guid("f6b65a7d-1c75-45fa-83eb-3f90097429ab"),
                             Code = "AnnulationInstruction",
                             Libelle = "Annulation de l'instruction"
                         });

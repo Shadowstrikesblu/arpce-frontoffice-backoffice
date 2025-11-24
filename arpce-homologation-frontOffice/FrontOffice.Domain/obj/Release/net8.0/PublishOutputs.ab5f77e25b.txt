@@ -1,3 +1,0 @@
-C:\Users\Administrator\Desktop\FrontOffice\FrontOffice.Domain.dll
-C:\Users\Administrator\Desktop\FrontOffice\FrontOffice.Domain.deps.json
-C:\Users\Administrator\Desktop\FrontOffice\FrontOffice.Domain.pdb

@@ -1,0 +1,39 @@
+{
+  "Version": 1,
+  "Hash": "rl05GjYd4GFt7180pKd1ZT4LJV0TrWM4AdHbiKiaYdA=",
+  "Source": "BackOffice.Api",
+  "BasePath": "_content/BackOffice.Api",
+  "Mode": "Default",
+  "ManifestType": "Publish",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "BackOffice.Api\\wwwroot",
+      "Source": "BackOffice.Api",
+      "ContentRoot": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Api\\wwwroot\\",
+      "BasePath": "_content/BackOffice.Api",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Api\\wwwroot\\css\\swagger-custom.css",
+      "SourceId": "BackOffice.Api",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Api\\wwwroot\\",
+      "BasePath": "_content/BackOffice.Api",
+      "RelativePath": "css/swagger-custom.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\swagger-custom.css"
+    }
+  ]
+}

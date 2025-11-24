@@ -1,3 +1,0 @@
-C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-frontOffice\publish\FrontOffice.Domain.dll
-C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-frontOffice\publish\FrontOffice.Domain.deps.json
-C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-frontOffice\publish\FrontOffice.Domain.pdb

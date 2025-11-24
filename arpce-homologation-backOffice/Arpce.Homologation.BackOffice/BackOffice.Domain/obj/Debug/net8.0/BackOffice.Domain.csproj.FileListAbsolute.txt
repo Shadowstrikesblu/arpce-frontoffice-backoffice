@@ -10,3 +10,15 @@ D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Domain\obj\Debug\net8.0\refint\BackOffice.Domain.dll
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Domain\obj\Debug\net8.0\BackOffice.Domain.pdb
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Domain\obj\Debug\net8.0\ref\BackOffice.Domain.dll
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Domain\bin\Debug\net8.0\BackOffice.Domain.deps.json
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Domain\bin\Debug\net8.0\BackOffice.Domain.dll
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Domain\bin\Debug\net8.0\BackOffice.Domain.pdb
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Domain\obj\Debug\net8.0\BackOffice.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Domain\obj\Debug\net8.0\BackOffice.Domain.AssemblyInfoInputs.cache
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Domain\obj\Debug\net8.0\BackOffice.Domain.AssemblyInfo.cs
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Domain\obj\Debug\net8.0\BackOffice.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Domain\obj\Debug\net8.0\BackOffice.Domain.sourcelink.json
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Domain\obj\Debug\net8.0\BackOffice.Domain.dll
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Domain\obj\Debug\net8.0\refint\BackOffice.Domain.dll
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Domain\obj\Debug\net8.0\BackOffice.Domain.pdb
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Domain\obj\Debug\net8.0\ref\BackOffice.Domain.dll

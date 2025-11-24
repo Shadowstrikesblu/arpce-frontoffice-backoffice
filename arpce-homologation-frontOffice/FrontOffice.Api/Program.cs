@@ -12,84 +12,55 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Text;
 
-// ---------------- SETUP SERILOG -------------
-
+// --- Configuration initiale de Serilog ---
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateBootstrapLogger();
 
-Log.Information("Starting up the FrontOffice API...");
+Log.Information("Démarrage du microservice FrontOffice API sur le VPS...");
 
 try
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    builder.Host.UseSerilog((context, services, configuration) =>
-        configuration
-            .ReadFrom.Configuration(context.Configuration)
-            .ReadFrom.Services(services)
-            .Enrich.FromLogContext()
-            .WriteTo.Console()
-    );
+    // --- Configuration de Serilog ---
+    // Important pour voir les logs dans la console de stdout IIS ou dans les fichiers
+    builder.Host.UseSerilog((context, services, configuration) => configuration
+        .ReadFrom.Configuration(context.Configuration)
+        .ReadFrom.Services(services)
+        .Enrich.FromLogContext()
+        .WriteTo.Console());
 
-    // ---------------- DEPENDENCY INJECTION ----------------
+    // --- Configuration des Services ---
 
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddScoped<IFileStorageProvider, LocalFileStorageProvider>();
     builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
-    // Database
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    // Politique CORS (À ajuster selon l'URL du Front-end React/Angular sur le VPS)
+    var corsPolicyName = "AllowWebApp";
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy(name: corsPolicyName,
+                          policy =>
+                          {
+                              policy.AllowAnyOrigin() // Pour le sandbox, on autorise tout.
+                                    .AllowAnyHeader()
+                                    .AllowAnyMethod();
+                          });
+    });
+
+    // Base de données SQL Server
+    // La chaîne "DefaultConnection" doit être définie dans appsettings.json sur le serveur
     builder.Services.AddDbContext<FrontOfficeDbContext>(options =>
-        options.UseSqlServer(connectionString));
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
     builder.Services.AddScoped<IApplicationDbContext>(provider =>
         provider.GetRequiredService<FrontOfficeDbContext>());
 
-    // MediatR
-    builder.Services.AddMediatR(cfg =>
-        cfg.RegisterServicesFromAssembly(typeof(AssemblyReference).Assembly));
-
-    // Controllers
     builder.Services.AddControllers();
 
-    // ------------------- CORS ---------------------
-    const string corsPolicyName = "AllowWebApp";
-    builder.Services.AddCors(options =>
-    {
-        options.AddPolicy(corsPolicyName, policy =>
-        {
-            policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-        });
-    });
-
-    // ------------------- JWT Auth ---------------------
-    var jwtSecret = builder.Configuration["JwtSettings:Secret"];
-    var jwtIssuer = builder.Configuration["JwtSettings:Issuer"];
-    var jwtAudience = builder.Configuration["JwtSettings:Audience"];
-
-    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(options =>
-        {
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-
-                ValidIssuer = jwtIssuer,
-                ValidAudience = jwtAudience,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
-            };
-        });
-
-    // Services
-    builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
-    builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
-    builder.Services.AddTransient<IEmailService, EmailService>();
-
-    // ------------------- SWAGGER ---------------------
+    // Configuration Swagger
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen(options =>
     {
@@ -103,12 +74,11 @@ try
         options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
             In = ParameterLocation.Header,
-            Description = "Bearer {token}",
+            Description = "Veuillez entrer 'Bearer' suivi d'un espace et du token JWT",
             Name = "Authorization",
             Type = SecuritySchemeType.ApiKey,
             Scheme = "Bearer"
         });
-
         options.AddSecurityRequirement(new OpenApiSecurityRequirement
         {
             {
@@ -121,45 +91,115 @@ try
         });
     });
 
-    var app = builder.Build();
+    // MediatR
+    builder.Services.AddMediatR(cfg =>
+        cfg.RegisterServicesFromAssembly(typeof(AssemblyReference).Assembly));
 
-    // ---------------- HTTP PIPELINE ----------------
+    // --- Configuration Authentification JWT Robuste ---
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+            // Lecture sécurisée des configurations
+            var jwtSecret = builder.Configuration["JwtSettings:Secret"];
+            var jwtIssuer = builder.Configuration["JwtSettings:Issuer"];
+            var jwtAudience = builder.Configuration["JwtSettings:Audience"];
+
+            // Logs pour aider l'infra à déboguer (sans afficher le secret en entier)
+            Log.Information("FrontOffice - Config JWT - Secret: {SecretStatus}, Issuer: {Issuer}, Audience: {Audience}",
+                !string.IsNullOrWhiteSpace(jwtSecret) ? "PRESENT (Long: " + jwtSecret.Length + ")" : "MANQUANT",
+                jwtIssuer,
+                jwtAudience);
+
+            // Vérification bloquante si le secret est absent
+            if (string.IsNullOrWhiteSpace(jwtSecret))
+            {
+                throw new ArgumentNullException("JwtSettings:Secret", "Le secret JWT est manquant dans la configuration (appsettings.json ou variables d'environnement).");
+            }
+
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = jwtIssuer,
+                ValidAudience = jwtAudience,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
+            };
+        });
+
+    // Services personnalisés
+    builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+    builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
+    builder.Services.AddTransient<IEmailService, EmailService>();
+    builder.WebHost.ConfigureKestrel(options =>
+    {
+        options.ListenAnyIP(5000);
+    });
+
+    // --- Construction de l'application ---
+
+    var app = builder.Build();
 
     app.UseMiddleware<ErrorHandlingMiddleware>();
     app.UseSerilogRequestLogging();
 
-    if (app.Environment.IsDevelopment() ||
-        builder.Configuration.GetValue<bool>("EnableSwaggerUI"))
+    // --- Activation de Swagger (Logique Sandbox) ---
+    // Active Swagger si on est en Dev OU si le paramètre EnableSwaggerUI est à true dans appsettings.json
+    bool enableSwagger = app.Environment.IsDevelopment() ||
+                         builder.Configuration.GetValue<bool>("EnableSwaggerUI", false);
+
+    if (enableSwagger)
     {
         app.UseSwagger();
-        app.UseSwaggerUI(c =>
+        app.UseSwaggerUI(options =>
         {
-            c.SwaggerEndpoint("/swagger/v1/swagger.json", "FrontOffice API v1");
-            c.RoutePrefix = string.Empty;
+            options.SwaggerEndpoint("/swagger/v1/swagger.json", "FrontOffice API V1");
+            options.RoutePrefix = string.Empty; // Swagger à la racine du site
+            options.InjectStylesheet("/css/swagger-custom.css"); // CSS Personnalisé
         });
+        Log.Information("Swagger UI activé.");
     }
 
-    // ---------------- APPLY EF MIGRATIONS AUTOMATICALLY ----------------
-    using (var scope = app.Services.CreateScope())
+    // --- Migration Automatique de la Base de Données ---
+    // Applique les migrations au démarrage si configuré. Utile pour le VPS.
+    bool applyMigrations = builder.Configuration.GetValue<bool>("ApplyMigrationsOnStartup", false);
+    
+    if (applyMigrations)
     {
-        var db = scope.ServiceProvider.GetRequiredService<FrontOfficeDbContext>();
-        db.Database.Migrate();
-        Log.Information("EF Core migrations applied successfully at startup.");
+        using (var scope = app.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+            try
+            {
+                var context = services.GetRequiredService<FrontOfficeDbContext>();
+                context.Database.Migrate(); // Applique les migrations en attente
+                Log.Information("Migrations EF Core appliquées avec succès au FrontOffice.");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Erreur critique lors de l'application des migrations sur le VPS.");
+                // On ne stoppe pas l'appli ici, on laisse continuer pour voir les logs d'erreur HTTP si besoin
+            }
+        }
     }
 
     app.UseHttpsRedirection();
-    app.UseStaticFiles();
-    app.UseCors(corsPolicyName);
+    
+    // Indispensable pour servir les fichiers uploadés (PDFs) et le CSS Swagger
+    app.UseStaticFiles(); 
 
+    app.UseCors(corsPolicyName);
     app.UseAuthentication();
     app.UseAuthorization();
 
     app.MapControllers();
+
     app.Run();
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "Application terminated unexpectedly");
+    Log.Fatal(ex, "L'application FrontOffice s'est arrêtée de manière inattendue sur le VPS.");
 }
 finally
 {

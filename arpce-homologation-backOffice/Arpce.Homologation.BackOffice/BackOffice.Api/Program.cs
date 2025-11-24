@@ -1,5 +1,3 @@
-// Fichier : BackOffice.Api/Program.cs
-
 using BackOffice.Api.Middleware;
 using BackOffice.Application;
 using BackOffice.Application.Common.Interfaces;
@@ -12,108 +10,95 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Text;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System; // Pour ArgumentNullException
 
-// --- Configuration initiale de Serilog (logger de démarrage) ---
+// ---------------- SETUP SERILOG -------------
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateBootstrapLogger();
 
-Log.Information("Démarrage du microservice BackOffice API...");
+Log.Information("DÃ©marrage du microservice BackOffice API...");
 
 try
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    // --- Configuration de Serilog ---
-    builder.Host.UseSerilog((context, services, configuration) => configuration
-        .ReadFrom.Configuration(context.Configuration)
-        .ReadFrom.Services(services)
-        .Enrich.FromLogContext()
-        .WriteTo.Console());
+    // Serilog
+    builder.Host.UseSerilog((context, services, configuration) =>
+        configuration.ReadFrom.Configuration(context.Configuration)
+                     .ReadFrom.Services(services)
+                     .Enrich.FromLogContext()
+                     .WriteTo.Console());
 
-    // --- Configuration des Services ---
-
+    // Controllers + JSON
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
 
-    // Configuration Swagger avec authentification JWT
+    // Swagger configuration
     builder.Services.AddSwaggerGen(options =>
     {
         options.SwaggerDoc("v1", new OpenApiInfo
         {
             Title = "ARPCE Homologation - BackOffice API",
             Version = "v1",
-            Description = "API pour la gestion des demandes d'homologation interne de ARPCE."
+            Description = "API pour la gestion interne des demandes d'homologation."
         });
 
         options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
             In = ParameterLocation.Header,
-            Description = "Veuillez entrer 'Bearer' suivi d'un espace et du token JWT. Exemple: 'Bearer VOTRE_TOKEN'",
+            Description = "Bearer {token}",
             Name = "Authorization",
             Type = SecuritySchemeType.ApiKey,
             Scheme = "Bearer"
         });
+
         options.AddSecurityRequirement(new OpenApiSecurityRequirement
         {
             {
                 new OpenApiSecurityScheme
                 {
-                    Reference = new OpenApiReference
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                    }
+                    Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
                 },
                 new string[] {}
             }
         });
     });
 
-    // Configuration CORS
-    var corsPolicyName = "AllowWebApp";
+    // CORS
+    const string corsPolicyName = "AllowWebApp";
     builder.Services.AddCors(options =>
     {
-        options.AddPolicy(name: corsPolicyName,
-                          policy =>
-                          {
-                              policy.AllowAnyOrigin() // À restreindre en production
-                                    .AllowAnyHeader()
-                                    .AllowAnyMethod();
-                          });
+        options.AddPolicy(corsPolicyName, policy =>
+        {
+            policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+        });
     });
 
-    // Configuration DB Context
+    // DB Context
     builder.Services.AddDbContext<BackOfficeDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-        b => b.MigrationsAssembly(typeof(BackOfficeDbContext).Assembly.FullName)));
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
     builder.Services.AddScoped<IApplicationDbContext>(provider =>
         provider.GetRequiredService<BackOfficeDbContext>());
 
-    // Configuration MediatR
+    // MediatR
     builder.Services.AddMediatR(cfg =>
         cfg.RegisterServicesFromAssembly(typeof(AssemblyReference).Assembly));
 
-    // Configuration Authentification JWT
+    // JWT Authentication
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
         {
-            // Lecture et validation robuste des secrets pour le déploiement
             var jwtSecret = builder.Configuration["JwtSettings:Secret"];
             var jwtIssuer = builder.Configuration["JwtSettings:Issuer"];
             var jwtAudience = builder.Configuration["JwtSettings:Audience"];
 
-            Log.Information("BackOffice - Configuration JWT - Secret: {Secret}, Issuer: {Issuer}, Audience: {Audience}",
-                            !string.IsNullOrWhiteSpace(jwtSecret) ? "CONFIGURED (length " + jwtSecret.Length + ")" : "NOT CONFIGURED",
-                            jwtIssuer ?? "NOT CONFIGURED",
-                            jwtAudience ?? "NOT CONFIGURED");
+            Log.Information("BackOffice JWT - Secret: {Secret}, Issuer: {Issuer}, Audience: {Audience}",
+                            jwtSecret != null ? $"CONFIGURED (length {jwtSecret.Length})" : "NULL",
+                            jwtIssuer ?? "NULL",
+                            jwtAudience ?? "NULL");
 
-            // Lève une exception claire si le secret est manquant sur Azure
-            ArgumentNullException.ThrowIfNullOrWhiteSpace(jwtSecret, "Le secret JWT (JwtSettings:Secret) est manquant ou vide.");
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(jwtSecret, "JwtSettings:Secret est manquant");
 
             options.TokenValidationParameters = new TokenValidationParameters
             {
@@ -121,27 +106,33 @@ try
                 ValidateAudience = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
+
                 ValidIssuer = jwtIssuer,
                 ValidAudience = jwtAudience,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
             };
         });
 
-    // Injection des services
+    // Dependency Injection
     builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
     builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
-    // --- Construction du Pipeline HTTP ---
+    // Kestrel Port
+    builder.WebHost.ConfigureKestrel(options =>
+    {
+        options.ListenAnyIP(4000);
+    });
 
+    // Build application
     var app = builder.Build();
 
+    // Middlewares
     app.UseMiddleware<ErrorHandlingMiddleware>();
     app.UseSerilogRequestLogging();
 
-    // --- Activation conditionnelle de Swagger ---
-    // Active Swagger si on est en Dev OU si le paramètre EnableSwaggerUI est à true (pour le Sandbox)
+    // Swagger runtime enabling
     bool enableSwagger = app.Environment.IsDevelopment() ||
                          builder.Configuration.GetValue<bool>("EnableSwaggerUI", false);
 
@@ -150,52 +141,33 @@ try
         app.UseSwagger();
         app.UseSwaggerUI(options =>
         {
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "BackOffice API V1");
-            options.RoutePrefix = string.Empty; // Swagger à la racine du site
-
-            // Injection du CSS personnalisé pour le thème BackOffice
+            options.SwaggerEndpoint("/swagger/v1/swagger.json", "BackOffice API v1");
+            options.RoutePrefix = string.Empty;
             options.InjectStylesheet("/css/swagger-custom.css");
         });
     }
 
-    // --- Application automatique des migrations au démarrage (pour Sandbox/Dev) ---
-    bool applyMigrationsOnStartup = app.Environment.IsDevelopment() ||
-                                    app.Environment.EnvironmentName == "Staging" ||
-                                    builder.Configuration.GetValue<bool>("ApplyMigrationsOnStartup", false);
-
-    if (applyMigrationsOnStartup)
+    // Apply migrations
+    using (var scope = app.Services.CreateScope())
     {
-        using (var scope = app.Services.CreateScope())
-        {
-            var services = scope.ServiceProvider;
-            try
-            {
-                var context = services.GetRequiredService<BackOfficeDbContext>();
-                context.Database.Migrate();
-                Log.Information("Migrations EF Core appliquées avec succès au BackOffice.");
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Erreur critique lors de l'application des migrations EF Core au BackOffice.");
-            }
-        }
+        var db = scope.ServiceProvider.GetRequiredService<BackOfficeDbContext>();
+        db.Database.Migrate();
+        Log.Information("EF Core migrations applied successfully at startup.");
     }
 
-    app.UseHttpsRedirection();
-
-    // ESSENTIEL : Permet de servir le fichier CSS personnalisé depuis wwwroot
-    app.UseStaticFiles();
-
+    // app.UseHttpsRedirection();
+    app.UseStaticFiles(); // Pour le CSS swagger
     app.UseCors(corsPolicyName);
+
     app.UseAuthentication();
     app.UseAuthorization();
-    app.MapControllers();
 
+    app.MapControllers();
     app.Run();
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "L'application BackOffice s'est arrêtée de manière inattendue.");
+    Log.Fatal(ex, "L'application BackOffice s'est arrÃªtÃ©e de maniÃ¨re inattendue.");
 }
 finally
 {

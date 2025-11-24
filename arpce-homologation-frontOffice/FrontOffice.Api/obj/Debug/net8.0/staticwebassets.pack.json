@@ -5,26 +5,6 @@
       "PackagePath": "staticwebassets\\css\\swagger-custom.css"
     },
     {
-      "Id": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Api\\wwwroot\\uploads\\courriers\\12d50740-f55c-43fe-9976-6aff3228f152.pdf",
-      "PackagePath": "staticwebassets\\uploads\\courriers\\12d50740-f55c-43fe-9976-6aff3228f152.pdf"
-    },
-    {
-      "Id": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Api\\wwwroot\\uploads\\courriers\\683a60f2-3fa7-4751-80d9-3641018e6139.pdf",
-      "PackagePath": "staticwebassets\\uploads\\courriers\\683a60f2-3fa7-4751-80d9-3641018e6139.pdf"
-    },
-    {
-      "Id": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Api\\wwwroot\\uploads\\courriers\\eaea641c-b50d-408b-8b15-c76d260401b2.pdf",
-      "PackagePath": "staticwebassets\\uploads\\courriers\\eaea641c-b50d-408b-8b15-c76d260401b2.pdf"
-    },
-    {
-      "Id": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Api\\wwwroot\\uploads\\fiches-techniques\\12bb7e9e-ab68-434b-a5bb-d68495374fad.pdf",
-      "PackagePath": "staticwebassets\\uploads\\fiches-techniques\\12bb7e9e-ab68-434b-a5bb-d68495374fad.pdf"
-    },
-    {
-      "Id": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Api\\wwwroot\\uploads\\fiches-techniques\\1c514920-d0e9-4559-9306-a35a1c68d938.pdf",
-      "PackagePath": "staticwebassets\\uploads\\fiches-techniques\\1c514920-d0e9-4559-9306-a35a1c68d938.pdf"
-    },
-    {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.FrontOffice.Api.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },
