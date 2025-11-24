@@ -1,8 +1,9 @@
 ﻿using FrontOffice.Domain.Entities;
-using FrontOffice.Domain.Enums; 
+using FrontOffice.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
+namespace FrontOffice.Infrastructure.Persistence.Configurations;
 
 public class StatutConfiguration : IEntityTypeConfiguration<Statut>
 {
@@ -10,20 +11,23 @@ public class StatutConfiguration : IEntityTypeConfiguration<Statut>
     {
         builder.ToTable("statuts");
         builder.HasKey(s => s.Id);
-        builder.Property(s => s.Code).HasMaxLength(120).IsRequired(); 
+        builder.Property(s => s.Code).HasMaxLength(120).IsRequired();
         builder.Property(s => s.Libelle).HasMaxLength(120).IsRequired();
 
-        // --- Ajout des données initiales (Seed) ---
         builder.HasData(
-            new Statut { Id = Guid.NewGuid(), Code = StatutDossierEnum.NouvelleDemande.ToString(), Libelle = "Nouvelle demande" },
-            new Statut { Id = Guid.NewGuid(), Code = StatutDossierEnum.EnCoursInstruction.ToString(), Libelle = "En cours d'instruction" },
-            new Statut { Id = Guid.NewGuid(), Code = StatutDossierEnum.EnvoyePourApprobation.ToString(), Libelle = "Envoyé pour approbation" },
-            new Statut { Id = Guid.NewGuid(), Code = StatutDossierEnum.ApprouveAttentePaiement.ToString(), Libelle = "Approuvé, en attente de paiement" },
-            new Statut { Id = Guid.NewGuid(), Code = StatutDossierEnum.Rejetee.ToString(), Libelle = "Rejetée" },
-            new Statut { Id = Guid.NewGuid(), Code = StatutDossierEnum.EquipementNonSoumisAHomologation.ToString(), Libelle = "Équipement non soumis à homologation" },
-            new Statut { Id = Guid.NewGuid(), Code = StatutDossierEnum.ApprouvePaiementEffectue.ToString(), Libelle = "Approuvé, paiement effectué" },
-            new Statut { Id = Guid.NewGuid(), Code = StatutDossierEnum.ApprouveAttestationSignee.ToString(), Libelle = "Approuvé, attestation signée" },
-            new Statut { Id = Guid.NewGuid(), Code = StatutDossierEnum.AnnulationInstruction.ToString(), Libelle = "Annulation de l'instruction" }
+            new Statut { Id = Guid.NewGuid(), Code = "NouveauDossier", Libelle = "Nouvelle demande" },
+            new Statut { Id = Guid.NewGuid(), Code = "Instruction", Libelle = "En cours d'instruction" },
+            new Statut { Id = Guid.NewGuid(), Code = "ApprobationInstruction", Libelle = "Envoyé pour approbation" },
+            new Statut { Id = Guid.NewGuid(), Code = "InstructionApprouve", Libelle = "Instruction Approuvée" },
+            new Statut { Id = Guid.NewGuid(), Code = "DevisEmis", Libelle = "Devis émis" },
+            new Statut { Id = Guid.NewGuid(), Code = "DevisValide", Libelle = "Devis validé par client" },
+            new Statut { Id = Guid.NewGuid(), Code = "DevisRejete", Libelle = "Devis refusé par client" },
+            new Statut { Id = Guid.NewGuid(), Code = "DevisPaiement", Libelle = "Approuvé, en attente de paiement" },
+            new Statut { Id = Guid.NewGuid(), Code = "PaiementRejete", Libelle = "Paiement non accepté" },
+            new Statut { Id = Guid.NewGuid(), Code = "PaiementExpire", Libelle = "Paiement expiré" },
+            new Statut { Id = Guid.NewGuid(), Code = "DossierPaye", Libelle = "Paiement effectué" },
+            new Statut { Id = Guid.NewGuid(), Code = "DossierSignature", Libelle = "Attestation en signature" },
+            new Statut { Id = Guid.NewGuid(), Code = "DossierSigne", Libelle = "Attestation signée" }
         );
     }
 }

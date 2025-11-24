@@ -1,6 +1,32 @@
 [
   {
     "ContainingType": "FrontOffice.Api.Controllers.AuthenticationController",
+    "Method": "ChangePassword",
+    "RelativePath": "api/auth/change-password",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "FrontOffice.Application.Features.Authentication.Commands.ChangePassword.ChangePasswordCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.AuthenticationController",
     "Method": "ConfirmAccount",
     "RelativePath": "api/auth/confirm-account",
     "HttpMethod": "POST",
@@ -105,6 +131,26 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "FrontOffice.Api.Controllers.AuthenticationController",
+    "Method": "ResendOtp",
+    "RelativePath": "api/auth/resend-otp",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "FrontOffice.Api.Controllers.ClientsController",
     "Method": "UpdateClientContact",
     "RelativePath": "api/clients/{clientId}/contact",
@@ -150,6 +196,32 @@
           "text/json"
         ],
         "StatusCode": 404
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.ClientsController",
+    "Method": "UpdateClientProfile",
+    "RelativePath": "api/clients/profile",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "FrontOffice.Application.Features.Clients.Commands.UpdateClientProfile.UpdateClientProfileCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FrontOffice.Application.Common.DTOs.ClientProfileDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
       }
     ]
   },
@@ -353,50 +425,6 @@
   },
   {
     "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
-    "Method": "GetPaiementEnAttenteForDossier",
-    "RelativePath": "api/dossiers/{dossierId}/paiement-en-attente",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "dossierId",
-        "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "FrontOffice.Application.Features.Demandes.Queries.GetPaiementsEnAttente.PaiementEnAttenteDto",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 404
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 401
-      }
-    ]
-  },
-  {
-    "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
     "Method": "GetDossiersOverview",
     "RelativePath": "api/dossiers/apercu",
     "HttpMethod": "GET",
@@ -406,6 +434,26 @@
     "ReturnTypes": [
       {
         "Type": "FrontOffice.Application.Features.Demandes.Queries.GetDemandesOverview.DemandesOverviewDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
+    "Method": "GetPaiementsEnAttenteList",
+    "RelativePath": "api/dossiers/paiements-en-attente",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[FrontOffice.Application.Features.Demandes.Queries.GetPaiementsEnAttente.PaiementEnAttenteDto, FrontOffice.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

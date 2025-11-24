@@ -1,13 +1,30 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36705.20 d17.14
+VisualStudioVersion = 17.14.36705.20
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackOffice.Domain", "BackOffice.Domain\BackOffice.Domain.csproj", "{4919E9E7-E831-4541-BE61-6C3DCF45EF38}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{7CDDE51B-D840-41CB-A88A-AD4A7A465900}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Projet ARPCE\Architecture_ASPNET_Kafka_Docker_ARPCE.docx = ..\..\..\..\Projet ARPCE\Architecture_ASPNET_Kafka_Docker_ARPCE.docx
+		..\..\..\..\Projet ARPCE\Documents\Document officiel de La Loi de Finance 2023 utilisé par l'ARPCE.pdf = ..\..\..\..\Projet ARPCE\Documents\Document officiel de La Loi de Finance 2023 utilisé par l'ARPCE.pdf
+		..\..\..\..\Projet ARPCE\Documents\Et voici la lettre d'homologation remis dans le cas où l'équipement n'est pas homologable.pdf = ..\..\..\..\Projet ARPCE\Documents\Et voici la lettre d'homologation remis dans le cas où l'équipement n'est pas homologable.pdf
+		..\..\..\..\Projet ARPCE\Documents\ETAT DE FACTURATION_CONGOREP DH 1348 du 29.10.2025.xlsx = ..\..\..\..\Projet ARPCE\Documents\ETAT DE FACTURATION_CONGOREP DH 1348 du 29.10.2025.xlsx
+		..\..\..\..\Projet ARPCE\Documents\Ici un autre exemple de demande d'homologation ayant plusieurs équipements.pdf = ..\..\..\..\Projet ARPCE\Documents\Ici un autre exemple de demande d'homologation ayant plusieurs équipements.pdf
+		..\..\..\..\Projet ARPCE\Documents\Le dossier d'homologation comprenant une lettre de demande d'homologation, le formulaire de demande d'homologation ainsi qu'une fiche technique jointe au dossier..pdf = ..\..\..\..\Projet ARPCE\Documents\Le dossier d'homologation comprenant une lettre de demande d'homologation, le formulaire de demande d'homologation ainsi qu'une fiche technique jointe au dossier..pdf
+		..\..\..\..\Projet ARPCE\Documents\modelisation.jpg = ..\..\..\..\Projet ARPCE\Documents\modelisation.jpg
+		..\..\..\..\Projet ARPCE\Documents\Preuve de paiement CREP DH 1325.pdf = ..\..\..\..\Projet ARPCE\Documents\Preuve de paiement CREP DH 1325.pdf
+		..\..\..\..\Projet ARPCE\Réunion ARPCE - CDS_v1.1.docx = ..\..\..\..\Projet ARPCE\Réunion ARPCE - CDS_v1.1.docx
+		..\..\..\..\Projet ARPCE\Documents\Schéma évolution statut d'une demande.pdf = ..\..\..\..\Projet ARPCE\Documents\Schéma évolution statut d'une demande.pdf
+		..\..\..\..\Projet ARPCE\Documents\script complet.txt = ..\..\..\..\Projet ARPCE\Documents\script complet.txt
+		..\..\..\..\Projet ARPCE\Documents\script types utilisateurs.txt = ..\..\..\..\Projet ARPCE\Documents\script types utilisateurs.txt
+		..\..\..\..\Projet ARPCE\Documents\script vues sur tables de base.txt = ..\..\..\..\Projet ARPCE\Documents\script vues sur tables de base.txt
+		..\..\..\..\Projet ARPCE\Documents\shema.jpg = ..\..\..\..\Projet ARPCE\Documents\shema.jpg
+		C:\Users\Lenovo\Downloads\Status d’une demande _ mot clé.pdf = C:\Users\Lenovo\Downloads\Status d’une demande _ mot clé.pdf
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2A653440-CC3D-4555-B4C2-4F80914C0119}"
 EndProject

@@ -17,7 +17,16 @@ public class Demande
     public int? QuantiteEquipements { get; set; }
     public string? ContactNom { get; set; }
     public string? ContactEmail { get; set; }
-
+    /// <summary>
+    /// Prix unitaire de l'homologation pour ce type d'équipement.
+    /// Renseigné par l'agent du Back Office lors de l'instruction.
+    /// </summary>
+    public decimal? PrixUnitaire { get; set; }
+    /// <summary>
+    /// Pourcentage de remise appliqué sur cet équipement.
+    /// Renseigné par l'agent du Back Office.
+    /// </summary>
+    public decimal? Remise { get; set; }
     public virtual Dossier Dossier { get; set; }
     public virtual CategorieEquipement? CategorieEquipement { get; set; }
     public virtual MotifRejet? MotifRejet { get; set; }

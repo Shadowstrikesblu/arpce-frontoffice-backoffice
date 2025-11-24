@@ -205,6 +205,83 @@
         }
       }
     },
+    "/api/auth/change-password": {
+      "patch": {
+        "tags": [
+          "Authentication"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/resend-otp": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/clients/{clientId}/contact": {
       "patch": {
         "tags": [
@@ -304,6 +381,54 @@
         }
       }
     },
+    "/api/clients/profile": {
+      "patch": {
+        "tags": [
+          "Clients"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateClientProfileCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateClientProfileCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateClientProfileCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientProfileDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientProfileDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientProfileDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/dossiers/apercu": {
       "get": {
         "tags": [
@@ -333,21 +458,10 @@
         }
       }
     },
-    "/api/dossiers/{dossierId}/paiement-en-attente": {
+    "/api/dossiers/paiements-en-attente": {
       "get": {
         "tags": [
           "Dossiers"
-        ],
-        "parameters": [
-          {
-            "name": "dossierId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -355,57 +469,26 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PaiementEnAttenteDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PaiementEnAttenteDto"
+                  }
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PaiementEnAttenteDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PaiementEnAttenteDto"
+                  }
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PaiementEnAttenteDto"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PaiementEnAttenteDto"
+                  }
                 }
               }
             }
@@ -795,6 +878,20 @@
         },
         "additionalProperties": false
       },
+      "ChangePasswordCommand": {
+        "type": "object",
+        "properties": {
+          "ancienMotDePasse": {
+            "type": "string",
+            "nullable": true
+          },
+          "nouveauMotDePasse": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ClientContactDto": {
         "type": "object",
         "properties": {
@@ -811,6 +908,48 @@
             "nullable": true
           },
           "contactFonction": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClientProfileDto": {
+        "type": "object",
+        "properties": {
+          "raisonSociale": {
+            "type": "string",
+            "nullable": true
+          },
+          "registreCommerce": {
+            "type": "string",
+            "nullable": true
+          },
+          "contactNom": {
+            "type": "string",
+            "nullable": true
+          },
+          "contactTelephone": {
+            "type": "string",
+            "nullable": true
+          },
+          "contactFonction": {
+            "type": "string",
+            "nullable": true
+          },
+          "adresse": {
+            "type": "string",
+            "nullable": true
+          },
+          "bp": {
+            "type": "string",
+            "nullable": true
+          },
+          "ville": {
+            "type": "string",
+            "nullable": true
+          },
+          "pays": {
             "type": "string",
             "nullable": true
           }
@@ -868,9 +1007,44 @@
             "type": "string",
             "nullable": true
           },
+          "codeClient": {
+            "type": "string",
+            "nullable": true
+          },
+          "registreCommerce": {
+            "type": "string",
+            "nullable": true
+          },
           "contactNom": {
             "type": "string",
             "nullable": true
+          },
+          "contactTelephone": {
+            "type": "string",
+            "nullable": true
+          },
+          "contactFonction": {
+            "type": "string",
+            "nullable": true
+          },
+          "adresse": {
+            "type": "string",
+            "nullable": true
+          },
+          "bp": {
+            "type": "string",
+            "nullable": true
+          },
+          "ville": {
+            "type": "string",
+            "nullable": true
+          },
+          "pays": {
+            "type": "string",
+            "nullable": true
+          },
+          "isVerified": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -1113,7 +1287,8 @@
           },
           "idModeReglement": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "nullable": true
           },
           "dateOuverture": {
             "type": "string",
@@ -1216,7 +1391,7 @@
             "type": "string",
             "format": "date-time"
           },
-          "modeReglementLibelle": {
+          "numeroDossier": {
             "type": "string",
             "nullable": true
           }
@@ -1306,6 +1481,48 @@
             "nullable": true
           },
           "contactFonction": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateClientProfileCommand": {
+        "type": "object",
+        "properties": {
+          "raisonSociale": {
+            "type": "string",
+            "nullable": true
+          },
+          "registreCommerce": {
+            "type": "string",
+            "nullable": true
+          },
+          "contactNom": {
+            "type": "string",
+            "nullable": true
+          },
+          "contactTelephone": {
+            "type": "string",
+            "nullable": true
+          },
+          "contactFonction": {
+            "type": "string",
+            "nullable": true
+          },
+          "adresse": {
+            "type": "string",
+            "nullable": true
+          },
+          "bp": {
+            "type": "string",
+            "nullable": true
+          },
+          "ville": {
+            "type": "string",
+            "nullable": true
+          },
+          "pays": {
             "type": "string",
             "nullable": true
           }

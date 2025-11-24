@@ -40,8 +40,9 @@ public class DossierConfiguration : IEntityTypeConfiguration<Dossier>
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(d => d.ModeReglement)
-            .WithMany() 
+            .WithMany()
             .HasForeignKey(d => d.IdModeReglement)
+            .IsRequired(false) 
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne<AdminUtilisateur>() 

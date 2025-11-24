@@ -1,4 +1,4 @@
-﻿using FrontOffice.Application.Common.DTOs; 
+﻿using FrontOffice.Application.Common.DTOs;
 using FrontOffice.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -28,12 +28,14 @@ public class GetDossiersRecentsQueryHandler : IRequestHandler<GetDossiersRecents
             .Where(d => d.IdClient == userId.Value)
             .Include(d => d.Statut)
             .Include(d => d.Demandes)
+            .OrderByDescending(d => d.DateOuverture) 
             .Select(d => new DossierRecentItemDto
             {
                 Id = d.Id,
                 IdClient = d.IdClient,
                 IdStatut = d.IdStatut,
                 IdModeReglement = d.IdModeReglement,
+
                 DateOuverture = d.DateOuverture,
                 Numero = d.Numero,
                 Libelle = d.Libelle,

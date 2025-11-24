@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using System.Text.Json.Serialization; 
+using System.Text.Json.Serialization;
 
 namespace BackOffice.Application.Features.Dossiers.Commands.ValidateInstruction;
 
