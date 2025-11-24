@@ -50,20 +50,33 @@ public class DossiersController : ControllerBase
     /// </summary>
     /// <param name="dossierId">L'identifiant du dossier à vérifier.</param>
     /// <returns>Les détails du paiement en attente.</returns>
-    [HttpGet("{dossierId:guid}/paiement-en-attente")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaiementEnAttenteDto))]
-    [ProducesResponseType(StatusCodes.Status404NotFound)] 
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<IActionResult> GetPaiementEnAttenteForDossier(Guid dossierId)
+    //[HttpGet("{dossierId:guid}/paiement-en-attente")]
+    //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaiementEnAttenteDto))]
+    //[ProducesResponseType(StatusCodes.Status404NotFound)] 
+    //[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    //public async Task<IActionResult> GetPaiementEnAttenteForDossier(Guid dossierId)
+    //{
+    //    var query = new GetPaiementEnAttenteByDossierQuery(dossierId);
+    //    var result = await _mediator.Send(query);
+
+    //    if (result == null)
+    //    {
+    //        return NotFound(new { message = "Aucun paiement en attente trouvé pour ce dossier." });
+    //    }
+
+    //    return Ok(result);
+    //}
+
+
+    /// <summary>
+    /// Récupère la liste de tous les paiements en attente pour le client connecté (tous dossiers confondus).
+    /// </summary>
+    [HttpGet("paiements-en-attente")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<PaiementEnAttenteDto>))]
+    public async Task<IActionResult> GetPaiementsEnAttenteList()
     {
-        var query = new GetPaiementEnAttenteByDossierQuery(dossierId);
-        var result = await _mediator.Send(query);
-
-        if (result == null)
-        {
-            return NotFound(new { message = "Aucun paiement en attente trouvé pour ce dossier." });
-        }
-
+        // Utilise la Query qui retourne une liste
+        var result = await _mediator.Send(new GetPaiementsEnAttenteListQuery());
         return Ok(result);
     }
 

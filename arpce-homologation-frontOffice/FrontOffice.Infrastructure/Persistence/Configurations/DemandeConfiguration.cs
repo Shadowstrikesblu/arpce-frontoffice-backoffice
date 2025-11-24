@@ -21,5 +21,7 @@ public class DemandeConfiguration : IEntityTypeConfiguration<Demande>
         builder.HasOne(d => d.CategorieEquipement).WithMany().HasForeignKey(d => d.IdCategorie).OnDelete(DeleteBehavior.Restrict);
         builder.HasOne(d => d.MotifRejet).WithMany().HasForeignKey(d => d.IdMotifRejet).OnDelete(DeleteBehavior.Restrict);
         builder.HasOne(d => d.Proposition).WithMany().HasForeignKey(d => d.IdProposition).OnDelete(DeleteBehavior.Restrict);
+        builder.Property(d => d.PrixUnitaire).HasColumnType("money"); 
+        builder.Property(d => d.Remise).HasColumnType("decimal(5, 2)");
     }
 }

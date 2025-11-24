@@ -24,9 +24,9 @@ public class PaiementEnAttenteDto
     /// Date limite pour effectuer le paiement.
     /// </summary>
     public DateTime DateEcheance { get; set; } 
-
+    public string NumeroDossier { get; set; }= string.Empty;
     /// <summary>
     /// Mode de règlement choisi pour ce dossier.
     /// </summary>
-    public string ModeReglementLibelle { get; set; } = string.Empty; 
+    //public string ModeReglementLibelle { get; set; } = string.Empty; 
 }

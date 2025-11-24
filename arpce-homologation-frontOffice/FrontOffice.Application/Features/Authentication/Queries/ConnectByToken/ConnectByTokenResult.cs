@@ -1,32 +1,20 @@
 ﻿namespace FrontOffice.Application.Features.Authentication.Queries.ConnectByToken;
 
-/// <summary>
-/// Représente le résultat d'une validation de session réussie via un token.
-/// </summary>
 public class ConnectByTokenResult
 {
-    /// <summary>
-    /// Message de succès.
-    /// </summary>
     public string Message { get; set; } = string.Empty;
-
-    /// <summary>
-    /// L'identifiant de l'utilisateur connecté.
-    /// </summary>
     public Guid UserId { get; set; }
-
-    /// <summary>
-    /// L'adresse e-mail de l'utilisateur.
-    /// </summary>
     public string Email { get; set; } = string.Empty;
-
-    /// <summary>
-    /// La raison sociale de l'utilisateur.
-    /// </summary>
     public string RaisonSociale { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Le nom du contact de l'utilisateur.
-    /// </summary>
+    public string? CodeClient { get; set; }
+    public string? RegistreCommerce { get; set; }
     public string? ContactNom { get; set; }
+    public string? ContactTelephone { get; set; }
+    public string? ContactFonction { get; set; }
+    public string? Adresse { get; set; }
+    public string? Bp { get; set; }
+    public string? Ville { get; set; }
+    public string? Pays { get; set; }
+    // IsVerified, etc. peuvent être utiles aussi
+    public bool IsVerified { get; set; }
 }

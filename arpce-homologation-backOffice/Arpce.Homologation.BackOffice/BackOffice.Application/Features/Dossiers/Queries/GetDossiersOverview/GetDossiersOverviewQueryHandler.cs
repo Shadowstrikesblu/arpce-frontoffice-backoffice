@@ -1,5 +1,6 @@
 ﻿using BackOffice.Application.Common.Interfaces;
 using BackOffice.Domain.Enums;
+using FrontOffice.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,30 +17,44 @@ public class GetDossiersOverviewQueryHandler : IRequestHandler<GetDossiersOvervi
 
     public async Task<DossiersOverviewDto> Handle(GetDossiersOverviewQuery request, CancellationToken cancellationToken)
     {
-        // Définition des codes de statut.
-        var statutSuccessCode = StatutDossierEnum.ApprouveAttestationSignee.ToString();
-        var statutFailedCode = StatutDossierEnum.Rejetee.ToString();
-        var statutInProgressCodes = new[]
-        {
-            StatutDossierEnum.NouvelleDemande.ToString(),
-            StatutDossierEnum.EnCoursInstruction.ToString(),
-            StatutDossierEnum.EnvoyePourApprobation.ToString(),
-            StatutDossierEnum.ApprouveAttentePaiement.ToString(),
-            StatutDossierEnum.ApprouvePaiementEffectue.ToString()
-        };
-
         var allDossiersQuery = _context.Dossiers.AsNoTracking();
 
+        // Succès : "DossierSigne" (Attestation signée, le processus est fini avec succès)
+        var statutSuccessCode = StatutDossierEnum.DossierSigne.ToString();
+
+        // Échec : "DevisRejete" ou "PaiementRejete" (On peut aussi inclure "PaiementExpire" si considéré comme échec définitif)
+        var statutsFailedCodes = new[]
+        {
+            StatutDossierEnum.DevisRejete.ToString(),
+            StatutDossierEnum.PaiementRejete.ToString(),
+            StatutDossierEnum.PaiementExpire.ToString()
+        };
+
+        // En cours : Tout le reste
+        var statutsInProgressCodes = new[]
+        {
+            StatutDossierEnum.NouveauDossier.ToString(),
+            StatutDossierEnum.Instruction.ToString(),
+            StatutDossierEnum.ApprobationInstruction.ToString(),
+            StatutDossierEnum.InstructionApprouve.ToString(),
+            StatutDossierEnum.DevisEmis.ToString(),
+            StatutDossierEnum.DevisValide.ToString(),
+            StatutDossierEnum.DevisPaiement.ToString(),
+            StatutDossierEnum.DossierPaye.ToString(),
+            StatutDossierEnum.DossierSignature.ToString()
+        };
+
+        // Requêtes séquentielles
         var total = await allDossiersQuery.CountAsync(cancellationToken);
 
         var success = await allDossiersQuery
             .CountAsync(d => d.Statut.Code == statutSuccessCode, cancellationToken);
 
         var failed = await allDossiersQuery
-            .CountAsync(d => d.Statut.Code == statutFailedCode, cancellationToken);
+            .CountAsync(d => statutsFailedCodes.Contains(d.Statut.Code), cancellationToken);
 
         var inProgress = await allDossiersQuery
-            .CountAsync(d => statutInProgressCodes.Contains(d.Statut.Code), cancellationToken);
+            .CountAsync(d => d.Statut != null && statutsInProgressCodes.Contains(d.Statut.Code), cancellationToken);
 
         return new DossiersOverviewDto
         {

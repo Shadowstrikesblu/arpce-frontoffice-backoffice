@@ -733,8 +733,14 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
 
+                    b.Property<decimal?>("PrixUnitaire")
+                        .HasColumnType("money");
+
                     b.Property<int?>("QuantiteEquipements")
                         .HasColumnType("int");
+
+                    b.Property<decimal?>("Remise")
+                        .HasColumnType("decimal(5, 2)");
 
                     b.Property<string>("Type")
                         .HasMaxLength(120)
@@ -838,7 +844,7 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Property<Guid>("IdClient")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("IdModeReglement")
+                    b.Property<Guid?>("IdModeReglement")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdStatut")
@@ -915,28 +921,44 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("6d80eb16-97fc-43ec-bf5f-bfc0a48a8b40"),
+=======
+                            Id = new Guid("0bf1ff70-a6ca-4974-a7a3-fd089af3c35f"),
+>>>>>>> 40fde6885e14a5236c4a4cf73d50f4fa1f30e52c
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("c67397f6-b926-445e-9919-4d5c3dc89093"),
+=======
+                            Id = new Guid("ad7797ee-0523-446f-8422-1525be198072"),
+>>>>>>> 40fde6885e14a5236c4a4cf73d50f4fa1f30e52c
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("8746bbce-d9c8-4aad-baa0-2fd13ff37d9a"),
+=======
+                            Id = new Guid("f26969c0-749f-4294-b48b-38075cd86ba8"),
+>>>>>>> 40fde6885e14a5236c4a4cf73d50f4fa1f30e52c
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("34343348-4535-4745-93b5-78dc23c989b3"),
+=======
+                            Id = new Guid("90a866cc-96fa-4795-8240-6e215a897158"),
+>>>>>>> 40fde6885e14a5236c4a4cf73d50f4fa1f30e52c
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1
@@ -1026,30 +1048,75 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("9ba6d657-01c1-46d2-ba1c-7e3681d4f12e"),
                             Code = "NouvelleDemande",
+=======
+                            Id = new Guid("744ef21b-ed56-4544-91d7-37b25d505557"),
+                            Code = "NouveauDossier",
+>>>>>>> 40fde6885e14a5236c4a4cf73d50f4fa1f30e52c
                             Libelle = "Nouvelle demande"
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("200f0b99-d446-44b0-9833-32cceb7a4a91"),
                             Code = "EnCoursInstruction",
+=======
+                            Id = new Guid("b79d198d-44aa-4ea6-97da-e578eaf9b337"),
+                            Code = "Instruction",
+>>>>>>> 40fde6885e14a5236c4a4cf73d50f4fa1f30e52c
                             Libelle = "En cours d'instruction"
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("9d62cb00-b885-4e98-8090-b9b48efcf1c1"),
                             Code = "EnvoyePourApprobation",
+=======
+                            Id = new Guid("4b556c15-a679-4c8f-96bf-ecfae00e35cd"),
+                            Code = "ApprobationInstruction",
+>>>>>>> 40fde6885e14a5236c4a4cf73d50f4fa1f30e52c
                             Libelle = "Envoyé pour approbation"
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("f2327e5b-3364-4a22-b5f7-5e081d6c5d6e"),
                             Code = "ApprouveAttentePaiement",
+=======
+                            Id = new Guid("162808ce-750e-4f77-8d52-6af3cd88b8bf"),
+                            Code = "InstructionApprouve",
+                            Libelle = "Instruction Approuvée"
+                        },
+                        new
+                        {
+                            Id = new Guid("9e1309d3-ccac-4b9a-a10d-4d0df879c01d"),
+                            Code = "DevisEmis",
+                            Libelle = "Devis émis"
+                        },
+                        new
+                        {
+                            Id = new Guid("e6a7678c-ab3b-4be3-997e-f26df0cd0611"),
+                            Code = "DevisValide",
+                            Libelle = "Devis validé par client"
+                        },
+                        new
+                        {
+                            Id = new Guid("07d62a2e-4b44-4f6b-aef0-9fd258a97a48"),
+                            Code = "DevisRejete",
+                            Libelle = "Devis refusé par client"
+                        },
+                        new
+                        {
+                            Id = new Guid("a0f01c2d-a3d5-4672-82d0-2c96b970896c"),
+                            Code = "DevisPaiement",
+>>>>>>> 40fde6885e14a5236c4a4cf73d50f4fa1f30e52c
                             Libelle = "Approuvé, en attente de paiement"
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("b2ed740f-28e7-4be1-85c8-9b62267d0c60"),
                             Code = "Rejetee",
                             Libelle = "Rejetée"
@@ -1077,6 +1144,35 @@ namespace FrontOffice.Infrastructure.Migrations
                             Id = new Guid("c98e3ed2-d7ae-47dd-b8bf-1332b93bcc1d"),
                             Code = "AnnulationInstruction",
                             Libelle = "Annulation de l'instruction"
+=======
+                            Id = new Guid("3fc66892-4e18-4d40-b21d-dcc87187329f"),
+                            Code = "PaiementRejete",
+                            Libelle = "Paiement non accepté"
+                        },
+                        new
+                        {
+                            Id = new Guid("9eda69e7-867c-4931-a6a8-ff852481992e"),
+                            Code = "PaiementExpire",
+                            Libelle = "Paiement expiré"
+                        },
+                        new
+                        {
+                            Id = new Guid("6a639062-cf81-4936-897e-b87131fc35e2"),
+                            Code = "DossierPaye",
+                            Libelle = "Paiement effectué"
+                        },
+                        new
+                        {
+                            Id = new Guid("37524274-de9e-488b-84a0-fd429a6addf2"),
+                            Code = "DossierSignature",
+                            Libelle = "Attestation en signature"
+                        },
+                        new
+                        {
+                            Id = new Guid("01c56870-eb14-46c9-88d5-c624838ffcd4"),
+                            Code = "DossierSigne",
+                            Libelle = "Attestation signée"
+>>>>>>> 40fde6885e14a5236c4a4cf73d50f4fa1f30e52c
                         });
                 });
 
@@ -1241,8 +1337,7 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasOne("FrontOffice.Domain.Entities.ModeReglement", "ModeReglement")
                         .WithMany()
                         .HasForeignKey("IdModeReglement")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("FrontOffice.Domain.Entities.Statut", "Statut")
                         .WithMany()

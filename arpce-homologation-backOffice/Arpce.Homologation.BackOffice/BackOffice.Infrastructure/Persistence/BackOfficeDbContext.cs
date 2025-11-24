@@ -44,6 +44,9 @@ public class BackOfficeDbContext : DbContext, IApplicationDbContext
     public DbSet<AdminReporting> AdminReportings { get; set; } = default!;
     public DbSet<AdminUtilisateur> AdminUtilisateurs { get; set; } = default!;
     public DbSet<AdminUtilisateurTypes> AdminUtilisateurTypes { get; set; } = default!;
+    public DbSet<AdminProfils> AdminProfils { get; set; } = default!;
+    public DbSet<AdminProfilsAcces> AdminProfilsAcces { get; set; } = default!;
+    public DbSet<AdminProfilsUtilisateursLDAP> AdminProfilsUtilisateursLDAP { get; set; } = default!;
 
     // Entités Communes et liées aux dossiers d'homologation (similaires au Front Office)
     public DbSet<Attestation> Attestations { get; set; } = default!;

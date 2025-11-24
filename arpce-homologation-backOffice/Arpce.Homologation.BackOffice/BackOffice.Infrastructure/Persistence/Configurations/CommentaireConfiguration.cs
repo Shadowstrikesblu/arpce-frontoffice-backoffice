@@ -4,51 +4,23 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BackOffice.Infrastructure.Persistence.Configurations;
 
-/// <summary>
-/// Configuration EF Core pour l'entité Demande (représente un équipement à homologuer).
-/// </summary>
-public class DemandeConfiguration : IEntityTypeConfiguration<Demande>
+public class CommentaireConfiguration : IEntityTypeConfiguration<Commentaire>
 {
-    public void Configure(EntityTypeBuilder<Demande> builder)
+    public void Configure(EntityTypeBuilder<Commentaire> builder)
     {
-        builder.ToTable("demandes"); 
+        builder.ToTable("commentaires");
+        builder.HasKey(c => c.Id);
+        builder.Property(c => c.DateCommentaire).HasColumnType("datetime").IsRequired();
+        builder.Property(c => c.CommentaireTexte).HasColumnName("commentaire").HasMaxLength(512);
+        builder.Property(c => c.NomInstructeur).HasMaxLength(60);
+        builder.Property(c => c.Proposition).HasMaxLength(512);
 
-        builder.HasKey(d => d.Id);
-
-        builder.Property(d => d.NumeroDemande).HasMaxLength(12);
-        builder.Property(d => d.Equipement).HasMaxLength(120);
-        builder.Property(d => d.Modele).HasMaxLength(120);
-        builder.Property(d => d.Marque).HasMaxLength(120);
-        builder.Property(d => d.Fabricant).HasMaxLength(120);
-        builder.Property(d => d.Type).HasMaxLength(120);
-        builder.Property(d => d.Description).HasMaxLength(512);
-        builder.Property(d => d.ContactNom).HasMaxLength(60);
-        builder.Property(d => d.ContactEmail).HasMaxLength(60);
-        builder.Property(d => d.QuantiteEquipements).HasColumnType("int");
-
-        // Définition des relations
-        builder.HasOne(d => d.Dossier)
-            .WithMany(dossier => dossier.Demandes)
-            .HasForeignKey(c => c.IdDossier) 
+        builder.HasOne(c => c.Dossier)
+            .WithMany(d => d.Commentaires)
+            .HasForeignKey(c => c.IdDossier)
             .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade); 
+            .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne(d => d.CategorieEquipement)
-            .WithMany() 
-            .HasForeignKey(d => d.IdCategorie)
-            .OnDelete(DeleteBehavior.Restrict); 
-
-        builder.HasOne(d => d.MotifRejet)
-            .WithMany()
-            .HasForeignKey(d => d.IdMotifRejet)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        builder.HasOne(d => d.Proposition)
-            .WithMany()
-            .HasForeignKey(d => d.IdProposition)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        // Champs d'audit hérités de AuditableEntity
         builder.Property(c => c.UtilisateurCreation).HasMaxLength(60);
         builder.Property(c => c.DateCreation).HasColumnType("datetime");
         builder.Property(c => c.UtilisateurModification).HasMaxLength(60);

@@ -25,6 +25,7 @@ public class DossierConfiguration : IEntityTypeConfiguration<Dossier>
         builder.HasOne(d => d.ModeReglement)
             .WithMany()
             .HasForeignKey(d => d.IdModeReglement)
+            .IsRequired(false) 
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

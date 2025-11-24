@@ -1,6 +1,8 @@
 ﻿using FrontOffice.Application.Features.Authentication;
+using FrontOffice.Application.Features.Authentication.Commands.ChangePassword;
 using FrontOffice.Application.Features.Authentication.Commands.ConfirmAccount;
 using FrontOffice.Application.Features.Authentication.Commands.Register;
+using FrontOffice.Application.Features.Authentication.Commands.ResendOtp;
 using FrontOffice.Application.Features.Authentication.Queries.ConnectByToken;
 using FrontOffice.Application.Features.Authentication.Queries.Login; // Ajout du using
 using MediatR;
@@ -62,5 +64,22 @@ public class AuthenticationController : ControllerBase
         var query = new ConnectByTokenQuery();
         var result = await _mediator.Send(query);
         return Ok(result);
+    }
+    [HttpPatch("change-password")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+    public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(new { ok = result });
+    }
+
+    [HttpPost("resend-otp")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+    public async Task<IActionResult> ResendOtp()
+    {
+        var result = await _mediator.Send(new ResendOtpCommand());
+        return Ok(new { ok = result });
     }
 }

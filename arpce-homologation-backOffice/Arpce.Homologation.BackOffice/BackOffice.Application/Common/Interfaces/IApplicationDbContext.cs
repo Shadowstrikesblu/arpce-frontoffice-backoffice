@@ -16,10 +16,10 @@ public interface IApplicationDbContext
     DbSet<AdminConnexions> AdminConnexions { get; }
     DbSet<AdminEvenementsTypes> AdminEvenementsTypes { get; }
     DbSet<AdminJournal> AdminJournals { get; }
-    DbSet<AdminOptions> AdminOptions { get; } 
-    // DbSet<AdminProfil> AdminProfils { get; } 
-    // DbSet<AdminProfilsAcces> AdminProfilsAcces { get; } 
-    // DbSet<AdminProfilsUtilisateursLDAP> AdminProfilsUtilisateursLDAP { get; } 
+    DbSet<AdminOptions> AdminOptions { get; }
+    DbSet<AdminProfils> AdminProfils { get; }
+    DbSet<AdminProfilsAcces> AdminProfilsAcces { get; }
+    DbSet<AdminProfilsUtilisateursLDAP> AdminProfilsUtilisateursLDAP { get; }
     DbSet<AdminReporting> AdminReportings { get; }
     DbSet<AdminUtilisateur> AdminUtilisateurs { get; }
     DbSet<AdminUtilisateurTypes> AdminUtilisateurTypes { get; }

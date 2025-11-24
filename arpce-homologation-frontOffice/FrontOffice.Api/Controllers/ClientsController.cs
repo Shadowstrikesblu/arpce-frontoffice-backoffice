@@ -1,5 +1,6 @@
 ﻿using FrontOffice.Application.Common.DTOs;
 using FrontOffice.Application.Features.Clients.Commands.UpdateClientContact;
+using FrontOffice.Application.Features.Clients.Commands.UpdateClientProfile;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -40,6 +41,14 @@ public class ClientsController : ControllerBase
 
         var result = await _mediator.Send(command);
 
+        return Ok(result);
+    }
+
+    [HttpPatch("profile")] 
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClientProfileDto))]
+    public async Task<IActionResult> UpdateClientProfile([FromBody] UpdateClientProfileCommand command)
+    {
+        var result = await _mediator.Send(command);
         return Ok(result);
     }
 }

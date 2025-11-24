@@ -1,24 +1,19 @@
 ﻿using BackOffice.Application.Common.Interfaces;
 using BackOffice.Domain.Entities;
 using BackOffice.Domain.Enums;
+using FrontOffice.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BackOffice.Application.Features.Dossiers.Commands.ValidateInstruction;
 
-/// <summary>
-/// Gère la logique de la commande pour valider l'instruction d'un dossier.
-/// </summary>
 public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstructionCommand, bool>
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _currentUserService;
     private readonly ILogger<ValidateInstructionCommandHandler> _logger;
 
-    /// <summary>
-    /// Initialise une nouvelle instance du handler.
-    /// </summary>
     public ValidateInstructionCommandHandler(
         IApplicationDbContext context,
         ICurrentUserService currentUserService,
@@ -29,11 +24,6 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
         _logger = logger;
     }
 
-    /// <summary>
-    /// Exécute la logique de validation d'instruction.
-    /// </summary>
-    /// <exception cref="UnauthorizedAccessException">Levée si l'utilisateur n'est pas authentifié.</exception>
-    /// <exception cref="Exception">Levée si le dossier est introuvable ou n'est pas dans un état valide pour cette action.</exception>
     public async Task<bool> Handle(ValidateInstructionCommand request, CancellationToken cancellationToken)
     {
         var agentId = _currentUserService.UserId;
@@ -42,9 +32,8 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
             throw new UnauthorizedAccessException("Accès non autorisé. L'authentification de l'agent est requise.");
         }
 
-        // Récupére le dossier à valider.
         var dossier = await _context.Dossiers
-            .Include(d => d.Statut) 
+            .Include(d => d.Statut)
             .FirstOrDefaultAsync(d => d.Id == request.DossierId, cancellationToken);
 
         if (dossier == null)
@@ -52,28 +41,24 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
             throw new Exception($"Le dossier avec l'ID '{request.DossierId}' est introuvable.");
         }
 
-        // Vérifie si le dossier est dans un statut approprié pour être validé.
-        if (dossier.Statut?.Code != StatutDossierEnum.EnCoursInstruction.ToString())
+        if (dossier.Statut?.Code != StatutDossierEnum.Instruction.ToString())
         {
-            throw new InvalidOperationException($"L'opération de validation n'est pas autorisée pour un dossier avec le statut '{dossier.Statut?.Libelle}'. Le dossier doit être 'En cours d'instruction'.");
+            throw new InvalidOperationException($"L'opération de validation n'est pas autorisée. Le dossier est actuellement au statut '{dossier.Statut?.Libelle}' mais doit être 'En cours d'instruction' ({StatutDossierEnum.Instruction}).");
         }
 
-        // Récupére le nouveau statut "Envoyé pour approbation".
         var nouveauStatut = await _context.Statuts
-            .FirstOrDefaultAsync(s => s.Code == StatutDossierEnum.EnvoyePourApprobation.ToString(), cancellationToken);
+            .FirstOrDefaultAsync(s => s.Code == StatutDossierEnum.ApprobationInstruction.ToString(), cancellationToken);
 
         if (nouveauStatut == null)
         {
-            throw new Exception("Configuration système manquante : le statut 'Envoyé pour approbation' est introuvable.");
+            throw new Exception($"Configuration système manquante : le statut '{StatutDossierEnum.ApprobationInstruction}' est introuvable.");
         }
 
-        // Mettre à jour le statut du dossier.
         dossier.IdStatut = nouveauStatut.Id;
 
         _logger.LogInformation("Le statut du dossier {DossierId} a été changé à '{NouveauStatut}' par l'agent {AgentId}.",
             dossier.Id, nouveauStatut.Libelle, agentId.Value);
 
-        // Ajoute un commentaire avec la remarque de validation.
         if (!string.IsNullOrWhiteSpace(request.Remarque))
         {
             var agent = await _context.AdminUtilisateurs.FindAsync(agentId.Value);
@@ -81,13 +66,15 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
 
             var commentaire = new Commentaire
             {
+                Id = Guid.NewGuid(),
                 IdDossier = dossier.Id,
                 DateCommentaire = DateTime.UtcNow,
                 CommentaireTexte = request.Remarque,
-                NomInstructeur = nomAgent,
+                NomInstructeur = nomAgent
             };
             _context.Commentaires.Add(commentaire);
         }
+
         await _context.SaveChangesAsync(cancellationToken);
 
         return true;

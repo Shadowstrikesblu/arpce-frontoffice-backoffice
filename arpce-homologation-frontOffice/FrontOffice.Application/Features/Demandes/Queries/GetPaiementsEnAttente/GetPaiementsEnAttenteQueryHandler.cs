@@ -45,7 +45,7 @@ public class GetPaiementEnAttenteByDossierQueryHandler : IRequestHandler<GetPaie
                     NumeroDemande = d.Numero,
                     Montant = devis.MontantEtude + (devis.MontantHomologation ?? 0) + (devis.MontantControle ?? 0), // Montant total du devis
                     DateEcheance = devis.Date,
-                    ModeReglementLibelle = d.ModeReglement.Libelle
+                    //ModeReglementLibelle = d.ModeReglement.Libelle
                 })
             )
             .FirstOrDefaultAsync(cancellationToken); 

@@ -5,171 +5,142 @@ using BackOffice.Infrastructure.Persistence;
 using BackOffice.Infrastructure.Security;
 using BackOffice.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Text;
 
-// ---------------- SETUP SERILOG -------------
-Log.Logger = new LoggerConfiguration()
-    .WriteTo.Console()
-    .CreateBootstrapLogger();
+var builder = WebApplication.CreateBuilder(args);
 
-Log.Information("Démarrage du microservice BackOffice API...");
+// --- Configuration des Services ---
 
-try
+// Logique de Serilog
+builder.Host.UseSerilog((context, services, configuration) => configuration
+    .ReadFrom.Configuration(context.Configuration)
+    .ReadFrom.Services(services)
+    .Enrich.FromLogContext()
+    .WriteTo.Console());
+
+// Ajouter les contr�leurs
+builder.Services.AddControllers();
+
+// Configuration Swagger/OpenAPI
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
 {
-    var builder = WebApplication.CreateBuilder(args);
-
-    // Serilog
-    builder.Host.UseSerilog((context, services, configuration) =>
-        configuration.ReadFrom.Configuration(context.Configuration)
-                     .ReadFrom.Services(services)
-                     .Enrich.FromLogContext()
-                     .WriteTo.Console());
-
-    // Controllers + JSON
-    builder.Services.AddControllers();
-    builder.Services.AddEndpointsApiExplorer();
-
-    // Swagger configuration
-    builder.Services.AddSwaggerGen(options =>
+    options.SwaggerDoc("v1", new OpenApiInfo
     {
-        options.SwaggerDoc("v1", new OpenApiInfo
-        {
-            Title = "ARPCE Homologation - BackOffice API",
-            Version = "v1",
-            Description = "API pour la gestion interne des demandes d'homologation."
-        });
+        Title = "ARPCE Homologation - BackOffice API",
+        Version = "v1",
+        Description = "API pour la gestion des demandes d'homologation interne de ARPCE."
+    });
 
-        options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    // Configuration pour la s�curit� JWT dans Swagger
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Veuillez entrer 'Bearer' suivi d'un espace et du token JWT",
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
         {
-            In = ParameterLocation.Header,
-            Description = "Bearer {token}",
-            Name = "Authorization",
-            Type = SecuritySchemeType.ApiKey,
-            Scheme = "Bearer"
-        });
-
-        options.AddSecurityRequirement(new OpenApiSecurityRequirement
-        {
+            new OpenApiSecurityScheme
             {
-                new OpenApiSecurityScheme
+                Reference = new OpenApiReference
                 {
-                    Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
-                },
-                new string[] {}
-            }
-        });
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
+
+// Configuration de la base de donn�es
+builder.Services.AddDbContext<BackOfficeDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+        b => b.MigrationsAssembly(typeof(BackOfficeDbContext).Assembly.FullName)));
+
+builder.Services.AddScoped<IApplicationDbContext>(provider =>
+    provider.GetRequiredService<BackOfficeDbContext>());
+
+// Ajouter MediatR
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(typeof(AssemblyReference).Assembly));
+
+// Ajouter les services pour la s�curit� et l'utilisateur courant
+builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+// Configuration de l'Authentification JWT
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+            ValidAudience = builder.Configuration["JwtSettings:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
+        };
     });
 
-    // CORS
-    const string corsPolicyName = "AllowWebApp";
-    builder.Services.AddCors(options =>
-    {
-        options.AddPolicy(corsPolicyName, policy =>
-        {
-            policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-        });
-    });
-
-    // DB Context
-    builder.Services.AddDbContext<BackOfficeDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-    builder.Services.AddScoped<IApplicationDbContext>(provider =>
-        provider.GetRequiredService<BackOfficeDbContext>());
-
-    // MediatR
-    builder.Services.AddMediatR(cfg =>
-        cfg.RegisterServicesFromAssembly(typeof(AssemblyReference).Assembly));
-
-    // JWT Authentication
-    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(options =>
-        {
-            var jwtSecret = builder.Configuration["JwtSettings:Secret"];
-            var jwtIssuer = builder.Configuration["JwtSettings:Issuer"];
-            var jwtAudience = builder.Configuration["JwtSettings:Audience"];
-
-            Log.Information("BackOffice JWT - Secret: {Secret}, Issuer: {Issuer}, Audience: {Audience}",
-                            jwtSecret != null ? $"CONFIGURED (length {jwtSecret.Length})" : "NULL",
-                            jwtIssuer ?? "NULL",
-                            jwtAudience ?? "NULL");
-
-            ArgumentNullException.ThrowIfNullOrWhiteSpace(jwtSecret, "JwtSettings:Secret est manquant");
-
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-
-                ValidIssuer = jwtIssuer,
-                ValidAudience = jwtAudience,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
-            };
-        });
-
-    // Dependency Injection
-    builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
-    builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
-    builder.Services.AddHttpContextAccessor();
-    builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
-
-    // Kestrel Port
-    builder.WebHost.ConfigureKestrel(options =>
-    {
-        options.ListenAnyIP(4000);
-    });
-
-    // Build application
-    var app = builder.Build();
-
-    // Middlewares
-    app.UseMiddleware<ErrorHandlingMiddleware>();
-    app.UseSerilogRequestLogging();
-
-    // Swagger runtime enabling
-    bool enableSwagger = app.Environment.IsDevelopment() ||
-                         builder.Configuration.GetValue<bool>("EnableSwaggerUI", false);
-
-    if (enableSwagger)
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI(options =>
-        {
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "BackOffice API v1");
-            options.RoutePrefix = string.Empty;
-            options.InjectStylesheet("/css/swagger-custom.css");
-        });
-    }
-
-    // Apply migrations
-    using (var scope = app.Services.CreateScope())
-    {
-        var db = scope.ServiceProvider.GetRequiredService<BackOfficeDbContext>();
-        db.Database.Migrate();
-        Log.Information("EF Core migrations applied successfully at startup.");
-    }
-
-    // app.UseHttpsRedirection();
-    app.UseStaticFiles(); // Pour le CSS swagger
-    app.UseCors(corsPolicyName);
-
-    app.UseAuthentication();
-    app.UseAuthorization();
-
-    app.MapControllers();
-    app.Run();
-}
-catch (Exception ex)
+// Politique CORS
+var corsPolicyName = "AllowWebApp";
+builder.Services.AddCors(options =>
 {
-    Log.Fatal(ex, "L'application BackOffice s'est arrêtée de manière inattendue.");
-}
-finally
+    options.AddPolicy(name: corsPolicyName,
+                      policy =>
+                      {
+                          policy.AllowAnyOrigin()
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                      });
+});
+
+var app = builder.Build();
+
+// --- Configuration du Pipeline HTTP ---
+
+// Utiliser le middleware de gestion d'erreurs
+app.UseMiddleware<ErrorHandlingMiddleware>();
+
+if (app.Environment.IsDevelopment())
 {
-    Log.CloseAndFlush();
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "BackOffice API V1");
+        options.RoutePrefix = string.Empty; // Swagger � la racine
+
+        // INJECTION DU CSS PERSONNALIS�
+        options.InjectStylesheet("/css/swagger-custom.css");
+    });
 }
+
+app.UseHttpsRedirection();
+
+// IMPORTANT : Permet de servir les fichiers statiques (comme le fichier CSS dans wwwroot)
+app.UseStaticFiles();
+
+app.UseCors(corsPolicyName);
+
+// Activer l'authentification et l'autorisation
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
