@@ -1,9 +1,0 @@
-wwwroot\css\swagger-custom.css
-wwwroot\uploads\courriers\12d50740-f55c-43fe-9976-6aff3228f152.pdf
-wwwroot\uploads\courriers\192177d3-7c68-4117-8300-23213c239db3.pdf
-wwwroot\uploads\courriers\683a60f2-3fa7-4751-80d9-3641018e6139.pdf
-wwwroot\uploads\courriers\92e909d5-188b-4a9d-bc1b-95fc058c1320.pdf
-wwwroot\uploads\courriers\eaea641c-b50d-408b-8b15-c76d260401b2.pdf
-wwwroot\uploads\fiches-techniques\12bb7e9e-ab68-434b-a5bb-d68495374fad.pdf
-wwwroot\uploads\fiches-techniques\1c514920-d0e9-4559-9306-a35a1c68d938.pdf
-wwwroot\uploads\fiches-techniques\cb5e491a-3004-47ae-aedd-a03813fceabd.pdf

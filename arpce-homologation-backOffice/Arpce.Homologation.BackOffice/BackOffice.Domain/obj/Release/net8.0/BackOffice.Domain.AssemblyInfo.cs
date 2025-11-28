@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BackOffice.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f2f7cc7a041a05e993faf9c7281816acec768ac1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5d6f59457db1724778a19c44b93beab54add56a9")]
 [assembly: System.Reflection.AssemblyProductAttribute("BackOffice.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BackOffice.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

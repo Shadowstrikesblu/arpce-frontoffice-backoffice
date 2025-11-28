@@ -13,11 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FrontOffice.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f2f7cc7a041a05e993faf9c7281816acec768ac1")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+08d028c726ed0aef8f741ffb4559b9853c3c4156")]
->>>>>>> 40fde6885e14a5236c4a4cf73d50f4fa1f30e52c
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5d6f59457db1724778a19c44b93beab54add56a9")]
 [assembly: System.Reflection.AssemblyProductAttribute("FrontOffice.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FrontOffice.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
