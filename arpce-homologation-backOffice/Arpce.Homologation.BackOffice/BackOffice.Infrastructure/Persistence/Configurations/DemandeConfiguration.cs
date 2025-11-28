@@ -56,5 +56,10 @@ public class DemandeConfiguration : IEntityTypeConfiguration<Demande>
         builder.Property(c => c.DateCreation).HasColumnType("datetime");
         builder.Property(c => c.UtilisateurModification).HasMaxLength(60);
         builder.Property(c => c.DateModification).HasColumnType("datetime");
+
+        builder.Property(d => d.EstHomologable)
+            .HasColumnType("bit") 
+            .IsRequired()
+            .HasDefaultValue(true);
     }
 }

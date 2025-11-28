@@ -1,5 +1,290 @@
 [
   {
+    "ContainingType": "BackOffice.Api.Controllers.AdminController",
+    "Method": "CreateAccess",
+    "RelativePath": "api/admin/acces",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "BackOffice.Application.Features.Admin.Commands.CreateAccess.CreateAccessCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 401
+      }
+    ]
+  },
+  {
+    "ContainingType": "BackOffice.Api.Controllers.AdminController",
+    "Method": "CreateProfil",
+    "RelativePath": "api/admin/profils",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "BackOffice.Application.Features.Admin.Commands.CreateProfil.CreateProfilCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 401
+      }
+    ]
+  },
+  {
+    "ContainingType": "BackOffice.Api.Controllers.AdminController",
+    "Method": "CreateRedevable",
+    "RelativePath": "api/admin/redevables",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "BackOffice.Application.Features.Admin.Commands.CreateRedevable.CreateRedevableCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 401
+      }
+    ]
+  },
+  {
+    "ContainingType": "BackOffice.Api.Controllers.AdminController",
+    "Method": "GetUserTypes",
+    "RelativePath": "api/admin/types-utilisateur",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[BackOffice.Application.Features.Admin.Queries.GetUserTypes.AdminUserTypeDto, BackOffice.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BackOffice.Api.Controllers.AdminController",
+    "Method": "CreateAdmin",
+    "RelativePath": "api/admin/utilisateurs",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "BackOffice.Application.Features.Admin.Commands.CreateAdmin.CreateAdminCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 401
+      }
+    ]
+  },
+  {
+    "ContainingType": "BackOffice.Api.Controllers.AdminController",
+    "Method": "AssignProfilToAdmin",
+    "RelativePath": "api/admin/utilisateurs/attribution-profil",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "BackOffice.Application.Features.Admin.Commands.AssignProfilToAdmin.AssignProfilToAdminCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 404
+      }
+    ]
+  },
+  {
+    "ContainingType": "BackOffice.Api.Controllers.AdminController",
+    "Method": "ChangeAdminPassword",
+    "RelativePath": "api/admin/utilisateurs/changement-mot-de-passe",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "BackOffice.Application.Features.Admin.Commands.ChangeAdminPassword.ChangeAdminPasswordCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 404
+      }
+    ]
+  },
+  {
+    "ContainingType": "BackOffice.Api.Controllers.AdminController",
+    "Method": "AssignProfilToLdapUser",
+    "RelativePath": "api/admin/utilisateurs/ldap/profil",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "BackOffice.Application.Features.Admin.Commands.AssignProfilToLdapUser.AssignProfilToLdapUserCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 404
+      }
+    ]
+  },
+  {
+    "ContainingType": "BackOffice.Api.Controllers.AuthenticationController",
+    "Method": "CheckToken",
+    "RelativePath": "api/auth/check-token",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "BackOffice.Application.Features.Authentication.Queries.CheckToken.AdminUserDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "BackOffice.Api.Controllers.AuthenticationController",
     "Method": "LoginAgent",
     "RelativePath": "api/auth/login",
@@ -259,6 +544,129 @@
     ]
   },
   {
+    "ContainingType": "BackOffice.Api.Controllers.DocumentsController",
+    "Method": "GetAttestations",
+    "RelativePath": "api/documents/attestations",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageTaille",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Recherche",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Ordre",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BackOffice.Application.Features.Documents.Queries.GetAttestationsList.AttestationListVm",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BackOffice.Api.Controllers.DocumentsController",
+    "Method": "GetFactures",
+    "RelativePath": "api/documents/factures",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageTaille",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Recherche",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Ordre",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BackOffice.Application.Common.DTOs.Documents.DocumentListVm",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BackOffice.Api.Controllers.DocumentsController",
+    "Method": "GetPaiements",
+    "RelativePath": "api/documents/paiements",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageTaille",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Recherche",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Ordre",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BackOffice.Application.Common.DTOs.Documents.DocumentListVm",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "BackOffice.Api.Controllers.DossiersController",
     "Method": "GetDossiersList",
     "RelativePath": "api/dossiers",
@@ -364,6 +772,67 @@
   },
   {
     "ContainingType": "BackOffice.Api.Controllers.DossiersController",
+    "Method": "SendMail",
+    "RelativePath": "api/dossiers/{dossierId}/envoyer-mail",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dossierId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "command",
+        "Type": "BackOffice.Application.Features.Dossiers.Commands.SendMail.SendMailToClientCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackOffice.Api.Controllers.DossiersController",
+    "Method": "RejectDossier",
+    "RelativePath": "api/dossiers/{dossierId}/rejeter",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dossierId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "command",
+        "Type": "BackOffice.Application.Features.Dossiers.Commands.RejectDossier.RejectDossierCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 404
+      }
+    ]
+  },
+  {
+    "ContainingType": "BackOffice.Api.Controllers.DossiersController",
     "Method": "ValidateInstruction",
     "RelativePath": "api/dossiers/{dossierId}/valider-instruction",
     "HttpMethod": "PATCH",
@@ -419,6 +888,27 @@
         "StatusCode": 422
       }
     ]
+  },
+  {
+    "ContainingType": "BackOffice.Api.Controllers.DossiersController",
+    "Method": "SetHomologable",
+    "RelativePath": "api/dossiers/{equipementId}/non-homologable",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "equipementId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "command",
+        "Type": "BackOffice.Application.Features.Demandes.Commands.SetHomologable.SetEquipementHomologableCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "BackOffice.Api.Controllers.DossiersController",

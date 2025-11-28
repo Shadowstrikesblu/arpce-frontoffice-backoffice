@@ -1,4 +1,7 @@
-﻿using BackOffice.Application.Features.Dossiers.Commands.ValidateInstruction;
+﻿using BackOffice.Application.Features.Demandes.Commands.SetHomologable;
+using BackOffice.Application.Features.Dossiers.Commands.RejectDossier;
+using BackOffice.Application.Features.Dossiers.Commands.SendMail;
+using BackOffice.Application.Features.Dossiers.Commands.ValidateInstruction;
 using BackOffice.Application.Features.Dossiers.Queries.GetDossierDetail;
 using BackOffice.Application.Features.Dossiers.Queries.GetDossiersList;
 using BackOffice.Application.Features.Dossiers.Queries.GetDossiersOverview;
@@ -134,6 +137,45 @@ public class DossiersController : ControllerBase
         {
             // Gère le cas où le dossier n'est pas trouvé avec un code 404.
             return NotFound(new { title = "Ressource Introuvable", detail = ex.Message, status = 404 });
+        }
+    }
+
+    [HttpPatch("{dossierId:guid}/rejeter")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> RejectDossier(Guid dossierId, [FromBody] RejectDossierCommand command)
+    {
+        command.DossierId = dossierId;
+        try
+        {
+            var result = await _mediator.Send(command);
+            return Ok(new { ok = result });
+        }
+        catch (Exception ex)
+        {
+            return NotFound(new { title = "Erreur", detail = ex.Message, status = 404 });
+        }
+    }
+
+    [HttpPatch("{equipementId:guid}/non-homologable")]
+    public async Task<IActionResult> SetHomologable(Guid equipementId, [FromBody] SetEquipementHomologableCommand command)
+    {
+        command.EquipementId = equipementId;
+        return Ok(new { ok = await _mediator.Send(command) });
+    }
+
+    [HttpPost("{dossierId:guid}/envoyer-mail")]
+    public async Task<IActionResult> SendMail(Guid dossierId, [FromBody] SendMailToClientCommand command)
+    {
+        command.DossierId = dossierId;
+        try
+        {
+            var result = await _mediator.Send(command);
+            return Ok(new { ok = result });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
         }
     }
 }

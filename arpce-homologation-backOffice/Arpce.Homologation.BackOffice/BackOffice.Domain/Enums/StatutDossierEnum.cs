@@ -1,22 +1,22 @@
-﻿namespace FrontOffice.Domain.Enums; 
+﻿namespace BackOffice.Domain.Enums;
 
-/// <summary>
-/// Définit les statuts possibles pour une demande de dossier d'homologation.
-/// Basé sur la nomenclature anglaise demandée par le frontend.
-/// </summary>
 public enum StatutDossierEnum
 {
-    NouveauDossier = 1,         // 01
-    Instruction = 2,            // 02
-    ApprobationInstruction = 3, // 03
-    InstructionApprouve = 4,    // New
-    DevisEmis = 5,              // 03B
-    DevisValide = 6,            // 03C
-    DevisRejete = 7,            // New
-    DevisPaiement = 8,          // 04
-    PaiementRejete = 9,         // 04A
-    PaiementExpire = 10,        // 04B 
-    DossierPaye = 11,           // 07
-    DossierSignature = 12,      // New 
-    DossierSigne = 13
+    NouveauDossier = 1,
+    RefusDossier = 2,
+    Instruction = 3,
+    ApprobationInstruction = 4,
+    InstructionApprouve = 5,
+    DevisCreer = 6,
+    DevisValideSC = 7,
+    DevisValideTr = 8,
+    DevisEmit = 9,
+    DevisValide = 10,
+    DevisRefuser = 11,
+    DevisPaiement = 12,
+    PaiementRejete = 13,
+    PaiementExpirer = 14,
+    DossierPayer = 15,  
+    DossierSignature = 16,
+    DossierSigne = 17  
 }
