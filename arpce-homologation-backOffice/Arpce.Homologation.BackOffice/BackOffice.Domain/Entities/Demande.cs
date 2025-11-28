@@ -25,6 +25,13 @@ public class Demande : AuditableEntity
     /// Pourcentage de remise appliqué sur cet équipement.
     /// Renseigné par l'agent du Back Office.
     /// </summary>
+    /// 
+    
+    /// <summary>
+    /// Indique si l'équipement est soumis à homologation.
+    /// Par défaut, il est considéré comme homologable (true).
+    /// </summary>
+    public bool EstHomologable { get; set; } = true;
     public decimal? Remise { get; set; }
     public virtual Dossier Dossier { get; set; } = default!;
     public virtual CategorieEquipement? CategorieEquipement { get; set; }

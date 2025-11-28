@@ -1,7 +1,9 @@
 ﻿using BackOffice.Application.Features.Authentication; 
-using BackOffice.Application.Features.Authentication.Commands.Register; 
+using BackOffice.Application.Features.Authentication.Commands.Register;
+using BackOffice.Application.Features.Authentication.Queries.CheckToken;
 using BackOffice.Application.Features.Authentication.Queries.Login; 
-using MediatR; 
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackOffice.Api.Controllers;
@@ -50,6 +52,19 @@ public class AuthenticationController : ControllerBase
     public async Task<IActionResult> LoginAgent([FromBody] LoginAgentQuery query)
     {
         var result = await _mediator.Send(query);
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Pour récupérer le token
+    /// </summary>
+    /// <returns></returns>
+    [HttpPost("check-token")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AdminUserDto))]
+    public async Task<IActionResult> CheckToken()
+    {
+        var result = await _mediator.Send(new CheckTokenQuery());
         return Ok(result);
     }
 }

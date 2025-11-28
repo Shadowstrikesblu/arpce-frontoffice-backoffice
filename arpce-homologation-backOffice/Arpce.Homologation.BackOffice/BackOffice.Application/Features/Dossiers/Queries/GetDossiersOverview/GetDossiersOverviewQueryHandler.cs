@@ -1,8 +1,11 @@
 ﻿using BackOffice.Application.Common.Interfaces;
 using BackOffice.Domain.Enums;
-using FrontOffice.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Dossiers.Queries.GetDossiersOverview;
 
@@ -19,32 +22,33 @@ public class GetDossiersOverviewQueryHandler : IRequestHandler<GetDossiersOvervi
     {
         var allDossiersQuery = _context.Dossiers.AsNoTracking();
 
-        // Succès : "DossierSigne" (Attestation signée, le processus est fini avec succès)
         var statutSuccessCode = StatutDossierEnum.DossierSigne.ToString();
 
-        // Échec : "DevisRejete" ou "PaiementRejete" (On peut aussi inclure "PaiementExpire" si considéré comme échec définitif)
         var statutsFailedCodes = new[]
         {
-            StatutDossierEnum.DevisRejete.ToString(),
-            StatutDossierEnum.PaiementRejete.ToString(),
-            StatutDossierEnum.PaiementExpire.ToString()
+            StatutDossierEnum.RefusDossier.ToString(),   // Refus initial ou en cours
+            StatutDossierEnum.DevisRefuser.ToString(),   // Refus du devis par le client
+            StatutDossierEnum.PaiementRejete.ToString(), // Paiement invalide
+            StatutDossierEnum.PaiementExpirer.ToString() // Délai dépassé
         };
 
-        // En cours : Tout le reste
         var statutsInProgressCodes = new[]
         {
             StatutDossierEnum.NouveauDossier.ToString(),
             StatutDossierEnum.Instruction.ToString(),
             StatutDossierEnum.ApprobationInstruction.ToString(),
             StatutDossierEnum.InstructionApprouve.ToString(),
-            StatutDossierEnum.DevisEmis.ToString(),
+            StatutDossierEnum.DevisCreer.ToString(),
+            StatutDossierEnum.DevisValideSC.ToString(),
+            StatutDossierEnum.DevisValideTr.ToString(),
+            StatutDossierEnum.DevisEmit.ToString(),
             StatutDossierEnum.DevisValide.ToString(),
             StatutDossierEnum.DevisPaiement.ToString(),
-            StatutDossierEnum.DossierPaye.ToString(),
+            StatutDossierEnum.DossierPayer.ToString(),
             StatutDossierEnum.DossierSignature.ToString()
         };
 
-        // Requêtes séquentielles
+        // Exécution séquentielle des requêtes de comptage
         var total = await allDossiersQuery.CountAsync(cancellationToken);
 
         var success = await allDossiersQuery

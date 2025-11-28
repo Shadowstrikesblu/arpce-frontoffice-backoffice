@@ -57,16 +57,16 @@ try
 
     builder.Services.AddControllers();
 
-    // Configuration Swagger
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen(options =>
+// Configuration Swagger/OpenAPI
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
     {
-        options.SwaggerDoc("v1", new OpenApiInfo
-        {
-            Title = "ARPCE Homologation - BackOffice API",
-            Version = "v1",
-            Description = "API pour la gestion des demandes d'homologation interne de ARPCE."
-        });
+        Title = "ARPCE Homologation - BackOffice API",
+        Version = "v1",
+        Description = "API pour la gestion des demandes d'homologation interne de ARPCE."
+    });
 
         options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
@@ -122,6 +122,28 @@ try
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
             };
         });
+// Ajouter les services pour la s�curit� et l'utilisateur courant
+builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddTransient<IEmailService, EmailService>();
+
+// Configuration de l'Authentification JWT
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+            ValidAudience = builder.Configuration["JwtSettings:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
+        };
+    });
 
     builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
     builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();

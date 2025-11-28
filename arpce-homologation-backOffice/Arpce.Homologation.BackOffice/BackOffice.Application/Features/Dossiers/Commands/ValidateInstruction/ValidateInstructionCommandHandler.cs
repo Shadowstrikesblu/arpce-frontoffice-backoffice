@@ -1,7 +1,6 @@
 ﻿using BackOffice.Application.Common.Interfaces;
 using BackOffice.Domain.Entities;
 using BackOffice.Domain.Enums;
-using FrontOffice.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
