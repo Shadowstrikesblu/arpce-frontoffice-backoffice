@@ -13,9 +13,15 @@ public class AdminUtilisateurTypesConfiguration : IEntityTypeConfiguration<Admin
     public void Configure(EntityTypeBuilder<AdminUtilisateurTypes> builder)
     {
         builder.ToTable("adminUtilisateurTypes");
-
         builder.HasKey(aut => aut.Id);
+        builder.Property(aut => aut.Libelle).HasMaxLength(120).IsRequired();
 
-        builder.Property(aut => aut.Libelle).HasMaxLength(120).IsRequired(); 
+        var adminTypeId = Guid.Parse("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"); 
+
+        builder.HasData(
+            new AdminUtilisateurTypes { Id = adminTypeId, Libelle = "Administrateur" },
+            new AdminUtilisateurTypes { Id = Guid.NewGuid(), Libelle = "Utilisateur Standard" }, // Autres types
+            new AdminUtilisateurTypes { Id = Guid.NewGuid(), Libelle = "Auditeur" }
+        );
     }
 }

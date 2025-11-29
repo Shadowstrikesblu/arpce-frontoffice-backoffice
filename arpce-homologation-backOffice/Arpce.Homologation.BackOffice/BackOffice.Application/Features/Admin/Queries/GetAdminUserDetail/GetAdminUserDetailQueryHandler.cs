@@ -1,40 +1,40 @@
 ﻿using BackOffice.Application.Common.Interfaces;
-using BackOffice.Application.Features.Admin.Queries.GetAdminUsersList; 
+using BackOffice.Application.Features.Authentication.Queries.CheckToken; 
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace BackOffice.Application.Features.Authentication.Queries.CheckToken;
+namespace BackOffice.Application.Features.Admin.Queries.GetAdminUserDetail;
 
-public class CheckTokenQueryHandler : IRequestHandler<CheckTokenQuery, AdminUserDto>
+public class GetAdminUserDetailQueryHandler : IRequestHandler<GetAdminUserDetailQuery, AdminUserDto>
 {
     private readonly IApplicationDbContext _context;
-    private readonly ICurrentUserService _currentUserService;
 
-    public CheckTokenQueryHandler(IApplicationDbContext context, ICurrentUserService currentUserService)
+    public GetAdminUserDetailQueryHandler(IApplicationDbContext context)
     {
         _context = context;
-        _currentUserService = currentUserService;
     }
 
-    public async Task<AdminUserDto> Handle(CheckTokenQuery request, CancellationToken cancellationToken)
+    public async Task<AdminUserDto> Handle(GetAdminUserDetailQuery request, CancellationToken cancellationToken)
     {
-        var userId = _currentUserService.UserId;
-        if (!userId.HasValue) throw new UnauthorizedAccessException("Token invalide.");
-
-        // Chargement complet de l'utilisateur, de son profil et de son TYPE
         var user = await _context.AdminUtilisateurs
             .AsNoTracking()
             .Include(u => u.UtilisateurType) 
-            .FirstOrDefaultAsync(u => u.Id == userId.Value, cancellationToken);
+            .FirstOrDefaultAsync(u => u.Id == request.UtilisateurId, cancellationToken);
 
-        if (user == null) throw new UnauthorizedAccessException("Utilisateur introuvable.");
+        if (user == null)
+        {
+            throw new Exception($"Utilisateur administrateur avec l'ID '{request.UtilisateurId}' introuvable.");
+        }
 
+        // Mapping de base
         var userDto = new AdminUserDto
         {
             Id = user.Id,
             IdProfil = user.IdProfil,
-            IdUtilisateurType = user.IdUtilisateurType,
-
             Compte = user.Compte,
             Nom = user.Nom,
             Prenoms = user.Prenoms,
@@ -46,21 +46,13 @@ public class CheckTokenQueryHandler : IRequestHandler<CheckTokenQuery, AdminUser
             DateCreation = user.DateCreation,
             UtilisateurModification = user.UtilisateurModification,
             DateModification = user.DateModification,
-
-            TypeUtilisateur = user.UtilisateurType != null ? new AdminUserTypeSimpleDto
-            {
-                Libelle = user.UtilisateurType.Libelle
-            } : null,
-
-            Profil = null 
+            IdUtilisateurType = user.IdUtilisateurType,
         };
 
+        // Chargement du profil et des accès
         if (user.IdProfil.HasValue)
         {
-            var profil = await _context.AdminProfils
-                .AsNoTracking()
-                .FirstOrDefaultAsync(p => p.Id == user.IdProfil.Value, cancellationToken);
-
+            var profil = await _context.AdminProfils.FindAsync(user.IdProfil.Value);
             if (profil != null)
             {
                 var accessList = await _context.AdminProfilsAcces

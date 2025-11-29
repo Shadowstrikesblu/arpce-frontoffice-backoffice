@@ -30,6 +30,9 @@ public class CreateAdminCommandHandler : IRequestHandler<CreateAdminCommand, boo
             MotPasse = hashedPassword,
             Desactive = request.Desactive,
             Remarques = request.Remarques,
+
+            IdUtilisateurType = request.IdUtilisateurType,
+
             DateCreation = DateTime.UtcNow
         };
 

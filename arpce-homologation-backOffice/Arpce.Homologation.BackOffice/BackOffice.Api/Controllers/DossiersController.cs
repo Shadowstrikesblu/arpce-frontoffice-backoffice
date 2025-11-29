@@ -140,6 +140,12 @@ public class DossiersController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Méthode pour le réjé d'une demande(équipement)
+    /// </summary>
+    /// <param name="dossierId"></param>
+    /// <param name="command"></param>
+    /// <returns></returns>
     [HttpPatch("{dossierId:guid}/rejeter")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -157,6 +163,13 @@ public class DossiersController : ControllerBase
         }
     }
 
+
+    /// <summary>
+    /// Méthode pour l'équipement non homologué
+    /// </summary>
+    /// <param name="equipementId"></param>
+    /// <param name="command"></param>
+    /// <returns></returns>
     [HttpPatch("{equipementId:guid}/non-homologable")]
     public async Task<IActionResult> SetHomologable(Guid equipementId, [FromBody] SetEquipementHomologableCommand command)
     {
@@ -176,6 +189,29 @@ public class DossiersController : ControllerBase
         catch (Exception ex)
         {
             return BadRequest(new { error = ex.Message });
+        }
+    }
+
+    /// <summary>
+    /// Méthode pour le changement de statuts
+    /// </summary>
+    /// <param name="dossierId"></param>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    [HttpPatch("{dossierId:guid}/changer-statut")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ChangeStatus(Guid dossierId, [FromBody] ChangeDossierStatusCommand command)
+    {
+        command.DossierId = dossierId;
+        try
+        {
+            var result = await _mediator.Send(command);
+            return Ok(new { ok = result });
+        }
+        catch (Exception ex) when (ex.Message.Contains("introuvable"))
+        {
+            return NotFound(new { title = "Ressource Introuvable", detail = ex.Message, status = 404 });
         }
     }
 }

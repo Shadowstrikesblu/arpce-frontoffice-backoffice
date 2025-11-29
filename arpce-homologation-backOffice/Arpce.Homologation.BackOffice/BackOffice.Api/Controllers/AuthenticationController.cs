@@ -1,7 +1,8 @@
 ﻿using BackOffice.Application.Features.Authentication; 
 using BackOffice.Application.Features.Authentication.Commands.Register;
 using BackOffice.Application.Features.Authentication.Queries.CheckToken;
-using BackOffice.Application.Features.Authentication.Queries.Login; 
+using BackOffice.Application.Features.Authentication.Queries.Login;
+using BackOffice.Application.Features.Authentication.Queries.LoginLdap;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -65,6 +66,20 @@ public class AuthenticationController : ControllerBase
     public async Task<IActionResult> CheckToken()
     {
         var result = await _mediator.Send(new CheckTokenQuery());
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// La connexion LDAP
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    [HttpPost("login-ldap")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthenticationResult))]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> LoginLdap([FromBody] LoginLdapQuery query)
+    {
+        var result = await _mediator.Send(query);
         return Ok(result);
     }
 }

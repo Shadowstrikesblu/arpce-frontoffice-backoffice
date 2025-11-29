@@ -81,6 +81,7 @@ builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddTransient<IEmailService, EmailService>();
+builder.Services.AddTransient<ILdapService, LdapService>();
 
 // Configuration de l'Authentification JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

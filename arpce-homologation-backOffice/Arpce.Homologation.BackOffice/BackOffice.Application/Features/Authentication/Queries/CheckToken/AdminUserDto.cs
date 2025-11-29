@@ -1,5 +1,6 @@
 ﻿// Fichier : BackOffice.Application/Features/Authentication/Queries/CheckToken/AdminUserDto.cs
 
+using BackOffice.Application.Features.Admin.Queries.GetAdminUsersList;
 using System;
 
 namespace BackOffice.Application.Features.Authentication.Queries.CheckToken;
@@ -12,6 +13,8 @@ public class AdminUserDto
     public string Nom { get; set; } = string.Empty;
     public string? Prenoms { get; set; }
     public bool ChangementMotPasse { get; set; }
+    public Guid IdUtilisateurType { get; set; } 
+    public AdminUserTypeSimpleDto? TypeUtilisateur { get; set; }
     public bool Desactive { get; set; }
     public string? Remarques { get; set; }
     public DateTime? DerniereConnexion { get; set; }
