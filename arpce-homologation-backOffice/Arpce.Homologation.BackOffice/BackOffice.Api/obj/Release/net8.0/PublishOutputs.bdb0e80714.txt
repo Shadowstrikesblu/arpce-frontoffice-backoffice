@@ -7,8 +7,10 @@ C:\Users\Administrator\Desktop\BackOffice\publish\BackOffice.Api.pdb
 C:\Users\Administrator\Desktop\BackOffice\publish\Azure.Core.dll
 C:\Users\Administrator\Desktop\BackOffice\publish\Azure.Identity.dll
 C:\Users\Administrator\Desktop\BackOffice\publish\BCrypt.Net-Next.dll
+C:\Users\Administrator\Desktop\BackOffice\publish\BouncyCastle.Cryptography.dll
 C:\Users\Administrator\Desktop\BackOffice\publish\FluentValidation.dll
 C:\Users\Administrator\Desktop\BackOffice\publish\FluentValidation.DependencyInjectionExtensions.dll
+C:\Users\Administrator\Desktop\BackOffice\publish\MailKit.dll
 C:\Users\Administrator\Desktop\BackOffice\publish\MediatR.dll
 C:\Users\Administrator\Desktop\BackOffice\publish\MediatR.Contracts.dll
 C:\Users\Administrator\Desktop\BackOffice\publish\Microsoft.AspNetCore.Authentication.JwtBearer.dll
@@ -43,6 +45,7 @@ C:\Users\Administrator\Desktop\BackOffice\publish\Microsoft.IdentityModel.Tokens
 C:\Users\Administrator\Desktop\BackOffice\publish\Microsoft.OpenApi.dll
 C:\Users\Administrator\Desktop\BackOffice\publish\Microsoft.SqlServer.Server.dll
 C:\Users\Administrator\Desktop\BackOffice\publish\Microsoft.Win32.SystemEvents.dll
+C:\Users\Administrator\Desktop\BackOffice\publish\MimeKit.dll
 C:\Users\Administrator\Desktop\BackOffice\publish\Serilog.dll
 C:\Users\Administrator\Desktop\BackOffice\publish\Serilog.AspNetCore.dll
 C:\Users\Administrator\Desktop\BackOffice\publish\Serilog.Extensions.Hosting.dll
@@ -64,6 +67,7 @@ C:\Users\Administrator\Desktop\BackOffice\publish\System.IdentityModel.Tokens.Jw
 C:\Users\Administrator\Desktop\BackOffice\publish\System.IO.Pipelines.dll
 C:\Users\Administrator\Desktop\BackOffice\publish\System.Memory.Data.dll
 C:\Users\Administrator\Desktop\BackOffice\publish\System.Runtime.Caching.dll
+C:\Users\Administrator\Desktop\BackOffice\publish\System.Security.Cryptography.Pkcs.dll
 C:\Users\Administrator\Desktop\BackOffice\publish\System.Security.Cryptography.ProtectedData.dll
 C:\Users\Administrator\Desktop\BackOffice\publish\System.Security.Permissions.dll
 C:\Users\Administrator\Desktop\BackOffice\publish\System.Text.Encodings.Web.dll
@@ -79,6 +83,7 @@ C:\Users\Administrator\Desktop\BackOffice\publish\runtimes\win\lib\net6.0\Micros
 C:\Users\Administrator\Desktop\BackOffice\publish\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
 C:\Users\Administrator\Desktop\BackOffice\publish\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 C:\Users\Administrator\Desktop\BackOffice\publish\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+C:\Users\Administrator\Desktop\BackOffice\publish\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
 C:\Users\Administrator\Desktop\BackOffice\publish\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\Administrator\Desktop\BackOffice\publish\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 C:\Users\Administrator\Desktop\BackOffice\publish\runtimes\win\lib\net6.0\System.Windows.Extensions.dll

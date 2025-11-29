@@ -193,3 +193,8 @@ C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce
 C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\obj\Release\net8.0\BackOffice.Api.pdb
 C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\obj\Release\net8.0\BackOffice.Api.genruntimeconfig.cache
 C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\obj\Release\net8.0\ref\BackOffice.Api.dll
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\bin\Release\net8.0\BouncyCastle.Cryptography.dll
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\bin\Release\net8.0\MailKit.dll
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\bin\Release\net8.0\MimeKit.dll
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\bin\Release\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\bin\Release\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
