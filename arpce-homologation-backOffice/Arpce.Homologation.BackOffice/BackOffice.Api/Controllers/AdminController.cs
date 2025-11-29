@@ -5,7 +5,13 @@ using BackOffice.Application.Features.Admin.Commands.CreateAccess;
 using BackOffice.Application.Features.Admin.Commands.CreateAdmin;
 using BackOffice.Application.Features.Admin.Commands.CreateProfil;
 using BackOffice.Application.Features.Admin.Commands.CreateRedevable;
+using BackOffice.Application.Features.Admin.Queries.GetAccessList;
+using BackOffice.Application.Features.Admin.Queries.GetAdminUserDetail;
+using BackOffice.Application.Features.Admin.Queries.GetAdminUsersList;
+using BackOffice.Application.Features.Admin.Queries.GetRedevableDetail;
+using BackOffice.Application.Features.Admin.Queries.GetRedevablesList;
 using BackOffice.Application.Features.Admin.Queries.GetUserTypes;
+using BackOffice.Application.Features.Authentication.Queries.CheckToken;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -127,20 +133,6 @@ public class AdminController : ControllerBase
     }
 
     /// <summary>
-    /// Pour la création du compte client(redvable)
-    /// </summary>
-    /// <param name="command"></param>
-    /// <returns></returns>
-    [HttpPost("redevables")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<IActionResult> CreateRedevable([FromBody] CreateRedevableCommand command)
-    {
-        var result = await _mediator.Send(command);
-        return Ok(new { ok = result });
-    }
-
-    /// <summary>
     /// 
     /// </summary>
     /// <param name="command"></param>
@@ -159,5 +151,94 @@ public class AdminController : ControllerBase
         {
             return NotFound(new { title = "Ressource Introuvable", detail = ex.Message, status = 404 });
         }
+    }
+
+    /// <summary>
+    /// Pour la création du compte client(redvable)
+    /// </summary>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    [HttpPost("create-redevables")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> CreateRedevable([FromBody] CreateRedevableCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(new { ok = result });
+    }
+
+    /// <summary>
+    /// Récupère la liste des redevables avec filtres et pagination.
+    /// </summary>
+    [HttpGet("redevables")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RedevableListVm))]
+    public async Task<IActionResult> GetRedevables([FromQuery] GetRedevablesListQuery query)
+    {
+        var result = await _mediator.Send(query);
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Récupère les détails complets d'un redevable.
+    /// </summary>
+    [HttpGet("redevables/{utilisateurId:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RedevableDetailDto))]
+    public async Task<IActionResult> GetRedevableDetail(Guid utilisateurId)
+    {
+        try
+        {
+            var result = await _mediator.Send(new GetRedevableDetailQuery(utilisateurId));
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return NotFound(new { title = "Non trouvé", detail = ex.Message });
+        }
+    }
+
+    /// <summary>
+    /// Récupère la liste des utilisateurs
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    [HttpGet("utilisateurs")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AdminUserListVm))]
+    public async Task<IActionResult> GetAdminUsers([FromQuery] GetAdminUsersListQuery query)
+    {
+        var result = await _mediator.Send(query);
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Récupère la liste des détailles 
+    /// </summary>
+    /// <param name="utilisateurId"></param>
+    /// <returns></returns>
+    [HttpGet("utilisateurs/{utilisateurId:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AdminUserDto))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAdminUserDetail(Guid utilisateurId)
+    {
+        try
+        {
+            var result = await _mediator.Send(new GetAdminUserDetailQuery(utilisateurId));
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return NotFound(new { title = "Non trouvé", detail = ex.Message });
+        }
+    }
+
+    /// <summary>
+    /// Récupère la liste des accès
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("acces")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<AdminAccessDto>))]
+    public async Task<IActionResult> GetAccessList()
+    {
+        var result = await _mediator.Send(new GetAccessListQuery());
+        return Ok(result);
     }
 }

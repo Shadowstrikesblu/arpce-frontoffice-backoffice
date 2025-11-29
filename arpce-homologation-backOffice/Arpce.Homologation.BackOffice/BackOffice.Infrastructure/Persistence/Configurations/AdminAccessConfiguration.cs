@@ -22,7 +22,7 @@ public class AdminAccessConfiguration : IEntityTypeConfiguration<AdminAccess>
         builder.Property(a => a.Groupe).HasMaxLength(120).IsRequired();      
         builder.Property(a => a.Libelle).HasMaxLength(120).IsRequired();     
         builder.Property(a => a.Page).HasMaxLength(120);                   
-        builder.Property(a => a.Type).HasMaxLength(12).IsRequired();        
+        builder.Property(a => a.Type).HasMaxLength(120).IsRequired();        
 
         builder.Property(a => a.Inactif).HasColumnType("tinyint");      
         builder.Property(a => a.Ajouter).HasColumnType("tinyint");      

@@ -120,6 +120,7 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
         {
             Dossiers = dossierDtos,
             Page = request.Parameters.Page,
+            PageTaille = request.Parameters.TaillePage,
             TotalPage = (int)Math.Ceiling(totalCount / (double)request.Parameters.TaillePage)
         };
 

@@ -8,6 +8,7 @@ namespace BackOffice.Application.Features.Dossiers.Queries.GetDossiersList;
 public class DossiersListVm
 {
     public int Page { get; set; }
+    public int PageTaille { get; set; }
     public int TotalPage { get; set; }
     public List<DossierListItemDto> Dossiers { get; set; } = new List<DossierListItemDto>();
 }
