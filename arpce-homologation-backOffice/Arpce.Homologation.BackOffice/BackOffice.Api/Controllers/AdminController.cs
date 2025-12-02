@@ -5,6 +5,7 @@ using BackOffice.Application.Features.Admin.Commands.CreateAccess;
 using BackOffice.Application.Features.Admin.Commands.CreateAdmin;
 using BackOffice.Application.Features.Admin.Commands.CreateProfil;
 using BackOffice.Application.Features.Admin.Commands.CreateRedevable;
+using BackOffice.Application.Features.Admin.Commands.ValidateRedevable;
 using BackOffice.Application.Features.Admin.Queries.GetAccessList;
 using BackOffice.Application.Features.Admin.Queries.GetAdminUserDetail;
 using BackOffice.Application.Features.Admin.Queries.GetAdminUsersList;
@@ -240,5 +241,18 @@ public class AdminController : ControllerBase
     {
         var result = await _mediator.Send(new GetAccessListQuery());
         return Ok(result);
+    }
+
+    /// <summary>
+    /// Pour valider le compte du redevable
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpPost("redevables/{id:guid}/valider")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+    public async Task<IActionResult> ValidateRedevable(Guid id)
+    {
+        await _mediator.Send(new ValidateRedevableCommand { RedevableId = id });
+        return Ok(new { ok = true });
     }
 }
