@@ -1,4 +1,5 @@
 ﻿using BackOffice.Application.Features.Demandes.Commands.SetHomologable;
+using BackOffice.Application.Features.Dossiers.Commands.DeleteDossier;
 using BackOffice.Application.Features.Dossiers.Commands.RejectDossier;
 using BackOffice.Application.Features.Dossiers.Commands.SendMail;
 using BackOffice.Application.Features.Dossiers.Commands.ValidateInstruction;
@@ -212,6 +213,26 @@ public class DossiersController : ControllerBase
         catch (Exception ex) when (ex.Message.Contains("introuvable"))
         {
             return NotFound(new { title = "Ressource Introuvable", detail = ex.Message, status = 404 });
+        }
+    }
+
+    /// <summary>
+    /// Suppression du dossier
+    /// </summary>
+    /// <param name="dossierId"></param>
+    /// <returns></returns>
+    [HttpDelete("{dossierId:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+    public async Task<IActionResult> DeleteDossier(Guid dossierId)
+    {
+        try
+        {
+            var result = await _mediator.Send(new DeleteDossierCommand(dossierId));
+            return Ok(new { ok = result });
+        }
+        catch (Exception ex)
+        {
+            return NotFound(new { title = "Erreur", detail = ex.Message });
         }
     }
 }
