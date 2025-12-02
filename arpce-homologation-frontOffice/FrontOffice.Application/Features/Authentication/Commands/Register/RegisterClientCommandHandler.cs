@@ -65,7 +65,7 @@ public class RegisterClientCommandHandler : IRequestHandler<RegisterClientComman
             // Politique de sécurité : Le Captcha est-il obligatoire ?
             // Pour l'instant, on log un avertissement si manquant, mais on peut choisir de bloquer (décommenter la ligne suivante).
             _logger.LogWarning("Inscription demandée sans token Captcha. Email: {Email}", request.Email);
-            //throw new InvalidOperationException("Le token Captcha est requis pour l'inscription.");
+            throw new InvalidOperationException("Le token Captcha est requis pour l'inscription.");
         }
 
         // Vérification de l'existence du client (Doublon d'e-mail)
