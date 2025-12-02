@@ -198,3 +198,4 @@ C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce
 C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\bin\Release\net8.0\MimeKit.dll
 C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\bin\Release\net8.0\System.Security.Cryptography.Pkcs.dll
 C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\bin\Release\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Administrator\Downloads\frontoffice\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\bin\Release\net8.0\Novell.Directory.Ldap.NETStandard.dll

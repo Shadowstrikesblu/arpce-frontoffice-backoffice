@@ -37,6 +37,7 @@ C:\Sites\BackOffice\publish\Microsoft.IdentityModel.Tokens.dll
 C:\Sites\BackOffice\publish\Microsoft.SqlServer.Server.dll
 C:\Sites\BackOffice\publish\Microsoft.Win32.SystemEvents.dll
 C:\Sites\BackOffice\publish\MimeKit.dll
+C:\Sites\BackOffice\publish\Novell.Directory.Ldap.NETStandard.dll
 C:\Sites\BackOffice\publish\System.ClientModel.dll
 C:\Sites\BackOffice\publish\System.Configuration.ConfigurationManager.dll
 C:\Sites\BackOffice\publish\System.Diagnostics.DiagnosticSource.dll

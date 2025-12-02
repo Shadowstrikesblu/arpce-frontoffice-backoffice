@@ -53,7 +53,7 @@ try
 
     builder.Services.AddControllers();
 
-    // 🔥 Configuration Swagger/OpenAPI + JWT Support
+    // 🔥 Configuration Swagger/OpenAPI
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen(options =>
     {
@@ -67,7 +67,7 @@ try
         options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
             In = ParameterLocation.Header,
-            Description = "Entrez : Bearer suivis d'un espace et de votre jeton JWT",
+            Description = "Entrez : Bearer <token>",
             Name = "Authorization",
             Type = SecuritySchemeType.ApiKey,
             Scheme = "Bearer"
@@ -93,30 +93,7 @@ try
     builder.Services.AddMediatR(cfg =>
         cfg.RegisterServicesFromAssembly(typeof(AssemblyReference).Assembly));
 
-// Ajouter les services pour la s�curit� et l'utilisateur courant
-builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
-builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
-builder.Services.AddTransient<IEmailService, EmailService>();
-builder.Services.AddTransient<ILdapService, LdapService>();
-
-// Configuration de l'Authentification JWT
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
-            ValidAudience = builder.Configuration["JwtSettings:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
-        };
-    });
-    // --- 🔐 Configuration Authentification JWT (Unique & Correcte) ---
+    // --- 🔐 CONFIGURATION AUTHENTIFICATION JWT ---
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
         {
@@ -149,6 +126,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
     builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
     builder.Services.AddTransient<IEmailService, EmailService>();
+    builder.Services.AddTransient<ILdapService, LdapService>();
 
     // Kestrel écoute sur port 4000
     builder.WebHost.ConfigureKestrel(options =>
@@ -165,7 +143,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     app.UseMiddleware<ErrorHandlingMiddleware>();
     app.UseSerilogRequestLogging();
 
-    // Swagger en Sandbox / VPS si activé
+    // Activer Swagger si configuré
     bool enableSwagger = app.Environment.IsDevelopment() ||
                          builder.Configuration.GetValue<bool>("EnableSwaggerUI", false);
 

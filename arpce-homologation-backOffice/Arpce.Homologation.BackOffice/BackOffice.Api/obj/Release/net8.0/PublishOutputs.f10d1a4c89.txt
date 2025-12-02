@@ -46,6 +46,7 @@ C:\Sites\BackOffice\publish\Microsoft.OpenApi.dll
 C:\Sites\BackOffice\publish\Microsoft.SqlServer.Server.dll
 C:\Sites\BackOffice\publish\Microsoft.Win32.SystemEvents.dll
 C:\Sites\BackOffice\publish\MimeKit.dll
+C:\Sites\BackOffice\publish\Novell.Directory.Ldap.NETStandard.dll
 C:\Sites\BackOffice\publish\Serilog.dll
 C:\Sites\BackOffice\publish\Serilog.AspNetCore.dll
 C:\Sites\BackOffice\publish\Serilog.Extensions.Hosting.dll

@@ -13,7 +13,8 @@
           "MailKit": "4.14.1",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.22",
           "Microsoft.EntityFrameworkCore": "9.0.11",
-          "Microsoft.EntityFrameworkCore.SqlServer": "9.0.11"
+          "Microsoft.EntityFrameworkCore.SqlServer": "9.0.11",
+          "Novell.Directory.Ldap.NETStandard": "3.0.2"
         },
         "runtime": {
           "BackOffice.Infrastructure.dll": {}
@@ -493,6 +494,14 @@
           "lib/net8.0/MimeKit.dll": {
             "assemblyVersion": "4.14.0.0",
             "fileVersion": "4.14.0.0"
+          }
+        }
+      },
+      "Novell.Directory.Ldap.NETStandard/3.0.2": {
+        "runtime": {
+          "lib/netstandard2.0/Novell.Directory.Ldap.NETStandard.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.2.0"
           }
         }
       },
@@ -1030,6 +1039,13 @@
       "sha512": "sha512-g0LtsMC8DCTkc030C3UgVqbltOJmV5cz4AX8ASowz2ZA+lxopXSYtC1XXYmenxy606aWFLwi5Xy4cC/zyYjbjQ==",
       "path": "mimekit/4.14.0",
       "hashPath": "mimekit.4.14.0.nupkg.sha512"
+    },
+    "Novell.Directory.Ldap.NETStandard/3.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-J9R5rw/ZZLaMzs2Opu5B5ay2IqF66l/r22CE/lHat4aRJ9np2NSccKSEfUwC96QAO4TJbYaB6Fh3MwNMAvM6nQ==",
+      "path": "novell.directory.ldap.netstandard/3.0.2",
+      "hashPath": "novell.directory.ldap.netstandard.3.0.2.nupkg.sha512"
     },
     "System.ClientModel/1.0.0": {
       "type": "package",
