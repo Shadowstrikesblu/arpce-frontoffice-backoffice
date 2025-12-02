@@ -82,6 +82,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddTransient<IEmailService, EmailService>();
 builder.Services.AddTransient<ILdapService, LdapService>();
+builder.Services.AddScoped<IAuditService, AuditService>();
 
 // Configuration de l'Authentification JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

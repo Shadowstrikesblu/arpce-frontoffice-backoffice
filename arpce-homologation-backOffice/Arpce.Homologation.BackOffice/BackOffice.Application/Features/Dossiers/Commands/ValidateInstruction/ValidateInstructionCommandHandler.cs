@@ -12,15 +12,18 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _currentUserService;
     private readonly ILogger<ValidateInstructionCommandHandler> _logger;
+    private readonly IAuditService _auditService;
 
     public ValidateInstructionCommandHandler(
         IApplicationDbContext context,
         ICurrentUserService currentUserService,
-        ILogger<ValidateInstructionCommandHandler> logger)
+        ILogger<ValidateInstructionCommandHandler> logger, IAuditService auditService)
     {
         _context = context;
         _currentUserService = currentUserService;
         _logger = logger;
+        _auditService = auditService;
+        _auditService = auditService;
     }
 
     public async Task<bool> Handle(ValidateInstructionCommand request, CancellationToken cancellationToken)
@@ -75,6 +78,12 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
         }
 
         await _context.SaveChangesAsync(cancellationToken);
+
+        await _auditService.LogAsync(
+            page: "Validation Dossier",
+            libelle: $"L'instruction du dossier '{dossier.Numero}' a été validée.",
+            eventTypeCode: "VALIDATION",
+            dossierId: dossier.Id);
 
         return true;
     }

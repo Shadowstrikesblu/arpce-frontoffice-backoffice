@@ -13,6 +13,7 @@ public class AddCategorieToDemandeCommandHandler : IRequestHandler<AddCategorieT
     private readonly IApplicationDbContext _context;
     private readonly ILogger<AddCategorieToDemandeCommandHandler> _logger;
     private readonly ICurrentUserService _currentUserService; 
+    private readonly IAuditService _auditService;
 
     /// <summary>
     /// Initialise une nouvelle instance du handler.
@@ -20,11 +21,13 @@ public class AddCategorieToDemandeCommandHandler : IRequestHandler<AddCategorieT
     public AddCategorieToDemandeCommandHandler(
         IApplicationDbContext context,
         ILogger<AddCategorieToDemandeCommandHandler> logger,
-        ICurrentUserService currentUserService)
+        ICurrentUserService currentUserService,
+        IAuditService auditService)
     {
         _context = context;
         _logger = logger;
         _currentUserService = currentUserService;
+        _auditService = auditService;
     }
 
     /// <summary>
@@ -59,6 +62,12 @@ public class AddCategorieToDemandeCommandHandler : IRequestHandler<AddCategorieT
 
         // Sauvegarde les changements.
         await _context.SaveChangesAsync(cancellationToken);
+
+        await _auditService.LogAsync(
+    page: "Instruction Équipement",
+    libelle: $"Assignation de la catégorie ID '{request.CategorieId}' à l'équipement ID '{request.DemandeId}'.",
+    eventTypeCode: "MODIFICATION",
+    dossierId: demande.IdDossier); 
 
         return true;
     }

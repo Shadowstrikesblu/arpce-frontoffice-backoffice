@@ -27,7 +27,8 @@ namespace BackOffice.Infrastructure.Migrations
                     Ajouter = table.Column<byte>(type: "tinyint", nullable: true),
                     Valider = table.Column<byte>(type: "tinyint", nullable: true),
                     Supprimer = table.Column<byte>(type: "tinyint", nullable: true),
-                    Imprimer = table.Column<byte>(type: "tinyint", nullable: true)
+                    Imprimer = table.Column<byte>(type: "tinyint", nullable: true),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,7 +54,8 @@ namespace BackOffice.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Libelle = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false)
+                    Libelle = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -269,30 +271,6 @@ namespace BackOffice.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "adminJournal",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdEvenementType = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Application = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    AdresseIP = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Utilisateur = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    DateEvenement = table.Column<DateTime>(type: "datetime", nullable: false),
-                    Page = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Libelle = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_adminJournal", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_adminJournal_adminEvenementsTypes_IdEvenementType",
-                        column: x => x.IdEvenementType,
-                        principalTable: "adminEvenementsTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "adminProfilsAcces",
                 columns: table => new
                 {
@@ -425,6 +403,37 @@ namespace BackOffice.Infrastructure.Migrations
                         principalTable: "statuts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "adminJournal",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdEvenementType = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Application = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    AdresseIP = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    Utilisateur = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    DateEvenement = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Page = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    Libelle = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    IdDossier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DossierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_adminJournal", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_adminJournal_adminEvenementsTypes_IdEvenementType",
+                        column: x => x.IdEvenementType,
+                        principalTable: "adminEvenementsTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_adminJournal_dossiers_DossierId",
+                        column: x => x.DossierId,
+                        principalTable: "dossiers",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -617,9 +626,9 @@ namespace BackOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Libelle" },
                 values: new object[,]
                 {
-                    { new Guid("654855ca-bdae-4f55-b481-fc3a09bf3f7d"), "Utilisateur Standard" },
+                    { new Guid("7155e85b-08f3-4cb6-81d5-579e4a7f5899"), "Utilisateur Standard" },
                     { new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"), "Administrateur" },
-                    { new Guid("b5c3cc10-ff1f-47d0-aa49-4b5fe5a92d39"), "Auditeur" }
+                    { new Guid("b6f56eae-f5ce-4e1e-ba1e-8310b919df55"), "Auditeur" }
                 });
 
             migrationBuilder.InsertData(
@@ -627,10 +636,10 @@ namespace BackOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "DateCreation", "DateModification", "Libelle", "MobileBanking", "Remarques", "UtilisateurCreation", "UtilisateurModification" },
                 values: new object[,]
                 {
-                    { new Guid("729c98b4-5c70-425a-b89f-62fe0a78d261"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
-                    { new Guid("d0576258-cecc-42c3-9d6f-5ec183740832"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
-                    { new Guid("e1db161f-b656-4f62-bead-cc981d0d0052"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
-                    { new Guid("e99f1daa-749f-4314-bcce-21e5ab3bedf7"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null }
+                    { new Guid("07628d0b-c274-4c06-8ba9-fde3a316dc84"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
+                    { new Guid("1fb33086-961e-4bae-8295-7b6ec58c06f3"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
+                    { new Guid("64000d39-ae4c-41ef-ad26-473fbe711b45"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
+                    { new Guid("b447ece5-d14b-435b-b999-6c83ea24328a"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -638,28 +647,33 @@ namespace BackOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "Libelle" },
                 values: new object[,]
                 {
-                    { new Guid("022765d4-8862-4252-a868-7c9514de818f"), "DossierPayer", "Paiement effectué" },
-                    { new Guid("036394f6-2dc8-4242-9e01-ea3cf5a64a13"), "PaiementExpirer", "Paiement expiré" },
-                    { new Guid("293ddfdf-024d-47d2-8a03-591fc52e540a"), "RefusDossier", "Refus de la demande" },
-                    { new Guid("3c9947db-1996-42f1-a266-ec1529af59f0"), "DevisRefuser", "Devis refusé par client" },
-                    { new Guid("4095bfe0-a232-46bd-8c37-ab378b1d81cf"), "NouveauDossier", "Nouvelle demande" },
-                    { new Guid("598dfd92-00f9-4fa2-837c-1f4de38560a1"), "DevisValide", "Devis validé par client" },
-                    { new Guid("5f670bf0-f5e6-46f5-be80-8cee230196f1"), "InstructionApprouve", "Instruction Approuvée" },
-                    { new Guid("5fe3e3ba-e24e-48fe-b676-03303e459b0f"), "DevisValideTr", "Devis validé par Trésorerie" },
-                    { new Guid("6adaa907-5b85-4372-95e3-91800742532e"), "PaiementRejete", "Paiement non accepté" },
-                    { new Guid("712d4229-8bcd-4ef4-b4f5-f9b74ab2ed75"), "DevisCreer", "Devis créé" },
-                    { new Guid("9770f151-8dd7-47cf-8ab3-7f38aa809113"), "ApprobationInstruction", "Envoyé pour approbation" },
-                    { new Guid("b45a7192-fb24-458a-859d-00fd6f3e6d48"), "DossierSignature", "Attestation en signature" },
-                    { new Guid("b4a18c66-0007-48d0-906e-bf4b63aab6cc"), "DossierSigner", "Attestation signée" },
-                    { new Guid("bbca9597-475d-4aa6-a62c-fd7af555e4e8"), "DevisValideSC", "Devis validé par Chef Service" },
-                    { new Guid("f081973a-5539-48f8-bd3c-906833fb87eb"), "Instruction", "En cours d'instruction" },
-                    { new Guid("fdec27a7-6a99-41e3-b5e6-0256445b7e0c"), "DevisEmit", "Devis émis" }
+                    { new Guid("048f9a42-5107-49c3-9d24-2dae0a2898cb"), "DevisValideSC", "Devis validé par Chef Service" },
+                    { new Guid("08d8c5e4-0be5-4185-b29e-058f6f6cb99d"), "NouveauDossier", "Nouvelle demande" },
+                    { new Guid("311e4102-4b53-486a-8169-2e8e5bf5eb7c"), "DevisValideTr", "Devis validé par Trésorerie" },
+                    { new Guid("4e419ee9-1d27-4a2b-9e0b-b2fe46b44125"), "PaiementExpirer", "Paiement expiré" },
+                    { new Guid("60b57c73-f261-4233-a488-308114f07cbf"), "DossierSigner", "Attestation signée" },
+                    { new Guid("7c0e1236-ff81-4c74-9006-fab8670a5460"), "RefusDossier", "Refus de la demande" },
+                    { new Guid("a772fcea-d134-4eed-a0f3-1bfb36d76282"), "InstructionApprouve", "Instruction Approuvée" },
+                    { new Guid("a7ff862a-d81d-4a61-b83b-be5907d78304"), "PaiementRejete", "Paiement non accepté" },
+                    { new Guid("b9701311-dd3c-4943-ab4a-16257882cdd5"), "ApprobationInstruction", "Envoyé pour approbation" },
+                    { new Guid("c799d816-40bb-477a-a859-4b4404cb8e76"), "DevisEmit", "Devis émis" },
+                    { new Guid("c7bf5de4-8116-4f4d-ada9-19e989f47802"), "DevisCreer", "Devis créé" },
+                    { new Guid("cc2d7826-368f-4f69-a42e-a4e45c550d9c"), "DossierSignature", "Attestation en signature" },
+                    { new Guid("d2ba611e-f001-4c87-a8b0-a706cdeb58d2"), "DossierPayer", "Paiement effectué" },
+                    { new Guid("de3f3369-3d51-4c17-929b-be4218c5b789"), "Instruction", "En cours d'instruction" },
+                    { new Guid("e3f823ce-f5e9-4d4c-b1ee-7e960d722d6f"), "DevisValide", "Devis validé par client" },
+                    { new Guid("e7a6e022-b1a0-4a02-b994-47613ff9f6b8"), "DevisRefuser", "Devis refusé par client" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AdminUtilisateurs",
                 columns: new[] { "Id", "AdminProfilsId", "ChangementMotPasse", "Compte", "DateCreation", "DateModification", "DerniereConnexion", "Desactive", "IdProfil", "IdUtilisateurType", "MotPasse", "Nom", "Prenoms", "Remarques", "UtilisateurCreation", "UtilisateurModification" },
-                values: new object[] { new Guid("0d043795-fda8-413f-ab24-dc3eb1b39a07"), null, true, "admin", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, false, null, new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"), "$2a$11$WsTym4NhNm3jWJERARooBeYR7zGhLs9jx/Bb5Kebk3E/K40HCAq.a", "Administrateur", "ARPCE", null, "SYSTEM_SEED", null });
+                values: new object[] { new Guid("bec01699-3434-4310-88a9-d64bf08ae841"), null, true, "admin", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, false, null, new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"), "$2a$11$51MqlIg9ogM0KLIekjNLJuf1S2dwfE1EezbTfQmbE1RWgz6cW/bJK", "Administrateur", "ARPCE", null, "SYSTEM_SEED", null });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_adminJournal_DossierId",
+                table: "adminJournal",
+                column: "DossierId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_adminJournal_IdEvenementType",

@@ -8,10 +8,12 @@ namespace BackOffice.Application.Features.Categories.Commands.CreateCategorie;
 public class CreateCategorieCommandHandler : IRequestHandler<CreateCategorieCommand, CategorieEquipementDto>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IAuditService _auditService;
 
-    public CreateCategorieCommandHandler(IApplicationDbContext context)
+    public CreateCategorieCommandHandler(IApplicationDbContext context, IAuditService auditService)
     {
         _context = context;
+        _auditService = auditService;
     }
 
     public async Task<CategorieEquipementDto> Handle(CreateCategorieCommand request, CancellationToken cancellationToken)
@@ -33,6 +35,11 @@ public class CreateCategorieCommandHandler : IRequestHandler<CreateCategorieComm
 
         _context.CategoriesEquipements.Add(entity);
         await _context.SaveChangesAsync(cancellationToken);
+
+        await _auditService.LogAsync(
+    page: "Gestion des Catégories",
+    libelle: $"Création de la catégorie '{request.Code}' - {request.Libelle}.",
+    eventTypeCode: "CREATION");
 
         return new CategorieEquipementDto
         {

@@ -8,11 +8,13 @@ public class CreateAdminCommandHandler : IRequestHandler<CreateAdminCommand, boo
 {
     private readonly IApplicationDbContext _context;
     private readonly IPasswordHasher _passwordHasher;
+    private readonly IAuditService _auditService;
 
-    public CreateAdminCommandHandler(IApplicationDbContext context, IPasswordHasher passwordHasher)
+    public CreateAdminCommandHandler(IApplicationDbContext context, IPasswordHasher passwordHasher, IAuditService auditService)
     {
         _context = context;
         _passwordHasher = passwordHasher;
+        _auditService = auditService;
     }
 
     public async Task<bool> Handle(CreateAdminCommand request, CancellationToken cancellationToken)
@@ -38,6 +40,11 @@ public class CreateAdminCommandHandler : IRequestHandler<CreateAdminCommand, boo
 
         _context.AdminUtilisateurs.Add(admin);
         await _context.SaveChangesAsync(cancellationToken);
+
+        await _auditService.LogAsync(
+    page: "Gestion des Utilisateurs",
+    libelle: $"Création de l'utilisateur admin '{request.Compte}'.",
+    eventTypeCode: "CREATION");
 
         return true;
     }

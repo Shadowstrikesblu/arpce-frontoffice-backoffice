@@ -8,11 +8,13 @@ public class SendMailToClientCommandHandler : IRequestHandler<SendMailToClientCo
 {
     private readonly IApplicationDbContext _context;
     private readonly IEmailService _emailService;
+    private readonly IAuditService _auditService;
 
-    public SendMailToClientCommandHandler(IApplicationDbContext context, IEmailService emailService)
+    public SendMailToClientCommandHandler(IApplicationDbContext context, IEmailService emailService, IAuditService auditService)
     {
         _context = context;
         _emailService = emailService;
+        _auditService = auditService;
     }
 
     public async Task<bool> Handle(SendMailToClientCommand request, CancellationToken cancellationToken)
@@ -39,6 +41,12 @@ public class SendMailToClientCommandHandler : IRequestHandler<SendMailToClientCo
         }
 
         await _emailService.SendEmailAsync(dossier.Client.Email, subject, body);
+
+        await _auditService.LogAsync(
+    page: "Communication Client",
+    libelle: $"Envoi d'un e-mail de type '{request.Type}' pour le dossier '{dossier.Numero}'.",
+    eventTypeCode: "COMMUNICATION",
+    dossierId: dossier.Id);
         return true;
     }
 }

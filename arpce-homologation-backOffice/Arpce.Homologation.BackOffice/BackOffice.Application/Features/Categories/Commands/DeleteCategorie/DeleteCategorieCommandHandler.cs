@@ -6,10 +6,12 @@ namespace BackOffice.Application.Features.Categories.Commands.DeleteCategorie;
 public class DeleteCategorieCommandHandler : IRequestHandler<DeleteCategorieCommand, bool>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IAuditService _auditService;
 
-    public DeleteCategorieCommandHandler(IApplicationDbContext context)
+    public DeleteCategorieCommandHandler(IApplicationDbContext context, IAuditService auditService)
     {
         _context = context;
+        _auditService = auditService;
     }
 
     public async Task<bool> Handle(DeleteCategorieCommand request, CancellationToken cancellationToken)
@@ -24,6 +26,11 @@ public class DeleteCategorieCommandHandler : IRequestHandler<DeleteCategorieComm
 
         _context.CategoriesEquipements.Remove(entity);
         await _context.SaveChangesAsync(cancellationToken);
+
+        await _auditService.LogAsync(
+    page: "Gestion des Catégories",
+    libelle: $"Suppression de la catégorie '{entity.Code}' (ID: {entity.Id}).",
+    eventTypeCode: "SUPPRESSION");
 
         return true;
     }

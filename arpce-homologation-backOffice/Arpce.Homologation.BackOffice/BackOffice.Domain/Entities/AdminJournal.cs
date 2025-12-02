@@ -9,5 +9,7 @@ public class AdminJournal
     public DateTime DateEvenement { get; set; }
     public string Page { get; set; } = string.Empty;
     public string? Libelle { get; set; }
+    public Guid? IdDossier { get; set; } 
+    public virtual Dossier? Dossier { get; set; }
     public virtual AdminEvenementsTypes? EvenementType { get; set; }
 }

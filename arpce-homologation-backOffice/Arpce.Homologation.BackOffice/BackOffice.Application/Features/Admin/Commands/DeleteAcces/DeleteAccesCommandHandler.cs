@@ -6,10 +6,11 @@ namespace BackOffice.Application.Features.Admin.Commands.DeleteAcces;
 public class DeleteAccesCommandHandler : IRequestHandler<DeleteAccesCommand, bool>
 {
     private readonly IApplicationDbContext _context;
-
-    public DeleteAccesCommandHandler(IApplicationDbContext context)
+    private readonly IAuditService _auditService;
+    public DeleteAccesCommandHandler(IApplicationDbContext context, IAuditService auditService)
     {
         _context = context;
+        _auditService = auditService;
     }
 
     public async Task<bool> Handle(DeleteAccesCommand request, CancellationToken cancellationToken)
@@ -24,6 +25,12 @@ public class DeleteAccesCommandHandler : IRequestHandler<DeleteAccesCommand, boo
         _context.AdminAccesses.Remove(acces);
 
         await _context.SaveChangesAsync(cancellationToken);
+
+        await _auditService.LogAsync(
+    page: "Gestion des Profils",
+    libelle: $"Suppression du profil '{request.Code}' (ID: {request.Id}).",
+    eventTypeCode: "SUPPRESSION");
+
         return true;
     }
 }
