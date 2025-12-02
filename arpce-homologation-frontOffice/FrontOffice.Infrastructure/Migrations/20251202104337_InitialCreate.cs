@@ -8,11 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FrontOffice.Infrastructure.Migrations
 {
     /// <inheritdoc />
-<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251128205538_InitialCreate.cs
     public partial class InitialCreate : Migration
-========
-    public partial class Initialisation : Migration
->>>>>>>> 112184c556a0864d234fd79f239cbcb480b632fc:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251202012622_Initialisation.cs
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -588,17 +584,10 @@ namespace FrontOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "DateCreation", "DateModification", "Libelle", "MobileBanking", "Remarques", "UtilisateurCreation", "UtilisateurModification" },
                 values: new object[,]
                 {
-<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251128205538_InitialCreate.cs
-                    { new Guid("15b5eca1-4bc6-4e49-aeae-2840d4de88ca"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
-                    { new Guid("366a1780-9bd9-420e-bed9-1cb461757729"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
-                    { new Guid("87250838-dd8d-4de6-ab2f-e01dc9143618"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
-                    { new Guid("c7fbd90f-3da5-40b9-a7cb-dd5722b90bed"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null }
-========
-                    { new Guid("082a7627-6e7d-4e77-ab2c-dc80656ae75f"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
-                    { new Guid("26e59a54-7035-4a31-8cd8-d5bab8f56e94"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
-                    { new Guid("d7c2dfa2-f4d5-4993-b2ff-0b85fc26a8e6"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
-                    { new Guid("f5624b60-7632-44f4-bb9c-5ed4eb6eb96e"), "Especes", null, null, "Espèces", (byte)0, null, null, null }
->>>>>>>> 112184c556a0864d234fd79f239cbcb480b632fc:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251202012622_Initialisation.cs
+                    { new Guid("467c4df2-b9a0-4368-a8dd-5b5df9c288f7"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
+                    { new Guid("9441b64a-ee09-4826-95b1-6cae0f658d66"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
+                    { new Guid("ebfba124-4a88-45b1-a7a8-1039b59f01a4"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
+                    { new Guid("fde13926-246f-458e-9f7b-67fc06858452"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -606,38 +595,22 @@ namespace FrontOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "Libelle" },
                 values: new object[,]
                 {
-<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251128205538_InitialCreate.cs
-                    { new Guid("0d1886ec-168c-4c9e-bc7d-9a5b440c2703"), "DossierSigne", "Attestation signée" },
-                    { new Guid("290e2ff5-ad14-4707-b948-f6b26b1d265c"), "PaiementExpire", "Paiement expiré" },
-                    { new Guid("3c5102f8-2ea5-4a3b-9f0c-5471b92ca4c6"), "DevisValide", "Devis validé par client" },
-                    { new Guid("456445b9-6c7f-4d2a-aa97-87f054163920"), "DossierPaye", "Paiement effectué" },
-                    { new Guid("4e456e99-7971-4253-ac39-ee4296ad23a1"), "DevisRejete", "Devis refusé par client" },
-                    { new Guid("5045330e-aae3-4c31-87e4-72480346b7bb"), "DossierSignature", "Attestation en signature" },
-                    { new Guid("8d8c639d-4005-4bb2-93f4-3ab29d6e85be"), "ApprobationInstruction", "Envoyé pour approbation" },
-                    { new Guid("98ad0ecc-363e-49f7-8631-6e1ff42aba97"), "DevisPaiement", "Approuvé, en attente de paiement" },
-                    { new Guid("a91b439f-51f6-4936-a66f-0c88608cc6b2"), "PaiementRejete", "Paiement non accepté" },
-                    { new Guid("cdbf10f6-9574-4756-8969-fe9a1e773e2e"), "NouveauDossier", "Nouvelle demande" },
-                    { new Guid("d5c379c1-84c7-4a85-b729-646e10377c1a"), "Instruction", "En cours d'instruction" },
-                    { new Guid("dd90777f-c32b-4fa4-87ec-3910872576c0"), "DevisEmis", "Devis émis" },
-                    { new Guid("f8887389-6fea-4759-882a-7952775f6dc5"), "InstructionApprouve", "Instruction Approuvée" }
-========
-                    { new Guid("04769801-8e20-4c68-88e1-bcfa67f5cbfb"), "PaiementRejete", "Paiement non accepté" },
-                    { new Guid("141b79ef-5251-48d6-bb0a-460ab3a5b3b2"), "DevisRefuser", "Devis refusé par client" },
-                    { new Guid("5b596875-81f9-46b4-a702-9b734c691550"), "PaiementExpirer", "Paiement expiré" },
-                    { new Guid("75333c99-4711-4ced-b93f-75c01e4a1524"), "DevisEmit", "Devis émis" },
-                    { new Guid("81c731ff-dad0-4d02-96f7-a8d8f0d94b4f"), "RefusDossier", "Refus de la demande" },
-                    { new Guid("973948f1-5dff-451e-bc92-0a610987614e"), "DevisValideTr", "Devis validé par Trésorerie" },
-                    { new Guid("9eeb2d9f-771a-4a6d-80f4-d1aaf24f8fb9"), "DevisValideSC", "Devis validé par Chef Service" },
-                    { new Guid("a62dbfaf-749e-43c8-94c7-376fc1bfc959"), "Instruction", "En cours d'instruction" },
-                    { new Guid("a7e79ec6-44e6-4216-b05b-b381b19a540e"), "DossierSignature", "Attestation en signature" },
-                    { new Guid("b06fa2fe-bf3a-4a35-9308-b9383a444c36"), "DevisValide", "Devis validé par client" },
-                    { new Guid("b3baf320-4e3d-47d1-8fe8-b5eed76f42f0"), "DossierSigner", "Attestation signée" },
-                    { new Guid("b45d01b4-e460-4b81-a6c6-b62b41a3fc4b"), "InstructionApprouve", "Instruction Approuvée" },
-                    { new Guid("be44c2d8-058b-42dc-a43a-53aa8f7e739e"), "DossierPayer", "Paiement effectué" },
-                    { new Guid("d28478fc-f703-4569-aeed-4189698a3e79"), "NouveauDossier", "Nouvelle demande" },
-                    { new Guid("e89bd706-7353-458d-9ef0-fde8a037ac81"), "DevisCreer", "Devis créé" },
-                    { new Guid("ed871603-e7a3-4c8f-bc0f-d2812f56c4e1"), "ApprobationInstruction", "Envoyé pour approbation" }
->>>>>>>> 112184c556a0864d234fd79f239cbcb480b632fc:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20251202012622_Initialisation.cs
+                    { new Guid("0bcbb1f8-9c0d-4109-bdba-0c1e2b5aff82"), "PaiementExpirer", "Paiement expiré" },
+                    { new Guid("0ffe14b6-ec76-414b-9b47-042e6cf5dbd5"), "DevisEmit", "Devis émis" },
+                    { new Guid("1073e644-333e-4941-badf-6b086e3c44a0"), "DevisRefuser", "Devis refusé par client" },
+                    { new Guid("2b1ae54f-2a02-4af7-bd51-adae25d7b6b0"), "DevisValideTr", "Devis validé par Trésorerie" },
+                    { new Guid("329ffaa9-f2a3-4a00-b0e6-7f46fd0e08eb"), "DossierSigner", "Attestation signée" },
+                    { new Guid("3ac729fd-f061-464b-868e-0caf9d52a739"), "ApprobationInstruction", "Envoyé pour approbation" },
+                    { new Guid("45c82c9c-3191-490e-aed1-76a0f6ba3a57"), "DossierSignature", "Attestation en signature" },
+                    { new Guid("483b3eca-200f-4f83-8ced-6db2d598842b"), "DevisValideSC", "Devis validé par Chef Service" },
+                    { new Guid("5af8bab9-8a3b-4ee6-a69a-212d00c3fa18"), "DossierPayer", "Paiement effectué" },
+                    { new Guid("5c4abb04-6257-4f9b-b2b4-f35259af933e"), "NouveauDossier", "Nouvelle demande" },
+                    { new Guid("65374217-3986-44d9-8072-9fa83ba91246"), "DevisCreer", "Devis créé" },
+                    { new Guid("765318a6-baa6-4ba6-ace7-d3cecb9605be"), "RefusDossier", "Refus de la demande" },
+                    { new Guid("7bef27c7-378c-40cb-9470-f956bc77a8c0"), "PaiementRejete", "Paiement non accepté" },
+                    { new Guid("8b7394c5-d49e-4621-ac92-869ce4722db4"), "InstructionApprouve", "Instruction Approuvée" },
+                    { new Guid("9edf0a38-1908-4d72-ad73-2980f952e721"), "Instruction", "En cours d'instruction" },
+                    { new Guid("fba71771-9d97-4815-a4ef-5cbb23147120"), "DevisValide", "Devis validé par client" }
                 });
 
             migrationBuilder.CreateIndex(

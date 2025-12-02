@@ -933,28 +933,28 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("082a7627-6e7d-4e77-ab2c-dc80656ae75f"),
+                            Id = new Guid("467c4df2-b9a0-4368-a8dd-5b5df9c288f7"),
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("d7c2dfa2-f4d5-4993-b2ff-0b85fc26a8e6"),
+                            Id = new Guid("ebfba124-4a88-45b1-a7a8-1039b59f01a4"),
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("f5624b60-7632-44f4-bb9c-5ed4eb6eb96e"),
+                            Id = new Guid("9441b64a-ee09-4826-95b1-6cae0f658d66"),
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("26e59a54-7035-4a31-8cd8-d5bab8f56e94"),
+                            Id = new Guid("fde13926-246f-458e-9f7b-67fc06858452"),
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1
@@ -1044,97 +1044,97 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d28478fc-f703-4569-aeed-4189698a3e79"),
+                            Id = new Guid("5c4abb04-6257-4f9b-b2b4-f35259af933e"),
                             Code = "NouveauDossier",
                             Libelle = "Nouvelle demande"
                         },
                         new
                         {
-                            Id = new Guid("81c731ff-dad0-4d02-96f7-a8d8f0d94b4f"),
+                            Id = new Guid("765318a6-baa6-4ba6-ace7-d3cecb9605be"),
                             Code = "RefusDossier",
                             Libelle = "Refus de la demande"
                         },
                         new
                         {
-                            Id = new Guid("a62dbfaf-749e-43c8-94c7-376fc1bfc959"),
+                            Id = new Guid("9edf0a38-1908-4d72-ad73-2980f952e721"),
                             Code = "Instruction",
                             Libelle = "En cours d'instruction"
                         },
                         new
                         {
-                            Id = new Guid("ed871603-e7a3-4c8f-bc0f-d2812f56c4e1"),
+                            Id = new Guid("3ac729fd-f061-464b-868e-0caf9d52a739"),
                             Code = "ApprobationInstruction",
                             Libelle = "Envoyé pour approbation"
                         },
                         new
                         {
-                            Id = new Guid("b45d01b4-e460-4b81-a6c6-b62b41a3fc4b"),
+                            Id = new Guid("8b7394c5-d49e-4621-ac92-869ce4722db4"),
                             Code = "InstructionApprouve",
                             Libelle = "Instruction Approuvée"
                         },
                         new
                         {
-                            Id = new Guid("e89bd706-7353-458d-9ef0-fde8a037ac81"),
+                            Id = new Guid("65374217-3986-44d9-8072-9fa83ba91246"),
                             Code = "DevisCreer",
                             Libelle = "Devis créé"
                         },
                         new
                         {
-                            Id = new Guid("9eeb2d9f-771a-4a6d-80f4-d1aaf24f8fb9"),
+                            Id = new Guid("483b3eca-200f-4f83-8ced-6db2d598842b"),
                             Code = "DevisValideSC",
                             Libelle = "Devis validé par Chef Service"
                         },
                         new
                         {
-                            Id = new Guid("973948f1-5dff-451e-bc92-0a610987614e"),
+                            Id = new Guid("2b1ae54f-2a02-4af7-bd51-adae25d7b6b0"),
                             Code = "DevisValideTr",
                             Libelle = "Devis validé par Trésorerie"
                         },
                         new
                         {
-                            Id = new Guid("75333c99-4711-4ced-b93f-75c01e4a1524"),
+                            Id = new Guid("0ffe14b6-ec76-414b-9b47-042e6cf5dbd5"),
                             Code = "DevisEmit",
                             Libelle = "Devis émis"
                         },
                         new
                         {
-                            Id = new Guid("b06fa2fe-bf3a-4a35-9308-b9383a444c36"),
+                            Id = new Guid("fba71771-9d97-4815-a4ef-5cbb23147120"),
                             Code = "DevisValide",
                             Libelle = "Devis validé par client"
                         },
                         new
                         {
-                            Id = new Guid("141b79ef-5251-48d6-bb0a-460ab3a5b3b2"),
+                            Id = new Guid("1073e644-333e-4941-badf-6b086e3c44a0"),
                             Code = "DevisRefuser",
                             Libelle = "Devis refusé par client"
                         },
                         new
                         {
-                            Id = new Guid("04769801-8e20-4c68-88e1-bcfa67f5cbfb"),
+                            Id = new Guid("7bef27c7-378c-40cb-9470-f956bc77a8c0"),
                             Code = "PaiementRejete",
                             Libelle = "Paiement non accepté"
                         },
                         new
                         {
-                            Id = new Guid("5b596875-81f9-46b4-a702-9b734c691550"),
+                            Id = new Guid("0bcbb1f8-9c0d-4109-bdba-0c1e2b5aff82"),
                             Code = "PaiementExpirer",
                             Libelle = "Paiement expiré"
                         },
                         new
                         {
-                            Id = new Guid("be44c2d8-058b-42dc-a43a-53aa8f7e739e"),
+                            Id = new Guid("5af8bab9-8a3b-4ee6-a69a-212d00c3fa18"),
                             Code = "DossierPayer",
                             Libelle = "Paiement effectué"
                         },
                         new
                         {
-                            Id = new Guid("a7e79ec6-44e6-4216-b05b-b381b19a540e"),
+                            Id = new Guid("45c82c9c-3191-490e-aed1-76a0f6ba3a57"),
                             Code = "DossierSignature",
                             Libelle = "Attestation en signature"
                         },
                         new
                         {
-                            Id = new Guid("b3baf320-4e3d-47d1-8fe8-b5eed76f42f0"),
+                            Id = new Guid("329ffaa9-f2a3-4a00-b0e6-7f46fd0e08eb"),
                             Code = "DossierSigner",
                             Libelle = "Attestation signée"
                         });

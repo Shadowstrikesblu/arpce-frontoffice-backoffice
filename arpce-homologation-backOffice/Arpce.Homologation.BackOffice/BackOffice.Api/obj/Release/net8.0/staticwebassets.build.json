@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Yi7hSHo48tCWpn2ZFAt7VorjJc8SbDpjDIU7NvltXfM=",
+  "Hash": "YnwRusX9PLD91ES2da3ZN1eS5mX2vAztwHzx16RBa94=",
   "Source": "BackOffice.Api",
   "BasePath": "_content/BackOffice.Api",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "BackOffice.Api\\wwwroot",
       "Source": "BackOffice.Api",
-      "ContentRoot": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Api\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Api\\wwwroot\\",
       "BasePath": "_content/BackOffice.Api",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Api\\wwwroot\\css\\swagger-custom.css",
+      "Identity": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Api\\wwwroot\\css\\swagger-custom.css",
       "SourceId": "BackOffice.Api",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Api\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-backOffice\\Arpce.Homologation.BackOffice\\BackOffice.Api\\wwwroot\\",
       "BasePath": "_content/BackOffice.Api",
       "RelativePath": "css/swagger-custom.css",
       "AssetKind": "All",

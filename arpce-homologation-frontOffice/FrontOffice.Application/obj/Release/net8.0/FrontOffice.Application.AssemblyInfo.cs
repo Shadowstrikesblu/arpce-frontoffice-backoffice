@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FrontOffice.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9f10b09a19cead855ee053cfe743eecc66f64bf5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5a1c14073003adcd0e8bbd2db34496db01684c0a")]
 [assembly: System.Reflection.AssemblyProductAttribute("FrontOffice.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FrontOffice.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

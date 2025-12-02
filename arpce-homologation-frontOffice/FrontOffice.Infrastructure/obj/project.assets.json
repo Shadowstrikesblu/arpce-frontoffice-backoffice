@@ -3670,11 +3670,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj",
+      "projectUniqueName": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj",
       "projectName": "FrontOffice.Infrastructure",
-      "projectPath": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj",
+      "projectPath": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\obj\\",
+      "outputPath": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -3689,8 +3689,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj": {
-              "projectPath": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj"
+            "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj": {
+              "projectPath": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj"
             }
           }
         }

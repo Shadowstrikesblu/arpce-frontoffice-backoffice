@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj": {}
+    "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj": {
+    "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj",
+        "projectUniqueName": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj",
         "projectName": "FrontOffice.Application",
-        "projectPath": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj",
+        "projectPath": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Application\\obj\\",
+        "outputPath": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -26,8 +26,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj": {
-                "projectPath": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj"
+              "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj": {
+                "projectPath": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj"
               }
             }
           }
@@ -92,14 +92,14 @@
         }
       }
     },
-    "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj": {
+    "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj",
         "projectName": "FrontOffice.Domain",
-        "projectPath": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj",
+        "projectPath": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Domain\\FrontOffice.Domain.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Domain\\obj\\",
+        "outputPath": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -150,14 +150,14 @@
         }
       }
     },
-    "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj": {
+    "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj",
         "projectName": "FrontOffice.Infrastructure",
-        "projectPath": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj",
+        "projectPath": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -172,8 +172,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj": {
-                "projectPath": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj"
+              "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj": {
+                "projectPath": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj"
               }
             }
           }

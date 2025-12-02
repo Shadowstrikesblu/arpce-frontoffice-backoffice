@@ -5372,11 +5372,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Api\\FrontOffice.Api.csproj",
+      "projectUniqueName": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Api\\FrontOffice.Api.csproj",
       "projectName": "FrontOffice.Api",
-      "projectPath": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Api\\FrontOffice.Api.csproj",
+      "projectPath": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Api\\FrontOffice.Api.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Api\\obj\\",
+      "outputPath": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -5391,11 +5391,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj": {
-              "projectPath": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj"
+            "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj": {
+              "projectPath": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Application\\FrontOffice.Application.csproj"
             },
-            "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\Administrator\\Downloads\\frontoffice\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj"
+            "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Infrastructure\\FrontOffice.Infrastructure.csproj"
             }
           }
         }
@@ -5456,5 +5456,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.416/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problème de lecture du fichier cache C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Api\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

@@ -427,13 +427,13 @@ namespace BackOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("51febcc5-e069-46b9-8e19-00835ef21c1e"),
+                            Id = new Guid("0f1d11bf-46d3-4633-8c9a-23615b4ecd7b"),
                             ChangementMotPasse = true,
                             Compte = "admin",
                             DateCreation = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Desactive = false,
                             IdUtilisateurType = new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"),
-                            MotPasse = "$2a$11$MqgWrrdhXh4V46eyZf8AUOUNAZ27RX0sNQ/QJWWRP0UeKpJeuQdR6",
+                            MotPasse = "$2a$11$hl45SqHjw9MmxjK.n2gbmuqzts9XGfCcbbh1Zi5l1wL1qBCP5GqSW",
                             Nom = "Administrateur",
                             Prenoms = "ARPCE",
                             UtilisateurCreation = "SYSTEM_SEED"
@@ -463,12 +463,12 @@ namespace BackOffice.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f3a2583c-c25f-4ac6-9d0c-21adfb394ab8"),
+                            Id = new Guid("f070e3c6-bd14-445c-ac2e-4ba8da73f5c1"),
                             Libelle = "Utilisateur Standard"
                         },
                         new
                         {
-                            Id = new Guid("dddfd690-a42c-467c-a544-36b6e9634145"),
+                            Id = new Guid("293787e6-f752-4e28-8e3a-670c584c438a"),
                             Libelle = "Auditeur"
                         });
                 });
@@ -581,8 +581,8 @@ namespace BackOffice.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Adresse")
-                        .HasMaxLength(512)
-                        .HasColumnType("nvarchar(512)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Bp")
                         .HasMaxLength(60)
@@ -630,9 +630,14 @@ namespace BackOffice.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<int>("NiveauValidation")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
                     b.Property<string>("Pays")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("RaisonSociale")
                         .IsRequired()
@@ -646,6 +651,13 @@ namespace BackOffice.Infrastructure.Migrations
                     b.Property<string>("Remarques")
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("TypeClient")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValue("Entreprise");
 
                     b.Property<string>("UtilisateurCreation")
                         .HasMaxLength(60)
@@ -663,8 +675,8 @@ namespace BackOffice.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Ville")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -1058,28 +1070,28 @@ namespace BackOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("41949d4c-7711-4096-a8ea-38f4af4253e4"),
+                            Id = new Guid("b979d9a2-69a4-4629-8a02-fe94da3f1f94"),
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("7b44ac7b-f28e-4589-a7a7-5c315bcc4b24"),
+                            Id = new Guid("5f5ced52-3b65-439c-a3fc-54765a6737e6"),
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("fb4f75f2-a67f-449c-865b-67c0d75f9ddd"),
+                            Id = new Guid("3eab8820-0f36-40df-a1af-7b5b6b1974ef"),
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("0963f1d8-8bf0-4e88-b841-37a5a6966151"),
+                            Id = new Guid("12fe3de7-31e8-4bee-b847-038c0d566e6e"),
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1
@@ -1183,97 +1195,97 @@ namespace BackOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c764a949-2495-4aa5-8833-3c5584489da1"),
+                            Id = new Guid("86b5f366-00a0-4746-9d78-c3ebb0348817"),
                             Code = "NouveauDossier",
                             Libelle = "Nouvelle demande"
                         },
                         new
                         {
-                            Id = new Guid("1e023b90-c8dd-4951-97c7-94cdaead255b"),
+                            Id = new Guid("1694cbad-0fc3-4f5d-b5ed-6d16c62d7d0f"),
                             Code = "RefusDossier",
                             Libelle = "Refus de la demande"
                         },
                         new
                         {
-                            Id = new Guid("791c548a-a18a-4b37-b033-6f8b3bccdcbe"),
+                            Id = new Guid("953bc7af-329d-4d9c-9bd2-5d88791bae7e"),
                             Code = "Instruction",
                             Libelle = "En cours d'instruction"
                         },
                         new
                         {
-                            Id = new Guid("a56e1a3f-0cc2-465e-8246-acae6238a001"),
+                            Id = new Guid("f1ffe7a4-ed66-466e-95a7-6212fa27cac0"),
                             Code = "ApprobationInstruction",
                             Libelle = "Envoyé pour approbation"
                         },
                         new
                         {
-                            Id = new Guid("2e8c2920-b003-4749-8908-8dca5823d697"),
+                            Id = new Guid("7e36dc70-ee33-4ac1-8e14-a98cc56deff8"),
                             Code = "InstructionApprouve",
                             Libelle = "Instruction Approuvée"
                         },
                         new
                         {
-                            Id = new Guid("7053757c-4444-4564-982e-6fff2797b5ee"),
+                            Id = new Guid("a21ca92e-5a69-4d7c-903f-01dfe748a110"),
                             Code = "DevisCreer",
                             Libelle = "Devis créé"
                         },
                         new
                         {
-                            Id = new Guid("ff1ec855-3519-4fa0-896b-c68dae7d17d0"),
+                            Id = new Guid("14fe4c09-9c8f-4c71-b365-a5e1490d4f9e"),
                             Code = "DevisValideSC",
                             Libelle = "Devis validé par Chef Service"
                         },
                         new
                         {
-                            Id = new Guid("c194ae43-2c4b-4f61-8de4-cb530cdef2e1"),
+                            Id = new Guid("cae75ba4-9e81-46b2-aaec-5ff6409d96aa"),
                             Code = "DevisValideTr",
                             Libelle = "Devis validé par Trésorerie"
                         },
                         new
                         {
-                            Id = new Guid("12d4d3bf-dc7a-4059-be99-8d921d73ebe3"),
+                            Id = new Guid("2a587a06-846f-4f88-bc14-ab7d8bb38f14"),
                             Code = "DevisEmit",
                             Libelle = "Devis émis"
                         },
                         new
                         {
-                            Id = new Guid("d0b73baa-9802-4943-8314-4cca762e424d"),
+                            Id = new Guid("5fc1d40d-ccd4-43d2-815e-417d3c26c535"),
                             Code = "DevisValide",
                             Libelle = "Devis validé par client"
                         },
                         new
                         {
-                            Id = new Guid("0386302f-f458-4d3a-b061-6b6955079051"),
+                            Id = new Guid("c2e54954-2e89-4231-8365-7910d5a21a49"),
                             Code = "DevisRefuser",
                             Libelle = "Devis refusé par client"
                         },
                         new
                         {
-                            Id = new Guid("61f44041-aed7-41ac-a42d-087013edd6ed"),
+                            Id = new Guid("051da1c0-f36d-447f-b8b3-a335fa16351b"),
                             Code = "PaiementRejete",
                             Libelle = "Paiement non accepté"
                         },
                         new
                         {
-                            Id = new Guid("9dc219fa-6291-43ad-85be-84ecf8627859"),
+                            Id = new Guid("5b9c2d73-df94-4b44-88dc-5fc5ccd93a11"),
                             Code = "PaiementExpirer",
                             Libelle = "Paiement expiré"
                         },
                         new
                         {
-                            Id = new Guid("8d05c235-080b-498f-984c-d75b123298e5"),
+                            Id = new Guid("8819e7ee-14b8-4dae-95a5-ddb796ab3049"),
                             Code = "DossierPayer",
                             Libelle = "Paiement effectué"
                         },
                         new
                         {
-                            Id = new Guid("57202784-37d1-417d-94c2-5202ee1c8c06"),
+                            Id = new Guid("a8b49a5a-699d-4b9a-99f4-bfd826e73625"),
                             Code = "DossierSignature",
                             Libelle = "Attestation en signature"
                         },
                         new
                         {
-                            Id = new Guid("f00e3751-6f54-4476-ab76-8d80e4f744c9"),
+                            Id = new Guid("04f55720-6254-4155-88c7-8fb1189b105c"),
                             Code = "DossierSigner",
                             Libelle = "Attestation signée"
                         });

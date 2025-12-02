@@ -17,9 +17,11 @@ C:\Sites\FrontOffice\publish\Microsoft.EntityFrameworkCore.dll
 C:\Sites\FrontOffice\publish\Microsoft.EntityFrameworkCore.Abstractions.dll
 C:\Sites\FrontOffice\publish\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Sites\FrontOffice\publish\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Sites\FrontOffice\publish\Microsoft.Extensions.Configuration.Abstractions.dll
 C:\Sites\FrontOffice\publish\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 C:\Sites\FrontOffice\publish\Microsoft.Extensions.DependencyModel.dll
 C:\Sites\FrontOffice\publish\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Sites\FrontOffice\publish\Microsoft.Extensions.Primitives.dll
 C:\Sites\FrontOffice\publish\Microsoft.Identity.Client.dll
 C:\Sites\FrontOffice\publish\Microsoft.Identity.Client.Extensions.Msal.dll
 C:\Sites\FrontOffice\publish\Microsoft.IdentityModel.Abstractions.dll
