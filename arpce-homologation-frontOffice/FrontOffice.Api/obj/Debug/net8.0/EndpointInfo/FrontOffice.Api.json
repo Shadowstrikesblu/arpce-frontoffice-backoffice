@@ -997,6 +997,34 @@
         },
         "additionalProperties": false
       },
+      "CategorieEquipementDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "libelle": {
+            "type": "string",
+            "nullable": true
+          },
+          "tarifEtude": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "tarifHomologation": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ChangePasswordCommand": {
         "type": "object",
         "properties": {
@@ -1204,6 +1232,53 @@
           "marque": {
             "type": "string",
             "nullable": true
+          },
+          "fabricant": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "quantiteEquipements": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "contactNom": {
+            "type": "string",
+            "nullable": true
+          },
+          "contactEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "prixUnitaire": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "remise": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "estHomologable": {
+            "type": "boolean"
+          },
+          "categorieEquipement": {
+            "$ref": "#/components/schemas/CategorieEquipementDto"
+          },
+          "motifRejet": {
+            "$ref": "#/components/schemas/MotifRejetDto"
+          },
+          "proposition": {
+            "$ref": "#/components/schemas/PropositionDto"
           }
         },
         "additionalProperties": false
@@ -1491,6 +1566,28 @@
         },
         "additionalProperties": false
       },
+      "MotifRejetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "libelle": {
+            "type": "string",
+            "nullable": true
+          },
+          "remarques": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "PaiementEnAttenteDto": {
         "type": "object",
         "properties": {
@@ -1543,6 +1640,24 @@
           }
         },
         "additionalProperties": { }
+      },
+      "PropositionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "libelle": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "RegisterClientCommand": {
         "type": "object",

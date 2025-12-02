@@ -7,11 +7,12 @@ public class UpdateRedevableCommandHandler : IRequestHandler<UpdateRedevableComm
 {
     private readonly IApplicationDbContext _context;
     private readonly IPasswordHasher _passwordHasher;
-
-    public UpdateRedevableCommandHandler(IApplicationDbContext context, IPasswordHasher passwordHasher)
+    private readonly IAuditService _auditService;
+    public UpdateRedevableCommandHandler(IApplicationDbContext context, IPasswordHasher passwordHasher, IAuditService auditService)
     {
         _context = context;
         _passwordHasher = passwordHasher;
+        _auditService = auditService;
     }
 
     public async Task<bool> Handle(UpdateRedevableCommand request, CancellationToken cancellationToken)
@@ -36,6 +37,12 @@ public class UpdateRedevableCommandHandler : IRequestHandler<UpdateRedevableComm
         }
 
         await _context.SaveChangesAsync(cancellationToken);
+
+        await _auditService.LogAsync(
+    page: "Gestion des Redevables",
+    libelle: $"Modification des informations du redevable '{client.RaisonSociale}' (ID: {client.Id}).",
+    eventTypeCode: "MODIFICATION");
+
         return true;
     }
 }

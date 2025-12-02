@@ -7,10 +7,12 @@ namespace BackOffice.Application.Features.Categories.Commands.UpdateCategorie;
 public class UpdateCategorieCommandHandler : IRequestHandler<UpdateCategorieCommand, bool>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IAuditService _auditService;
 
-    public UpdateCategorieCommandHandler(IApplicationDbContext context)
+    public UpdateCategorieCommandHandler(IApplicationDbContext context, IAuditService auditService)
     {
         _context = context;
+        _auditService = auditService;
     }
 
     public async Task<bool> Handle(UpdateCategorieCommand request, CancellationToken cancellationToken)
@@ -35,6 +37,11 @@ public class UpdateCategorieCommandHandler : IRequestHandler<UpdateCategorieComm
         if (request.Remarques != null) entity.Remarques = request.Remarques;
 
         await _context.SaveChangesAsync(cancellationToken);
+
+        await _auditService.LogAsync(
+    page: "Gestion des Catégories",
+    libelle: $"Modification de la catégorie '{entity.Code}' (ID: {entity.Id}).",
+    eventTypeCode: "MODIFICATION");
 
         return true;
     }

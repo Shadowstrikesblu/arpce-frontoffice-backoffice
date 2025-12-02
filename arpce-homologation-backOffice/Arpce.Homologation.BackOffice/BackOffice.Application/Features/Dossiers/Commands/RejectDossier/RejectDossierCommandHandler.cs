@@ -9,11 +9,13 @@ public class RejectDossierCommandHandler : IRequestHandler<RejectDossierCommand,
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _currentUserService;
+    private readonly IAuditService _auditService;
 
-    public RejectDossierCommandHandler(IApplicationDbContext context, ICurrentUserService currentUserService)
+    public RejectDossierCommandHandler(IApplicationDbContext context, ICurrentUserService currentUserService, IAuditService auditService)
     {
         _context = context;
         _currentUserService = currentUserService;
+        _auditService = auditService;
     }
 
     public async Task<bool> Handle(RejectDossierCommand request, CancellationToken cancellationToken)
@@ -69,6 +71,12 @@ public class RejectDossierCommandHandler : IRequestHandler<RejectDossierCommand,
         _context.Commentaires.Add(commentaire);
 
         await _context.SaveChangesAsync(cancellationToken);
+
+        await _auditService.LogAsync(
+    page: "Instruction Dossier",
+    libelle: $"Le dossier '{dossier.Numero}' a été rejeté. Motif: {motif.Libelle}.",
+    eventTypeCode: "REJET",
+    dossierId: dossier.Id);
 
         return true;
     }

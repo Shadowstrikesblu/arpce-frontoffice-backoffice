@@ -10,11 +10,13 @@ public class ValidateRedevableCommandHandler : IRequestHandler<ValidateRedevable
 {
     private readonly IApplicationDbContext _context;
     private readonly IEmailService _emailService;
+    private readonly IAuditService _auditService;
 
-    public ValidateRedevableCommandHandler(IApplicationDbContext context, IEmailService emailService)
+    public ValidateRedevableCommandHandler(IApplicationDbContext context, IEmailService emailService, IAuditService auditService)
     {
         _context = context;
         _emailService = emailService;
+        _auditService = auditService;
     }
 
     public async Task<bool> Handle(ValidateRedevableCommand request, CancellationToken cancellationToken)
@@ -59,6 +61,11 @@ public class ValidateRedevableCommandHandler : IRequestHandler<ValidateRedevable
             {
             }
         }
+
+        await _auditService.LogAsync(
+    page: "Validation Redevable",
+    libelle: $"Le compte du redevable '{client.RaisonSociale}' (ID: {client.Id}) a été validé (Niveau 2).",
+    eventTypeCode: "VALIDATION");
 
         return true;
     }

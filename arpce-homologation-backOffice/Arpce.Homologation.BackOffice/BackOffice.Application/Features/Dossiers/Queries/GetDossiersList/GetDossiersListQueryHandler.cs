@@ -1,5 +1,6 @@
 ﻿using BackOffice.Application.Common.DTOs;
 using BackOffice.Application.Common.Interfaces;
+using BackOffice.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,8 +12,9 @@ namespace BackOffice.Application.Features.Dossiers.Queries.GetDossiersList;
 /// </summary>
 public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery, DossiersListVm>
 {
+    // Déclaration unique du contexte
     private readonly IApplicationDbContext _context;
-    private readonly ICurrentUserService _currentUserService; 
+    private readonly ICurrentUserService _currentUserService;
 
     /// <summary>
     /// Initialise une nouvelle instance du handler.
@@ -28,14 +30,13 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
     /// </summary>
     public async Task<DossiersListVm> Handle(GetDossiersListQuery request, CancellationToken cancellationToken)
     {
-        // Construire la requête de base (IQueryable)
-        var query = _context.Dossiers.AsNoTracking();
+        // Création de la requête de base
+        IQueryable<Dossier> query = _context.Dossiers.AsNoTracking();
 
-        // Appliquer les filtres
+        // Application des filtres
         if (!string.IsNullOrWhiteSpace(request.Parameters.Recherche))
         {
             var searchTerm = request.Parameters.Recherche.Trim().ToLower();
-            // La recherche s'applique sur le numéro, le libellé du dossier, ou la raison sociale du client.
             query = query.Where(d =>
                 d.Numero.ToLower().Contains(searchTerm) ||
                 d.Libelle.ToLower().Contains(searchTerm) ||
@@ -43,15 +44,13 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
             );
         }
 
-        // Filtre par statut
         if (!string.IsNullOrWhiteSpace(request.Parameters.Status))
         {
             var statusTerm = request.Parameters.Status.Trim();
-            // Le filtre s'applique sur le code du statut.
             query = query.Where(d => d.Statut.Code == statusTerm);
         }
 
-        // Applique le tri
+        // Application du tri
         bool isDescending = request.Parameters.Ordre?.ToLower() == "desc";
 
         switch (request.Parameters.TrierPar?.ToLower())
@@ -66,29 +65,27 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
                 query = isDescending ? query.OrderByDescending(d => d.Libelle) : query.OrderBy(d => d.Libelle);
                 break;
             default:
-                // Tri par défaut : les plus récents en premier
                 query = query.OrderByDescending(d => d.DateCreation);
                 break;
         }
 
-        // Calcule le nombre total d'éléments après filtrage
+        // Comptage
         var totalCount = await query.CountAsync(cancellationToken);
         if (totalCount == 0)
         {
-            // Si aucun résultat, on retourne une réponse vide immédiatement pour éviter des calculs inutiles.
-            return new DossiersListVm { Page = request.Parameters.Page, TotalPage = 0, Dossiers = new() };
+            return new DossiersListVm { Page = request.Parameters.Page, TotalPage = 0, PageTaille = request.Parameters.TaillePage, Dossiers = new() };
         }
 
-        // Applique la pagination et exécuter la requête
+        // Pagination et Chargement des données
         var dossiersPaged = await query
-            .Include(d => d.Client)   
-            .Include(d => d.Statut)   
-            .Include(d => d.Demandes) 
+            .Include(d => d.Client)
+            .Include(d => d.Statut)
+            .Include(d => d.Demandes)
             .Skip((request.Parameters.Page - 1) * request.Parameters.TaillePage)
             .Take(request.Parameters.TaillePage)
             .ToListAsync(cancellationToken);
 
-        // Mappe les résultats vers les DTOs
+        // Mapping
         var dossierDtos = dossiersPaged.Select(dossier => new DossierListItemDto
         {
             Id = dossier.Id,
@@ -115,7 +112,7 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
             }).ToList()
         }).ToList();
 
-        // Construire le ViewModel de réponse final
+        // Retourne du ViewModel
         var viewModel = new DossiersListVm
         {
             Dossiers = dossierDtos,

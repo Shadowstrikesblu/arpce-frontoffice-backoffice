@@ -1,4 +1,5 @@
-﻿using BackOffice.Application.Common.Interfaces;
+﻿using BackOffice.Application.Common.DTOs;
+using BackOffice.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,9 +40,9 @@ public class GetCategoriesListQueryHandler : IRequestHandler<GetCategoriesListQu
                 Libelle = c.Libelle,
                 TypeEquipement = c.TypeEquipement,
                 TypeClient = c.TypeClient,
-                FraisEtude = c.TarifEtude,
-                FraisHomologation = c.TarifHomologation,
-                FraisControle = c.TarifControle,
+                TarifEtude = c.TarifEtude,
+                TarifHomologation = c.TarifHomologation,
+                TarifControle = c.TarifControle,
                 FormuleHomologation = c.FormuleHomologation,
                 QuantiteReference = c.QuantiteReference,
                 Remarques = c.Remarques

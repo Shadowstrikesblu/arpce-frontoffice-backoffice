@@ -8,10 +8,12 @@ namespace BackOffice.Application.Features.Admin.Commands.AssignProfilToLdapUser;
 public class AssignProfilToLdapUserCommandHandler : IRequestHandler<AssignProfilToLdapUserCommand, bool>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IAuditService _auditService;
 
-    public AssignProfilToLdapUserCommandHandler(IApplicationDbContext context)
+    public AssignProfilToLdapUserCommandHandler(IApplicationDbContext context, IAuditService auditService)
     {
         _context = context;
+        _auditService = auditService;
     }
 
     public async Task<bool> Handle(AssignProfilToLdapUserCommand request, CancellationToken cancellationToken)
@@ -44,6 +46,12 @@ public class AssignProfilToLdapUserCommandHandler : IRequestHandler<AssignProfil
         }
 
         await _context.SaveChangesAsync(cancellationToken);
+
+        await _auditService.LogAsync(
+    page: "Gestion Utilisateurs LDAP",
+    libelle: $"Attribution du profil ID '{request.IdProfil}' à l'utilisateur LDAP '{request.Utilisateur}'.",
+    eventTypeCode: "ATTRIBUTION");
+
         return true;
     }
 }

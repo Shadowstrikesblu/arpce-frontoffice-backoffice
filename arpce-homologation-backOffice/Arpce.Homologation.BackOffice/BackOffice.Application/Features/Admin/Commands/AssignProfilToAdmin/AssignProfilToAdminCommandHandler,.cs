@@ -1,4 +1,5 @@
 ﻿using BackOffice.Application.Common.Interfaces;
+using BackOffice.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,10 +11,12 @@ namespace BackOffice.Application.Features.Admin.Commands.AssignProfilToAdmin;
 public class AssignProfilToAdminCommandHandler : IRequestHandler<AssignProfilToAdminCommand, bool>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IAuditService _auditService;
 
-    public AssignProfilToAdminCommandHandler(IApplicationDbContext context)
+    public AssignProfilToAdminCommandHandler(IApplicationDbContext context, IAuditService auditService)
     {
         _context = context;
+        _auditService = auditService;
     }
 
     public async Task<bool> Handle(AssignProfilToAdminCommand request, CancellationToken cancellationToken)
@@ -39,6 +42,11 @@ public class AssignProfilToAdminCommandHandler : IRequestHandler<AssignProfilToA
 
         //  Sauvegarde les changements
         await _context.SaveChangesAsync(cancellationToken);
+
+        await _auditService.LogAsync(
+     page: "Gestion des Utilisateurs",
+     libelle: $"Attribution du profil ID '{request.IdProfil}' à l'utilisateur ID '{request.UtilisateurId}'.",
+     eventTypeCode: "ATTRIBUTION");
 
         return true;
     }

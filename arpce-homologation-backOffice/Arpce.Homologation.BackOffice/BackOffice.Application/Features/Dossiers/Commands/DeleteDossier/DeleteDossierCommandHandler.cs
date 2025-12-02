@@ -6,10 +6,12 @@ namespace BackOffice.Application.Features.Dossiers.Commands.DeleteDossier;
 public class DeleteDossierCommandHandler : IRequestHandler<DeleteDossierCommand, bool>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IAuditService _auditService;
 
-    public DeleteDossierCommandHandler(IApplicationDbContext context)
+    public DeleteDossierCommandHandler(IApplicationDbContext context, IAuditService auditService)
     {
         _context = context;
+        _auditService = auditService;
     }
 
     public async Task<bool> Handle(DeleteDossierCommand request, CancellationToken cancellationToken)
@@ -27,6 +29,13 @@ public class DeleteDossierCommandHandler : IRequestHandler<DeleteDossierCommand,
         _context.Dossiers.Remove(dossier);
 
         await _context.SaveChangesAsync(cancellationToken);
+
+        await _auditService.LogAsync(
+    page: "Gestion des Dossiers",
+    libelle: $"Le dossier '{dossier.Numero}' (ID: {dossier.Id}) a été supprimé.",
+    eventTypeCode: "SUPPRESSION",
+    dossierId: dossier.Id);
+
         return true;
     }
 }

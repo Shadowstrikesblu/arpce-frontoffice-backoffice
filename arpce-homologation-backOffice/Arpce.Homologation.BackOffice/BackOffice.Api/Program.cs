@@ -93,34 +93,30 @@ try
     builder.Services.AddMediatR(cfg =>
         cfg.RegisterServicesFromAssembly(typeof(AssemblyReference).Assembly));
 
-    // --- 🔐 CONFIGURATION AUTHENTIFICATION JWT ---
-    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(options =>
+// Ajouter les services pour la s�curit� et l'utilisateur courant
+builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddTransient<IEmailService, EmailService>();
+builder.Services.AddTransient<ILdapService, LdapService>();
+builder.Services.AddScoped<IAuditService, AuditService>();
+
+// Configuration de l'Authentification JWT
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
         {
-            var jwtSecret = builder.Configuration["JwtSettings:Secret"];
-            var jwtIssuer = builder.Configuration["JwtSettings:Issuer"];
-            var jwtAudience = builder.Configuration["JwtSettings:Audience"];
-
-            Log.Information("BackOffice - Config JWT - Secret: {Status}, Issuer: {Issuer}, Audience: {Audience}",
-                !string.IsNullOrWhiteSpace(jwtSecret) ? "PRESENT (len:" + jwtSecret.Length + ")" : "MANQUANT",
-                jwtIssuer, jwtAudience);
-
-            if (string.IsNullOrWhiteSpace(jwtSecret))
-            {
-                throw new ArgumentNullException("JwtSettings:Secret", "Le secret JWT est manquant dans la configuration.");
-            }
-
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = jwtIssuer,
-                ValidAudience = jwtAudience,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
-            };
-        });
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+            ValidAudience = builder.Configuration["JwtSettings:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
+        };
+    });
 
     // Services personnalisés
     builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();

@@ -6,10 +6,12 @@ namespace BackOffice.Application.Features.Admin.Commands.UpdateAdmin;
 public class UpdateAdminCommandHandler : IRequestHandler<UpdateAdminCommand, bool>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IAuditService _auditService;
 
-    public UpdateAdminCommandHandler(IApplicationDbContext context)
+    public UpdateAdminCommandHandler(IApplicationDbContext context, IAuditService auditService)
     {
         _context = context;
+        _auditService = auditService;
     }
 
     public async Task<bool> Handle(UpdateAdminCommand request, CancellationToken cancellationToken)
@@ -24,6 +26,12 @@ public class UpdateAdminCommandHandler : IRequestHandler<UpdateAdminCommand, boo
         if (request.IdUtilisateurType.HasValue) admin.IdUtilisateurType = request.IdUtilisateurType.Value;
 
         await _context.SaveChangesAsync(cancellationToken);
+
+        await _auditService.LogAsync(
+    page: "Gestion des Utilisateurs",
+    libelle: $"Modification des informations de l'utilisateur admin '{admin.Compte}' (ID: {admin.Id}).",
+    eventTypeCode: "MODIFICATION");
+
         return true;
     }
 }

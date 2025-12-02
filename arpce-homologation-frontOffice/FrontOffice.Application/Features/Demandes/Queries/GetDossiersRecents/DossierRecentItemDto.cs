@@ -1,6 +1,4 @@
-﻿// Fichier : FrontOffice.Application/Features/Demandes/Queries/GetDossiersRecents/DossierRecentItemDto.cs
-
-using FrontOffice.Application.Common.DTOs;
+﻿using FrontOffice.Application.Common.DTOs;
 using System;
 using System.Collections.Generic;
 

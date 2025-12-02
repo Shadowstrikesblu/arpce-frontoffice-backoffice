@@ -7,10 +7,12 @@ namespace BackOffice.Application.Features.Admin.Commands.CreateAccess;
 public class CreateAccessCommandHandler : IRequestHandler<CreateAccessCommand, bool>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IAuditService _auditService;
 
-    public CreateAccessCommandHandler(IApplicationDbContext context)
+    public CreateAccessCommandHandler(IApplicationDbContext context, IAuditService auditService)
     {
         _context = context;
+        _auditService = auditService;
     }
 
     public async Task<bool> Handle(CreateAccessCommand request, CancellationToken cancellationToken)
@@ -32,6 +34,11 @@ public class CreateAccessCommandHandler : IRequestHandler<CreateAccessCommand, b
 
         _context.AdminAccesses.Add(access);
         await _context.SaveChangesAsync(cancellationToken);
+
+        await _auditService.LogAsync(
+    page: "Gestion des Accès",
+    libelle: $"Création de l'accès '{request.Libelle}' dans le groupe '{request.Groupe}'.",
+    eventTypeCode: "CREATION");
 
         return true;
     }

@@ -9,10 +9,12 @@ namespace BackOffice.Application.Features.Admin.Commands.DeleteAdmin;
 public class DeleteAdminCommandHandler : IRequestHandler<DeleteAdminCommand, bool>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IAuditService _auditService;
 
-    public DeleteAdminCommandHandler(IApplicationDbContext context)
+    public DeleteAdminCommandHandler(IApplicationDbContext context, IAuditService auditService)
     {
         _context = context;
+        _auditService = auditService;
     }
 
     public async Task<bool> Handle(DeleteAdminCommand request, CancellationToken cancellationToken)
@@ -24,6 +26,12 @@ public class DeleteAdminCommandHandler : IRequestHandler<DeleteAdminCommand, boo
         _context.AdminUtilisateurs.Remove(admin);
 
         await _context.SaveChangesAsync(cancellationToken);
+
+        await _auditService.LogAsync(
+    page: "Gestion des Utilisateurs",
+    libelle: $"Suppression de l'utilisateur admin '{admin.Compte}' (ID: {admin.Id}).",
+    eventTypeCode: "SUPPRESSION");
+
         return true;
     }
 }

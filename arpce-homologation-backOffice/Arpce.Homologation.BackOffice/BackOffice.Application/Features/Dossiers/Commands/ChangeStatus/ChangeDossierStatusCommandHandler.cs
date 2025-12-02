@@ -9,11 +9,13 @@ public class ChangeDossierStatusCommandHandler : IRequestHandler<ChangeDossierSt
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _currentUserService;
+    private readonly IAuditService _auditService;
 
-    public ChangeDossierStatusCommandHandler(IApplicationDbContext context, ICurrentUserService currentUserService)
+    public ChangeDossierStatusCommandHandler(IApplicationDbContext context, ICurrentUserService currentUserService, IAuditService auditService)
     {
         _context = context;
         _currentUserService = currentUserService;
+        _auditService = auditService;
     }
 
     public async Task<bool> Handle(ChangeDossierStatusCommand request, CancellationToken cancellationToken)
@@ -61,6 +63,13 @@ public class ChangeDossierStatusCommandHandler : IRequestHandler<ChangeDossierSt
         }
 
         await _context.SaveChangesAsync(cancellationToken);
+
+        await _auditService.LogAsync(
+    page: "Gestion des Dossiers",
+    libelle: $"Le statut du dossier '{dossier.Numero}' a été changé à '{dossier.Libelle}'.",
+    eventTypeCode: "MODIFICATION",
+    dossierId: dossier.Id);
+
         return true;
     }
 }

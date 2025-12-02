@@ -1,5 +1,5 @@
-﻿using BackOffice.Application.Common.Interfaces;
-using BackOffice.Application.Features.Categories.Queries.GetCategoriesList;
+﻿using BackOffice.Application.Common.DTOs;
+using BackOffice.Application.Common.Interfaces;
 using BackOffice.Domain.Entities;
 using MediatR;
 
@@ -8,10 +8,12 @@ namespace BackOffice.Application.Features.Categories.Commands.CreateCategorie;
 public class CreateCategorieCommandHandler : IRequestHandler<CreateCategorieCommand, CategorieEquipementDto>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IAuditService _auditService;
 
-    public CreateCategorieCommandHandler(IApplicationDbContext context)
+    public CreateCategorieCommandHandler(IApplicationDbContext context, IAuditService auditService)
     {
         _context = context;
+        _auditService = auditService;
     }
 
     public async Task<CategorieEquipementDto> Handle(CreateCategorieCommand request, CancellationToken cancellationToken)
@@ -34,6 +36,11 @@ public class CreateCategorieCommandHandler : IRequestHandler<CreateCategorieComm
         _context.CategoriesEquipements.Add(entity);
         await _context.SaveChangesAsync(cancellationToken);
 
+        await _auditService.LogAsync(
+    page: "Gestion des Catégories",
+    libelle: $"Création de la catégorie '{request.Code}' - {request.Libelle}.",
+    eventTypeCode: "CREATION");
+
         return new CategorieEquipementDto
         {
             Id = entity.Id,
@@ -41,9 +48,9 @@ public class CreateCategorieCommandHandler : IRequestHandler<CreateCategorieComm
             Libelle = entity.Libelle,
             TypeEquipement = entity.TypeEquipement,
             TypeClient = entity.TypeClient,
-            FraisEtude = entity.TarifEtude,
-            FraisHomologation = entity.TarifHomologation,
-            FraisControle = entity.TarifControle,
+            TarifEtude = entity.TarifEtude,
+            TarifHomologation = entity.TarifHomologation,
+            TarifControle = entity.TarifControle,
             FormuleHomologation = entity.FormuleHomologation,
             QuantiteReference = entity.QuantiteReference,
             Remarques = entity.Remarques

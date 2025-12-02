@@ -1,4 +1,5 @@
-﻿using BackOffice.Application.Features.Categories.Commands.CreateCategorie;
+﻿using BackOffice.Application.Common.DTOs;
+using BackOffice.Application.Features.Categories.Commands.CreateCategorie;
 using BackOffice.Application.Features.Categories.Commands.DeleteCategorie;
 using BackOffice.Application.Features.Categories.Commands.UpdateCategorie;
 using BackOffice.Application.Features.Categories.Queries.GetCategoriesList;

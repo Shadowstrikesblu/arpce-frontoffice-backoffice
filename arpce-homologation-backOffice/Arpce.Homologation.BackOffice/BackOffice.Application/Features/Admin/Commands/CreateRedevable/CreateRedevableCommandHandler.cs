@@ -12,11 +12,12 @@ public class CreateRedevableCommandHandler : IRequestHandler<CreateRedevableComm
 {
     private readonly IApplicationDbContext _context;
     private readonly IPasswordHasher _passwordHasher;
-
-    public CreateRedevableCommandHandler(IApplicationDbContext context, IPasswordHasher passwordHasher)
+    private readonly IAuditService _auditService;
+    public CreateRedevableCommandHandler(IApplicationDbContext context, IPasswordHasher passwordHasher, IAuditService auditService)
     {
         _context = context;
         _passwordHasher = passwordHasher;
+        _auditService = auditService;
     }
 
     public async Task<bool> Handle(CreateRedevableCommand request, CancellationToken cancellationToken)
@@ -50,6 +51,11 @@ public class CreateRedevableCommandHandler : IRequestHandler<CreateRedevableComm
 
         _context.Clients.Add(client);
         await _context.SaveChangesAsync(cancellationToken);
+
+        await _auditService.LogAsync(
+    page: "Gestion des Redevables",
+    libelle: $"Création du redevable '{request.RaisonSociale}' (Email: {request.Email}).",
+    eventTypeCode: "CREATION");
 
         return true;
     }

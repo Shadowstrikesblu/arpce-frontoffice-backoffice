@@ -1,20 +1,17 @@
-﻿// Fichier : BackOffice.Application/Features/Demandes/Commands/SetHomologable/SetEquipementHomologableCommandHandler.cs
-
-using BackOffice.Application.Common.Interfaces;
+﻿using BackOffice.Application.Common.Interfaces;
 using MediatR;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Demandes.Commands.SetHomologable;
 
 public class SetEquipementHomologableCommandHandler : IRequestHandler<SetEquipementHomologableCommand, bool>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IAuditService _auditService;
 
-    public SetEquipementHomologableCommandHandler(IApplicationDbContext context)
+    public SetEquipementHomologableCommandHandler(IApplicationDbContext context, IAuditService auditService)
     {
         _context = context;
+        _auditService = auditService;
     }
 
     public async Task<bool> Handle(SetEquipementHomologableCommand request, CancellationToken cancellationToken)
@@ -32,6 +29,12 @@ public class SetEquipementHomologableCommandHandler : IRequestHandler<SetEquipem
 
         // Sauvegarde
         await _context.SaveChangesAsync(cancellationToken);
+
+        await _auditService.LogAsync(
+    page: "Instruction Équipement",
+    libelle: $"L'équipement ID '{demande.Id}' a été marqué comme {(request.Homologable ? "Homologable" : "Non Homologable")}.",
+    eventTypeCode: "QUALIFICATION",
+    dossierId: demande.IdDossier);
 
         return true;
     }

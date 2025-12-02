@@ -7,10 +7,12 @@ namespace BackOffice.Application.Features.Admin.Commands.CreateProfil;
 public class CreateProfilCommandHandler : IRequestHandler<CreateProfilCommand, bool>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IAuditService _auditService;
 
-    public CreateProfilCommandHandler(IApplicationDbContext context)
+    public CreateProfilCommandHandler(IApplicationDbContext context, IAuditService auditService)
     {
         _context = context;
+        _auditService = auditService;
     }
 
     public async Task<bool> Handle(CreateProfilCommand request, CancellationToken cancellationToken)
@@ -43,6 +45,12 @@ public class CreateProfilCommandHandler : IRequestHandler<CreateProfilCommand, b
         }
 
         await _context.SaveChangesAsync(cancellationToken);
+
+        // --- Log de l'action ---
+        await _auditService.LogAsync(
+            page: "Gestion des Profils",
+            libelle: $"Création du profil '{request.Code}' - {request.Libelle}",
+            eventTypeCode: "CREATION");
 
         return true;
     }
