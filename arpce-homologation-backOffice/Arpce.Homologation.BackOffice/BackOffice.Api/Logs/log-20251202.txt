@@ -3,3 +3,507 @@
 2025-12-02 04:36:17.031 +01:00 [INF] Application started. Press Ctrl+C to shut down.
 2025-12-02 04:36:17.075 +01:00 [INF] Hosting environment: Development
 2025-12-02 04:36:17.095 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api
+2025-12-02 17:38:16.373 +01:00 [INF] Executed DbCommand (366ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [ArpceHomologation_BackOffice];
+2025-12-02 17:38:16.507 +01:00 [INF] Executed DbCommand (88ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [ArpceHomologation_BackOffice] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2025-12-02 17:38:16.526 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-12-02 17:38:16.556 +01:00 [INF] Executed DbCommand (27ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2025-12-02 17:38:16.664 +01:00 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2025-12-02 17:38:16.674 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-12-02 17:38:16.675 +01:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-12-02 17:38:16.686 +01:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-12-02 17:38:16.897 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [adminAccess] (
+    [Id] uniqueidentifier NOT NULL,
+    [Application] nvarchar(120) NOT NULL,
+    [Groupe] nvarchar(120) NOT NULL,
+    [Libelle] nvarchar(120) NOT NULL,
+    [Page] nvarchar(120) NULL,
+    [Type] nvarchar(120) NOT NULL,
+    [Inactif] tinyint NULL,
+    [Ajouter] tinyint NULL,
+    [Valider] tinyint NULL,
+    [Supprimer] tinyint NULL,
+    [Imprimer] tinyint NULL,
+    CONSTRAINT [PK_adminAccess] PRIMARY KEY ([Id])
+);
+2025-12-02 17:38:16.899 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [adminConnexions] (
+    [Id] uniqueidentifier NOT NULL,
+    [Utilisateur] nvarchar(60) NOT NULL,
+    [DateConnexion] datetime NOT NULL,
+    [Ip] nvarchar(60) NULL,
+    CONSTRAINT [PK_adminConnexions] PRIMARY KEY ([Id])
+);
+2025-12-02 17:38:16.901 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [adminEvenementsTypes] (
+    [Id] uniqueidentifier NOT NULL,
+    [Libelle] nvarchar(120) NOT NULL,
+    CONSTRAINT [PK_adminEvenementsTypes] PRIMARY KEY ([Id])
+);
+2025-12-02 17:38:17.290 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AdminOptions] (
+    [Id] uniqueidentifier NOT NULL,
+    [JournalActivation] tinyint NULL,
+    [EventConnexion] tinyint NULL,
+    [EventOuverturePage] tinyint NULL,
+    [EventChangementMotPasse] tinyint NULL,
+    [EventModificationDonnees] tinyint NULL,
+    [EventSuppressionDonnees] tinyint NULL,
+    [EventImpression] tinyint NULL,
+    [EventValidation] tinyint NULL,
+    [JournalLimitation] tinyint NULL,
+    [JournalTypeLimitation] tinyint NULL,
+    [JournalDureeLimitation] int NULL,
+    [JournalTypeDureeLimitation] tinyint NULL,
+    [JournalTailleLimitation] int NULL,
+    [LDAPAuthentificationActivation] tinyint NULL,
+    [LDAPAuthentificationNomDomaine] nvarchar(60) NULL,
+    [LDAPCreationAutoActivation] tinyint NULL,
+    [LDAPCreationAutoNomServeur] nvarchar(60) NULL,
+    [LDAPCreationAutoCompte] nvarchar(60) NULL,
+    [LDAPCreationAutoPassword] nvarchar(60) NULL,
+    [ReplicationActivation] tinyint NULL,
+    [ReplicationNomServeur] nvarchar(60) NULL,
+    [ReplicationCompte] nvarchar(60) NULL,
+    [ReplicationPassword] nvarchar(60) NULL,
+    CONSTRAINT [PK_AdminOptions] PRIMARY KEY ([Id])
+);
+2025-12-02 17:38:17.292 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [adminProfils] (
+    [Id] uniqueidentifier NOT NULL,
+    [Code] nvarchar(12) NOT NULL,
+    [Libelle] nvarchar(120) NOT NULL,
+    [Remarques] nvarchar(512) NULL,
+    [UtilisateurCreation] nvarchar(60) NULL,
+    [DateCreation] datetime NULL,
+    [UtilisateurModification] nvarchar(60) NULL,
+    [DateModification] datetime NULL,
+    CONSTRAINT [PK_adminProfils] PRIMARY KEY ([Id])
+);
+2025-12-02 17:38:17.295 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [adminReporting] (
+    [Id] uniqueidentifier NOT NULL,
+    [Application] nvarchar(120) NULL,
+    [Code] nvarchar(12) NOT NULL,
+    [Libelle] nvarchar(120) NOT NULL,
+    [Inactif] tinyint NULL,
+    CONSTRAINT [PK_adminReporting] PRIMARY KEY ([Id])
+);
+2025-12-02 17:38:21.132 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [adminUtilisateurTypes] (
+    [Id] uniqueidentifier NOT NULL,
+    [Libelle] nvarchar(120) NOT NULL,
+    CONSTRAINT [PK_adminUtilisateurTypes] PRIMARY KEY ([Id])
+);
+2025-12-02 17:38:21.134 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [categoriesEquipements] (
+    [Id] uniqueidentifier NOT NULL,
+    [Code] nvarchar(12) NOT NULL,
+    [Libelle] nvarchar(120) NOT NULL,
+    [TypeEquipement] nvarchar(50) NOT NULL,
+    [TypeClient] nvarchar(50) NOT NULL,
+    [FormuleHomologation] nvarchar(255) NULL,
+    [QuantiteReference] int NULL,
+    [TarifEtude] money NULL,
+    [TarifHomologation] money NULL,
+    [TarifHomologationParLot] tinyint NULL,
+    [TarifHomologationQuantiteParLot] int NULL,
+    [TarifControle] money NULL,
+    [Remarques] nvarchar(512) NULL,
+    [UtilisateurCreation] nvarchar(60) NULL,
+    [DateCreation] datetime NULL,
+    [UtilisateurModification] nvarchar(60) NULL,
+    [DateModification] datetime NULL,
+    CONSTRAINT [PK_categoriesEquipements] PRIMARY KEY ([Id])
+);
+2025-12-02 17:38:21.140 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [clients] (
+    [Id] uniqueidentifier NOT NULL,
+    [Code] nvarchar(30) NOT NULL,
+    [RaisonSociale] nvarchar(120) NOT NULL,
+    [RegistreCommerce] nvarchar(60) NULL,
+    [MotPasse] nvarchar(255) NULL,
+    [ChangementMotPasse] tinyint NULL,
+    [Desactive] tinyint NULL,
+    [ContactNom] nvarchar(60) NULL,
+    [ContactTelephone] nvarchar(30) NULL,
+    [ContactFonction] nvarchar(60) NULL,
+    [Email] nvarchar(120) NULL,
+    [Adresse] nvarchar(255) NULL,
+    [Bp] nvarchar(60) NULL,
+    [Ville] nvarchar(100) NULL,
+    [Pays] nvarchar(100) NULL,
+    [Remarques] nvarchar(512) NULL,
+    [TypeClient] nvarchar(20) NOT NULL DEFAULT N'Entreprise',
+    [NiveauValidation] int NOT NULL DEFAULT 0,
+    [IsVerified] bit NOT NULL DEFAULT CAST(0 AS bit),
+    [VerificationCode] nvarchar(6) NULL,
+    [VerificationTokenExpiry] datetime2 NULL,
+    [UtilisateurCreation] nvarchar(60) NULL,
+    [DateCreation] datetime NULL,
+    [UtilisateurModification] nvarchar(60) NULL,
+    [DateModification] datetime NULL,
+    CONSTRAINT [PK_clients] PRIMARY KEY ([Id])
+);
+2025-12-02 17:38:26.574 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [modesReglements] (
+    [Id] uniqueidentifier NOT NULL,
+    [Code] nvarchar(120) NOT NULL,
+    [Libelle] nvarchar(120) NOT NULL,
+    [MobileBanking] tinyint NOT NULL,
+    [Remarques] nvarchar(512) NULL,
+    [UtilisateurCreation] nvarchar(60) NULL,
+    [DateCreation] datetime NULL,
+    [UtilisateurModification] nvarchar(60) NULL,
+    [DateModification] datetime NULL,
+    CONSTRAINT [PK_modesReglements] PRIMARY KEY ([Id])
+);
+2025-12-02 17:38:26.577 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [motifsRejets] (
+    [Id] uniqueidentifier NOT NULL,
+    [Code] nvarchar(12) NOT NULL,
+    [Libelle] nvarchar(120) NOT NULL,
+    [Remarques] nvarchar(512) NULL,
+    [UtilisateurCreation] nvarchar(60) NULL,
+    [DateCreation] datetime NULL,
+    [UtilisateurModification] nvarchar(60) NULL,
+    [DateModification] datetime NULL,
+    CONSTRAINT [PK_motifsRejets] PRIMARY KEY ([Id])
+);
+2025-12-02 17:38:26.581 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [propositions] (
+    [Id] uniqueidentifier NOT NULL,
+    [Code] nvarchar(12) NOT NULL,
+    [Libelle] nvarchar(120) NOT NULL,
+    [UtilisateurCreation] nvarchar(60) NULL,
+    [DateCreation] datetime NULL,
+    [UtilisateurModification] nvarchar(60) NULL,
+    [DateModification] datetime NULL,
+    CONSTRAINT [PK_propositions] PRIMARY KEY ([Id])
+);
+2025-12-02 17:38:31.040 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [statuts] (
+    [Id] uniqueidentifier NOT NULL,
+    [Code] nvarchar(120) NOT NULL,
+    [Libelle] nvarchar(120) NOT NULL,
+    CONSTRAINT [PK_statuts] PRIMARY KEY ([Id])
+);
+2025-12-02 17:38:31.044 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [adminJournal] (
+    [Id] uniqueidentifier NOT NULL,
+    [IdEvenementType] uniqueidentifier NOT NULL,
+    [Application] nvarchar(120) NOT NULL,
+    [AdresseIP] nvarchar(120) NOT NULL,
+    [Utilisateur] nvarchar(120) NOT NULL,
+    [DateEvenement] datetime NOT NULL,
+    [Page] nvarchar(120) NOT NULL,
+    [Libelle] nvarchar(255) NULL,
+    CONSTRAINT [PK_adminJournal] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_adminJournal_adminEvenementsTypes_IdEvenementType] FOREIGN KEY ([IdEvenementType]) REFERENCES [adminEvenementsTypes] ([Id]) ON DELETE NO ACTION
+);
+2025-12-02 17:38:31.048 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [adminProfilsAcces] (
+    [IdProfil] uniqueidentifier NOT NULL,
+    [IdAccess] uniqueidentifier NOT NULL,
+    [Ajouter] tinyint NULL,
+    [Valider] tinyint NULL,
+    [Supprimer] tinyint NULL,
+    [Imprimer] tinyint NULL,
+    CONSTRAINT [PK_adminProfilsAcces] PRIMARY KEY ([IdProfil], [IdAccess]),
+    CONSTRAINT [FK_adminProfilsAcces_adminAccess_IdAccess] FOREIGN KEY ([IdAccess]) REFERENCES [adminAccess] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_adminProfilsAcces_adminProfils_IdProfil] FOREIGN KEY ([IdProfil]) REFERENCES [adminProfils] ([Id]) ON DELETE CASCADE
+);
+2025-12-02 17:38:31.050 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [adminProfilsUtilisateursLDAP] (
+    [Utilisateur] nvarchar(120) NOT NULL,
+    [IdProfil] uniqueidentifier NOT NULL,
+    CONSTRAINT [PK_adminProfilsUtilisateursLDAP] PRIMARY KEY ([Utilisateur], [IdProfil]),
+    CONSTRAINT [FK_adminProfilsUtilisateursLDAP_adminProfils_IdProfil] FOREIGN KEY ([IdProfil]) REFERENCES [adminProfils] ([Id]) ON DELETE CASCADE
+);
+2025-12-02 17:38:34.807 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AdminUtilisateurs] (
+    [Id] uniqueidentifier NOT NULL,
+    [IdProfil] uniqueidentifier NULL,
+    [IdUtilisateurType] uniqueidentifier NOT NULL,
+    [Compte] nvarchar(100) NOT NULL,
+    [Nom] nvarchar(100) NOT NULL,
+    [Prenoms] nvarchar(150) NULL,
+    [MotPasse] nvarchar(255) NULL,
+    [ChangementMotPasse] bit NOT NULL,
+    [Desactive] bit NOT NULL,
+    [Remarques] nvarchar(512) NULL,
+    [DerniereConnexion] datetime NULL,
+    [UtilisateurCreation] nvarchar(60) NULL,
+    [DateCreation] datetime NULL,
+    [UtilisateurModification] nvarchar(60) NULL,
+    [DateModification] datetime NULL,
+    [AdminProfilsId] uniqueidentifier NULL,
+    CONSTRAINT [PK_AdminUtilisateurs] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AdminUtilisateurs_adminProfils_AdminProfilsId] FOREIGN KEY ([AdminProfilsId]) REFERENCES [adminProfils] ([Id]),
+    CONSTRAINT [FK_AdminUtilisateurs_adminProfils_IdProfil] FOREIGN KEY ([IdProfil]) REFERENCES [adminProfils] ([Id]) ON DELETE SET NULL,
+    CONSTRAINT [FK_AdminUtilisateurs_adminUtilisateurTypes_IdUtilisateurType] FOREIGN KEY ([IdUtilisateurType]) REFERENCES [adminUtilisateurTypes] ([Id]) ON DELETE NO ACTION
+);
+2025-12-02 17:38:34.812 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [dossiers] (
+    [Id] uniqueidentifier NOT NULL,
+    [IdClient] uniqueidentifier NOT NULL,
+    [IdStatut] uniqueidentifier NOT NULL,
+    [IdModeReglement] uniqueidentifier NULL,
+    [DateOuverture] date NOT NULL,
+    [Numero] nvarchar(30) NOT NULL,
+    [Libelle] nvarchar(120) NOT NULL,
+    [IdAgentInstructeur] uniqueidentifier NULL,
+    [UtilisateurCreation] nvarchar(60) NULL,
+    [DateCreation] datetime NULL,
+    [UtilisateurModification] nvarchar(60) NULL,
+    [DateModification] datetime NULL,
+    CONSTRAINT [PK_dossiers] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_dossiers_AdminUtilisateurs_IdAgentInstructeur] FOREIGN KEY ([IdAgentInstructeur]) REFERENCES [AdminUtilisateurs] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_dossiers_clients_IdClient] FOREIGN KEY ([IdClient]) REFERENCES [clients] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_dossiers_modesReglements_IdModeReglement] FOREIGN KEY ([IdModeReglement]) REFERENCES [modesReglements] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_dossiers_statuts_IdStatut] FOREIGN KEY ([IdStatut]) REFERENCES [statuts] ([Id]) ON DELETE NO ACTION
+);
+2025-12-02 17:38:37.434 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [commentaires] (
+    [Id] uniqueidentifier NOT NULL,
+    [IdDossier] uniqueidentifier NOT NULL,
+    [DateCommentaire] datetime NOT NULL,
+    [commentaire] nvarchar(512) NULL,
+    [NomInstructeur] nvarchar(60) NULL,
+    [Proposition] nvarchar(512) NULL,
+    [UtilisateurCreation] nvarchar(60) NULL,
+    [DateCreation] datetime NULL,
+    [UtilisateurModification] nvarchar(60) NULL,
+    [DateModification] datetime NULL,
+    CONSTRAINT [PK_commentaires] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_commentaires_dossiers_IdDossier] FOREIGN KEY ([IdDossier]) REFERENCES [dossiers] ([Id]) ON DELETE CASCADE
+);
+2025-12-02 17:38:37.442 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [demandes] (
+    [Id] uniqueidentifier NOT NULL,
+    [IdDossier] uniqueidentifier NOT NULL,
+    [IdCategorie] uniqueidentifier NULL,
+    [IdMotifRejet] uniqueidentifier NULL,
+    [IdProposition] uniqueidentifier NULL,
+    [NumeroDemande] nvarchar(12) NULL,
+    [Equipement] nvarchar(120) NULL,
+    [Modele] nvarchar(120) NULL,
+    [Marque] nvarchar(120) NULL,
+    [Fabricant] nvarchar(120) NULL,
+    [Type] nvarchar(120) NULL,
+    [Description] nvarchar(512) NULL,
+    [QuantiteEquipements] int NULL,
+    [ContactNom] nvarchar(60) NULL,
+    [ContactEmail] nvarchar(60) NULL,
+    [PrixUnitaire] money NULL,
+    [EstHomologable] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [Remise] decimal(5,2) NULL,
+    [UtilisateurCreation] nvarchar(60) NULL,
+    [DateCreation] datetime NULL,
+    [UtilisateurModification] nvarchar(60) NULL,
+    [DateModification] datetime NULL,
+    CONSTRAINT [PK_demandes] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_demandes_categoriesEquipements_IdCategorie] FOREIGN KEY ([IdCategorie]) REFERENCES [categoriesEquipements] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_demandes_dossiers_IdDossier] FOREIGN KEY ([IdDossier]) REFERENCES [dossiers] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_demandes_motifsRejets_IdMotifRejet] FOREIGN KEY ([IdMotifRejet]) REFERENCES [motifsRejets] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_demandes_propositions_IdProposition] FOREIGN KEY ([IdProposition]) REFERENCES [propositions] ([Id]) ON DELETE NO ACTION
+);
+2025-12-02 17:38:40.545 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [devis] (
+    [Id] uniqueidentifier NOT NULL,
+    [IdDossier] uniqueidentifier NOT NULL,
+    [Date] date NOT NULL,
+    [MontantEtude] money NOT NULL,
+    [MontantHomologation] money NULL,
+    [MontantControle] money NULL,
+    [PaiementOk] tinyint NULL,
+    [PaiementMobileId] nvarchar(60) NULL,
+    [UtilisateurCreation] nvarchar(60) NULL,
+    [DateCreation] datetime NULL,
+    [UtilisateurModification] nvarchar(60) NULL,
+    [DateModification] datetime NULL,
+    CONSTRAINT [PK_devis] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_devis_dossiers_IdDossier] FOREIGN KEY ([IdDossier]) REFERENCES [dossiers] ([Id]) ON DELETE CASCADE
+);
+2025-12-02 17:38:40.550 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [documentsDossiers] (
+    [Id] uniqueidentifier NOT NULL,
+    [IdDossier] uniqueidentifier NOT NULL,
+    [Nom] nvarchar(120) NULL,
+    [Type] tinyint NULL,
+    [Donnees] varbinary(max) NULL,
+    [Extension] nvarchar(12) NOT NULL,
+    [FilePath] nvarchar(512) NULL,
+    [UtilisateurCreation] nvarchar(60) NULL,
+    [DateCreation] datetime NULL,
+    [UtilisateurModification] nvarchar(60) NULL,
+    [DateModification] datetime NULL,
+    CONSTRAINT [PK_documentsDossiers] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_documentsDossiers_dossiers_IdDossier] FOREIGN KEY ([IdDossier]) REFERENCES [dossiers] ([Id]) ON DELETE CASCADE
+);
+2025-12-02 17:38:43.735 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [attestations] (
+    [Id] uniqueidentifier NOT NULL,
+    [IdDemande] uniqueidentifier NOT NULL,
+    [DateDelivrance] date NOT NULL,
+    [DateExpiration] date NOT NULL,
+    [Donnees] varbinary(max) NULL,
+    [Extension] nvarchar(12) NOT NULL,
+    CONSTRAINT [PK_attestations] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_attestations_demandes_IdDemande] FOREIGN KEY ([IdDemande]) REFERENCES [demandes] ([Id]) ON DELETE CASCADE
+);
+2025-12-02 17:38:43.737 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [documentsDemandes] (
+    [Id] uniqueidentifier NOT NULL,
+    [IdDemande] uniqueidentifier NOT NULL,
+    [Nom] nvarchar(120) NULL,
+    [Donnees] varbinary(max) NULL,
+    [Extension] nvarchar(12) NOT NULL,
+    [FilePath] nvarchar(512) NULL,
+    [UtilisateurCreation] nvarchar(60) NULL,
+    [DateCreation] datetime NULL,
+    [UtilisateurModification] nvarchar(60) NULL,
+    [DateModification] datetime NULL,
+    CONSTRAINT [PK_documentsDemandes] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_documentsDemandes_demandes_IdDemande] FOREIGN KEY ([IdDemande]) REFERENCES [demandes] ([Id]) ON DELETE CASCADE
+);
+2025-12-02 17:38:43.788 +01:00 [INF] Executed DbCommand (50ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Libelle') AND [object_id] = OBJECT_ID(N'[adminUtilisateurTypes]'))
+    SET IDENTITY_INSERT [adminUtilisateurTypes] ON;
+INSERT INTO [adminUtilisateurTypes] ([Id], [Libelle])
+VALUES ('654855ca-bdae-4f55-b481-fc3a09bf3f7d', N'Utilisateur Standard'),
+('7e5b7d94-4f5d-4eff-9983-c8f846d3cee6', N'Administrateur'),
+('b5c3cc10-ff1f-47d0-aa49-4b5fe5a92d39', N'Auditeur');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Libelle') AND [object_id] = OBJECT_ID(N'[adminUtilisateurTypes]'))
+    SET IDENTITY_INSERT [adminUtilisateurTypes] OFF;
+2025-12-02 17:38:47.266 +01:00 [INF] Executed DbCommand (34ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Code', N'DateCreation', N'DateModification', N'Libelle', N'MobileBanking', N'Remarques', N'UtilisateurCreation', N'UtilisateurModification') AND [object_id] = OBJECT_ID(N'[modesReglements]'))
+    SET IDENTITY_INSERT [modesReglements] ON;
+INSERT INTO [modesReglements] ([Id], [Code], [DateCreation], [DateModification], [Libelle], [MobileBanking], [Remarques], [UtilisateurCreation], [UtilisateurModification])
+VALUES ('729c98b4-5c70-425a-b89f-62fe0a78d261', N'Cheque', NULL, NULL, N'Chèque', CAST(0 AS tinyint), NULL, NULL, NULL),
+('d0576258-cecc-42c3-9d6f-5ec183740832', N'Especes', NULL, NULL, N'Espèces', CAST(0 AS tinyint), NULL, NULL, NULL),
+('e1db161f-b656-4f62-bead-cc981d0d0052', N'MobileBanking', NULL, NULL, N'Paiement mobile', CAST(1 AS tinyint), NULL, NULL, NULL),
+('e99f1daa-749f-4314-bcce-21e5ab3bedf7', N'Virement', NULL, NULL, N'Virement bancaire', CAST(0 AS tinyint), NULL, NULL, NULL);
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Code', N'DateCreation', N'DateModification', N'Libelle', N'MobileBanking', N'Remarques', N'UtilisateurCreation', N'UtilisateurModification') AND [object_id] = OBJECT_ID(N'[modesReglements]'))
+    SET IDENTITY_INSERT [modesReglements] OFF;
+2025-12-02 17:38:47.284 +01:00 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Code', N'Libelle') AND [object_id] = OBJECT_ID(N'[statuts]'))
+    SET IDENTITY_INSERT [statuts] ON;
+INSERT INTO [statuts] ([Id], [Code], [Libelle])
+VALUES ('022765d4-8862-4252-a868-7c9514de818f', N'DossierPayer', N'Paiement effectué'),
+('036394f6-2dc8-4242-9e01-ea3cf5a64a13', N'PaiementExpirer', N'Paiement expiré'),
+('293ddfdf-024d-47d2-8a03-591fc52e540a', N'RefusDossier', N'Refus de la demande'),
+('3c9947db-1996-42f1-a266-ec1529af59f0', N'DevisRefuser', N'Devis refusé par client'),
+('4095bfe0-a232-46bd-8c37-ab378b1d81cf', N'NouveauDossier', N'Nouvelle demande'),
+('598dfd92-00f9-4fa2-837c-1f4de38560a1', N'DevisValide', N'Devis validé par client'),
+('5f670bf0-f5e6-46f5-be80-8cee230196f1', N'InstructionApprouve', N'Instruction Approuvée'),
+('5fe3e3ba-e24e-48fe-b676-03303e459b0f', N'DevisValideTr', N'Devis validé par Trésorerie'),
+('6adaa907-5b85-4372-95e3-91800742532e', N'PaiementRejete', N'Paiement non accepté'),
+('712d4229-8bcd-4ef4-b4f5-f9b74ab2ed75', N'DevisCreer', N'Devis créé'),
+('9770f151-8dd7-47cf-8ab3-7f38aa809113', N'ApprobationInstruction', N'Envoyé pour approbation'),
+('b45a7192-fb24-458a-859d-00fd6f3e6d48', N'DossierSignature', N'Attestation en signature'),
+('b4a18c66-0007-48d0-906e-bf4b63aab6cc', N'DossierSigner', N'Attestation signée'),
+('bbca9597-475d-4aa6-a62c-fd7af555e4e8', N'DevisValideSC', N'Devis validé par Chef Service'),
+('f081973a-5539-48f8-bd3c-906833fb87eb', N'Instruction', N'En cours d''instruction'),
+('fdec27a7-6a99-41e3-b5e6-0256445b7e0c', N'DevisEmit', N'Devis émis');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Code', N'Libelle') AND [object_id] = OBJECT_ID(N'[statuts]'))
+    SET IDENTITY_INSERT [statuts] OFF;
+2025-12-02 17:38:50.313 +01:00 [INF] Executed DbCommand (20ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'AdminProfilsId', N'ChangementMotPasse', N'Compte', N'DateCreation', N'DateModification', N'DerniereConnexion', N'Desactive', N'IdProfil', N'IdUtilisateurType', N'MotPasse', N'Nom', N'Prenoms', N'Remarques', N'UtilisateurCreation', N'UtilisateurModification') AND [object_id] = OBJECT_ID(N'[AdminUtilisateurs]'))
+    SET IDENTITY_INSERT [AdminUtilisateurs] ON;
+INSERT INTO [AdminUtilisateurs] ([Id], [AdminProfilsId], [ChangementMotPasse], [Compte], [DateCreation], [DateModification], [DerniereConnexion], [Desactive], [IdProfil], [IdUtilisateurType], [MotPasse], [Nom], [Prenoms], [Remarques], [UtilisateurCreation], [UtilisateurModification])
+VALUES ('0d043795-fda8-413f-ab24-dc3eb1b39a07', NULL, CAST(1 AS bit), N'admin', '2025-01-01T00:00:00.000', NULL, NULL, CAST(0 AS bit), NULL, '7e5b7d94-4f5d-4eff-9983-c8f846d3cee6', N'$2a$11$WsTym4NhNm3jWJERARooBeYR7zGhLs9jx/Bb5Kebk3E/K40HCAq.a', N'Administrateur', N'ARPCE', NULL, N'SYSTEM_SEED', NULL);
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'AdminProfilsId', N'ChangementMotPasse', N'Compte', N'DateCreation', N'DateModification', N'DerniereConnexion', N'Desactive', N'IdProfil', N'IdUtilisateurType', N'MotPasse', N'Nom', N'Prenoms', N'Remarques', N'UtilisateurCreation', N'UtilisateurModification') AND [object_id] = OBJECT_ID(N'[AdminUtilisateurs]'))
+    SET IDENTITY_INSERT [AdminUtilisateurs] OFF;
+2025-12-02 17:38:51.541 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_adminJournal_IdEvenementType] ON [adminJournal] ([IdEvenementType]);
+2025-12-02 17:38:51.542 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_adminProfilsAcces_IdAccess] ON [adminProfilsAcces] ([IdAccess]);
+2025-12-02 17:38:51.543 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_adminProfilsUtilisateursLDAP_IdProfil] ON [adminProfilsUtilisateursLDAP] ([IdProfil]);
+2025-12-02 17:38:51.566 +01:00 [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AdminUtilisateurs_AdminProfilsId] ON [AdminUtilisateurs] ([AdminProfilsId]);
+2025-12-02 17:38:51.569 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_AdminUtilisateurs_Compte] ON [AdminUtilisateurs] ([Compte]);
+2025-12-02 17:38:51.573 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AdminUtilisateurs_IdProfil] ON [AdminUtilisateurs] ([IdProfil]);
+2025-12-02 17:38:53.554 +01:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AdminUtilisateurs_IdUtilisateurType] ON [AdminUtilisateurs] ([IdUtilisateurType]);
+2025-12-02 17:38:53.555 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_attestations_IdDemande] ON [attestations] ([IdDemande]);
+2025-12-02 17:38:53.556 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_commentaires_IdDossier] ON [commentaires] ([IdDossier]);
+2025-12-02 17:38:53.557 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_demandes_IdCategorie] ON [demandes] ([IdCategorie]);
+2025-12-02 17:38:53.558 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_demandes_IdDossier] ON [demandes] ([IdDossier]);
+2025-12-02 17:38:53.559 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_demandes_IdMotifRejet] ON [demandes] ([IdMotifRejet]);
+2025-12-02 17:38:53.560 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_demandes_IdProposition] ON [demandes] ([IdProposition]);
+2025-12-02 17:38:53.561 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_devis_IdDossier] ON [devis] ([IdDossier]);
+2025-12-02 17:38:53.562 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_documentsDemandes_IdDemande] ON [documentsDemandes] ([IdDemande]);
+2025-12-02 17:38:53.564 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_documentsDossiers_IdDossier] ON [documentsDossiers] ([IdDossier]);
+2025-12-02 17:38:53.565 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_dossiers_IdAgentInstructeur] ON [dossiers] ([IdAgentInstructeur]);
+2025-12-02 17:38:54.870 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_dossiers_IdClient] ON [dossiers] ([IdClient]);
+2025-12-02 17:38:54.871 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_dossiers_IdModeReglement] ON [dossiers] ([IdModeReglement]);
+2025-12-02 17:38:54.872 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_dossiers_IdStatut] ON [dossiers] ([IdStatut]);
+2025-12-02 17:38:54.881 +01:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20251202163515_Initialisation', N'9.0.11');
+2025-12-02 17:38:54.890 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2025-12-02 17:48:33.995 +01:00 [INF] Now listening on: https://localhost:7238
+2025-12-02 17:48:34.057 +01:00 [INF] Now listening on: http://localhost:5126
+2025-12-02 17:48:34.208 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-02 17:48:34.211 +01:00 [INF] Hosting environment: Development
+2025-12-02 17:48:34.216 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api
+2025-12-02 17:50:52.767 +01:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2025-12-02 17:50:56.388 +01:00 [INF] Executed DbCommand (195ms) [Parameters=[@__request_Compte_0='?' (Size = 100)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AdminProfilsId], [a].[ChangementMotPasse], [a].[Compte], [a].[DateCreation], [a].[DateModification], [a].[DerniereConnexion], [a].[Desactive], [a].[IdProfil], [a].[IdUtilisateurType], [a].[MotPasse], [a].[Nom], [a].[Prenoms], [a].[Remarques], [a].[UtilisateurCreation], [a].[UtilisateurModification]
+FROM [AdminUtilisateurs] AS [a]
+WHERE [a].[Compte] = @__request_Compte_0
+2025-12-02 17:50:57.240 +01:00 [INF] Executed DbCommand (16ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [AdminUtilisateurs] SET [DerniereConnexion] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+2025-12-02 17:52:06.875 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__agentId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+WHERE [d].[IdAgentInstructeur] = @__agentId_Value_0
+2025-12-02 17:52:54.631 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]

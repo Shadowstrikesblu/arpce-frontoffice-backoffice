@@ -26,6 +26,8 @@ public class Demande
     /// Pourcentage de remise appliqué sur cet équipement.
     /// Renseigné par l'agent du Back Office.
     /// </summary>
+
+    public bool EstHomologable { get; set; } = true;
     public decimal? Remise { get; set; }
     public virtual Dossier Dossier { get; set; }
     public virtual CategorieEquipement? CategorieEquipement { get; set; }

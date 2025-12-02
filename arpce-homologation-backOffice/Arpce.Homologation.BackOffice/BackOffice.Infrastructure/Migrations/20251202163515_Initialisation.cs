@@ -181,11 +181,13 @@ namespace BackOffice.Infrastructure.Migrations
                     ContactTelephone = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     ContactFonction = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: true),
-                    Adresse = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
+                    Adresse = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     Bp = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    Ville = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    Pays = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
+                    Ville = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Pays = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Remarques = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
+                    TypeClient = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false, defaultValue: "Entreprise"),
+                    NiveauValidation = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     IsVerified = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     VerificationCode = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: true),
                     VerificationTokenExpiry = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -615,9 +617,9 @@ namespace BackOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Libelle" },
                 values: new object[,]
                 {
+                    { new Guid("654855ca-bdae-4f55-b481-fc3a09bf3f7d"), "Utilisateur Standard" },
                     { new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"), "Administrateur" },
-                    { new Guid("93068d87-baf0-4ee8-80d7-aed03d868a66"), "Utilisateur Standard" },
-                    { new Guid("d185bae2-8312-4038-8de3-f546b0dda281"), "Auditeur" }
+                    { new Guid("b5c3cc10-ff1f-47d0-aa49-4b5fe5a92d39"), "Auditeur" }
                 });
 
             migrationBuilder.InsertData(
@@ -625,10 +627,10 @@ namespace BackOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "DateCreation", "DateModification", "Libelle", "MobileBanking", "Remarques", "UtilisateurCreation", "UtilisateurModification" },
                 values: new object[,]
                 {
-                    { new Guid("55ad03aa-82ba-4ea0-abea-c2c797a12564"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
-                    { new Guid("892932e6-2fb8-4b99-9eec-7ed3d64975ea"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
-                    { new Guid("a2f85e6b-8aaa-433f-b3ef-1ebcc58a7db8"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
-                    { new Guid("a3e5ea37-ef34-417a-915a-d792d454e8fe"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null }
+                    { new Guid("729c98b4-5c70-425a-b89f-62fe0a78d261"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
+                    { new Guid("d0576258-cecc-42c3-9d6f-5ec183740832"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
+                    { new Guid("e1db161f-b656-4f62-bead-cc981d0d0052"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
+                    { new Guid("e99f1daa-749f-4314-bcce-21e5ab3bedf7"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -636,28 +638,28 @@ namespace BackOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "Libelle" },
                 values: new object[,]
                 {
-                    { new Guid("0f9dcac1-41bf-47a7-a74a-81357c9e2c88"), "DevisRefuser", "Devis refusé par client" },
-                    { new Guid("2e3ed721-6162-4839-b3fe-3cdf18be1ac5"), "DossierSigner", "Attestation signée" },
-                    { new Guid("349377e4-1ea8-42db-9f8d-3f2ca213e052"), "DossierPayer", "Paiement effectué" },
-                    { new Guid("34fb02c0-c3e9-4fc2-9725-848dcad31418"), "DevisValide", "Devis validé par client" },
-                    { new Guid("4a86afc6-0221-4785-9b1f-3f4daa07aaa8"), "Instruction", "En cours d'instruction" },
-                    { new Guid("5dee0c7d-7b0e-4859-b44a-45e6a33b35e7"), "PaiementRejete", "Paiement non accepté" },
-                    { new Guid("83f3f17e-814e-45d7-8681-5f84ccfb1925"), "PaiementExpirer", "Paiement expiré" },
-                    { new Guid("9779f880-00aa-4936-ab11-e7bb84dbb4df"), "DevisValideTr", "Devis validé par Trésorerie" },
-                    { new Guid("9f7e5d91-5ee0-4460-9779-0231c6e384bc"), "RefusDossier", "Refus de la demande" },
-                    { new Guid("bf2d535e-29bb-4833-94fa-d26027d565e2"), "DossierSignature", "Attestation en signature" },
-                    { new Guid("c9329885-6d32-4778-b547-4db75531f0fe"), "ApprobationInstruction", "Envoyé pour approbation" },
-                    { new Guid("d9ed98f2-a427-4ffa-b1be-94ac5020bf72"), "DevisCreer", "Devis créé" },
-                    { new Guid("da50c792-35b3-4128-9505-bf43f3f42d44"), "NouveauDossier", "Nouvelle demande" },
-                    { new Guid("e3ac319f-5635-4479-8e62-745d7d187832"), "DevisValideSC", "Devis validé par Chef Service" },
-                    { new Guid("e8b63843-949a-473d-8c16-11d3c1475edd"), "DevisEmit", "Devis émis" },
-                    { new Guid("f1b04e32-443b-4393-bf44-c24086b29c97"), "InstructionApprouve", "Instruction Approuvée" }
+                    { new Guid("022765d4-8862-4252-a868-7c9514de818f"), "DossierPayer", "Paiement effectué" },
+                    { new Guid("036394f6-2dc8-4242-9e01-ea3cf5a64a13"), "PaiementExpirer", "Paiement expiré" },
+                    { new Guid("293ddfdf-024d-47d2-8a03-591fc52e540a"), "RefusDossier", "Refus de la demande" },
+                    { new Guid("3c9947db-1996-42f1-a266-ec1529af59f0"), "DevisRefuser", "Devis refusé par client" },
+                    { new Guid("4095bfe0-a232-46bd-8c37-ab378b1d81cf"), "NouveauDossier", "Nouvelle demande" },
+                    { new Guid("598dfd92-00f9-4fa2-837c-1f4de38560a1"), "DevisValide", "Devis validé par client" },
+                    { new Guid("5f670bf0-f5e6-46f5-be80-8cee230196f1"), "InstructionApprouve", "Instruction Approuvée" },
+                    { new Guid("5fe3e3ba-e24e-48fe-b676-03303e459b0f"), "DevisValideTr", "Devis validé par Trésorerie" },
+                    { new Guid("6adaa907-5b85-4372-95e3-91800742532e"), "PaiementRejete", "Paiement non accepté" },
+                    { new Guid("712d4229-8bcd-4ef4-b4f5-f9b74ab2ed75"), "DevisCreer", "Devis créé" },
+                    { new Guid("9770f151-8dd7-47cf-8ab3-7f38aa809113"), "ApprobationInstruction", "Envoyé pour approbation" },
+                    { new Guid("b45a7192-fb24-458a-859d-00fd6f3e6d48"), "DossierSignature", "Attestation en signature" },
+                    { new Guid("b4a18c66-0007-48d0-906e-bf4b63aab6cc"), "DossierSigner", "Attestation signée" },
+                    { new Guid("bbca9597-475d-4aa6-a62c-fd7af555e4e8"), "DevisValideSC", "Devis validé par Chef Service" },
+                    { new Guid("f081973a-5539-48f8-bd3c-906833fb87eb"), "Instruction", "En cours d'instruction" },
+                    { new Guid("fdec27a7-6a99-41e3-b5e6-0256445b7e0c"), "DevisEmit", "Devis émis" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AdminUtilisateurs",
                 columns: new[] { "Id", "AdminProfilsId", "ChangementMotPasse", "Compte", "DateCreation", "DateModification", "DerniereConnexion", "Desactive", "IdProfil", "IdUtilisateurType", "MotPasse", "Nom", "Prenoms", "Remarques", "UtilisateurCreation", "UtilisateurModification" },
-                values: new object[] { new Guid("2d8cd8c8-e075-4631-b402-eba8673672dc"), null, true, "admin", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, false, null, new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"), "$2a$11$Kj5i2qFrtvxLM8AQbijdeuXqJCN/B.I7Jp6GlkqeK5hnuvS4JZY5G", "Administrateur", "ARPCE", null, "SYSTEM_SEED", null });
+                values: new object[] { new Guid("0d043795-fda8-413f-ab24-dc3eb1b39a07"), null, true, "admin", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, false, null, new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"), "$2a$11$WsTym4NhNm3jWJERARooBeYR7zGhLs9jx/Bb5Kebk3E/K40HCAq.a", "Administrateur", "ARPCE", null, "SYSTEM_SEED", null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_adminJournal_IdEvenementType",

@@ -1,5 +1,5 @@
-﻿using BackOffice.Application.Common.Interfaces;
-using BackOffice.Application.Features.Categories.Queries.GetCategoriesList;
+﻿using BackOffice.Application.Common.DTOs;
+using BackOffice.Application.Common.Interfaces;
 using BackOffice.Domain.Entities;
 using MediatR;
 
@@ -41,9 +41,9 @@ public class CreateCategorieCommandHandler : IRequestHandler<CreateCategorieComm
             Libelle = entity.Libelle,
             TypeEquipement = entity.TypeEquipement,
             TypeClient = entity.TypeClient,
-            FraisEtude = entity.TarifEtude,
-            FraisHomologation = entity.TarifHomologation,
-            FraisControle = entity.TarifControle,
+            TarifEtude = entity.TarifEtude,
+            TarifHomologation = entity.TarifHomologation,
+            TarifControle = entity.TarifControle,
             FormuleHomologation = entity.FormuleHomologation,
             QuantiteReference = entity.QuantiteReference,
             Remarques = entity.Remarques

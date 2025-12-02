@@ -1,4 +1,4 @@
-﻿using BackOffice.Application.Features.Categories.Queries.GetCategoriesList; 
+﻿using BackOffice.Application.Common.DTOs;
 using MediatR;
 
 namespace BackOffice.Application.Features.Categories.Commands.CreateCategorie;

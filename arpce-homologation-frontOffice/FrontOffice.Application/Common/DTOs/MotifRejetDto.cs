@@ -1,5 +1,4 @@
-﻿namespace BackOffice.Application.Common.DTOs;
-
+﻿namespace FrontOffice.Application.Common.DTOs;
 public class MotifRejetDto
 {
     public Guid Id { get; set; }
