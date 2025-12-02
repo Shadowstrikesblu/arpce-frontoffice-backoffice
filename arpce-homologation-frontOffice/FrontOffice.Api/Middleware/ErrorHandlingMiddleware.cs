@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FrontOffice.Application.Common.Exceptions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Net;
@@ -60,6 +61,17 @@ public class ErrorHandlingMiddleware
                     title = "Accès Non Autorisé, vérifier vos infos de connexion",
                     detail = exception.Message, 
                     status = (int)HttpStatusCode.Unauthorized
+                };
+                break;
+
+            // --- Cas spécifique : Compte en attente de validation ARPCE ---
+            case AccountPendingValidationException:
+                statusCode = HttpStatusCode.NotAcceptable; // Code 406
+                errorResponse = new
+                {
+                    title = "Compte Non Validé",
+                    detail = exception.Message,
+                    status = (int)HttpStatusCode.NotAcceptable
                 };
                 break;
 

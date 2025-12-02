@@ -174,3 +174,70 @@ WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] = @__statutPaiementCode_
     FROM [devis] AS [d0]
     WHERE [d].[Id] = [d0].[DossierId] AND ([d0].[PaiementOk] <> CAST(1 AS tinyint) OR [d0].[PaiementOk] IS NULL)) > 0.0
 2025-11-24 17:07:59.222 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 1331.6425 ms
+2025-11-24 22:48:52.261 +01:00 [INF] Now listening on: https://localhost:7016
+2025-11-24 22:48:52.337 +01:00 [INF] Now listening on: http://localhost:5041
+2025-11-24 22:48:52.900 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-24 22:48:52.905 +01:00 [INF] Hosting environment: Development
+2025-11-24 22:48:52.911 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2025-11-24 22:53:42.247 +01:00 [INF] HTTP GET /index.html responded 200 in 203.7786 ms
+2025-11-24 22:53:42.612 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 85.3525 ms
+2025-11-24 22:54:42.228 +01:00 [INF] Executed DbCommand (366ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-11-24 22:54:43.810 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 15635.3348 ms
+2025-11-24 23:01:06.331 +01:00 [INF] Executed DbCommand (21ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-11-24 23:01:07.216 +01:00 [INF] Executed DbCommand (38ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 512), @p2='?' (Size = 60), @p3='?' (Size = 1) (DbType = Byte), @p4='?' (Size = 30), @p5='?' (Size = 60), @p6='?' (Size = 60), @p7='?' (Size = 30), @p8='?' (DbType = DateTime), @p9='?' (DbType = DateTime), @p10='?' (Size = 1) (DbType = Byte), @p11='?' (Size = 120), @p12='?' (Size = 255), @p13='?' (Size = 60), @p14='?' (Size = 120), @p15='?' (Size = 60), @p16='?' (Size = 512), @p17='?' (Size = 60), @p18='?' (Size = 60), @p19='?' (Size = 6), @p20='?' (DbType = DateTime2), @p21='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [clients] ([Id], [Adresse], [Bp], [ChangementMotPasse], [Code], [ContactFonction], [ContactNom], [ContactTelephone], [DateCreation], [DateModification], [Desactive], [Email], [MotPasse], [Pays], [RaisonSociale], [RegistreCommerce], [Remarques], [UtilisateurCreation], [UtilisateurModification], [VerificationCode], [VerificationTokenExpiry], [Ville])
+OUTPUT INSERTED.[IsVerified]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21);
+2025-11-24 23:01:13.198 +01:00 [INF] HTTP POST /api/auth/register responded 200 in 7107.8706 ms
+2025-11-24 23:01:49.935 +01:00 [INF] Executed DbCommand (13ms) [Parameters=[@__get_Item_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Id] = @__get_Item_0
+2025-11-24 23:01:50.044 +01:00 [INF] Executed DbCommand (23ms) [Parameters=[@p3='?' (DbType = Guid), @p0='?' (DbType = DateTime), @p1='?' (Size = 6), @p2='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [clients] SET [DateModification] = @p0, [VerificationCode] = @p1, [VerificationTokenExpiry] = @p2
+OUTPUT 1
+WHERE [Id] = @p3;
+2025-11-24 23:01:54.441 +01:00 [INF] HTTP POST /api/auth/resend-otp responded 200 in 5037.1522 ms
+2025-11-24 23:02:57.188 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@__get_Item_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Id] = @__get_Item_0
+2025-11-24 23:02:57.599 +01:00 [ERR] HTTP POST /api/auth/confirm-account responded 500 in 471.7071 ms
+System.InvalidOperationException: Ce compte a déjà été vérifié.
+   at FrontOffice.Application.Features.Authentication.Commands.ConfirmAccount.ConfirmAccountCommandHandler.Handle(ConfirmAccountCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\ConfirmAccount\ConfirmAccountCommandHandler.cs:line 51
+   at FrontOffice.Api.Controllers.AuthenticationController.ConfirmAccount(ConfirmAccountCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 48
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-11-24 23:03:49.292 +01:00 [INF] Executed DbCommand (11ms) [Parameters=[@__get_Item_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Id] = @__get_Item_0
+2025-11-24 23:03:49.319 +01:00 [INF] Executed DbCommand (10ms) [Parameters=[@p5='?' (DbType = Guid), @p0='?' (DbType = DateTime), @p1='?' (DbType = Boolean), @p2='?' (Size = 60), @p3='?' (Size = 6), @p4='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [clients] SET [DateModification] = @p0, [IsVerified] = @p1, [UtilisateurModification] = @p2, [VerificationCode] = @p3, [VerificationTokenExpiry] = @p4
+OUTPUT 1
+WHERE [Id] = @p5;
+2025-11-24 23:03:49.334 +01:00 [INF] HTTP POST /api/auth/confirm-account responded 200 in 88.5516 ms

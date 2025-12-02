@@ -36,6 +36,8 @@ try
     builder.Services.AddScoped<IFileStorageProvider, LocalFileStorageProvider>();
     // Enregistrement du service pour l'utilisateur courant
     builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+    builder.Services.AddTransient<IEmailService, EmailService>();
+    builder.Services.AddHttpClient<ICaptchaValidator, GoogleCaptchaValidator>();
 
     // Politique CORS
     var corsPolicyName = "AllowWebApp";

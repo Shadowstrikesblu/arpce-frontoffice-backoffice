@@ -124,7 +124,7 @@
     "Parameters": [
       {
         "Name": "command",
-        "Type": "RegisterClientCommand",
+        "Type": "FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommand",
         "IsRequired": true
       }
     ],
@@ -434,6 +434,88 @@
     "ReturnTypes": [
       {
         "Type": "FrontOffice.Application.Features.Demandes.Queries.GetDemandesOverview.DemandesOverviewDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
+    "Method": "GetDevisNonValides",
+    "RelativePath": "api/dossiers/devis-non-valides",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "TaillePage",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Recherche",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "TrierPar",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Ordre",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
+    "Method": "GetFacturesNonValidees",
+    "RelativePath": "api/dossiers/factures-non-validees",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "TaillePage",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Recherche",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "TrierPar",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Ordre",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FrontOffice.Application.Features.Dossiers.Queries.GetDossiersList.DossiersListVm",
         "MediaTypes": [
           "text/plain",
           "application/json",

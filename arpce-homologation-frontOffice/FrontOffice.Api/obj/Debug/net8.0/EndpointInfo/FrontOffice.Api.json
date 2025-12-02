@@ -842,6 +842,125 @@
           }
         }
       }
+    },
+    "/api/dossiers/devis-non-valides": {
+      "get": {
+        "tags": [
+          "Dossiers"
+        ],
+        "parameters": [
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "TaillePage",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Recherche",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "TrierPar",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Ordre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/dossiers/factures-non-validees": {
+      "get": {
+        "tags": [
+          "Dossiers"
+        ],
+        "parameters": [
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "TaillePage",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Recherche",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "TrierPar",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Ordre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DossiersListVm"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DossiersListVm"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DossiersListVm"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1260,10 +1379,10 @@
           "statut": {
             "$ref": "#/components/schemas/StatutDto"
           },
-          "demandes": {
+          "documents": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/DemandeDto"
+              "$ref": "#/components/schemas/DocumentDossierDto"
             },
             "nullable": true
           }
@@ -1445,6 +1564,38 @@
             "nullable": true
           },
           "contactTelephone": {
+            "type": "string",
+            "nullable": true
+          },
+          "contactFonction": {
+            "type": "string",
+            "nullable": true
+          },
+          "typeClient": {
+            "type": "string",
+            "nullable": true
+          },
+          "registreCommerce": {
+            "type": "string",
+            "nullable": true
+          },
+          "adresse": {
+            "type": "string",
+            "nullable": true
+          },
+          "bp": {
+            "type": "string",
+            "nullable": true
+          },
+          "ville": {
+            "type": "string",
+            "nullable": true
+          },
+          "pays": {
+            "type": "string",
+            "nullable": true
+          },
+          "captchaToken": {
             "type": "string",
             "nullable": true
           }
