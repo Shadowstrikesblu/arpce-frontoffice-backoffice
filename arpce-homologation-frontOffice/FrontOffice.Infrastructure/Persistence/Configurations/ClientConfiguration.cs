@@ -1,46 +1,48 @@
-﻿using FrontOffice.Domain.Entities;
+﻿// Fichier : FrontOffice.Infrastructure/Persistence/Configurations/ClientConfiguration.cs
+
+using FrontOffice.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FrontOffice.Infrastructure.Persistence.Configurations;
 
 /// <summary>
-/// Configuration EF Core pour l'entité Client.
-/// Mappe la classe .NET à la table 'clients' dans la base de données
-/// et configure les propriétés, longueurs et contraintes de chaque colonne.
+/// Configuration EF Core pour l'entité Client (Redevable).
+/// Définit le schéma de la table 'clients' incluant les champs pour le nouveau workflow d'inscription.
 /// </summary>
 public class ClientConfiguration : IEntityTypeConfiguration<Client>
 {
     public void Configure(EntityTypeBuilder<Client> builder)
     {
-        // Définit le nom de la table dans la base de données.
+        // Nom de la table
         builder.ToTable("clients");
 
-        // Définit la clé primaire de la table.
+        // Clé primaire
         builder.HasKey(c => c.Id);
 
-        // --- Configuration des propriétés de l'entité Client ---
-
+        // --- Propriétés d'identification ---
         builder.Property(c => c.Code)
-            .HasMaxLength(30) 
-            .IsRequired();    
+            .HasMaxLength(30)
+            .IsRequired();
 
         builder.Property(c => c.RaisonSociale)
             .HasMaxLength(120)
             .IsRequired();
 
         builder.Property(c => c.RegistreCommerce)
-            .HasMaxLength(60); 
+            .HasMaxLength(60); // Optionnel
 
+        // --- Propriétés de sécurité ---
         builder.Property(c => c.MotPasse)
-            .HasMaxLength(255); 
+            .HasMaxLength(255); // Hash du mot de passe
 
         builder.Property(c => c.ChangementMotPasse)
-            .HasColumnType("tinyint"); 
+            .HasColumnType("tinyint"); // 0 ou 1
 
         builder.Property(c => c.Desactive)
-            .HasColumnType("tinyint");
+            .HasColumnType("tinyint"); // 0 ou 1
 
+        // --- Propriétés de contact ---
         builder.Property(c => c.ContactNom)
             .HasMaxLength(60);
 
@@ -51,48 +53,55 @@ public class ClientConfiguration : IEntityTypeConfiguration<Client>
             .HasMaxLength(60);
 
         builder.Property(c => c.Email)
-            .HasMaxLength(120); 
+            .HasMaxLength(120);
 
+        // --- NOUVEAUX CHAMPS (Demande Front Office) ---
         builder.Property(c => c.Adresse)
-            .HasMaxLength(512);
+            .HasMaxLength(255);
 
         builder.Property(c => c.Bp)
             .HasMaxLength(60);
 
         builder.Property(c => c.Ville)
-            .HasMaxLength(60);
+            .HasMaxLength(100);
 
         builder.Property(c => c.Pays)
-            .HasMaxLength(60);
+            .HasMaxLength(100);
 
         builder.Property(c => c.Remarques)
             .HasMaxLength(512);
 
-        // La valeur par défaut pour un nouveau client sera 'false' (0) au niveau de la base de données.
+        // Type de client ("Particulier" ou "Entreprise")
+        builder.Property(c => c.TypeClient)
+            .HasMaxLength(20)
+            .IsRequired()
+            .HasDefaultValue("Entreprise");
+
+        // --- CHAMPS DU WORKFLOW DE VALIDATION ---
+
+        // Niveau de validation du compte :
+        // 0 = Inscrit (en attente OTP)
+        // 1 = OTP Validé (en attente Validation ARPCE)
+        // 2 = Validé ARPCE (Compte Actif)
+        builder.Property(c => c.NiveauValidation)
+            .HasColumnType("int")
+            .IsRequired()
+            .HasDefaultValue(0);
+
+        // IsVerified est conservé pour la compatibilité avec la logique OTP existante (passage de 0 à 1)
         builder.Property(c => c.IsVerified)
             .IsRequired()
             .HasDefaultValue(false);
 
-        // Le code de vérification à 6 chiffres, stocké comme une chaîne de caractères.
         builder.Property(c => c.VerificationCode)
-            .HasMaxLength(6);
+            .HasMaxLength(6); // Code OTP à 6 chiffres
 
-        // La date d'expiration sera est un 'datetime' 
-        builder.Property(c => c.VerificationTokenExpiry);
+        builder.Property(c => c.VerificationTokenExpiry); // Date d'expiration de l'OTP
 
-
-        // --- Configuration des champs d'audit hérités de AuditableEntity ---
-
-        builder.Property(c => c.UtilisateurCreation)
-            .HasMaxLength(60);
-
-        builder.Property(c => c.DateCreation)
-            .HasColumnType("datetime"); 
-
-        builder.Property(c => c.UtilisateurModification)
-            .HasMaxLength(60);
-
-        builder.Property(c => c.DateModification)
-            .HasColumnType("datetime");
+        // --- Champs d'audit ---
+        builder.Property(c => c.UtilisateurCreation).HasMaxLength(60);
+        builder.Property(c => c.DateCreation).HasColumnType("datetime");
+        builder.Property(c => c.UtilisateurModification).HasMaxLength(60);
+        builder.Property(c => c.DateModification).HasColumnType("datetime");
     }
 }

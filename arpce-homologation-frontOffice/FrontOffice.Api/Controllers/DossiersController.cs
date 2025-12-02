@@ -5,7 +5,9 @@ using FrontOffice.Application.Features.Demandes.Queries.GetDossiersRecents;
 using FrontOffice.Application.Features.Demandes.Queries.GetPaiementEnAttente;
 using FrontOffice.Application.Features.Demandes.Queries.GetPaiementsEnAttente;
 using FrontOffice.Application.Features.Dossiers.Queries.GetDossierDetail;
+using FrontOffice.Application.Features.Dossiers.Queries.GetDossiersDevisNonValides;
 using FrontOffice.Application.Features.Dossiers.Queries.GetDossiersList;
+using FrontOffice.Application.Features.Dossiers.Queries.GetFacturesNonValidees;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -146,5 +148,31 @@ public class DossiersController : ControllerBase
         command.IdDossier = dossierId;
         var result = await _mediator.Send(command);
         return Ok(new { ok = result });
+    }
+
+
+    /// <summary>
+    /// Pour les devis non validés
+    /// </summary>
+    /// <param name="parameters"></param>
+    /// <returns></returns>
+    [HttpGet("devis-non-valides")]
+    public async Task<IActionResult> GetDevisNonValides([FromQuery] GetDossiersQueryParameters parameters)
+    {
+        var result = await _mediator.Send(new GetDossiersDevisNonValidesQuery(parameters));
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Récupération des factures non validées
+    /// </summary>
+    /// <param name="parameters"></param>
+    /// <returns></returns>
+    [HttpGet("factures-non-validees")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DossiersListVm))]
+    public async Task<IActionResult> GetFacturesNonValidees([FromQuery] GetDossiersQueryParameters parameters)
+    {
+        var result = await _mediator.Send(new GetFacturesNonValideesQuery(parameters));
+        return Ok(result);
     }
 }

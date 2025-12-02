@@ -5,7 +5,15 @@ using BackOffice.Application.Features.Admin.Commands.CreateAccess;
 using BackOffice.Application.Features.Admin.Commands.CreateAdmin;
 using BackOffice.Application.Features.Admin.Commands.CreateProfil;
 using BackOffice.Application.Features.Admin.Commands.CreateRedevable;
+using BackOffice.Application.Features.Admin.Commands.DeleteAcces;
+using BackOffice.Application.Features.Admin.Commands.DeleteAdmin;
+using BackOffice.Application.Features.Admin.Commands.DeleteProfil;
+using BackOffice.Application.Features.Admin.Commands.DeleteRedevable;
+using BackOffice.Application.Features.Admin.Commands.UpdateAdmin;
+using BackOffice.Application.Features.Admin.Commands.UpdateRedevable;
+using BackOffice.Application.Features.Admin.Commands.ValidateRedevable;
 using BackOffice.Application.Features.Admin.Queries.GetAccessList;
+using BackOffice.Application.Features.Admin.Queries.GetAdminJournalList;
 using BackOffice.Application.Features.Admin.Queries.GetAdminUserDetail;
 using BackOffice.Application.Features.Admin.Queries.GetAdminUsersList;
 using BackOffice.Application.Features.Admin.Queries.GetRedevableDetail;
@@ -240,5 +248,119 @@ public class AdminController : ControllerBase
     {
         var result = await _mediator.Send(new GetAccessListQuery());
         return Ok(result);
+    }
+
+    /// <summary>
+    /// Pour valider le compte du redevable
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpPost("redevables/{id:guid}/valider")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+    public async Task<IActionResult> ValidateRedevable(Guid id)
+    {
+        await _mediator.Send(new ValidateRedevableCommand { RedevableId = id });
+        return Ok(new { ok = true });
+    }
+
+    /// <summary>
+    /// Pour la récupération de la liste de journal
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    [HttpGet("journal")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(JournalListVm))]
+    public async Task<IActionResult> GetJournalList([FromQuery] GetAdminJournalListQuery query)
+    {
+        var result = await _mediator.Send(query);
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Mis à jour du redvable
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    [HttpPatch("redevables/{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+    public async Task<IActionResult> UpdateRedevable(Guid id, [FromBody] UpdateRedevableCommand command)
+    {
+        command.Id = id;
+        var result = await _mediator.Send(command);
+        return Ok(new { ok = result });
+    }
+
+    /// <summary>
+    /// Suppression du redvable
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpDelete("redevables/{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+    public async Task<IActionResult> DeleteRedevable(Guid id)
+    {
+        var result = await _mediator.Send(new DeleteRedevableCommand(id));
+        return Ok(new { ok = result });
+    }
+
+    /// <summary>
+    /// Mis à jour de l'utilisateur ARPCE
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    [HttpPatch("utilisateurs/{id:guid}")]
+    public async Task<IActionResult> UpdateAdmin(Guid id, [FromBody] UpdateAdminCommand command)
+    {
+        command.Id = id;
+        var result = await _mediator.Send(command);
+        return Ok(new { ok = result });
+    }
+
+    /// <summary>
+    /// Suppression de l'utilisateur ARPCE
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpDelete("utilisateurs/{id:guid}")]
+    public async Task<IActionResult> DeleteAdmin(Guid id)
+    {
+        var result = await _mediator.Send(new DeleteAdminCommand(id));
+        return Ok(new { ok = result });
+    }
+
+    /// <summary>
+    /// Supression du profil
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpDelete("profils/{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteProfil(Guid id)
+    {
+        try
+        {
+            var result = await _mediator.Send(new DeleteProfilCommand(id));
+            return Ok(new { ok = result });
+        }
+        catch (Exception ex) when (ex.Message.Contains("introuvable"))
+        {
+            return NotFound(new { title = "Non trouvé", detail = ex.Message });
+        }
+    }
+
+    /// <summary>
+    /// Suppression des accès utilisateurs
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpDelete("acces/{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+    public async Task<IActionResult> DeleteAcces(Guid id)
+    {
+        var result = await _mediator.Send(new DeleteAccesCommand(id));
+        return Ok(new { ok = result });
     }
 }

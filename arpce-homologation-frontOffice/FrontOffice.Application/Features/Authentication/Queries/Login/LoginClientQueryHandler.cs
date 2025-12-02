@@ -1,12 +1,13 @@
-﻿using FrontOffice.Application.Common.Interfaces;
+﻿using FrontOffice.Application.Common.Exceptions;
+using FrontOffice.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace FrontOffice.Application.Features.Authentication.Queries.Login;
 
 /// <summary>
-/// Gère la logique de la requête de connexion d'un client.
-/// Cette version inclut la vérification du statut d'activation du compte.
+/// Gère la tentative de connexion d'un client.
+/// Vérifie les identifiants et le niveau de validation du compte (0, 1 ou 2).
 /// </summary>
 public class LoginClientQueryHandler : IRequestHandler<LoginClientQuery, AuthenticationResult>
 {
@@ -14,9 +15,6 @@ public class LoginClientQueryHandler : IRequestHandler<LoginClientQuery, Authent
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
     private readonly IPasswordHasher _passwordHasher;
 
-    /// <summary>
-    /// Initialise une nouvelle instance du handler.
-    /// </summary>
     public LoginClientQueryHandler(
         IApplicationDbContext context,
         IJwtTokenGenerator jwtTokenGenerator,
@@ -27,47 +25,46 @@ public class LoginClientQueryHandler : IRequestHandler<LoginClientQuery, Authent
         _passwordHasher = passwordHasher;
     }
 
-    /// <summary>
-    /// Exécute la logique de la requête de connexion.
-    /// </summary>
-    /// <param name="request">La requête de connexion contenant l'email et le mot de passe.</param>
-    /// <param name="cancellationToken">Le token d'annulation.</param>
-    /// <returns>Un résultat d'authentification contenant un message de succès et un token de connexion.</returns>
-    /// <exception cref="UnauthorizedAccessException">Levée si les informations d'identification sont invalides, si le compte est désactivé ou non vérifié.</exception>
     public async Task<AuthenticationResult> Handle(LoginClientQuery request, CancellationToken cancellationToken)
     {
-        // Recherche le client dans la base de données par son e-mail.
+        // Étape 1 : Rechercher le client par email
         var client = await _context.Clients
             .FirstOrDefaultAsync(c => c.Email == request.Email, cancellationToken);
 
-        // Valide l'existence du client et la correspondance du mot de passe.
+        // Étape 2 : Valider l'existence et le mot de passe
         if (client is null || string.IsNullOrEmpty(client.MotPasse) || !_passwordHasher.Verify(request.Password, client.MotPasse))
         {
-            // Leve une exception avec un message générique pour la sécurité.
+            // Message générique pour la sécurité
             throw new UnauthorizedAccessException("L'adresse e-mail ou le mot de passe est incorrect.");
         }
 
-        // Vérifie si le compte client est désactivé par un administrateur.
+        // Vérifie si le compte est désactivé administrativement
         if (client.Desactive == 1)
         {
-            throw new UnauthorizedAccessException("Ce compte client a été désactivé.");
+            throw new UnauthorizedAccessException("Ce compte client a été désactivé par l'administration.");
         }
 
-        if (!client.IsVerified)
+        // Vérifie le Niveau de Validation (Workflow d'inscription)
+
+        // Cas 0 : Inscrit mais OTP non validé
+        if (client.NiveauValidation == 0)
         {
-            // Si le compte n'est pas vérifié, on refuse la connexion et on donne une instruction claire.
-            // L'utilisateur devra refaire le processus d'inscription pour recevoir un nouveau code.
-            throw new UnauthorizedAccessException("Votre compte n'a pas encore été vérifié. Veuillez vérifier votre e-mail ou vous réinscrire pour recevoir un nouveau code de confirmation.");
+            throw new UnauthorizedAccessException("Votre adresse e-mail n'a pas encore été vérifiée. Veuillez utiliser le code reçu lors de l'inscription.");
         }
 
-        // Si l'authentification est réussie, générer un nouveau token de connexion.
+        // Cas 1 : OTP validé mais en attente validation ARPCE
+        if (client.NiveauValidation == 1)
+        {
+            throw new AccountPendingValidationException("Votre compte est en attente de validation");
+        }
+
+        // Générer le token de connexion
         var token = _jwtTokenGenerator.GenerateToken(client.Id, client.Email);
 
-        //  Retourne le résultat avec un message de succès et le token.
         return new AuthenticationResult
         {
             Message = "Connexion réussie.",
-            Token = token 
+            Token = token
         };
     }
 }

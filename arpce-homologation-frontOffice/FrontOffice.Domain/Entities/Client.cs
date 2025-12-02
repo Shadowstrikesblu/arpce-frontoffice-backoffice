@@ -21,21 +21,20 @@ public class Client : AuditableEntity
     public string? Remarques { get; set; }
 
     /// <summary>
-    /// Indique si le compte du client a été vérifié par e-mail.
-    /// Par défaut, un nouveau compte n'est pas vérifié.
+    /// Type de client : "Particulier" ou "Entreprise".
     /// </summary>
+    public string TypeClient { get; set; } = "Entreprise";
+
+    /// <summary>
+    /// Niveau de validation du compte.
+    /// 0 : Inscrit (en attente OTP)
+    /// 1 : OTP Validé (en attente ARPCE)
+    /// 2 : Validé ARPCE (Actif)
+    /// </summary>
+    public int NiveauValidation { get; set; } = 0;
     public bool IsVerified { get; set; } = false;
-
-    /// <summary>
-    /// Le code de vérification à 6 chiffres envoyé par e-mail.
-    /// </summary>
     public string? VerificationCode { get; set; }
-
-    /// <summary>
-    /// La date d'expiration du code/token de vérification.
-    /// </summary>
     public DateTime? VerificationTokenExpiry { get; set; }
-
 
     public virtual ICollection<Dossier> Dossiers { get; set; } = new List<Dossier>();
 }

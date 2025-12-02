@@ -36,6 +36,8 @@ try
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddScoped<IFileStorageProvider, LocalFileStorageProvider>();
     builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+    builder.Services.AddTransient<IEmailService, EmailService>();
+    builder.Services.AddHttpClient<ICaptchaValidator, GoogleCaptchaValidator>();
 
     // Politique CORS (Ouverte pour le Sandbox)
     var corsPolicyName = "AllowWebApp";
