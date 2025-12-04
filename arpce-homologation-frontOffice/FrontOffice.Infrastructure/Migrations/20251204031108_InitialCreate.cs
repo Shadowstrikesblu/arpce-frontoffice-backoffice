@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace BackOffice.Infrastructure.Migrations
+namespace FrontOffice.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -22,13 +22,12 @@ namespace BackOffice.Infrastructure.Migrations
                     Groupe = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     Libelle = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     Page = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: true),
-                    Type = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
                     Inactif = table.Column<byte>(type: "tinyint", nullable: true),
                     Ajouter = table.Column<byte>(type: "tinyint", nullable: true),
                     Valider = table.Column<byte>(type: "tinyint", nullable: true),
                     Supprimer = table.Column<byte>(type: "tinyint", nullable: true),
-                    Imprimer = table.Column<byte>(type: "tinyint", nullable: true),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Imprimer = table.Column<byte>(type: "tinyint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -39,14 +38,13 @@ namespace BackOffice.Infrastructure.Migrations
                 name: "adminConnexions",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Utilisateur = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
-                    DateConnexion = table.Column<DateTime>(type: "datetime", nullable: false),
+                    DateConnexion = table.Column<DateTime>(type: "smalldatetime", nullable: false),
                     Ip = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_adminConnexions", x => x.Id);
+                    table.PrimaryKey("PK_adminConnexions", x => new { x.Utilisateur, x.DateConnexion });
                 });
 
             migrationBuilder.CreateTable(
@@ -54,8 +52,7 @@ namespace BackOffice.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Libelle = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Libelle = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -81,15 +78,15 @@ namespace BackOffice.Infrastructure.Migrations
                     JournalTypeDureeLimitation = table.Column<byte>(type: "tinyint", nullable: true),
                     JournalTailleLimitation = table.Column<int>(type: "int", nullable: true),
                     LDAPAuthentificationActivation = table.Column<byte>(type: "tinyint", nullable: true),
-                    LDAPAuthentificationNomDomaine = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
+                    LDAPAuthentificationNomDomaine = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LDAPCreationAutoActivation = table.Column<byte>(type: "tinyint", nullable: true),
-                    LDAPCreationAutoNomServeur = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    LDAPCreationAutoCompte = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    LDAPCreationAutoPassword = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
+                    LDAPCreationAutoNomServeur = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LDAPCreationAutoCompte = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LDAPCreationAutoPassword = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ReplicationActivation = table.Column<byte>(type: "tinyint", nullable: true),
-                    ReplicationNomServeur = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    ReplicationCompte = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    ReplicationPassword = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true)
+                    ReplicationNomServeur = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ReplicationCompte = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ReplicationPassword = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -101,13 +98,13 @@ namespace BackOffice.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: true),
                     Libelle = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     Remarques = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
                     UtilisateurCreation = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateCreation = table.Column<DateTime>(type: "datetime", nullable: true),
+                    DateCreation = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     UtilisateurModification = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateModification = table.Column<DateTime>(type: "datetime", nullable: true)
+                    DateModification = table.Column<DateTime>(type: "smalldatetime", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -148,20 +145,16 @@ namespace BackOffice.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
                     Libelle = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    TypeEquipement = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    TypeClient = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    FormuleHomologation = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    QuantiteReference = table.Column<int>(type: "int", nullable: true),
                     TarifEtude = table.Column<decimal>(type: "money", nullable: true),
-                    TarifHomologation = table.Column<byte>(type: "tinyint", nullable: true),
-                    FraisHomologationParLot = table.Column<byte>(type: "tinyint", nullable: true),
-                    FraisHomologationQuantiteParLot = table.Column<int>(type: "int", nullable: true),
+                    TarifHomologation = table.Column<decimal>(type: "money", nullable: true),
+                    TarifHomologationParLot = table.Column<byte>(type: "tinyint", nullable: true),
+                    TarifHomologationQuantiteParLot = table.Column<int>(type: "int", nullable: true),
                     TarifControle = table.Column<decimal>(type: "money", nullable: true),
                     Remarques = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
                     UtilisateurCreation = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateCreation = table.Column<DateTime>(type: "datetime", nullable: true),
+                    DateCreation = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     UtilisateurModification = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateModification = table.Column<DateTime>(type: "datetime", nullable: true)
+                    DateModification = table.Column<DateTime>(type: "smalldatetime", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -213,9 +206,9 @@ namespace BackOffice.Infrastructure.Migrations
                     MobileBanking = table.Column<byte>(type: "tinyint", nullable: false),
                     Remarques = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
                     UtilisateurCreation = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateCreation = table.Column<DateTime>(type: "datetime", nullable: true),
+                    DateCreation = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     UtilisateurModification = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateModification = table.Column<DateTime>(type: "datetime", nullable: true)
+                    DateModification = table.Column<DateTime>(type: "smalldatetime", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -231,9 +224,9 @@ namespace BackOffice.Infrastructure.Migrations
                     Libelle = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     Remarques = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
                     UtilisateurCreation = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateCreation = table.Column<DateTime>(type: "datetime", nullable: true),
+                    DateCreation = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     UtilisateurModification = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateModification = table.Column<DateTime>(type: "datetime", nullable: true)
+                    DateModification = table.Column<DateTime>(type: "smalldatetime", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -246,11 +239,7 @@ namespace BackOffice.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
-                    Libelle = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    UtilisateurCreation = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateCreation = table.Column<DateTime>(type: "datetime", nullable: true),
-                    UtilisateurModification = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateModification = table.Column<DateTime>(type: "datetime", nullable: true)
+                    Libelle = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -268,6 +257,30 @@ namespace BackOffice.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_statuts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "adminJournal",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdEvenementType = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Application = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    AdresseIP = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    Utilisateur = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateEvenement = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Page = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    Libelle = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_adminJournal", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_adminJournal_adminEvenementsTypes_IdEvenementType",
+                        column: x => x.IdEvenementType,
+                        principalTable: "adminEvenementsTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -289,13 +302,13 @@ namespace BackOffice.Infrastructure.Migrations
                         column: x => x.IdAccess,
                         principalTable: "adminAccess",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_adminProfilsAcces_adminProfils_IdProfil",
                         column: x => x.IdProfil,
                         principalTable: "adminProfils",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -313,46 +326,40 @@ namespace BackOffice.Infrastructure.Migrations
                         column: x => x.IdProfil,
                         principalTable: "adminProfils",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AdminUtilisateurs",
+                name: "adminUtilisateurs",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdProfil = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IdUtilisateurType = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Compte = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Nom = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Prenoms = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
-                    MotPasse = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    ChangementMotPasse = table.Column<bool>(type: "bit", nullable: false),
-                    Desactive = table.Column<bool>(type: "bit", nullable: false),
+                    IdProfil = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Compte = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
+                    Nom = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
+                    Prenoms = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
+                    MotPasse = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    ChangementMotPasse = table.Column<byte>(type: "tinyint", nullable: true),
+                    Desactive = table.Column<byte>(type: "tinyint", nullable: true),
                     Remarques = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
-                    DerniereConnexion = table.Column<DateTime>(type: "datetime", nullable: true),
+                    DerniereConnexion = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     UtilisateurCreation = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateCreation = table.Column<DateTime>(type: "datetime", nullable: true),
+                    DateCreation = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     UtilisateurModification = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateModification = table.Column<DateTime>(type: "datetime", nullable: true),
-                    AdminProfilsId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    DateModification = table.Column<DateTime>(type: "smalldatetime", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AdminUtilisateurs", x => x.Id);
+                    table.PrimaryKey("PK_adminUtilisateurs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AdminUtilisateurs_adminProfils_AdminProfilsId",
-                        column: x => x.AdminProfilsId,
-                        principalTable: "adminProfils",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_AdminUtilisateurs_adminProfils_IdProfil",
+                        name: "FK_adminUtilisateurs_adminProfils_IdProfil",
                         column: x => x.IdProfil,
                         principalTable: "adminProfils",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AdminUtilisateurs_adminUtilisateurTypes_IdUtilisateurType",
+                        name: "FK_adminUtilisateurs_adminUtilisateurTypes_IdUtilisateurType",
                         column: x => x.IdUtilisateurType,
                         principalTable: "adminUtilisateurTypes",
                         principalColumn: "Id",
@@ -370,27 +377,20 @@ namespace BackOffice.Infrastructure.Migrations
                     DateOuverture = table.Column<DateTime>(type: "date", nullable: false),
                     Numero = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Libelle = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    IdAgentInstructeur = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UtilisateurCreation = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateCreation = table.Column<DateTime>(type: "datetime", nullable: true),
-                    UtilisateurModification = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateModification = table.Column<DateTime>(type: "datetime", nullable: true)
+                    UtilisateurCreation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateCreation = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UtilisateurModification = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateModification = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_dossiers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_dossiers_AdminUtilisateurs_IdAgentInstructeur",
-                        column: x => x.IdAgentInstructeur,
-                        principalTable: "AdminUtilisateurs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_dossiers_clients_IdClient",
                         column: x => x.IdClient,
                         principalTable: "clients",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_dossiers_modesReglements_IdModeReglement",
                         column: x => x.IdModeReglement,
@@ -406,50 +406,15 @@ namespace BackOffice.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "adminJournal",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdEvenementType = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Application = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    AdresseIP = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Utilisateur = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    DateEvenement = table.Column<DateTime>(type: "datetime", nullable: false),
-                    Page = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Libelle = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    IdDossier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    DossierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_adminJournal", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_adminJournal_adminEvenementsTypes_IdEvenementType",
-                        column: x => x.IdEvenementType,
-                        principalTable: "adminEvenementsTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_adminJournal_dossiers_DossierId",
-                        column: x => x.DossierId,
-                        principalTable: "dossiers",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "commentaires",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdDossier = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DateCommentaire = table.Column<DateTime>(type: "datetime", nullable: false),
+                    DateCommentaire = table.Column<DateTime>(type: "date", nullable: false),
                     commentaire = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
                     NomInstructeur = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    Proposition = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
-                    UtilisateurCreation = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateCreation = table.Column<DateTime>(type: "datetime", nullable: true),
-                    UtilisateurModification = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateModification = table.Column<DateTime>(type: "datetime", nullable: true)
+                    Proposition = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -483,11 +448,7 @@ namespace BackOffice.Infrastructure.Migrations
                     ContactEmail = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     PrixUnitaire = table.Column<decimal>(type: "money", nullable: true),
                     EstHomologable = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
-                    Remise = table.Column<decimal>(type: "decimal(5,2)", nullable: true),
-                    UtilisateurCreation = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateCreation = table.Column<DateTime>(type: "datetime", nullable: true),
-                    UtilisateurModification = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateModification = table.Column<DateTime>(type: "datetime", nullable: true)
+                    Remise = table.Column<decimal>(type: "decimal(5,2)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -519,48 +480,16 @@ namespace BackOffice.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "devis",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdDossier = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Date = table.Column<DateTime>(type: "date", nullable: false),
-                    MontantEtude = table.Column<decimal>(type: "money", nullable: false),
-                    MontantHomologation = table.Column<decimal>(type: "money", nullable: true),
-                    MontantControle = table.Column<decimal>(type: "money", nullable: true),
-                    PaiementOk = table.Column<byte>(type: "tinyint", nullable: true),
-                    PaiementMobileId = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    UtilisateurCreation = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateCreation = table.Column<DateTime>(type: "datetime", nullable: true),
-                    UtilisateurModification = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateModification = table.Column<DateTime>(type: "datetime", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_devis", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_devis_dossiers_IdDossier",
-                        column: x => x.IdDossier,
-                        principalTable: "dossiers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "documentsDossiers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdDossier = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nom = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: true),
+                    Nom = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     Type = table.Column<byte>(type: "tinyint", nullable: true),
                     Donnees = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     Extension = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
-                    FilePath = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
-                    UtilisateurCreation = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateCreation = table.Column<DateTime>(type: "datetime", nullable: true),
-                    UtilisateurModification = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateModification = table.Column<DateTime>(type: "datetime", nullable: true)
+                    FilePath = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -596,6 +525,40 @@ namespace BackOffice.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "devis",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdDemande = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Date = table.Column<DateTime>(type: "date", nullable: false),
+                    MontantEtude = table.Column<decimal>(type: "money", nullable: false),
+                    MontantHomologation = table.Column<decimal>(type: "money", nullable: true),
+                    MontantControle = table.Column<decimal>(type: "money", nullable: true),
+                    PaiementOk = table.Column<byte>(type: "tinyint", nullable: true),
+                    PaiementMobileId = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
+                    DossierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UtilisateurCreation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateCreation = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UtilisateurModification = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateModification = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_devis", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_devis_demandes_IdDemande",
+                        column: x => x.IdDemande,
+                        principalTable: "demandes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_devis_dossiers_DossierId",
+                        column: x => x.DossierId,
+                        principalTable: "dossiers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "documentsDemandes",
                 columns: table => new
                 {
@@ -604,11 +567,7 @@ namespace BackOffice.Infrastructure.Migrations
                     Nom = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: true),
                     Donnees = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     Extension = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
-                    FilePath = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
-                    UtilisateurCreation = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateCreation = table.Column<DateTime>(type: "datetime", nullable: true),
-                    UtilisateurModification = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateModification = table.Column<DateTime>(type: "datetime", nullable: true)
+                    FilePath = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -622,66 +581,14 @@ namespace BackOffice.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "adminEvenementsTypes",
-                columns: new[] { "Id", "Code", "Libelle" },
-                values: new object[,]
-                {
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251202233148_InitialCreate.cs
-                    { new Guid("0d52a865-2dd7-4f90-a52b-a8068426f96b"), "CONNEXION", "Modification" },
-                    { new Guid("0eb2d916-b5e7-464a-93de-4d94a4a19533"), "VALIDATION", "Validation de processus" },
-                    { new Guid("2dc0effc-1224-4c84-a99a-8ac56962b1a9"), "CREATION", "Création de données" },
-                    { new Guid("47fa833c-9671-43ec-98c2-10b2accfe847"), "QUALIFICATION", "Qualification de données" },
-                    { new Guid("5010fb9a-bbb3-4e43-935d-4b49cf0b7b49"), "SUPPRESSION", "Suppression de données" },
-                    { new Guid("5485159c-e831-47fc-aa63-20262f6ad156"), "COMMUNICATION", "Envoi de communication" },
-                    { new Guid("b22665cb-9e04-4c00-a9bd-042f9cead15f"), "SECURITE", "Action de sécurité" },
-                    { new Guid("b5ec3926-135d-41e3-bfc9-9505d4218640"), "MODIFICATION", "Modification de données" },
-                    { new Guid("bcfd7d38-29de-4a39-87b0-de7d24e3f545"), "MODIFICATION", "Connexion utilisateur" },
-                    { new Guid("c1479364-57c2-4a6f-b35a-2ac255e1de29"), "ATTRIBUTION", "Attribution de droits/profils" }
-========
-                    { new Guid("085d97f6-d7a9-45b4-b398-3a4459c182c7"), "CREATION", "Création de données" },
-                    { new Guid("0c9f080c-ae78-4506-b182-bcadeab65532"), "MODIFICATION", "Connexion utilisateur" },
-                    { new Guid("32a47796-2314-48eb-a05a-ce1c67577317"), "VALIDATION", "Validation de processus" },
-                    { new Guid("62c5b7a4-de3a-45b1-980d-b31621236c20"), "COMMUNICATION", "Envoi de communication" },
-                    { new Guid("934b7df9-7dc8-462b-86df-0cfb945ddf43"), "MODIFICATION", "Modification de données" },
-                    { new Guid("9e9f89f7-6c93-4ceb-bbc3-9fcfb64c871a"), "SECURITE", "Action de sécurité" },
-                    { new Guid("a5645866-5c3e-4755-948d-a1ee018d6217"), "ATTRIBUTION", "Attribution de droits/profils" },
-                    { new Guid("c4039001-93fe-4ee2-a007-5b95128bdba2"), "QUALIFICATION", "Qualification de données" },
-                    { new Guid("d6d88430-4acd-4114-99e9-098cffd3c038"), "CONNEXION", "Modification" },
-                    { new Guid("e7b9e63f-ef5e-486e-8cf4-848a78191ba8"), "SUPPRESSION", "Suppression de données" }
->>>>>>>> 666418c26a5ce783f3e6751760dd209a093efbab:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251204001551_Initialisation.cs
-                });
-
-            migrationBuilder.InsertData(
-                table: "adminUtilisateurTypes",
-                columns: new[] { "Id", "Libelle" },
-                values: new object[,]
-                {
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251202233148_InitialCreate.cs
-                    { new Guid("1f5ea320-0896-4eed-9ab1-da9fc6f1a5d1"), "Auditeur" },
-                    { new Guid("4e16d4ee-487d-4cb0-b4d8-aa383bf11da8"), "Utilisateur Standard" },
-========
-                    { new Guid("21506b36-ce47-49a8-8393-85504d46fbc0"), "Utilisateur Standard" },
-                    { new Guid("5b9a841b-40c3-46f5-847b-321703746a62"), "Auditeur" },
->>>>>>>> 666418c26a5ce783f3e6751760dd209a093efbab:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251204001551_Initialisation.cs
-                    { new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"), "Administrateur" }
-                });
-
-            migrationBuilder.InsertData(
                 table: "modesReglements",
                 columns: new[] { "Id", "Code", "DateCreation", "DateModification", "Libelle", "MobileBanking", "Remarques", "UtilisateurCreation", "UtilisateurModification" },
                 values: new object[,]
                 {
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251202233148_InitialCreate.cs
-                    { new Guid("a3f570af-6145-462d-a961-019fc0b3d641"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
-                    { new Guid("c31a8b4e-a08e-48fc-aeeb-ce441e0a2147"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
-                    { new Guid("c687b9cf-c6d2-4b89-a0e3-e962e400210a"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
-                    { new Guid("ef30ee2d-d441-4080-a125-072ce9221bf0"), "Especes", null, null, "Espèces", (byte)0, null, null, null }
-========
-                    { new Guid("47702c0a-3439-4de3-8cae-9292697a6453"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
-                    { new Guid("9f10fbf3-987c-4968-b6f6-caae8b87bf80"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
-                    { new Guid("c4e94470-6cda-4fdf-bca5-20f398434296"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
-                    { new Guid("c5e27342-5f35-4a83-8fa9-c173c8748223"), "Cheque", null, null, "Chèque", (byte)0, null, null, null }
->>>>>>>> 666418c26a5ce783f3e6751760dd209a093efbab:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251204001551_Initialisation.cs
+                    { new Guid("0f69c893-86a1-4e90-b526-af584d73fe0f"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
+                    { new Guid("218286de-89da-4722-9a3e-266876c8a495"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
+                    { new Guid("775b8196-8ce0-4832-ac32-03729db8d673"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
+                    { new Guid("ea473f9e-91c2-4be1-8c20-22b1c746e5a1"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -689,56 +596,23 @@ namespace BackOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "Libelle" },
                 values: new object[,]
                 {
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251202233148_InitialCreate.cs
-                    { new Guid("097643d1-b4ce-4582-b736-f02496693eff"), "DossierSigner", "Attestation signée" },
-                    { new Guid("191ac61f-369b-45b3-9fea-25372a40f40d"), "PaiementRejete", "Paiement non accepté" },
-                    { new Guid("248aab76-916e-4109-9231-de32aee4024a"), "Instruction", "En cours d'instruction" },
-                    { new Guid("29cf2afb-59d5-4a3e-940e-98ab93574e6b"), "ApprobationInstruction", "Envoyé pour approbation" },
-                    { new Guid("373d7df0-7010-4a44-84af-48e9d5b223bd"), "RefusDossier", "Refus de la demande" },
-                    { new Guid("39479817-55fe-44f9-8589-219eebf4220a"), "DevisCreer", "Devis créé" },
-                    { new Guid("3b1af062-ddb9-41e5-9407-99fa47dbc4ae"), "PaiementExpirer", "Paiement expiré" },
-                    { new Guid("655e2bb9-d043-41ba-8003-f6ab5170502a"), "DossierSignature", "Attestation en signature" },
-                    { new Guid("6af25826-c31a-4d2f-97bb-d3c36ef5d30a"), "DevisRefuser", "Devis refusé par client" },
-                    { new Guid("765ab068-f172-4f83-8150-ed7bc5c376b1"), "DevisValideTr", "Devis validé par Trésorerie" },
-                    { new Guid("7bfa9fa7-ae23-4789-b381-60684149a851"), "DevisValideSC", "Devis validé par Chef Service" },
-                    { new Guid("828db0cc-0d71-4931-b771-e3e154119f00"), "InstructionApprouve", "Instruction Approuvée" },
-                    { new Guid("865cb34a-a5d3-445f-9a4c-f5c8fe303a5a"), "NouveauDossier", "Nouvelle demande" },
-                    { new Guid("9b25f72e-eec4-483d-ac05-1adfa93ee21e"), "DossierPayer", "Paiement effectué" },
-                    { new Guid("a5fcd273-29ec-4a1d-a3f0-c593ec1ba691"), "DevisValide", "Devis validé par client" },
-                    { new Guid("aca2fd5d-7b29-4763-984a-96eb0dee9411"), "DevisEmit", "Devis émis" }
-========
-                    { new Guid("1c7008c1-0dcc-4615-95f3-a68318f1cb08"), "ApprobationInstruction", "Envoyé pour approbation" },
-                    { new Guid("2a95e411-5d2c-42a8-94d1-8b98770c3139"), "RefusDossier", "Refus de la demande" },
-                    { new Guid("4423a983-2316-477a-8949-bdda30e61cb8"), "DevisValide", "Devis validé par client" },
-                    { new Guid("650b2183-0b13-4f61-8da8-be6df7f4a247"), "DevisRefuser", "Devis refusé par client" },
-                    { new Guid("663e1659-7732-4123-9f16-a49dd1d3159b"), "NouveauDossier", "Nouvelle demande" },
-                    { new Guid("67c00a9a-36eb-4278-b4b6-5c6a2c4f0b5b"), "PaiementRejete", "Paiement non accepté" },
-                    { new Guid("7856d7a5-d887-4928-9919-cf39806644c2"), "DevisValideSC", "Devis validé par Chef Service" },
-                    { new Guid("801a01d7-ce46-461a-9c3b-1d74b9c19aac"), "Instruction", "En cours d'instruction" },
-                    { new Guid("8ac61be4-c29b-4b1c-bab9-07b6fadf023d"), "PaiementExpirer", "Paiement expiré" },
-                    { new Guid("8d56a112-72be-4a23-b638-3752a80d5193"), "DossierSignature", "Attestation en signature" },
-                    { new Guid("8f2468ad-c6ba-40bd-8b7f-cab2f9130b4e"), "DevisCreer", "Devis créé" },
-                    { new Guid("90d10281-1e81-410b-884d-f03ef75cb584"), "DevisEmit", "Devis émis" },
-                    { new Guid("d5b65fea-b0a0-418b-9f14-36767b34edab"), "DevisValideTr", "Devis validé par Trésorerie" },
-                    { new Guid("d7aa0b4f-cf4b-47e4-b3f7-7c08f05e8a31"), "DossierSigner", "Attestation signée" },
-                    { new Guid("f046322e-5bf3-415f-acd8-5da44ae1fc88"), "DossierPayer", "Paiement effectué" },
-                    { new Guid("fb0e4bfe-40f2-44df-acc6-6a412d306d44"), "InstructionApprouve", "Instruction Approuvée" }
->>>>>>>> 666418c26a5ce783f3e6751760dd209a093efbab:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251204001551_Initialisation.cs
+                    { new Guid("18b334d3-9a56-4d96-95f7-52466f77d28d"), "RefusDossier", "Refus de la demande" },
+                    { new Guid("1d161ddb-b8ac-4bbd-a2f3-d0ff6a45a9e7"), "InstructionApprouve", "Instruction Approuvée" },
+                    { new Guid("3291240d-4acb-4bb2-977c-111713469031"), "DossierPayer", "Paiement effectué" },
+                    { new Guid("3ae52f82-6b8e-438b-993d-298b6c49ce35"), "PaiementExpirer", "Paiement expiré" },
+                    { new Guid("634177c1-24b2-4d2a-b5b1-af24d2f14a50"), "DevisCreer", "Devis créé" },
+                    { new Guid("65b75c38-b341-41a2-842f-62f97e23ef1a"), "ApprobationInstruction", "Envoyé pour approbation" },
+                    { new Guid("6efbc594-c55f-41ac-8174-9ac2e4b796a9"), "DevisRefuser", "Devis refusé par client" },
+                    { new Guid("7337838f-de14-415f-95bc-333962e5411b"), "NouveauDossier", "Nouvelle demande" },
+                    { new Guid("7ce14616-a644-4fd7-b512-c39cdfa3048f"), "PaiementRejete", "Paiement non accepté" },
+                    { new Guid("7f8460d3-1d79-4301-8897-dd2fa4e484b6"), "DevisEmit", "Devis émis" },
+                    { new Guid("8800ac78-df56-43e8-9c8f-bf3da051ff9f"), "Instruction", "En cours d'instruction" },
+                    { new Guid("8a583396-ca38-4f79-9205-82e6cdcd60bd"), "DevisValideTr", "Devis validé par Trésorerie" },
+                    { new Guid("a5e60514-81b5-4444-9884-8c8fd6c667f1"), "DevisValideSC", "Devis validé par Chef Service" },
+                    { new Guid("ab42cd4c-7fba-42f1-83f0-8f28bef8b984"), "DevisValide", "Devis validé par client" },
+                    { new Guid("ded7727a-024b-4fb3-b72c-0480f484a249"), "DossierSignature", "Attestation en signature" },
+                    { new Guid("fc6b42ff-1c0b-4916-bd87-a4e8e779b0d8"), "DossierSigner", "Attestation signée" }
                 });
-
-            migrationBuilder.InsertData(
-                table: "AdminUtilisateurs",
-                columns: new[] { "Id", "AdminProfilsId", "ChangementMotPasse", "Compte", "DateCreation", "DateModification", "DerniereConnexion", "Desactive", "IdProfil", "IdUtilisateurType", "MotPasse", "Nom", "Prenoms", "Remarques", "UtilisateurCreation", "UtilisateurModification" },
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251202233148_InitialCreate.cs
-                values: new object[] { new Guid("f7b1ddfe-444b-4fb7-af09-edf7947c9b85"), null, true, "admin", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, false, null, new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"), "$2a$11$dFv9gzP9WjQK6DHBUaQPv.qD86.56DLh0iyAZRX1Ljl7W/uSv3bFi", "Administrateur", "ARPCE", null, "SYSTEM_SEED", null });
-========
-                values: new object[] { new Guid("45984c40-427b-45bc-a646-b47438f1d8b3"), null, true, "admin", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, false, null, new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"), "$2a$11$2RRchS584NgwaJZiqTl14OX3MLzDmF5BDuonOU/gHw4kEHBFCBW4a", "Administrateur", "ARPCE", null, "SYSTEM_SEED", null });
->>>>>>>> 666418c26a5ce783f3e6751760dd209a093efbab:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251204001551_Initialisation.cs
-
-            migrationBuilder.CreateIndex(
-                name: "IX_adminJournal_DossierId",
-                table: "adminJournal",
-                column: "DossierId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_adminJournal_IdEvenementType",
@@ -756,24 +630,13 @@ namespace BackOffice.Infrastructure.Migrations
                 column: "IdProfil");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AdminUtilisateurs_AdminProfilsId",
-                table: "AdminUtilisateurs",
-                column: "AdminProfilsId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AdminUtilisateurs_Compte",
-                table: "AdminUtilisateurs",
-                column: "Compte",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AdminUtilisateurs_IdProfil",
-                table: "AdminUtilisateurs",
+                name: "IX_adminUtilisateurs_IdProfil",
+                table: "adminUtilisateurs",
                 column: "IdProfil");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AdminUtilisateurs_IdUtilisateurType",
-                table: "AdminUtilisateurs",
+                name: "IX_adminUtilisateurs_IdUtilisateurType",
+                table: "adminUtilisateurs",
                 column: "IdUtilisateurType");
 
             migrationBuilder.CreateIndex(
@@ -807,9 +670,14 @@ namespace BackOffice.Infrastructure.Migrations
                 column: "IdProposition");
 
             migrationBuilder.CreateIndex(
-                name: "IX_devis_IdDossier",
+                name: "IX_devis_DossierId",
                 table: "devis",
-                column: "IdDossier");
+                column: "DossierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_devis_IdDemande",
+                table: "devis",
+                column: "IdDemande");
 
             migrationBuilder.CreateIndex(
                 name: "IX_documentsDemandes_IdDemande",
@@ -820,11 +688,6 @@ namespace BackOffice.Infrastructure.Migrations
                 name: "IX_documentsDossiers_IdDossier",
                 table: "documentsDossiers",
                 column: "IdDossier");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_dossiers_IdAgentInstructeur",
-                table: "dossiers",
-                column: "IdAgentInstructeur");
 
             migrationBuilder.CreateIndex(
                 name: "IX_dossiers_IdClient",
@@ -864,6 +727,9 @@ namespace BackOffice.Infrastructure.Migrations
                 name: "adminReporting");
 
             migrationBuilder.DropTable(
+                name: "adminUtilisateurs");
+
+            migrationBuilder.DropTable(
                 name: "attestations");
 
             migrationBuilder.DropTable(
@@ -885,6 +751,12 @@ namespace BackOffice.Infrastructure.Migrations
                 name: "adminAccess");
 
             migrationBuilder.DropTable(
+                name: "adminProfils");
+
+            migrationBuilder.DropTable(
+                name: "adminUtilisateurTypes");
+
+            migrationBuilder.DropTable(
                 name: "demandes");
 
             migrationBuilder.DropTable(
@@ -900,9 +772,6 @@ namespace BackOffice.Infrastructure.Migrations
                 name: "propositions");
 
             migrationBuilder.DropTable(
-                name: "AdminUtilisateurs");
-
-            migrationBuilder.DropTable(
                 name: "clients");
 
             migrationBuilder.DropTable(
@@ -910,12 +779,6 @@ namespace BackOffice.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "statuts");
-
-            migrationBuilder.DropTable(
-                name: "adminProfils");
-
-            migrationBuilder.DropTable(
-                name: "adminUtilisateurTypes");
         }
     }
 }

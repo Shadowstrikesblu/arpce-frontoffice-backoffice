@@ -1,7 +1,6 @@
-<<<<<<< HEAD
 {
   "Version": 1,
-  "Hash": "iwDSQ0x3TCgkVwZ1cO05ENeT0GBFZhhpR2rYKn9wqtE=",
+  "Hash": "WP9gmMdxJoy4aqBj/nFmLp2jPCOoroRAtg+CQZ95pFo=",
   "Source": "FrontOffice.Api",
   "BasePath": "_content/FrontOffice.Api",
   "Mode": "Default",
@@ -35,47 +34,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\swagger-custom.css"
-    },
-    {
-      "Identity": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Api\\wwwroot\\uploads\\courriers\\92e909d5-188b-4a9d-bc1b-95fc058c1320.pdf",
-      "SourceId": "FrontOffice.Api",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Api\\wwwroot\\",
-      "BasePath": "_content/FrontOffice.Api",
-      "RelativePath": "uploads/courriers/92e909d5-188b-4a9d-bc1b-95fc058c1320.pdf",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\courriers\\92e909d5-188b-4a9d-bc1b-95fc058c1320.pdf"
-    },
-    {
-      "Identity": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Api\\wwwroot\\uploads\\fiches-techniques\\cb5e491a-3004-47ae-aedd-a03813fceabd.pdf",
-      "SourceId": "FrontOffice.Api",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Api\\wwwroot\\",
-      "BasePath": "_content/FrontOffice.Api",
-      "RelativePath": "uploads/fiches-techniques/cb5e491a-3004-47ae-aedd-a03813fceabd.pdf",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\fiches-techniques\\cb5e491a-3004-47ae-aedd-a03813fceabd.pdf"
     }
   ]
 }
-=======
-{"Version":1,"Hash":"+O2qPH6kHJP0DzzAuihVG/vg7k9e3PFZT+vYRHwFUJI=","Source":"FrontOffice.Api","BasePath":"_content/FrontOffice.Api","Mode":"Default","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[{"Name":"FrontOffice.Api\\wwwroot","Source":"FrontOffice.Api","ContentRoot":"D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Api\\wwwroot\\","BasePath":"_content/FrontOffice.Api","Pattern":"**"}],"Assets":[{"Identity":"D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Api\\wwwroot\\css\\swagger-custom.css","SourceId":"FrontOffice.Api","SourceType":"Discovered","ContentRoot":"D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Api\\wwwroot\\","BasePath":"_content/FrontOffice.Api","RelativePath":"css/swagger-custom#[.{fingerprint}]?.css","AssetKind":"All","AssetMode":"All","AssetRole":"Primary","AssetMergeBehavior":"","AssetMergeSource":"","RelatedAsset":"","AssetTraitName":"","AssetTraitValue":"","Fingerprint":"m6i9vf83yn","Integrity":"suDdw9QrhNi7lnf73S0wkqyjio+eWh14ziAp/vkIt+c=","CopyToOutputDirectory":"Never","CopyToPublishDirectory":"PreserveNewest","OriginalItemSpec":"wwwroot\\css\\swagger-custom.css","FileLength":3410,"LastWriteTime":"2025-11-21T11:17:46+00:00"}],"Endpoints":[{"Route":"css/swagger-custom.css","AssetFile":"D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Api\\wwwroot\\css\\swagger-custom.css","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"3410"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"suDdw9QrhNi7lnf73S0wkqyjio+eWh14ziAp/vkIt+c=\""},{"Name":"Last-Modified","Value":"Fri, 21 Nov 2025 11:17:46 GMT"},{"Name":"Cache-Control","Value":"no-cache"}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-suDdw9QrhNi7lnf73S0wkqyjio+eWh14ziAp/vkIt+c="}]},{"Route":"css/swagger-custom.m6i9vf83yn.css","AssetFile":"D:\\CDS\\work_space\\arpce-homologation-backends-cds\\arpce-homologation-frontOffice\\FrontOffice.Api\\wwwroot\\css\\swagger-custom.css","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"3410"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"suDdw9QrhNi7lnf73S0wkqyjio+eWh14ziAp/vkIt+c=\""},{"Name":"Last-Modified","Value":"Fri, 21 Nov 2025 11:17:46 GMT"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"}],"EndpointProperties":[{"Name":"fingerprint","Value":"m6i9vf83yn"},{"Name":"label","Value":"css/swagger-custom.css"},{"Name":"integrity","Value":"sha256-suDdw9QrhNi7lnf73S0wkqyjio+eWh14ziAp/vkIt+c="}]}]}
->>>>>>> 666418c26a5ce783f3e6751760dd209a093efbab

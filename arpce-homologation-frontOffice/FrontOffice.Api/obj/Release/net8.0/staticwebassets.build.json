@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "iwDSQ0x3TCgkVwZ1cO05ENeT0GBFZhhpR2rYKn9wqtE=",
+  "Hash": "WP9gmMdxJoy4aqBj/nFmLp2jPCOoroRAtg+CQZ95pFo=",
   "Source": "FrontOffice.Api",
   "BasePath": "_content/FrontOffice.Api",
   "Mode": "Default",
@@ -34,44 +34,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\swagger-custom.css"
-    },
-    {
-      "Identity": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Api\\wwwroot\\uploads\\courriers\\92e909d5-188b-4a9d-bc1b-95fc058c1320.pdf",
-      "SourceId": "FrontOffice.Api",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Api\\wwwroot\\",
-      "BasePath": "_content/FrontOffice.Api",
-      "RelativePath": "uploads/courriers/92e909d5-188b-4a9d-bc1b-95fc058c1320.pdf",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\courriers\\92e909d5-188b-4a9d-bc1b-95fc058c1320.pdf"
-    },
-    {
-      "Identity": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Api\\wwwroot\\uploads\\fiches-techniques\\cb5e491a-3004-47ae-aedd-a03813fceabd.pdf",
-      "SourceId": "FrontOffice.Api",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Administrator\\Downloads\\Backend\\arpce-homologation-frontOffice\\FrontOffice.Api\\wwwroot\\",
-      "BasePath": "_content/FrontOffice.Api",
-      "RelativePath": "uploads/fiches-techniques/cb5e491a-3004-47ae-aedd-a03813fceabd.pdf",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\fiches-techniques\\cb5e491a-3004-47ae-aedd-a03813fceabd.pdf"
     }
   ]
 }
