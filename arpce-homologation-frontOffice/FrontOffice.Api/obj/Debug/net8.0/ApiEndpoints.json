@@ -226,6 +226,27 @@
     ]
   },
   {
+    "ContainingType": "FrontOffice.Api.Controllers.DocumentsController",
+    "Method": "DownloadDocument",
+    "RelativePath": "api/documents/{type}/{id}/download",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "type",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
     "Method": "GetDossiersList",
     "RelativePath": "api/dossiers",

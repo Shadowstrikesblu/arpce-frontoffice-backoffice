@@ -1,5 +1,6 @@
 ﻿using FrontOffice.Domain.Entities;
-using Microsoft.EntityFrameworkCore; 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace FrontOffice.Application.Common.Interfaces;
 
@@ -30,6 +31,8 @@ public interface IApplicationDbContext
     DbSet<MotifRejet> MotifsRejets { get; }
     DbSet<Proposition> Propositions { get; }
     DbSet<Statut> Statuts { get; }
+
+    DatabaseFacade Database { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }
