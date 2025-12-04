@@ -1,6 +1,7 @@
 ﻿// Fichier : BackOffice.Api/Controllers/DocumentsController.cs
 
 using BackOffice.Application.Common.DTOs.Documents;
+using BackOffice.Application.Features.Demandes.Queries.DownloadDocument;
 using BackOffice.Application.Features.Documents.Queries.GetAttestationsList;
 using BackOffice.Application.Features.Documents.Queries.GetFacturesList;
 using BackOffice.Application.Features.Documents.Queries.GetPaiementsList;
@@ -45,5 +46,25 @@ public class DocumentsController : ControllerBase
     {
         var result = await _mediator.Send(query);
         return Ok(result);
+    }
+
+    /// <summary>
+    /// Pour récupérer les fichiers
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpGet("{type}/{id:guid}/download")]
+    public async Task<IActionResult> DownloadDocument(string type, Guid id)
+    {
+        try
+        {
+            var result = await _mediator.Send(new DownloadDocumentQuery(id, type));
+            return File(result.FileContents, result.ContentType, result.FileName);
+        }
+        catch (FileNotFoundException ex)
+        {
+            return NotFound(new { error = ex.Message });
+        }
     }
 }

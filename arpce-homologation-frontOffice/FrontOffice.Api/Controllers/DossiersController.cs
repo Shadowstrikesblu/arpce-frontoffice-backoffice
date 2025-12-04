@@ -4,6 +4,7 @@ using FrontOffice.Application.Features.Demandes.Queries.GetDemandesOverview;
 using FrontOffice.Application.Features.Demandes.Queries.GetDossiersRecents;
 using FrontOffice.Application.Features.Demandes.Queries.GetPaiementEnAttente;
 using FrontOffice.Application.Features.Demandes.Queries.GetPaiementsEnAttente;
+using FrontOffice.Application.Features.Dossiers.Commands.ValidateDevis;
 using FrontOffice.Application.Features.Dossiers.Queries.GetDossierDetail;
 using FrontOffice.Application.Features.Dossiers.Queries.GetDossiersDevisNonValides;
 using FrontOffice.Application.Features.Dossiers.Queries.GetDossiersList;
@@ -174,5 +175,20 @@ public class DossiersController : ControllerBase
     {
         var result = await _mediator.Send(new GetFacturesNonValideesQuery(parameters));
         return Ok(result);
+    }
+
+    /// <summary>
+    /// Permet au client de valider le devis qui lui a été soumis.
+    /// </summary>
+    [HttpPost("{dossierId:guid}/valider-devis")]
+    [Authorize] // Nécessite d'être connecté
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)] // Si le dossier n'est pas au bon statut
+    public async Task<IActionResult> ValidateDevis(Guid dossierId)
+    {
+        var command = new ValidateDevisCommand { DossierId = dossierId };
+        var result = await _mediator.Send(command);
+        return Ok(new { ok = result });
     }
 }

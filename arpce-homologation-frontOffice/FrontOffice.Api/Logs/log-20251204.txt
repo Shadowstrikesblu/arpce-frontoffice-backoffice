@@ -1,0 +1,47 @@
+2025-12-04 00:14:20.006 +01:00 [INF] Now listening on: https://localhost:7016
+2025-12-04 00:14:20.036 +01:00 [INF] Now listening on: http://localhost:5041
+2025-12-04 00:14:20.100 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-04 00:14:20.103 +01:00 [INF] Hosting environment: Development
+2025-12-04 00:14:20.106 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2025-12-04 00:14:33.789 +01:00 [INF] HTTP GET /index.html responded 200 in 102.2788 ms
+2025-12-04 00:14:34.100 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 59.7864 ms
+2025-12-04 00:15:38.245 +01:00 [INF] HTTP GET /api/documents/dossier/4EAF24BE-9AF5-4C0B-9CBE-C2FE2B957C7B/download responded 401 in 85.6084 ms
+2025-12-04 00:16:44.769 +01:00 [INF] Executed DbCommand (87ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-12-04 00:16:45.654 +01:00 [ERR] HTTP POST /api/auth/login responded 500 in 3302.5031 ms
+FrontOffice.Application.Common.Exceptions.AccountPendingValidationException: Votre compte est en attente de validation
+   at FrontOffice.Application.Features.Authentication.Queries.Login.LoginClientQueryHandler.Handle(LoginClientQuery request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Queries\Login\LoginClientQueryHandler.cs:line 58
+   at FrontOffice.Api.Controllers.AuthenticationController.Login(LoginClientQuery query) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-12-04 00:20:22.851 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-12-04 00:20:23.306 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 490.1290 ms
+2025-12-04 00:20:47.808 +01:00 [INF] Executed DbCommand (22ms) [Parameters=[@__request_DocumentId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[Donnees], [d].[Extension], [d].[FilePath], [d].[IdDossier], [d].[Nom], [d].[Type], [d0].[Id], [d0].[DateCreation], [d0].[DateModification], [d0].[DateOuverture], [d0].[IdClient], [d0].[IdModeReglement], [d0].[IdStatut], [d0].[Libelle], [d0].[Numero], [d0].[UtilisateurCreation], [d0].[UtilisateurModification]
+FROM [documentsDossiers] AS [d]
+INNER JOIN [dossiers] AS [d0] ON [d].[IdDossier] = [d0].[Id]
+WHERE [d].[Id] = @__request_DocumentId_0 AND [d0].[IdClient] = @__userId_Value_1
+2025-12-04 00:20:47.849 +01:00 [INF] HTTP GET /api/documents/dossier/4EAF24BE-9AF5-4C0B-9CBE-C2FE2B957C7B/download responded 200 in 340.6452 ms
+2025-12-04 00:20:50.897 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__request_DocumentId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[Donnees], [d].[Extension], [d].[FilePath], [d].[IdDossier], [d].[Nom], [d].[Type], [d0].[Id], [d0].[DateCreation], [d0].[DateModification], [d0].[DateOuverture], [d0].[IdClient], [d0].[IdModeReglement], [d0].[IdStatut], [d0].[Libelle], [d0].[Numero], [d0].[UtilisateurCreation], [d0].[UtilisateurModification]
+FROM [documentsDossiers] AS [d]
+INNER JOIN [dossiers] AS [d0] ON [d].[IdDossier] = [d0].[Id]
+WHERE [d].[Id] = @__request_DocumentId_0 AND [d0].[IdClient] = @__userId_Value_1
+2025-12-04 00:20:50.909 +01:00 [INF] HTTP GET /api/documents/dossier/4EAF24BE-9AF5-4C0B-9CBE-C2FE2B957C7B/download responded 200 in 21.8929 ms

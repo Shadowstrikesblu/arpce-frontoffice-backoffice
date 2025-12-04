@@ -62,7 +62,7 @@ public class BackOfficeDbContext : DbContext, IApplicationDbContext
     public DbSet<MotifRejet> MotifsRejets { get; set; } = default!;
     public DbSet<Proposition> Propositions { get; set; } = default!;
     public DbSet<Statut> Statuts { get; set; } = default!;
-
+   
     /// <summary>
     /// Configure le modèle d'entités avec les mappings définis par les classes IEntityTypeConfiguration.
     /// Cette méthode est appelée lors de la création du modèle de base de données.

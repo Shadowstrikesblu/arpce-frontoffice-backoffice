@@ -1,4 +1,6 @@
 ﻿using BackOffice.Application.Features.Demandes.Commands.AddCategorieToDemande;
+using BackOffice.Application.Features.Demandes.Commands.UploadCertificat;
+using BackOffice.Application.Features.Demandes.Queries.DownloadDocument;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +47,41 @@ public class DemandesController : ControllerBase
         {
             // Retourne une 404 claire si la demande ou la catégorie n'existe pas.
             return NotFound(new { title = "Ressource Introuvable", detail = ex.Message, status = 404 });
+        }
+    }
+
+    /// <summary>
+    /// Pour uploader le certificat signé
+    /// </summary>
+    /// <param name="demandeId"></param>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    [HttpPost("{demandeId:guid}/certificat")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+    public async Task<IActionResult> UploadCertificat(Guid demandeId, [FromForm] UploadCertificatCommand command)
+    {
+        command.DemandeId = demandeId;
+        var result = await _mediator.Send(command);
+        return Ok(new { ok = result });
+    }
+
+    /// <summary>
+    /// Pour télé charger le document
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpGet("{type}/{id:guid}/download")]
+    public async Task<IActionResult> DownloadDocument(string type, Guid id)
+    {
+        try
+        {
+            var result = await _mediator.Send(new DownloadDocumentQuery(id, type));
+            return File(result.FileContents, result.ContentType, result.FileName);
+        }
+        catch (FileNotFoundException ex)
+        {
+            return NotFound(new { error = ex.Message });
         }
     }
 }

@@ -114,9 +114,9 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                     Libelle = dem.CategorieEquipement.Libelle,
                     TypeEquipement = dem.CategorieEquipement.TypeEquipement,
                     TypeClient = dem.CategorieEquipement.TypeClient,
-                    TarifEtude = dem.CategorieEquipement.TarifEtude,
-                    TarifHomologation = dem.CategorieEquipement.TarifHomologation,
-                    TarifControle = dem.CategorieEquipement.TarifControle,
+                    FraisEtude = dem.CategorieEquipement.FraisEtude,
+                    FraisHomologation = dem.CategorieEquipement.FraisHomologation,
+                    FraisControle = dem.CategorieEquipement.FraisControle,
                     FormuleHomologation = dem.CategorieEquipement.FormuleHomologation,
                     QuantiteReference = dem.CategorieEquipement.QuantiteReference,
                     Remarques = dem.CategorieEquipement.Remarques

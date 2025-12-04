@@ -7,7 +7,8 @@ using Microsoft.Extensions.Logging;
 namespace FrontOffice.Application.Features.Demandes.Commands.AddEquipementToDossier;
 
 /// <summary>
-/// Gère la logique de la commande pour ajouter un équipement à un dossier existant.
+/// Gère la logique de la commande pour ajouter un équipement et sa fiche technique à un dossier existant.
+/// Utilise IFileStorageProvider pour appeler la procédure stockée d'importation.
 /// </summary>
 public class AddEquipementToDossierCommandHandler : IRequestHandler<AddEquipementToDossierCommand, bool>
 {
@@ -36,16 +37,16 @@ public class AddEquipementToDossierCommandHandler : IRequestHandler<AddEquipemen
     /// </summary>
     public async Task<bool> Handle(AddEquipementToDossierCommand request, CancellationToken cancellationToken)
     {
-        // Vérification de l'authentification et les droits de l'utilisateur
         var userId = _currentUserService.UserId;
         if (!userId.HasValue)
         {
             throw new UnauthorizedAccessException("Utilisateur non authentifié.");
         }
 
-        // Vérifie que le dossier existe et qu'il appartient bien à l'utilisateur connecté
+        // Vérifie que le dossier parent existe et appartient bien au client
         var dossier = await _context.Dossiers
             .FirstOrDefaultAsync(d => d.Id == request.IdDossier && d.IdClient == userId.Value, cancellationToken);
+
         if (dossier == null)
         {
             throw new UnauthorizedAccessException("Le dossier spécifié est introuvable ou vous n'avez pas les droits nécessaires.");
@@ -58,36 +59,18 @@ public class AddEquipementToDossierCommandHandler : IRequestHandler<AddEquipemen
 
         if (ficheTechniqueFile == null || ficheTechniqueFile.Length == 0)
         {
-            throw new InvalidOperationException("La fiche technique est un fichier obligatoire.");
+            throw new InvalidOperationException("La fiche technique est obligatoire.");
         }
         if (ficheTechniqueFile.Length > maxFileSize)
         {
-            throw new InvalidOperationException($"La taille de la fiche technique ne doit pas dépasser {maxFileSize / 1024 / 1024} Mo.");
+            throw new InvalidOperationException($"La taille de la fiche technique ne doit pas dépasser 3 Mo.");
+        }
+        if (!allowedExtensions.Contains(Path.GetExtension(ficheTechniqueFile.FileName).ToLowerInvariant()))
+        {
+            throw new InvalidOperationException("Le format du fichier de la fiche technique n'est pas supporté.");
         }
 
-        var fileExtension = Path.GetExtension(ficheTechniqueFile.FileName).ToLowerInvariant();
-        if (!allowedExtensions.Contains(fileExtension))
-        {
-            throw new InvalidOperationException($"Format de fichier non supporté. Formats autorisés : {string.Join(", ", allowedExtensions)}");
-        }
-
-        // On génère un nom de fichier unique basé sur un Guid et l'extension d'origine.
-        var uniqueFileName = $"{Guid.NewGuid()}{fileExtension}";
-        string relativeFilePath;
-        try
-        {
-            using (var fileStream = ficheTechniqueFile.OpenReadStream())
-            {
-                relativeFilePath = await _fileStorageProvider.SaveFileAsync(fileStream, uniqueFileName, "fiches-techniques");
-            }
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Erreur lors du stockage de la fiche technique : {FileName}", ficheTechniqueFile.FileName);
-            throw new InvalidOperationException("Une erreur est survenue lors de l'upload de la fiche technique.");
-        }
-
-        // Création de l'entité 'Demande', qui représente l'équipement à homologuer
+        // Crée l'entité Demande (équipement) en mémoire (sans la sauvegarder encore)
         var nouvelleDemande = new Demande
         {
             Id = Guid.NewGuid(),
@@ -99,28 +82,34 @@ public class AddEquipementToDossierCommandHandler : IRequestHandler<AddEquipemen
             Description = request.Description,
             QuantiteEquipements = request.QuantiteEquipements,
             ContactNom = request.ContactNom,
-            ContactEmail = request.ContactEmail
+            ContactEmail = request.ContactEmail,
+            EstHomologable = true 
         };
         _context.Demandes.Add(nouvelleDemande);
-        // Sauvegarde intermédiaire pour s'assurer que `nouvelleDemande` a bien un ID avant de l'utiliser.
-        await _context.SaveChangesAsync(cancellationToken);
 
-        // Création de l'entité 'DocumentDemande' pour lier la fiche technique à la demande d'équipement
-        var documentDemande = new DocumentDemande
+        // Utilise le service de stockage pour appeler la procédure stockée
+        try
         {
-            Id = Guid.NewGuid(),
-            IdDemande = nouvelleDemande.Id,
-            Nom = $"FicheTechnique_{request.Equipement}_{request.Modele}",
-            Extension = fileExtension.TrimStart('.'),
-            Donnees = null
-        };
+            // On sauvegarde d'abord la demande pour avoir un ID valide sur lequel la procédure va s'appuyer
+            await _context.SaveChangesAsync(cancellationToken);
 
-        documentDemande.FilePath = relativeFilePath;
+            // Ensuite, on importe le document qui sera lié à cette demande
+            await _fileStorageProvider.ImportDocumentDemandeAsync(
+                file: ficheTechniqueFile,
+                nom: $"FicheTechnique_{request.Equipement}_{request.Modele}",
+                demandeId: nouvelleDemande.Id
+            );
+        }
+        catch (Exception ex)
+        {
+            // En cas d'échec de l'import, on annule la création de la demande pour garder la cohérence.
+            // Cette partie est un "rollback manuel".
+            _context.Demandes.Remove(nouvelleDemande);
+            await _context.SaveChangesAsync(cancellationToken);
 
-        _context.DocumentsDemandes.Add(documentDemande);
-
-        // Sauvegarde finale pour lier le document à la demande
-        await _context.SaveChangesAsync(cancellationToken);
+            _logger.LogError(ex, "Échec de l'importation de la fiche technique. La création de la demande a été annulée.");
+            throw new InvalidOperationException($"Échec de la création du document : {ex.Message}");
+        }
 
         return true;
     }

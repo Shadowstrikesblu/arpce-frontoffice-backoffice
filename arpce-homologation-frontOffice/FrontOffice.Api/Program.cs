@@ -1,5 +1,4 @@
 using FrontOffice.Api.Middleware;
-using FrontOffice.Api.Services;
 using FrontOffice.Application;
 using FrontOffice.Application.Common.Interfaces;
 using FrontOffice.Infrastructure.Persistence;
@@ -34,7 +33,8 @@ try
     // --- Configuration des Services ---
 
     builder.Services.AddHttpContextAccessor();
-    builder.Services.AddScoped<IFileStorageProvider, LocalFileStorageProvider>();
+    builder.Services.AddScoped<IFileStorageProvider, DatabaseFileStorageProvider>();
+    // Enregistrement du service pour l'utilisateur courant
     builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
     builder.Services.AddTransient<IEmailService, EmailService>();
     builder.Services.AddHttpClient<ICaptchaValidator, GoogleCaptchaValidator>();
