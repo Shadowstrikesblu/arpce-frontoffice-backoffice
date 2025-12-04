@@ -7,11 +7,11 @@ public class CategorieEquipementDto
     public string Libelle { get; set; } = string.Empty;
     public string TypeEquipement { get; set; } = string.Empty;
     public string TypeClient { get; set; } = string.Empty;
-    public decimal? TarifEtude { get; set; }
-    public decimal? TarifHomologation { get; set; }
-    public byte? TarifHomologationParLot { get; set; }
-    public int? TarifHomologationQuantiteParLot { get; set; }
-    public decimal? TarifControle { get; set; }
+    public decimal? FraisEtude { get; set; }
+    public decimal? FraisHomologation { get; set; }
+    public byte? FraisHomologationParLot { get; set; }
+    public int? FraisHomologationQuantiteParLot { get; set; }
+    public decimal? FraisControle { get; set; }
     public string? FormuleHomologation { get; set; }
     public int? QuantiteReference { get; set; }
     public string? Remarques { get; set; }

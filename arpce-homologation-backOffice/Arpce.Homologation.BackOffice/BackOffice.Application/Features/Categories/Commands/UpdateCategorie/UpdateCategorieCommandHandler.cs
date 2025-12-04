@@ -29,9 +29,9 @@ public class UpdateCategorieCommandHandler : IRequestHandler<UpdateCategorieComm
         if (request.Libelle != null) entity.Libelle = request.Libelle;
         if (request.TypeEquipement != null) entity.TypeEquipement = request.TypeEquipement;
         if (request.TypeClient != null) entity.TypeClient = request.TypeClient;
-        if (request.FraisEtude.HasValue) entity.TarifEtude = request.FraisEtude;
-        if (request.FraisHomologation.HasValue) entity.TarifHomologation = request.FraisHomologation;
-        if (request.FraisControle.HasValue) entity.TarifControle = request.FraisControle;
+        if (request.FraisEtude.HasValue) entity.FraisEtude = request.FraisEtude;
+        if (request.FraisHomologation.HasValue) entity.FraisHomologation = request.FraisHomologation;
+        if (request.FraisControle.HasValue) entity.FraisControle = request.FraisControle;
         if (request.FormuleHomologation != null) entity.FormuleHomologation = request.FormuleHomologation;
         if (request.QuantiteReference.HasValue) entity.QuantiteReference = request.QuantiteReference;
         if (request.Remarques != null) entity.Remarques = request.Remarques;

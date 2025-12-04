@@ -29,11 +29,11 @@ public class CategorieEquipementConfiguration : IEntityTypeConfiguration<Categor
         builder.Property(c => c.FormuleHomologation).HasMaxLength(255);
         builder.Property(c => c.QuantiteReference);
 
-        builder.Property(c => c.TarifEtude).HasColumnType("money"); 
-        builder.Property(c => c.TarifHomologation).HasColumnType("money");
-        builder.Property(c => c.TarifHomologationParLot).HasColumnType("tinyint"); 
-        builder.Property(c => c.TarifHomologationQuantiteParLot).HasColumnType("int"); 
-        builder.Property(c => c.TarifControle).HasColumnType("money");
+        builder.Property(c => c.FraisEtude).HasColumnType("money").HasColumnName("TarifEtude");
+        builder.Property(c => c.FraisHomologation).HasColumnType("money").HasColumnName("TarifHomologation");
+        builder.Property(c => c.FraisHomologation).HasColumnType("tinyint"); 
+        builder.Property(c => c.FraisHomologationQuantiteParLot).HasColumnType("int");
+        builder.Property(c => c.FraisControle).HasColumnType("money").HasColumnName("TarifControle");
         builder.Property(c => c.Remarques).HasMaxLength(512);
 
         // Champs d'audit hérités de AuditableEntity

@@ -1,5 +1,6 @@
 ﻿using BackOffice.Domain.Entities; 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -38,6 +39,7 @@ public interface IApplicationDbContext
     DbSet<MotifRejet> MotifsRejets { get; }
     DbSet<Proposition> Propositions { get; }
     DbSet<Statut> Statuts { get; }
+    DatabaseFacade Database { get; }
 
     /// <summary>
     /// Sauvegarde toutes les modifications en attente dans la base de données.

@@ -40,9 +40,9 @@ public class GetCategoriesListQueryHandler : IRequestHandler<GetCategoriesListQu
                 Libelle = c.Libelle,
                 TypeEquipement = c.TypeEquipement,
                 TypeClient = c.TypeClient,
-                TarifEtude = c.TarifEtude,
-                TarifHomologation = c.TarifHomologation,
-                TarifControle = c.TarifControle,
+                FraisEtude = c.FraisEtude,
+                FraisHomologation = c.FraisHomologation,
+                FraisControle = c.FraisControle,
                 FormuleHomologation = c.FormuleHomologation,
                 QuantiteReference = c.QuantiteReference,
                 Remarques = c.Remarques

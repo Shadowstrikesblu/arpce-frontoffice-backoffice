@@ -2,6 +2,7 @@
 using BackOffice.Application.Features.Dossiers.Commands.DeleteDossier;
 using BackOffice.Application.Features.Dossiers.Commands.RejectDossier;
 using BackOffice.Application.Features.Dossiers.Commands.SendMail;
+using BackOffice.Application.Features.Dossiers.Commands.UploadFacture;
 using BackOffice.Application.Features.Dossiers.Commands.ValidateInstruction;
 using BackOffice.Application.Features.Dossiers.Queries.GetDossierDetail;
 using BackOffice.Application.Features.Dossiers.Queries.GetDossiersList;
@@ -234,5 +235,20 @@ public class DossiersController : ControllerBase
         {
             return NotFound(new { title = "Erreur", detail = ex.Message });
         }
+    }
+
+    /// <summary>
+    /// Pour uploader la facture
+    /// </summary>
+    /// <param name="dossierId"></param>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    [HttpPost("{dossierId:guid}/facture")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+    public async Task<IActionResult> UploadFacture(Guid dossierId, [FromForm] UploadFactureCommand command)
+    {
+        command.DossierId = dossierId;
+        var result = await _mediator.Send(command);
+        return Ok(new { ok = result });
     }
 }
