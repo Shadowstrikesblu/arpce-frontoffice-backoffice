@@ -1,4 +1,4 @@
-﻿using BackOffice.Application.Features.Authentication.Queries.CheckToken; 
+﻿using BackOffice.Application.Common.DTOs;
 using MediatR;
 
 namespace BackOffice.Application.Features.Admin.Queries.GetAdminUserDetail;

@@ -1,4 +1,6 @@
-﻿namespace BackOffice.Application.Features.Admin.Queries.GetProfilsList
+﻿using BackOffice.Application.Common.DTOs;
+
+namespace BackOffice.Application.Features.Admin.Queries.GetProfilsList
 {
     public class ProfilFullDto
     {

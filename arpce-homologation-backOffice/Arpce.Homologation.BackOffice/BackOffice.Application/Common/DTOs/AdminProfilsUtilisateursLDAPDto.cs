@@ -1,5 +1,4 @@
-﻿
-namespace BackOffice.Application.Features.Admin.Queries.GetProfilsList
+﻿namespace BackOffice.Application.Common.DTOs
 {
     public class AdminProfilsUtilisateursLDAPDto
     {

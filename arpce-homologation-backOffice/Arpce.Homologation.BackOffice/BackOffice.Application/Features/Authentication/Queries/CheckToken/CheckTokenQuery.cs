@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using BackOffice.Application.Common.DTOs;
+using MediatR;
 
 namespace BackOffice.Application.Features.Authentication.Queries.CheckToken;
 

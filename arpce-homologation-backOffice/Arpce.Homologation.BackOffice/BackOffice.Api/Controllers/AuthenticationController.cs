@@ -1,4 +1,5 @@
-﻿using BackOffice.Application.Features.Authentication; 
+﻿using BackOffice.Application.Common.DTOs;
+using BackOffice.Application.Features.Authentication; 
 using BackOffice.Application.Features.Authentication.Commands.Register;
 using BackOffice.Application.Features.Authentication.Queries.CheckToken;
 using BackOffice.Application.Features.Authentication.Queries.Login;

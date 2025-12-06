@@ -1,4 +1,6 @@
-﻿using BackOffice.Application.Common.Interfaces;
+﻿using BackOffice.Application.Common.DTOs;
+using BackOffice.Application.Common.Interfaces;
+using BackOffice.Application.Features.Authentication.Queries.CheckToken;
 using BackOffice.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -54,7 +56,7 @@ public class GetProfilsListQueryHandler : IRequestHandler<GetProfilsListQuery, P
                 Valider = a.Valider == 1,
                 Supprimer = a.Supprimer == 1,
                 Imprimer = a.Imprimer == 1,
-                Access = a.Access != null ? new AdminAccessSimpleDto { Id = a.Access.Id, Application = a.Access.Application, Groupe = a.Access.Groupe, Libelle = a.Access.Libelle } : null
+                Access = a.Access != null ? new AdminAccessDto { Id = a.Access.Id, Application = a.Access.Application, Groupe = a.Access.Groupe, Libelle = a.Access.Libelle } : null
             }).ToList()
         }).ToList();
 
