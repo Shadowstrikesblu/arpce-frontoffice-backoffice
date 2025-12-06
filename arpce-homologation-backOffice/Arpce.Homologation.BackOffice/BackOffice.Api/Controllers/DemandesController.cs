@@ -1,4 +1,5 @@
 ﻿using BackOffice.Application.Features.Demandes.Commands.AddCategorieToDemande;
+using BackOffice.Application.Features.Demandes.Commands.UpdateEquipement;
 using BackOffice.Application.Features.Demandes.Commands.UploadCertificat;
 using BackOffice.Application.Features.Demandes.Queries.DownloadDocument;
 using MediatR;
@@ -83,5 +84,20 @@ public class DemandesController : ControllerBase
         {
             return NotFound(new { error = ex.Message });
         }
+    }
+
+    /// <summary>
+    /// La récupération de l'équipement by id
+    /// </summary>
+    /// <param name="equipementId"></param>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    [HttpPatch("{equipementId:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+    public async Task<IActionResult> UpdateEquipement(Guid equipementId, [FromBody] UpdateEquipementCommand command)
+    {
+        command.EquipementId = equipementId;
+        var result = await _mediator.Send(command);
+        return Ok(new { ok = result });
     }
 }

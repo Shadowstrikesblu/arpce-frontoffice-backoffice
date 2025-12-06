@@ -14,6 +14,7 @@ public class AdminProfils : AuditableEntity
     public string? Remarques { get; set; }
 
 
-    // Propriété de navigation pour lister les utilisateurs ayant ce profil
     public virtual ICollection<AdminUtilisateur> Utilisateurs { get; set; } = new List<AdminUtilisateur>();
+    public virtual ICollection<AdminProfilsAcces> AdminProfilsAcces { get; set; } = new List<AdminProfilsAcces>();
+    public virtual ICollection<AdminProfilsUtilisateursLDAP> AdminProfilsUtilisateursLDAP { get; set; } = new List<AdminProfilsUtilisateursLDAP>();
 }
