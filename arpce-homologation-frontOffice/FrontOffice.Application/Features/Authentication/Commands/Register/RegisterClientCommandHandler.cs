@@ -51,21 +51,21 @@ public class RegisterClientCommandHandler : IRequestHandler<RegisterClientComman
         // Validation de Sécurité (Captcha)
         // Si un token Captcha est fourni par le frontend, nous le validons auprès de Google.
         // Si la validation échoue, nous rejetons la demande immédiatement.
-        if (!string.IsNullOrWhiteSpace(request.CaptchaToken))
-        {
-            bool isCaptchaValid = await _captchaValidator.ValidateAsync(request.CaptchaToken);
-            if (!isCaptchaValid)
-            {
-                _logger.LogWarning("Tentative d'inscription avec un Captcha invalide. Email: {Email}", request.Email);
-                throw new InvalidOperationException("La validation de sécurité (Captcha) a échoué. Veuillez réessayer.");
-            }
-        }
-        else
-        {
-            // Pour l'instant, on log un avertissement si manquant, mais on peut choisir de bloquer (décommenter la ligne suivante).
-            _logger.LogWarning("Inscription demandée sans token Captcha. Email: {Email}", request.Email);
-            throw new InvalidOperationException("Le token Captcha est requis pour l'inscription.");
-        }
+        //if (!string.IsNullOrWhiteSpace(request.CaptchaToken))
+        //{
+        //    bool isCaptchaValid = await _captchaValidator.ValidateAsync(request.CaptchaToken);
+        //    if (!isCaptchaValid)
+        //    {
+        //        _logger.LogWarning("Tentative d'inscription avec un Captcha invalide. Email: {Email}", request.Email);
+        //        throw new InvalidOperationException("La validation de sécurité (Captcha) a échoué. Veuillez réessayer.");
+        //    }
+        //}
+        //else
+        //{
+        //    // Pour l'instant, on log un avertissement si manquant, mais on peut choisir de bloquer (décommenter la ligne suivante).
+        //    _logger.LogWarning("Inscription demandée sans token Captcha. Email: {Email}", request.Email);
+        //    throw new InvalidOperationException("Le token Captcha est requis pour l'inscription.");
+        //}
 
         // Vérification de l'existence du client (Doublon d'e-mail)
         var existingClient = await _context.Clients

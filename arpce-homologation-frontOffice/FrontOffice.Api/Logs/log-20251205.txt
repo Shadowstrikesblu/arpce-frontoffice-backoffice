@@ -1,0 +1,13 @@
+2025-12-05 12:32:17.060 +01:00 [INF] Now listening on: https://localhost:7016
+2025-12-05 12:32:17.145 +01:00 [INF] Now listening on: http://localhost:5041
+2025-12-05 12:32:17.352 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-05 12:32:17.356 +01:00 [INF] Hosting environment: Development
+2025-12-05 12:32:17.359 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2025-12-05 12:33:34.265 +01:00 [INF] HTTP GET /index.html responded 200 in 174.2501 ms
+2025-12-05 12:33:34.409 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 304 in 59.2449 ms
+2025-12-05 12:33:34.664 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 68.0206 ms
+2025-12-05 19:31:33.046 +01:00 [INF] Now listening on: https://localhost:7016
+2025-12-05 19:31:33.101 +01:00 [INF] Now listening on: http://localhost:5041
+2025-12-05 19:31:33.191 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-05 19:31:33.195 +01:00 [INF] Hosting environment: Development
+2025-12-05 19:31:33.203 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api

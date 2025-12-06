@@ -332,3 +332,4 @@ D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.pdb
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.genruntimeconfig.cache
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\ref\FrontOffice.Api.dll
+D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\bin\Debug\net8.0\Newtonsoft.Json.dll

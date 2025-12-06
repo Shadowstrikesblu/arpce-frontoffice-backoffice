@@ -1,4 +1,5 @@
-﻿using FrontOffice.Application.Features.Documents.Queries.DownloadDocument;
+﻿using FrontOffice.Application.Features.Documents.Queries.DownloadCertificat; 
+using FrontOffice.Application.Features.Documents.Queries.DownloadDocument;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,7 @@ public class DocumentsController : ControllerBase
     }
 
     /// <summary>
-    /// Télécharge un document (dossier ou demande) par son ID.
+    /// Télécharge un document générique (lié à un dossier ou une demande) par son ID.
     /// </summary>
     /// <param name="type">Le type de document : 'dossier' ou 'demande'.</param>
     /// <param name="id">L'ID du document.</param>
@@ -28,6 +29,27 @@ public class DocumentsController : ControllerBase
         try
         {
             var result = await _mediator.Send(new DownloadDocumentQuery(id, type));
+            // La méthode File() de ASP.NET Core construit la réponse HTTP pour le téléchargement
+            return File(result.FileContents, result.ContentType, result.FileName);
+        }
+        catch (FileNotFoundException ex)
+        {
+            return NotFound(new { error = ex.Message });
+        }
+    }
+
+    /// <summary>
+    /// Télécharge un certificat (attestation) spécifique par son ID.
+    /// </summary>
+    /// <param name="id">L'ID de l'attestation.</param>
+    [HttpGet("certificat/{id:guid}/download")]
+    [ProducesResponseType(typeof(FileContentResult), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DownloadCertificat(Guid id)
+    {
+        try
+        {
+            var result = await _mediator.Send(new DownloadCertificatQuery(id));
             return File(result.FileContents, result.ContentType, result.FileName);
         }
         catch (FileNotFoundException ex)
