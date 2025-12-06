@@ -607,6 +607,69 @@
         }
       }
     },
+    "/api/documents/certificat/{id}/download": {
+      "get": {
+        "tags": [
+          "Documents"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/dossiers/apercu": {
       "get": {
         "tags": [
@@ -1284,6 +1347,129 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/dossiers/{dossierId}/preuve-paiement": {
+      "post": {
+        "tags": [
+          "Dossiers"
+        ],
+        "parameters": [
+          {
+            "name": "dossierId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "DossierId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "PreuvePaiement": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "DossierId": {
+                  "style": "form"
+                },
+                "PreuvePaiement": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/paiements/dossier/{dossierId}/momo": {
+      "post": {
+        "tags": [
+          "Paiements"
+        ],
+        "parameters": [
+          {
+            "name": "dossierId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PayByMomoCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PayByMomoCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PayByMomoCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/paiements/momo-webhook": {
+      "post": {
+        "tags": [
+          "Paiements"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MomoWebhookPayload"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MomoWebhookPayload"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MomoWebhookPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -2035,6 +2221,27 @@
         },
         "additionalProperties": false
       },
+      "MomoWebhookPayload": {
+        "type": "object",
+        "properties": {
+          "externalId": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "financialTransactionId": {
+            "type": "string",
+            "nullable": true
+          },
+          "payer": {
+            "$ref": "#/components/schemas/Payer"
+          }
+        },
+        "additionalProperties": false
+      },
       "MotifRejetDto": {
         "type": "object",
         "properties": {
@@ -2077,6 +2284,34 @@
             "format": "date-time"
           },
           "numeroDossier": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PayByMomoCommand": {
+        "type": "object",
+        "properties": {
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "provider": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Payer": {
+        "type": "object",
+        "properties": {
+          "partyIdType": {
+            "type": "string",
+            "nullable": true
+          },
+          "partyId": {
             "type": "string",
             "nullable": true
           }
