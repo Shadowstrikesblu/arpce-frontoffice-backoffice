@@ -332,3 +332,4 @@ C:\Users\Administrator\Downloads\Backend\arpce-homologation-frontOffice\FrontOff
 C:\Users\Administrator\Downloads\Backend\arpce-homologation-frontOffice\FrontOffice.Api\obj\Release\net8.0\FrontOffice.Api.pdb
 C:\Users\Administrator\Downloads\Backend\arpce-homologation-frontOffice\FrontOffice.Api\obj\Release\net8.0\FrontOffice.Api.genruntimeconfig.cache
 C:\Users\Administrator\Downloads\Backend\arpce-homologation-frontOffice\FrontOffice.Api\obj\Release\net8.0\ref\FrontOffice.Api.dll
+C:\Users\Administrator\Downloads\Backend\arpce-homologation-frontOffice\FrontOffice.Api\bin\Release\net8.0\Newtonsoft.Json.dll

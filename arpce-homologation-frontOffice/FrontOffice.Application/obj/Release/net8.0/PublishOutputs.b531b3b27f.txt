@@ -18,5 +18,6 @@ C:\Sites\FrontOffice\publish\Microsoft.Extensions.Logging.dll
 C:\Sites\FrontOffice\publish\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Sites\FrontOffice\publish\Microsoft.Extensions.Options.dll
 C:\Sites\FrontOffice\publish\Microsoft.Extensions.Primitives.dll
+C:\Sites\FrontOffice\publish\Newtonsoft.Json.dll
 C:\Sites\FrontOffice\publish\FrontOffice.Domain.dll
 C:\Sites\FrontOffice\publish\FrontOffice.Domain.pdb

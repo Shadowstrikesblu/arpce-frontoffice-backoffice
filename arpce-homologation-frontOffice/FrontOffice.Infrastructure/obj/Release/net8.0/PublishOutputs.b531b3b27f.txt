@@ -33,6 +33,7 @@ C:\Sites\FrontOffice\publish\Microsoft.IdentityModel.Tokens.dll
 C:\Sites\FrontOffice\publish\Microsoft.SqlServer.Server.dll
 C:\Sites\FrontOffice\publish\Microsoft.Win32.SystemEvents.dll
 C:\Sites\FrontOffice\publish\MimeKit.dll
+C:\Sites\FrontOffice\publish\Newtonsoft.Json.dll
 C:\Sites\FrontOffice\publish\Serilog.dll
 C:\Sites\FrontOffice\publish\Serilog.AspNetCore.dll
 C:\Sites\FrontOffice\publish\Serilog.Extensions.Hosting.dll

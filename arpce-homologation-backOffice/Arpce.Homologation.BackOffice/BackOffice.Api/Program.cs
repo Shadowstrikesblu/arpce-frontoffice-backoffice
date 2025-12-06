@@ -29,21 +29,24 @@ try
         .Enrich.FromLogContext()
         .WriteTo.Console());
 
-    // --- Configuration des Services ---
+    // ------------------------------------------------------
+    //              SERVICES
+    // ------------------------------------------------------
+
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
-    // Politique CORS
+    // CORS
     var corsPolicyName = "AllowWebApp";
     builder.Services.AddCors(options =>
     {
-        options.AddPolicy(name: corsPolicyName,
-            policy => policy.AllowAnyOrigin()
-                            .AllowAnyHeader()
-                            .AllowAnyMethod());
+        options.AddPolicy(corsPolicyName, policy =>
+        {
+            policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+        });
     });
 
-    // Base de données SQL Server
+    // DbContext
     builder.Services.AddDbContext<BackOfficeDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
             b => b.MigrationsAssembly(typeof(BackOfficeDbContext).Assembly.FullName)));
@@ -53,7 +56,7 @@ try
 
     builder.Services.AddControllers();
 
-    // 🔥 Configuration Swagger/OpenAPI
+    // 🔥 Swagger
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen(options =>
     {
@@ -63,6 +66,9 @@ try
             Version = "v1",
             Description = "API pour la gestion interne des demandes d'homologation."
         });
+
+        // Fix Swagger duplicate schema names
+        options.CustomSchemaIds(type => type.FullName);
 
         options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
@@ -78,11 +84,7 @@ try
             {
                 new OpenApiSecurityScheme
                 {
-                    Reference = new OpenApiReference
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                    }
+                    Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
                 },
                 Array.Empty<string>()
             }
@@ -93,54 +95,46 @@ try
     builder.Services.AddMediatR(cfg =>
         cfg.RegisterServicesFromAssembly(typeof(AssemblyReference).Assembly));
 
-// Ajouter les services pour la s�curit� et l'utilisateur courant
-builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
-builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
-builder.Services.AddTransient<IEmailService, EmailService>();
-builder.Services.AddTransient<ILdapService, LdapService>();
-builder.Services.AddScoped<IAuditService, AuditService>();
-builder.Services.AddScoped<IFileStorageProvider, DatabaseFileStorageProvider>();
-
-// Configuration de l'Authentification JWT
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
-            ValidAudience = builder.Configuration["JwtSettings:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
-        };
-    });
-
-    // Services personnalisés
+    // Security services (ADD ONCE!)
     builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
     builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
     builder.Services.AddTransient<IEmailService, EmailService>();
     builder.Services.AddTransient<ILdapService, LdapService>();
+    builder.Services.AddScoped<IAuditService, AuditService>();
+    builder.Services.AddScoped<IFileStorageProvider, DatabaseFileStorageProvider>();
 
-    // Kestrel écoute sur port 4000
+    // JWT Auth
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+                ValidAudience = builder.Configuration["JwtSettings:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
+            };
+        });
+
+    // Kestrel port
     builder.WebHost.ConfigureKestrel(options =>
     {
         options.ListenAnyIP(4000);
     });
 
-    //---------------------------------------
-    //    Construction de l'application
-    //---------------------------------------
+    //-----------------------------------------------------
+    //         BUILD
+    //-----------------------------------------------------
 
     var app = builder.Build();
 
     app.UseMiddleware<ErrorHandlingMiddleware>();
     app.UseSerilogRequestLogging();
 
-    // Activer Swagger si configuré
+    // Enable Swagger
     bool enableSwagger = app.Environment.IsDevelopment() ||
                          builder.Configuration.GetValue<bool>("EnableSwaggerUI", false);
 
@@ -157,9 +151,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         Log.Information("Swagger UI activé sur BackOffice.");
     }
 
-    // Migrations automatiques au démarrage
+    // Migrations auto
     bool applyMigrations = builder.Configuration.GetValue<bool>("ApplyMigrationsOnStartup", false);
-
     if (applyMigrations)
     {
         using var scope = app.Services.CreateScope();
@@ -167,11 +160,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         {
             var context = scope.ServiceProvider.GetRequiredService<BackOfficeDbContext>();
             context.Database.Migrate();
-            Log.Information("Migrations EF Core appliquées avec succès au BackOffice.");
         }
         catch (Exception ex)
         {
-            Log.Error(ex, "Erreur critique lors de l'application des migrations.");
+            Log.Error(ex, "Erreur lors de l'application des migrations.");
         }
     }
 
