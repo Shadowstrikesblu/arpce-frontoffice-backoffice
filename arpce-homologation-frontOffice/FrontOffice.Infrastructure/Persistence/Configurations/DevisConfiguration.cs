@@ -15,9 +15,8 @@ public class DevisConfiguration : IEntityTypeConfiguration<Devis>
         builder.Property(d => d.PaiementMobileId).HasMaxLength(60);
 
         builder.HasOne(d => d.Demande)
-            .WithMany() 
-            .HasForeignKey(d => d.IdDemande) 
-            .OnDelete(DeleteBehavior.Cascade);
+     .WithMany(dem => dem.Devis) 
+     .HasForeignKey(d => d.IdDemande);
 
     }
 }
