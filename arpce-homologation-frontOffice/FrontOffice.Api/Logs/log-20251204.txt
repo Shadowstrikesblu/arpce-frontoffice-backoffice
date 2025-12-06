@@ -45,39 +45,68 @@ FROM [documentsDossiers] AS [d]
 INNER JOIN [dossiers] AS [d0] ON [d].[IdDossier] = [d0].[Id]
 WHERE [d].[Id] = @__request_DocumentId_0 AND [d0].[IdClient] = @__userId_Value_1
 2025-12-04 00:20:50.909 +01:00 [INF] HTTP GET /api/documents/dossier/4EAF24BE-9AF5-4C0B-9CBE-C2FE2B957C7B/download responded 200 in 21.8929 ms
-2025-12-04 02:36:21.650 +00:00 [FTL] L'application FrontOffice s'est arrêtée de manière inattendue sur le VPS.
-Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
-   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
-   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
-   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
-   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
-   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
-   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
-   at Program.<Main>$(String[] args) in C:\Users\Administrator\Downloads\Backend\arpce-homologation-frontOffice\FrontOffice.Api\Program.cs:line 137
-2025-12-04 02:38:22.033 +00:00 [FTL] L'application FrontOffice s'est arrêtée de manière inattendue sur le VPS.
-Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
-   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
-   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
-   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
-   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
-   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
-   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
-   at Program.<Main>$(String[] args) in C:\Users\Administrator\Downloads\Backend\arpce-homologation-frontOffice\FrontOffice.Api\Program.cs:line 137
-2025-12-04 03:11:06.835 +00:00 [FTL] L'application FrontOffice s'est arrêtée de manière inattendue sur le VPS.
-Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
-   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
-   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
-   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
-   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
-   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
-   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
-   at Program.<Main>$(String[] args) in C:\Users\Administrator\Downloads\Backend\arpce-homologation-frontOffice\FrontOffice.Api\Program.cs:line 137
-2025-12-04 03:11:22.526 +00:00 [FTL] L'application FrontOffice s'est arrêtée de manière inattendue sur le VPS.
-Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
-   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
-   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
-   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
-   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
-   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
-   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
-   at Program.<Main>$(String[] args) in C:\Users\Administrator\Downloads\Backend\arpce-homologation-frontOffice\FrontOffice.Api\Program.cs:line 137
+2025-12-04 17:15:21.843 +01:00 [INF] Now listening on: https://localhost:7016
+2025-12-04 17:15:21.883 +01:00 [INF] Now listening on: http://localhost:5041
+2025-12-04 17:15:21.953 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-04 17:15:21.956 +01:00 [INF] Hosting environment: Development
+2025-12-04 17:15:21.959 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2025-12-04 17:15:46.446 +01:00 [INF] HTTP GET /index.html responded 200 in 95.2150 ms
+2025-12-04 17:15:46.844 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 78.4232 ms
+2025-12-04 17:16:03.096 +01:00 [WRN] Inscription demandée sans token Captcha. Email: orichekaya1@gmail.com
+2025-12-04 17:16:03.264 +01:00 [ERR] HTTP POST /api/auth/register responded 500 in 2927.1221 ms
+System.InvalidOperationException: Le token Captcha est requis pour l'inscription.
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.Handle(RegisterClientCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 67
+   at FrontOffice.Api.Controllers.AuthenticationController.Register(RegisterClientCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 31
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-12-04 17:16:45.592 +01:00 [INF] Now listening on: https://localhost:7016
+2025-12-04 17:16:45.616 +01:00 [INF] Now listening on: http://localhost:5041
+2025-12-04 17:16:45.674 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-04 17:16:45.676 +01:00 [INF] Hosting environment: Development
+2025-12-04 17:16:45.679 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2025-12-04 17:16:57.132 +01:00 [INF] Executed DbCommand (165ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-12-04 17:16:57.455 +01:00 [ERR] HTTP POST /api/auth/register responded 500 in 4770.5886 ms
+System.InvalidOperationException: Un compte client avec cet e-mail existe déjà et est en cours de validation ou actif.
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.Handle(RegisterClientCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 79
+   at FrontOffice.Api.Controllers.AuthenticationController.Register(RegisterClientCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 31
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-12-04 17:17:12.428 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-12-04 17:17:13.136 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 255), @p2='?' (Size = 60), @p3='?' (Size = 1) (DbType = Byte), @p4='?' (Size = 30), @p5='?' (Size = 60), @p6='?' (Size = 60), @p7='?' (Size = 30), @p8='?' (DbType = DateTime), @p9='?' (DbType = DateTime), @p10='?' (Size = 1) (DbType = Byte), @p11='?' (Size = 120), @p12='?' (Size = 255), @p13='?' (Size = 100), @p14='?' (Size = 120), @p15='?' (Size = 60), @p16='?' (Size = 512), @p17='?' (Size = 20), @p18='?' (Size = 60), @p19='?' (Size = 60), @p20='?' (Size = 6), @p21='?' (DbType = DateTime2), @p22='?' (Size = 100)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [clients] ([Id], [Adresse], [Bp], [ChangementMotPasse], [Code], [ContactFonction], [ContactNom], [ContactTelephone], [DateCreation], [DateModification], [Desactive], [Email], [MotPasse], [Pays], [RaisonSociale], [RegistreCommerce], [Remarques], [TypeClient], [UtilisateurCreation], [UtilisateurModification], [VerificationCode], [VerificationTokenExpiry], [Ville])
+OUTPUT INSERTED.[IsVerified], INSERTED.[NiveauValidation]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22);
+2025-12-04 17:17:20.287 +01:00 [INF] HTTP POST /api/auth/register responded 200 in 7887.6071 ms

@@ -38,6 +38,8 @@ try
     builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
     builder.Services.AddTransient<IEmailService, EmailService>();
     builder.Services.AddHttpClient<ICaptchaValidator, GoogleCaptchaValidator>();
+    builder.Services.AddHttpClient<IMomoPaymentService, MomoPaymentService>();
+    
 
     // Politique CORS (Ouverte pour le Sandbox)
     var corsPolicyName = "AllowWebApp";

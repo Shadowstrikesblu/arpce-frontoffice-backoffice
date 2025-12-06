@@ -16,6 +16,7 @@ using BackOffice.Application.Features.Admin.Queries.GetAccessList;
 using BackOffice.Application.Features.Admin.Queries.GetAdminJournalList;
 using BackOffice.Application.Features.Admin.Queries.GetAdminUserDetail;
 using BackOffice.Application.Features.Admin.Queries.GetAdminUsersList;
+using BackOffice.Application.Features.Admin.Queries.GetProfilsList;
 using BackOffice.Application.Features.Admin.Queries.GetRedevableDetail;
 using BackOffice.Application.Features.Admin.Queries.GetRedevablesList;
 using BackOffice.Application.Features.Admin.Queries.GetUserTypes;
@@ -61,13 +62,12 @@ public class AdminController : ControllerBase
     /// </summary>
     /// <param name="command">Les détails du profil et la liste des accès associés.</param>
     /// <returns>Un succès si le profil est créé.</returns>
-    [HttpPost("profils")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<IActionResult> CreateProfil([FromBody] CreateProfilCommand command)
+    [HttpGet("profils")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProfilsListVm))]
+    public async Task<IActionResult> GetProfils([FromQuery] GetProfilsListQuery query)
     {
-        var result = await _mediator.Send(command);
-        return Ok(new { ok = result });
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
 
     /// <summary>

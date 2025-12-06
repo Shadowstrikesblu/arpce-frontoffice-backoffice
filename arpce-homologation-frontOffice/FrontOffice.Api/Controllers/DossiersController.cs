@@ -4,9 +4,11 @@ using FrontOffice.Application.Features.Demandes.Queries.GetDemandesOverview;
 using FrontOffice.Application.Features.Demandes.Queries.GetDossiersRecents;
 using FrontOffice.Application.Features.Demandes.Queries.GetPaiementEnAttente;
 using FrontOffice.Application.Features.Demandes.Queries.GetPaiementsEnAttente;
+using FrontOffice.Application.Features.Dossiers.Commands.UploadPreuvePaiement;
 using FrontOffice.Application.Features.Dossiers.Commands.ValidateDevis;
 using FrontOffice.Application.Features.Dossiers.Queries.GetDossierDetail;
 using FrontOffice.Application.Features.Dossiers.Queries.GetDossiersDevisNonValides;
+using FrontOffice.Application.Features.Dossiers.Queries.GetDossiersFullList;
 using FrontOffice.Application.Features.Dossiers.Queries.GetDossiersList;
 using FrontOffice.Application.Features.Dossiers.Queries.GetFacturesNonValidees;
 using MediatR;
@@ -188,6 +190,34 @@ public class DossiersController : ControllerBase
     public async Task<IActionResult> ValidateDevis(Guid dossierId)
     {
         var command = new ValidateDevisCommand { DossierId = dossierId };
+        var result = await _mediator.Send(command);
+        return Ok(new { ok = result });
+    }
+
+
+    /// <summary>
+    /// Récupère une liste de dossiers avec TOUTES leurs informations imbriquées.
+    /// ATTENTION : Peut être une requête lourde. Utiliser avec une pagination stricte.
+    /// </summary>
+    [HttpGet("full")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DossiersFullListVm))]
+    public async Task<IActionResult> GetDossiersFullList([FromQuery] GetDossiersQueryParameters parameters)
+    {
+        var result = await _mediator.Send(new GetDossiersFullListQuery(parameters));
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Pour uploader la preuve de paiement
+    /// </summary>
+    /// <param name="dossierId"></param>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    [HttpPost("{dossierId:guid}/preuve-paiement")]
+    [Authorize]
+    public async Task<IActionResult> UploadPreuvePaiement(Guid dossierId, [FromForm] UploadPreuvePaiementCommand command)
+    {
+        command.DossierId = dossierId;
         var result = await _mediator.Send(command);
         return Ok(new { ok = result });
     }

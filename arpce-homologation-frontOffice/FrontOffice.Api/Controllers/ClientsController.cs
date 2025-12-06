@@ -1,4 +1,5 @@
 ﻿using FrontOffice.Application.Common.DTOs;
+using FrontOffice.Application.Features.Clients.Commands.DeleteAccount;
 using FrontOffice.Application.Features.Clients.Commands.UpdateClientContact;
 using FrontOffice.Application.Features.Clients.Commands.UpdateClientProfile;
 using MediatR;
@@ -50,5 +51,18 @@ public class ClientsController : ControllerBase
     {
         var result = await _mediator.Send(command);
         return Ok(result);
+    }
+
+    /// <summary>
+    /// Pour la suppression du compte du client
+    /// </summary>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    [HttpPost("delete-account")]
+    [Authorize]
+    public async Task<IActionResult> DeleteAccount([FromBody] DeleteAccountCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(new { ok = result });
     }
 }

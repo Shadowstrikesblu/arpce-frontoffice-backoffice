@@ -329,6 +329,7 @@ D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\
 D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.pdb
 D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.genruntimeconfig.cache
 D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\obj\Debug\net8.0\ref\FrontOffice.Api.dll
+<<<<<<< HEAD
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.csproj.AssemblyReference.cache
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\rpswa.dswa.cache.json
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.GeneratedMSBuildEditorConfig.editorconfig
@@ -669,3 +670,5 @@ C:\Users\Administrator\Downloads\Backend\arpce-homologation-frontOffice\FrontOff
 C:\Users\Administrator\Downloads\Backend\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.pdb
 C:\Users\Administrator\Downloads\Backend\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.genruntimeconfig.cache
 C:\Users\Administrator\Downloads\Backend\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\ref\FrontOffice.Api.dll
+=======
+>>>>>>> d8b1adaa88a98ab61be30fd27a6d77e2b5271c47
