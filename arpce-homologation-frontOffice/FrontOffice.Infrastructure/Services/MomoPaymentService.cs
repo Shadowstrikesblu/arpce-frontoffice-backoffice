@@ -105,9 +105,23 @@ public class MomoPaymentService : IMomoPaymentService
         return transactionId;
     }
 
-    public Task<string> GetTransactionStatusAsync(string transactionId, string accessToken)
+    public async Task<string> GetTransactionStatusAsync(string transactionReferenceId, string accessToken)
     {
-        throw new NotImplementedException();
+        var baseUrl = _configuration["MomoApiSettings:BaseUrl"];
+        var subscriptionKey = _configuration["MomoApiSettings:SubscriptionKey"];
+
+        var requestUri = $"{baseUrl}/collection/v1_0/requesttopay/{transactionReferenceId}";
+
+        var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+        request.Headers.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
+        request.Headers.Add("X-Target-Environment", "sandbox");
+
+        var response = await _httpClient.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+
+        var jsonString = await response.Content.ReadAsStringAsync();
+        return jsonString;
     }
 
     private class MomoTokenResponse

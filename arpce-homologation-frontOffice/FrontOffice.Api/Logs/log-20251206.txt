@@ -1,4 +1,9 @@
-2025-12-06 14:17:15.639 +00:00 [FTL] L'application FrontOffice s'est arrêtée de manière inattendue sur le VPS.
+2025-12-06 14:11:41.143 +01:00 [INF] Now listening on: https://localhost:7016
+2025-12-06 14:11:41.177 +01:00 [INF] Now listening on: http://localhost:5041
+2025-12-06 14:11:41.284 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-06 14:11:41.307 +01:00 [INF] Hosting environment: Development
+2025-12-06 14:11:41.313 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2025-12-06 14:13:07.091 +01:00 [FTL] Application terminated unexpectedly
 Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
    at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
    at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
@@ -6,8 +11,8 @@ Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
    at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
    at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
    at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
-   at Program.<Main>$(String[] args) in C:\Users\Administrator\Downloads\Backend\arpce-homologation-frontOffice\FrontOffice.Api\Program.cs:line 139
-2025-12-06 14:17:50.994 +00:00 [FTL] L'application FrontOffice s'est arrêtée de manière inattendue sur le VPS.
+   at Program.<Main>$(String[] args) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Program.cs:line 131
+2025-12-06 14:13:35.587 +01:00 [FTL] Application terminated unexpectedly
 Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
    at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
    at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
@@ -15,8 +20,8 @@ Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
    at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
    at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
    at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
-   at Program.<Main>$(String[] args) in C:\Users\Administrator\Downloads\Backend\arpce-homologation-frontOffice\FrontOffice.Api\Program.cs:line 139
-2025-12-06 14:18:07.316 +00:00 [FTL] L'application FrontOffice s'est arrêtée de manière inattendue sur le VPS.
+   at Program.<Main>$(String[] args) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Program.cs:line 131
+2025-12-06 14:34:18.247 +01:00 [FTL] Application terminated unexpectedly
 Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
    at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
    at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
@@ -24,4 +29,145 @@ Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
    at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
    at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
    at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
-   at Program.<Main>$(String[] args) in C:\Users\Administrator\Downloads\Backend\arpce-homologation-frontOffice\FrontOffice.Api\Program.cs:line 139
+   at Program.<Main>$(String[] args) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Program.cs:line 131
+2025-12-06 14:34:38.360 +01:00 [FTL] Application terminated unexpectedly
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Program.cs:line 131
+2025-12-06 14:42:50.074 +01:00 [INF] Now listening on: https://localhost:7016
+2025-12-06 14:42:50.113 +01:00 [INF] Now listening on: http://localhost:5041
+2025-12-06 14:42:50.190 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-06 14:42:50.196 +01:00 [INF] Hosting environment: Development
+2025-12-06 14:42:50.198 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2025-12-06 14:42:53.324 +01:00 [INF] HTTP GET /index.html responded 200 in 127.1044 ms
+2025-12-06 14:42:53.744 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 98.1852 ms
+2025-12-06 14:50:38.607 +01:00 [INF] Executed DbCommand (182ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-12-06 14:50:39.735 +01:00 [INF] Executed DbCommand (13ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 255), @p2='?' (Size = 60), @p3='?' (Size = 1) (DbType = Byte), @p4='?' (Size = 30), @p5='?' (Size = 60), @p6='?' (Size = 60), @p7='?' (Size = 30), @p8='?' (DbType = DateTime), @p9='?' (DbType = DateTime), @p10='?' (Size = 1) (DbType = Byte), @p11='?' (Size = 120), @p12='?' (Size = 255), @p13='?' (Size = 100), @p14='?' (Size = 120), @p15='?' (Size = 60), @p16='?' (Size = 512), @p17='?' (Size = 20), @p18='?' (Size = 60), @p19='?' (Size = 60), @p20='?' (Size = 6), @p21='?' (DbType = DateTime2), @p22='?' (Size = 100)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [clients] ([Id], [Adresse], [Bp], [ChangementMotPasse], [Code], [ContactFonction], [ContactNom], [ContactTelephone], [DateCreation], [DateModification], [Desactive], [Email], [MotPasse], [Pays], [RaisonSociale], [RegistreCommerce], [Remarques], [TypeClient], [UtilisateurCreation], [UtilisateurModification], [VerificationCode], [VerificationTokenExpiry], [Ville])
+OUTPUT INSERTED.[IsVerified], INSERTED.[NiveauValidation]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22);
+2025-12-06 14:50:48.205 +01:00 [INF] HTTP POST /api/auth/register responded 200 in 14276.1597 ms
+2025-12-06 14:51:58.566 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@__get_Item_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Id] = @__get_Item_0
+2025-12-06 14:51:58.601 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@p6='?' (DbType = Guid), @p0='?' (DbType = DateTime), @p1='?' (DbType = Boolean), @p2='?' (DbType = Int32), @p3='?' (Size = 60), @p4='?' (Size = 6), @p5='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [clients] SET [DateModification] = @p0, [IsVerified] = @p1, [NiveauValidation] = @p2, [UtilisateurModification] = @p3, [VerificationCode] = @p4, [VerificationTokenExpiry] = @p5
+OUTPUT 1
+WHERE [Id] = @p6;
+2025-12-06 14:51:58.613 +01:00 [INF] HTTP POST /api/auth/confirm-account responded 200 in 252.5824 ms
+2025-12-06 14:52:11.408 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Id] = @__userId_Value_0
+2025-12-06 14:52:11.426 +01:00 [INF] HTTP POST /api/auth/connect-by-token responded 200 in 133.7042 ms
+2025-12-06 14:52:49.417 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-12-06 14:52:49.948 +01:00 [ERR] HTTP POST /api/auth/login responded 500 in 556.6155 ms
+FrontOffice.Application.Common.Exceptions.AccountPendingValidationException: Votre compte est en attente de validation
+   at FrontOffice.Application.Features.Authentication.Queries.Login.LoginClientQueryHandler.Handle(LoginClientQuery request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Queries\Login\LoginClientQueryHandler.cs:line 58
+   at FrontOffice.Api.Controllers.AuthenticationController.Login(LoginClientQuery query) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 39
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-12-06 14:56:12.613 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-12-06 14:56:12.848 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 246.3062 ms
+2025-12-06 14:56:57.351 +01:00 [INF] Executed DbCommand (33ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__statutPaiementCode_1='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[Numero] AS [NumeroDossier], (
+    SELECT COALESCE(SUM([d1].[MontantEtude] + COALESCE([d1].[MontantHomologation], 0.0) + COALESCE([d1].[MontantControle], 0.0)), 0.0)
+    FROM [devis] AS [d1]
+    WHERE [d].[Id] = [d1].[DossierId] AND ([d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL)) AS [Montant], COALESCE((
+    SELECT TOP(1) [d2].[Date]
+    FROM [devis] AS [d2]
+    WHERE [d].[Id] = [d2].[DossierId] AND ([d2].[PaiementOk] <> CAST(1 AS tinyint) OR [d2].[PaiementOk] IS NULL)
+    ORDER BY [d2].[Date] DESC), '0001-01-01') AS [DateEcheance]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] = @__statutPaiementCode_1 AND (
+    SELECT COALESCE(SUM([d0].[MontantEtude] + COALESCE([d0].[MontantHomologation], 0.0) + COALESCE([d0].[MontantControle], 0.0)), 0.0)
+    FROM [devis] AS [d0]
+    WHERE [d].[Id] = [d0].[DossierId] AND ([d0].[PaiementOk] <> CAST(1 AS tinyint) OR [d0].[PaiementOk] IS NULL)) > 0.0
+2025-12-06 14:56:57.370 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 215.1229 ms
+2025-12-06 15:02:47.242 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@__request_Libelle_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [dossiers] AS [d]
+        WHERE [d].[Libelle] = @__request_Libelle_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-12-06 15:02:47.263 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Code], [s].[Libelle]
+FROM [statuts] AS [s]
+WHERE [s].[Code] = N'NouveauDossier'
+2025-12-06 15:02:47.377 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = DateTime2), @p3='?' (DbType = Date), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?' (Size = 120), @p8='?' (Size = 30), @p9='?' (Size = 4000), @p10='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [dossiers] ([Id], [DateCreation], [DateModification], [DateOuverture], [IdClient], [IdModeReglement], [IdStatut], [Libelle], [Numero], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10);
+2025-12-06 15:02:47.461 +01:00 [INF] Executed DbCommand (53ms) [Parameters=[@fichier='?' (Size = 89), @nom='?' (Size = 36), @type='?' (Size = 1) (DbType = Byte), @IDDossier='?' (DbType = Guid), @IDDocument='?' (Direction = Output) (DbType = Guid), @errNumero='?' (Direction = Output) (DbType = Int32), @errMessage='?' (Size = 500) (Direction = Output)], CommandType='"Text"', CommandTimeout='30']
+EXEC ImporterDocumentDossier @fichier, @nom, @type, @IDDossier, @IDDocument OUT, @errNumero OUT, @errMessage OUT
+2025-12-06 15:02:47.499 +01:00 [INF] HTTP POST /api/dossiers responded 201 in 350.0192 ms
+2025-12-06 15:05:22.318 +01:00 [INF] Executed DbCommand (11ms) [Parameters=[@__request_IdDossier_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+FROM [dossiers] AS [d]
+WHERE [d].[Id] = @__request_IdDossier_0 AND [d].[IdClient] = @__userId_Value_1
+2025-12-06 15:05:22.443 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 60), @p2='?' (Size = 60), @p3='?' (DbType = DateTime2), @p4='?' (DbType = DateTime2), @p5='?' (Size = 512), @p6='?' (Size = 120), @p7='?' (Size = 120), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (DbType = Guid), @p11='?' (DbType = Guid), @p12='?' (Size = 120), @p13='?' (Size = 120), @p14='?' (Size = 12), @p15='?' (DbType = Currency), @p16='?' (DbType = Int32), @p17='?' (Precision = 5) (Scale = 2) (DbType = Decimal), @p18='?' (Size = 120), @p19='?' (Size = 4000), @p20='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [demandes] ([Id], [ContactEmail], [ContactNom], [DateCreation], [DateModification], [Description], [Equipement], [Fabricant], [IdCategorie], [IdDossier], [IdMotifRejet], [IdProposition], [Marque], [Modele], [NumeroDemande], [PrixUnitaire], [QuantiteEquipements], [Remise], [Type], [UtilisateurCreation], [UtilisateurModification])
+OUTPUT INSERTED.[EstHomologable]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20);
+2025-12-06 15:05:22.487 +01:00 [INF] Executed DbCommand (27ms) [Parameters=[@fichier='?' (Size = 89), @nom='?' (Size = 29), @IDDemande='?' (DbType = Guid), @IDDocument='?' (Direction = Output) (DbType = Guid), @errNumero='?' (Direction = Output) (DbType = Int32), @errMessage='?' (Size = 500) (Direction = Output)], CommandType='"Text"', CommandTimeout='30']
+EXEC ImporterDocumentDemande @fichier, @nom, @IDDemande, @IDDocument OUT, @errNumero OUT, @errMessage OUT
+2025-12-06 15:05:22.499 +01:00 [INF] HTTP POST /api/dossiers/7f766ca5-2e79-46da-80f7-e5b62ac9e6e0/equipements responded 200 in 255.5355 ms
+2025-12-06 16:32:31.991 +01:00 [INF] HTTP GET /api/dossiers responded 401 in 18.0535 ms
+2025-12-06 16:32:49.000 +01:00 [INF] Executed DbCommand (16ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-12-06 16:32:49.272 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 329.0756 ms
+2025-12-06 16:33:32.074 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+WHERE [d].[IdClient] = @__userId_Value_0
+2025-12-06 16:33:32.125 +01:00 [INF] Executed DbCommand (16ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [s].[Id], [s].[Code], [s].[Libelle]
+FROM (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[IdClient] = @__userId_Value_0
+    ORDER BY [d].[DateOuverture] DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [t]
+INNER JOIN [statuts] AS [s] ON [t].[IdStatut] = [s].[Id]
+ORDER BY [t].[DateOuverture] DESC
+2025-12-06 16:33:32.164 +01:00 [INF] HTTP GET /api/dossiers responded 200 in 130.7517 ms

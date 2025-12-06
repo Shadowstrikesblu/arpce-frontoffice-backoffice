@@ -17,6 +17,8 @@ public class AdminProfilsAccesConfiguration : IEntityTypeConfiguration<AdminProf
         builder.Property(apa => apa.Imprimer).HasColumnType("tinyint");
 
         builder.HasOne(apa => apa.Profil).WithMany().HasForeignKey(apa => apa.IdProfil).OnDelete(DeleteBehavior.Cascade);
-        builder.HasOne(apa => apa.Access).WithMany().HasForeignKey(apa => apa.IdAccess).OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne(apa => apa.Access)
+    .WithMany()
+    .HasForeignKey(apa => apa.IdAccess);
     }
 }

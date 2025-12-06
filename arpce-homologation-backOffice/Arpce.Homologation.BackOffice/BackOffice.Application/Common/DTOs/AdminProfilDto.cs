@@ -1,4 +1,4 @@
-﻿namespace BackOffice.Application.Features.Authentication.Queries.CheckToken;
+﻿namespace BackOffice.Application.Common.DTOs;
 
 public class AdminProfilDto
 {

@@ -324,6 +324,41 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "FrontOffice.Api.Controllers.DocumentsController",
+    "Method": "DownloadCertificat",
+    "RelativePath": "api/documents/certificat/{id}/download",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.FileContentResult",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 404
+      }
+    ]
+  },
+  {
     "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
     "Method": "GetDossiersList",
     "RelativePath": "api/dossiers",
@@ -520,6 +555,32 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
+    "Method": "UploadPreuvePaiement",
+    "RelativePath": "api/dossiers/{dossierId}/preuve-paiement",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dossierId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "DossierId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "PreuvePaiement",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
@@ -752,6 +813,43 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "PaiementsController",
+    "Method": "PayByMomo",
+    "RelativePath": "api/paiements/dossier/{dossierId}/momo",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dossierId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "command",
+        "Type": "FrontOffice.Application.Features.Paiements.Commands.PayByMomo.PayByMomoCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PaiementsController",
+    "Method": "MomoWebhook",
+    "RelativePath": "api/paiements/momo-webhook",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "payload",
+        "Type": "FrontOffice.Application.Features.Paiements.Commands.HandleMomoWebhook.MomoWebhookPayload",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "PublicController",

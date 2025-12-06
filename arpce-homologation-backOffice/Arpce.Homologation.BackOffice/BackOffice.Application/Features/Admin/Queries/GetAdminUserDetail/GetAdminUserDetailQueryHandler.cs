@@ -1,11 +1,13 @@
-﻿using BackOffice.Application.Common.Interfaces;
-using BackOffice.Application.Features.Authentication.Queries.CheckToken; 
+﻿using BackOffice.Application.Common.DTOs;
+using BackOffice.Application.Common.Interfaces;
+using BackOffice.Application.Features.Authentication.Queries.CheckToken;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+
 
 namespace BackOffice.Application.Features.Admin.Queries.GetAdminUserDetail;
 

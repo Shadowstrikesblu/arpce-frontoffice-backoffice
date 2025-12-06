@@ -1,4 +1,5 @@
-﻿using BackOffice.Application.Features.Authentication.Queries.CheckToken; 
+﻿using BackOffice.Application.Common.DTOs;
+using BackOffice.Application.Features.Authentication.Queries.CheckToken;
 using MediatR;
 
 namespace BackOffice.Application.Features.Admin.Queries.GetAccessList;

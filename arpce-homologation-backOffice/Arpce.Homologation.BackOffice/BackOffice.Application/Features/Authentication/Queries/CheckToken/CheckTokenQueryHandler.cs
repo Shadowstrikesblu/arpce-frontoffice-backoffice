@@ -1,4 +1,5 @@
-﻿using BackOffice.Application.Common.Interfaces;
+﻿using BackOffice.Application.Common.DTOs;
+using BackOffice.Application.Common.Interfaces;
 using BackOffice.Application.Features.Admin.Queries.GetAdminUsersList; 
 using MediatR;
 using Microsoft.EntityFrameworkCore;

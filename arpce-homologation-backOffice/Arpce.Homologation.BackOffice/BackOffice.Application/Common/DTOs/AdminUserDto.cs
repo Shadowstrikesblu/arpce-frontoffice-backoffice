@@ -3,7 +3,7 @@
 using BackOffice.Application.Features.Admin.Queries.GetAdminUsersList;
 using System;
 
-namespace BackOffice.Application.Features.Authentication.Queries.CheckToken;
+namespace BackOffice.Application.Common.DTOs;
 
 public class AdminUserDto
 {

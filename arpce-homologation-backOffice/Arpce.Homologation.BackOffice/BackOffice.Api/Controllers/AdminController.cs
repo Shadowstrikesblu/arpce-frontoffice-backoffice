@@ -1,4 +1,7 @@
-﻿using BackOffice.Application.Features.Admin.Commands.AssignProfilToAdmin;
+﻿// Fichier : BackOffice.Api/Controllers/AdminController.cs
+
+// --- Usings pour les Commandes et Requêtes MediatR ---
+using BackOffice.Application.Features.Admin.Commands.AssignProfilToAdmin;
 using BackOffice.Application.Features.Admin.Commands.AssignProfilToLdapUser;
 using BackOffice.Application.Features.Admin.Commands.ChangeAdminPassword;
 using BackOffice.Application.Features.Admin.Commands.CreateAccess;
@@ -13,27 +16,29 @@ using BackOffice.Application.Features.Admin.Commands.UpdateAdmin;
 using BackOffice.Application.Features.Admin.Commands.UpdateRedevable;
 using BackOffice.Application.Features.Admin.Commands.ValidateRedevable;
 using BackOffice.Application.Features.Admin.Queries.GetAccessList;
-using BackOffice.Application.Features.Admin.Queries.GetAdminJournalList;
 using BackOffice.Application.Features.Admin.Queries.GetAdminUserDetail;
 using BackOffice.Application.Features.Admin.Queries.GetAdminUsersList;
 using BackOffice.Application.Features.Admin.Queries.GetProfilsList;
 using BackOffice.Application.Features.Admin.Queries.GetRedevableDetail;
+using BackOffice.Application.Features.Admin.Queries.GetRedevablesAValider;
 using BackOffice.Application.Features.Admin.Queries.GetRedevablesList;
 using BackOffice.Application.Features.Admin.Queries.GetUserTypes;
-using BackOffice.Application.Features.Authentication.Queries.CheckToken;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BackOffice.Api.Controllers;
 
 /// <summary>
-/// Contrôleur dédié à la gestion de l'administration du système (Accès, Profils, Utilisateurs).
-/// Accessible uniquement aux administrateurs (gestion des droits à affiner plus tard).
+/// Contrôleur centralisé pour toutes les opérations d'administration du système.
+/// Gère les utilisateurs (admins, redevables), les profils et les droits d'accès.
 /// </summary>
 [ApiController]
 [Route("api/admin")]
-[Authorize] 
+[Authorize] // Sécurisé par défaut, nécessite un token d'agent valide
 public class AdminController : ControllerBase
 {
     private readonly ISender _mediator;
@@ -43,27 +48,95 @@ public class AdminController : ControllerBase
         _mediator = mediator;
     }
 
+    // --- GESTION DES UTILISATEURS ADMINS ---
+
     /// <summary>
-    /// Crée un nouvel accès (permission) dans le système.
+    /// Crée un nouvel utilisateur administrateur (agent).
     /// </summary>
-    /// <param name="command">Les détails de l'accès à créer.</param>
-    /// <returns>Un succès si l'accès est créé.</returns>
-    [HttpPost("acces")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<IActionResult> CreateAccess([FromBody] CreateAccessCommand command)
+    [HttpPost("utilisateurs")]
+    public async Task<IActionResult> CreateAdmin([FromBody] CreateAdminCommand command)
     {
         var result = await _mediator.Send(command);
         return Ok(new { ok = result });
     }
 
     /// <summary>
-    /// Crée un nouveau profil (rôle) et lui associe une liste de droits d'accès.
+    /// Récupère la liste paginée des utilisateurs administrateurs.
     /// </summary>
-    /// <param name="command">Les détails du profil et la liste des accès associés.</param>
-    /// <returns>Un succès si le profil est créé.</returns>
+    [HttpGet("utilisateurs")]
+    public async Task<IActionResult> GetAdminUsers([FromQuery] GetAdminUsersListQuery query)
+    {
+        var result = await _mediator.Send(query);
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Récupère les détails complets d'un utilisateur administrateur.
+    /// </summary>
+    [HttpGet("utilisateurs/{utilisateurId:guid}")]
+    public async Task<IActionResult> GetAdminUserDetail(Guid utilisateurId)
+    {
+        var result = await _mediator.Send(new GetAdminUserDetailQuery(utilisateurId));
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Modifie les informations d'un utilisateur administrateur.
+    /// </summary>
+    [HttpPatch("utilisateurs/{id:guid}")]
+    public async Task<IActionResult> UpdateAdmin(Guid id, [FromBody] UpdateAdminCommand command)
+    {
+        command.Id = id;
+        var result = await _mediator.Send(command);
+        return Ok(new { ok = result });
+    }
+
+    /// <summary>
+    /// Supprime un utilisateur administrateur.
+    /// </summary>
+    [HttpDelete("utilisateurs/{id:guid}")]
+    public async Task<IActionResult> DeleteAdmin(Guid id)
+    {
+        var result = await _mediator.Send(new DeleteAdminCommand(id));
+        return Ok(new { ok = result });
+    }
+
+    /// <summary>
+    /// Modifie le mot de passe d'un utilisateur administrateur.
+    /// </summary>
+    [HttpPatch("utilisateurs/changement-mot-de-passe")]
+    public async Task<IActionResult> ChangeAdminPassword([FromBody] ChangeAdminPasswordCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(new { ok = result });
+    }
+
+    /// <summary>
+    /// Récupère la liste des types d'utilisateurs (ex: Administrateur).
+    /// </summary>
+    [HttpGet("types-utilisateur")]
+    public async Task<IActionResult> GetUserTypes()
+    {
+        var result = await _mediator.Send(new GetAdminUserTypesQuery());
+        return Ok(result);
+    }
+
+    // --- GESTION DES PROFILS ET ACCÈS ---
+
+    /// <summary>
+    /// Crée un nouveau profil (rôle) avec ses droits d'accès.
+    /// </summary>
+    [HttpPost("profils")]
+    public async Task<IActionResult> CreateProfil([FromBody] CreateProfilCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(new { ok = result });
+    }
+
+    /// <summary>
+    /// Récupère la liste paginée des profils avec leurs détails.
+    /// </summary>
     [HttpGet("profils")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProfilsListVm))]
     public async Task<IActionResult> GetProfils([FromQuery] GetProfilsListQuery query)
     {
         var result = await _mediator.Send(query);
@@ -71,104 +144,71 @@ public class AdminController : ControllerBase
     }
 
     /// <summary>
-    /// Crée un nouvel utilisateur administrateur (agent) dans le Back Office.
+    /// Supprime un profil.
     /// </summary>
-    /// <param name="command">Les informations du nouvel administrateur.</param>
-    /// <returns>Un succès si l'utilisateur est créé.</returns>
-    [HttpPost("utilisateurs")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<IActionResult> CreateAdmin([FromBody] CreateAdminCommand command)
+    [HttpDelete("profils/{id:guid}")]
+    public async Task<IActionResult> DeleteProfil(Guid id)
+    {
+        var result = await _mediator.Send(new DeleteProfilCommand(id));
+        return Ok(new { ok = result });
+    }
+
+    /// <summary>
+    /// Attribue un profil à un utilisateur administrateur.
+    /// </summary>
+    [HttpPatch("utilisateurs/attribution-profil")]
+    public async Task<IActionResult> AssignProfilToAdmin([FromBody] AssignProfilToAdminCommand command)
     {
         var result = await _mediator.Send(command);
         return Ok(new { ok = result });
     }
 
-
     /// <summary>
-    /// Attribue un profil spécifique à un utilisateur administrateur.
+    /// Attribue un profil à un utilisateur LDAP.
     /// </summary>
-    /// <param name="command">Contient l'ID de l'utilisateur et l'ID du profil.</param>
-    /// <returns>Un succès si l'attribution est effectuée.</returns>
-    [HttpPatch("utilisateurs/attribution-profil")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> AssignProfilToAdmin([FromBody] AssignProfilToAdminCommand command)
+    [HttpPatch("utilisateurs/ldap/profil")]
+    public async Task<IActionResult> AssignProfilToLdapUser([FromBody] AssignProfilToLdapUserCommand command)
     {
-        try
-        {
-            var result = await _mediator.Send(command);
-            return Ok(new { ok = result });
-        }
-        catch (Exception ex) when (ex.Message.Contains("introuvable"))
-        {
-            return NotFound(new { title = "Ressource Introuvable", detail = ex.Message, status = 404 });
-        }
-
-
+        var result = await _mediator.Send(command);
+        return Ok(new { ok = result });
     }
 
     /// <summary>
-    /// Modifie le mot de passe d'un utilisateur administrateur.
+    /// Crée un nouvel accès (permission) dans le système.
     /// </summary>
-    /// <param name="command">Contient l'ID de l'utilisateur et le nouveau mot de passe.</param>
-    /// <returns>Un succès si le changement est effectué.</returns>
-    [HttpPatch("utilisateurs/changement-mot-de-passe")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> ChangeAdminPassword([FromBody] ChangeAdminPasswordCommand command)
+    [HttpPost("acces")]
+    public async Task<IActionResult> CreateAccess([FromBody] CreateAccessCommand command)
     {
-        try
-        {
-            var result = await _mediator.Send(command);
-            return Ok(new { ok = result });
-        }
-        catch (Exception ex) when (ex.Message.Contains("introuvable"))
-        {
-            return NotFound(new { title = "Ressource Introuvable", detail = ex.Message, status = 404 });
-        }
+        var result = await _mediator.Send(command);
+        return Ok(new { ok = result });
     }
 
     /// <summary>
-    /// Récupère la liste des types d'utilisateurs (ex: Administrateur, Utilisateur Standard).
+    /// Récupère la liste de tous les accès disponibles.
     /// </summary>
-    [HttpGet("types-utilisateur")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<AdminUserTypeDto>))]
-    public async Task<IActionResult> GetUserTypes()
+    [HttpGet("acces")]
+    public async Task<IActionResult> GetAccessList()
     {
-        var result = await _mediator.Send(new GetAdminUserTypesQuery());
+        var result = await _mediator.Send(new GetAccessListQuery());
         return Ok(result);
     }
 
     /// <summary>
-    /// 
+    /// Supprime un accès.
     /// </summary>
-    /// <param name="command"></param>
-    /// <returns></returns>
-    [HttpPatch("utilisateurs/ldap/profil")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> AssignProfilToLdapUser([FromBody] AssignProfilToLdapUserCommand command)
+    [HttpDelete("acces/{id:guid}")]
+    public async Task<IActionResult> DeleteAcces(Guid id)
     {
-        try
-        {
-            var result = await _mediator.Send(command);
-            return Ok(new { ok = result });
-        }
-        catch (Exception ex) when (ex.Message.Contains("introuvable"))
-        {
-            return NotFound(new { title = "Ressource Introuvable", detail = ex.Message, status = 404 });
-        }
+        var result = await _mediator.Send(new DeleteAccesCommand(id));
+        return Ok(new { ok = result });
     }
 
+    // --- GESTION DES REDEVABLES ---
+
     /// <summary>
-    /// Pour la création du compte client(redvable)
+    /// Crée un compte redevable (client) depuis le Back Office.
     /// </summary>
-    /// <param name="command"></param>
-    /// <returns></returns>
-    [HttpPost("create-redevables")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [HttpPost("redevables")]
     public async Task<IActionResult> CreateRedevable([FromBody] CreateRedevableCommand command)
     {
         var result = await _mediator.Send(command);
@@ -176,10 +216,9 @@ public class AdminController : ControllerBase
     }
 
     /// <summary>
-    /// Récupère la liste des redevables avec filtres et pagination.
+    /// Récupère la liste paginée des redevables.
     /// </summary>
     [HttpGet("redevables")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RedevableListVm))]
     public async Task<IActionResult> GetRedevables([FromQuery] GetRedevablesListQuery query)
     {
         var result = await _mediator.Send(query);
@@ -190,100 +229,16 @@ public class AdminController : ControllerBase
     /// Récupère les détails complets d'un redevable.
     /// </summary>
     [HttpGet("redevables/{utilisateurId:guid}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RedevableDetailDto))]
     public async Task<IActionResult> GetRedevableDetail(Guid utilisateurId)
     {
-        try
-        {
-            var result = await _mediator.Send(new GetRedevableDetailQuery(utilisateurId));
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            return NotFound(new { title = "Non trouvé", detail = ex.Message });
-        }
-    }
-
-    /// <summary>
-    /// Récupère la liste des utilisateurs
-    /// </summary>
-    /// <param name="query"></param>
-    /// <returns></returns>
-    [HttpGet("utilisateurs")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AdminUserListVm))]
-    public async Task<IActionResult> GetAdminUsers([FromQuery] GetAdminUsersListQuery query)
-    {
-        var result = await _mediator.Send(query);
+        var result = await _mediator.Send(new GetRedevableDetailQuery(utilisateurId));
         return Ok(result);
     }
 
     /// <summary>
-    /// Récupère la liste des détailles 
+    /// Modifie les informations d'un redevable.
     /// </summary>
-    /// <param name="utilisateurId"></param>
-    /// <returns></returns>
-    [HttpGet("utilisateurs/{utilisateurId:guid}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AdminUserDto))]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAdminUserDetail(Guid utilisateurId)
-    {
-        try
-        {
-            var result = await _mediator.Send(new GetAdminUserDetailQuery(utilisateurId));
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            return NotFound(new { title = "Non trouvé", detail = ex.Message });
-        }
-    }
-
-    /// <summary>
-    /// Récupère la liste des accès
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet("acces")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<AdminAccessDto>))]
-    public async Task<IActionResult> GetAccessList()
-    {
-        var result = await _mediator.Send(new GetAccessListQuery());
-        return Ok(result);
-    }
-
-    /// <summary>
-    /// Pour valider le compte du redevable
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    [HttpPost("redevables/{id:guid}/valider")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
-    public async Task<IActionResult> ValidateRedevable(Guid id)
-    {
-        await _mediator.Send(new ValidateRedevableCommand { RedevableId = id });
-        return Ok(new { ok = true });
-    }
-
-    /// <summary>
-    /// Pour la récupération de la liste de journal
-    /// </summary>
-    /// <param name="query"></param>
-    /// <returns></returns>
-    [HttpGet("journal")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(JournalListVm))]
-    public async Task<IActionResult> GetJournalList([FromQuery] GetAdminJournalListQuery query)
-    {
-        var result = await _mediator.Send(query);
-        return Ok(result);
-    }
-
-    /// <summary>
-    /// Mis à jour du redvable
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="command"></param>
-    /// <returns></returns>
     [HttpPatch("redevables/{id:guid}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
     public async Task<IActionResult> UpdateRedevable(Guid id, [FromBody] UpdateRedevableCommand command)
     {
         command.Id = id;
@@ -292,12 +247,9 @@ public class AdminController : ControllerBase
     }
 
     /// <summary>
-    /// Suppression du redvable
+    /// Supprime (désactive) un compte redevable.
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
     [HttpDelete("redevables/{id:guid}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
     public async Task<IActionResult> DeleteRedevable(Guid id)
     {
         var result = await _mediator.Send(new DeleteRedevableCommand(id));
@@ -305,62 +257,22 @@ public class AdminController : ControllerBase
     }
 
     /// <summary>
-    /// Mis à jour de l'utilisateur ARPCE
+    /// Valide un compte redevable qui a déjà vérifié son email (Niveau 1 -> 2).
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="command"></param>
-    /// <returns></returns>
-    [HttpPatch("utilisateurs/{id:guid}")]
-    public async Task<IActionResult> UpdateAdmin(Guid id, [FromBody] UpdateAdminCommand command)
+    [HttpPost("redevables/{id:guid}/valider")]
+    public async Task<IActionResult> ValidateRedevable(Guid id)
     {
-        command.Id = id;
-        var result = await _mediator.Send(command);
+        var result = await _mediator.Send(new ValidateRedevableCommand { RedevableId = id });
         return Ok(new { ok = result });
     }
 
     /// <summary>
-    /// Suppression de l'utilisateur ARPCE
+    /// Récupère la liste des redevables en attente de validation administrative (Niveau 1).
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    [HttpDelete("utilisateurs/{id:guid}")]
-    public async Task<IActionResult> DeleteAdmin(Guid id)
+    [HttpGet("redevables/a-valider")]
+    public async Task<IActionResult> GetRedevablesAValider([FromQuery] GetRedevablesAValiderQuery query)
     {
-        var result = await _mediator.Send(new DeleteAdminCommand(id));
-        return Ok(new { ok = result });
-    }
-
-    /// <summary>
-    /// Supression du profil
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    [HttpDelete("profils/{id:guid}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteProfil(Guid id)
-    {
-        try
-        {
-            var result = await _mediator.Send(new DeleteProfilCommand(id));
-            return Ok(new { ok = result });
-        }
-        catch (Exception ex) when (ex.Message.Contains("introuvable"))
-        {
-            return NotFound(new { title = "Non trouvé", detail = ex.Message });
-        }
-    }
-
-    /// <summary>
-    /// Suppression des accès utilisateurs
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    [HttpDelete("acces/{id:guid}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
-    public async Task<IActionResult> DeleteAcces(Guid id)
-    {
-        var result = await _mediator.Send(new DeleteAccesCommand(id));
-        return Ok(new { ok = result });
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
 }
