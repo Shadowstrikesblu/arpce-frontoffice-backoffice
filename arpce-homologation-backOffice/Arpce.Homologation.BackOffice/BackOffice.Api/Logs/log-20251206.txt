@@ -874,3 +874,8 @@ VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
 2025-12-06 16:42:09.967 +01:00 [INF] Application started. Press Ctrl+C to shut down.
 2025-12-06 16:42:09.970 +01:00 [INF] Hosting environment: Development
 2025-12-06 16:42:09.973 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api
+2025-12-06 17:33:45.915 +01:00 [INF] Now listening on: https://localhost:7238
+2025-12-06 17:33:45.971 +01:00 [INF] Now listening on: http://localhost:5126
+2025-12-06 17:33:46.099 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-06 17:33:46.102 +01:00 [INF] Hosting environment: Development
+2025-12-06 17:33:46.118 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api
