@@ -16,6 +16,7 @@ using BackOffice.Application.Features.Admin.Commands.UpdateAdmin;
 using BackOffice.Application.Features.Admin.Commands.UpdateRedevable;
 using BackOffice.Application.Features.Admin.Commands.ValidateRedevable;
 using BackOffice.Application.Features.Admin.Queries.GetAccessList;
+using BackOffice.Application.Features.Admin.Queries.GetAdminJournalList;
 using BackOffice.Application.Features.Admin.Queries.GetAdminUserDetail;
 using BackOffice.Application.Features.Admin.Queries.GetAdminUsersList;
 using BackOffice.Application.Features.Admin.Queries.GetProfilsList;
@@ -273,6 +274,17 @@ public class AdminController : ControllerBase
     public async Task<IActionResult> GetRedevablesAValider([FromQuery] GetRedevablesAValiderQuery query)
     {
         var result = await _mediator.Send(query);
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Pour l'audit
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("journal")]
+    public async Task<IActionResult> GetAdminJournalList()
+    {
+        var result = await _mediator.Send(new GetAdminJournalListQuery());
         return Ok(result);
     }
 }
