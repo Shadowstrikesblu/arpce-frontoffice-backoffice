@@ -500,7 +500,6 @@ D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.pdb
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.genruntimeconfig.cache
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\ref\FrontOffice.Api.dll
-<<<<<<< HEAD
 >>>>>>> 112184c556a0864d234fd79f239cbcb480b632fc
 C:\Users\Administrator\Downloads\Backend\arpce-homologation-frontOffice\FrontOffice.Api\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\Administrator\Downloads\Backend\arpce-homologation-frontOffice\FrontOffice.Api\bin\Debug\net8.0\appsettings.json
@@ -672,6 +671,5 @@ C:\Users\Administrator\Downloads\Backend\arpce-homologation-frontOffice\FrontOff
 C:\Users\Administrator\Downloads\Backend\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\ref\FrontOffice.Api.dll
 >>>>>>> d8b1adaa88a98ab61be30fd27a6d77e2b5271c47
 C:\Users\Administrator\Downloads\Backend\arpce-homologation-frontOffice\FrontOffice.Api\bin\Debug\net8.0\Newtonsoft.Json.dll
-=======
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\bin\Debug\net8.0\Newtonsoft.Json.dll
 >>>>>>> 1a85d91ce2689cd6397687313df3f1bb615cb6f5
