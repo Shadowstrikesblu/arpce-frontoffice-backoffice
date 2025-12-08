@@ -3,3 +3,27 @@
 2025-12-08 01:15:53.051 +01:00 [INF] Application started. Press Ctrl+C to shut down.
 2025-12-08 01:15:53.054 +01:00 [INF] Hosting environment: Development
 2025-12-08 01:15:53.058 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api
+2025-12-08 01:18:13.653 +01:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2025-12-08 01:18:19.493 +01:00 [INF] Executed DbCommand (181ms) [Parameters=[@__request_Compte_0='?' (Size = 100)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AdminProfilsId], [a].[ChangementMotPasse], [a].[Compte], [a].[DateCreation], [a].[DateModification], [a].[DerniereConnexion], [a].[Desactive], [a].[IdProfil], [a].[IdUtilisateurType], [a].[MotPasse], [a].[Nom], [a].[Prenoms], [a].[Remarques], [a].[UtilisateurCreation], [a].[UtilisateurModification]
+FROM [AdminUtilisateurs] AS [a]
+WHERE [a].[Compte] = @__request_Compte_0
+2025-12-08 01:18:20.378 +01:00 [INF] Executed DbCommand (11ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [AdminUtilisateurs] SET [DerniereConnexion] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+2025-12-08 01:18:54.370 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [adminJournal] AS [a]
+2025-12-08 01:18:54.496 +01:00 [INF] Executed DbCommand (13ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a1].[Id], [a1].[AdresseIP], [a1].[Application], [a1].[DateEvenement], [a1].[DossierId], [a1].[IdDossier], [a1].[IdEvenementType], [a1].[Libelle], [a1].[Page], [a1].[Utilisateur], [a0].[Id], [a0].[Code], [a0].[Libelle]
+FROM (
+    SELECT [a].[Id], [a].[AdresseIP], [a].[Application], [a].[DateEvenement], [a].[DossierId], [a].[IdDossier], [a].[IdEvenementType], [a].[Libelle], [a].[Page], [a].[Utilisateur]
+    FROM [adminJournal] AS [a]
+    ORDER BY [a].[DateEvenement] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [a1]
+INNER JOIN [adminEvenementsTypes] AS [a0] ON [a1].[IdEvenementType] = [a0].[Id]
+ORDER BY [a1].[DateEvenement] DESC
