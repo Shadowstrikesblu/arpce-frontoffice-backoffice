@@ -1,0 +1,434 @@
+2025-12-07 00:06:32.311 +01:00 [INF] HTTP POST /api/paiements/dossier/8b16fa6e-06da-4843-bc3a-1dc181ad26f2/momo responded 401 in 15.8880 ms
+2025-12-07 00:06:45.470 +01:00 [INF] Executed DbCommand (10ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-12-07 00:06:46.499 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 1208.5707 ms
+2025-12-07 00:07:22.757 +01:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_DossierId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [t0].[Id], [t0].[Date], [t0].[DateCreation], [t0].[DateModification], [t0].[DossierId], [t0].[IdDemande], [t0].[MontantControle], [t0].[MontantEtude], [t0].[MontantHomologation], [t0].[PaiementMobileId], [t0].[PaiementOk], [t0].[UtilisateurCreation], [t0].[UtilisateurModification]
+FROM (
+    SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[Id] = @__request_DossierId_0 AND [d].[IdClient] = @__userId_Value_1
+) AS [t]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[Date], [t1].[DateCreation], [t1].[DateModification], [t1].[DossierId], [t1].[IdDemande], [t1].[MontantControle], [t1].[MontantEtude], [t1].[MontantHomologation], [t1].[PaiementMobileId], [t1].[PaiementOk], [t1].[UtilisateurCreation], [t1].[UtilisateurModification], [t1].[IdDossier]
+    FROM (
+        SELECT [d1].[Id], [d1].[Date], [d1].[DateCreation], [d1].[DateModification], [d1].[DossierId], [d1].[IdDemande], [d1].[MontantControle], [d1].[MontantEtude], [d1].[MontantHomologation], [d1].[PaiementMobileId], [d1].[PaiementOk], [d1].[UtilisateurCreation], [d1].[UtilisateurModification], [d0].[IdDossier], ROW_NUMBER() OVER(PARTITION BY [d0].[IdDossier] ORDER BY [d0].[Id], [d1].[Id]) AS [row]
+        FROM [demandes] AS [d0]
+        INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+        WHERE [d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL
+    ) AS [t1]
+    WHERE [t1].[row] <= 1
+) AS [t0] ON [t].[Id] = [t0].[IdDossier]
+2025-12-07 00:07:22.871 +01:00 [INF] Start processing HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/token/
+2025-12-07 00:07:22.879 +01:00 [INF] Sending HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/token/
+2025-12-07 00:07:32.439 +01:00 [INF] Received HTTP response headers after 9534.7134ms - 401
+2025-12-07 00:07:32.548 +01:00 [INF] End processing HTTP request after 9682.7322ms - 401
+2025-12-07 00:07:32.712 +01:00 [ERR] HTTP POST /api/paiements/dossier/8b16fa6e-06da-4843-bc3a-1dc181ad26f2/momo responded 500 in 10123.3478 ms
+System.Net.Http.HttpRequestException: Response status code does not indicate success: 401 (Access Denied).
+   at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()
+   at FrontOffice.Infrastructure.Services.MomoPaymentService.GetAccessTokenAsync() in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Infrastructure\Services\MomoPaymentService.cs:line 44
+   at FrontOffice.Application.Features.Paiements.Commands.PayByMomo.PayByMomoCommandHandler.Handle(PayByMomoCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Paiements\Commands\PayByMomo\PayByMomoCommandHandler.cs:line 55
+   at PaiementsController.PayByMomo(Guid dossierId, PayByMomoCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\PaiementsController.cs:line 22
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-12-07 00:07:32.865 +01:00 [ERR] Une exception non gérée a été interceptée par le middleware.
+System.Net.Http.HttpRequestException: Response status code does not indicate success: 401 (Access Denied).
+   at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()
+   at FrontOffice.Infrastructure.Services.MomoPaymentService.GetAccessTokenAsync() in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Infrastructure\Services\MomoPaymentService.cs:line 44
+   at FrontOffice.Application.Features.Paiements.Commands.PayByMomo.PayByMomoCommandHandler.Handle(PayByMomoCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Paiements\Commands\PayByMomo\PayByMomoCommandHandler.cs:line 55
+   at PaiementsController.PayByMomo(Guid dossierId, PayByMomoCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\PaiementsController.cs:line 22
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at FrontOffice.Api.Middleware.ErrorHandlingMiddleware.Invoke(HttpContext context) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Middleware\ErrorHandlingMiddleware.cs:line 34
+2025-12-07 00:08:28.680 +01:00 [INF] Executed DbCommand (9ms) [Parameters=[@__request_DossierId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [t0].[Id], [t0].[Date], [t0].[DateCreation], [t0].[DateModification], [t0].[DossierId], [t0].[IdDemande], [t0].[MontantControle], [t0].[MontantEtude], [t0].[MontantHomologation], [t0].[PaiementMobileId], [t0].[PaiementOk], [t0].[UtilisateurCreation], [t0].[UtilisateurModification]
+FROM (
+    SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[Id] = @__request_DossierId_0 AND [d].[IdClient] = @__userId_Value_1
+) AS [t]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[Date], [t1].[DateCreation], [t1].[DateModification], [t1].[DossierId], [t1].[IdDemande], [t1].[MontantControle], [t1].[MontantEtude], [t1].[MontantHomologation], [t1].[PaiementMobileId], [t1].[PaiementOk], [t1].[UtilisateurCreation], [t1].[UtilisateurModification], [t1].[IdDossier]
+    FROM (
+        SELECT [d1].[Id], [d1].[Date], [d1].[DateCreation], [d1].[DateModification], [d1].[DossierId], [d1].[IdDemande], [d1].[MontantControle], [d1].[MontantEtude], [d1].[MontantHomologation], [d1].[PaiementMobileId], [d1].[PaiementOk], [d1].[UtilisateurCreation], [d1].[UtilisateurModification], [d0].[IdDossier], ROW_NUMBER() OVER(PARTITION BY [d0].[IdDossier] ORDER BY [d0].[Id], [d1].[Id]) AS [row]
+        FROM [demandes] AS [d0]
+        INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+        WHERE [d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL
+    ) AS [t1]
+    WHERE [t1].[row] <= 1
+) AS [t0] ON [t].[Id] = [t0].[IdDossier]
+2025-12-07 00:08:28.687 +01:00 [INF] Start processing HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/token/
+2025-12-07 00:08:28.692 +01:00 [INF] Sending HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/token/
+2025-12-07 00:08:28.897 +01:00 [ERR] HTTP POST /api/paiements/dossier/8b16fa6e-06da-4843-bc3a-1dc181ad26f2/momo responded 500 in 263.6455 ms
+System.Net.Http.HttpRequestException: An error occurred while sending the request.
+ ---> System.IO.IOException: Unable to read data from the transport connection: Une connexion existante a dû être fermée par l’hôte distant..
+ ---> System.Net.Sockets.SocketException (10054): Une connexion existante a dû être fermée par l’hôte distant.
+   --- End of inner exception stack trace ---
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource<System.Int32>.GetResult(Int16 token)
+   at System.Net.Security.SslStream.EnsureFullTlsFrameAsync[TIOAdapter](CancellationToken cancellationToken, Int32 estimatedSize)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at System.Net.Security.SslStream.ReadAsyncInternal[TIOAdapter](Memory`1 buffer, CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at System.Net.Http.HttpConnection.<EnsureReadAheadTaskHasStarted>g__ReadAheadWithZeroByteReadAsync|40_0()
+   at System.Net.Http.HttpConnection.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnection.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.DiagnosticsHandler.SendAsyncCore(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Http.Logging.LoggingHttpMessageHandler.<SendCoreAsync>g__Core|5_0(HttpRequestMessage request, Boolean useAsync, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Http.Logging.LoggingScopeHttpMessageHandler.<SendCoreAsync>g__Core|5_0(HttpRequestMessage request, Boolean useAsync, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at FrontOffice.Infrastructure.Services.MomoPaymentService.GetAccessTokenAsync() in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Infrastructure\Services\MomoPaymentService.cs:line 43
+   at FrontOffice.Application.Features.Paiements.Commands.PayByMomo.PayByMomoCommandHandler.Handle(PayByMomoCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Paiements\Commands\PayByMomo\PayByMomoCommandHandler.cs:line 55
+   at PaiementsController.PayByMomo(Guid dossierId, PayByMomoCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\PaiementsController.cs:line 22
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-12-07 00:08:29.025 +01:00 [ERR] Une exception non gérée a été interceptée par le middleware.
+System.Net.Http.HttpRequestException: An error occurred while sending the request.
+ ---> System.IO.IOException: Unable to read data from the transport connection: Une connexion existante a dû être fermée par l’hôte distant..
+ ---> System.Net.Sockets.SocketException (10054): Une connexion existante a dû être fermée par l’hôte distant.
+   --- End of inner exception stack trace ---
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource<System.Int32>.GetResult(Int16 token)
+   at System.Net.Security.SslStream.EnsureFullTlsFrameAsync[TIOAdapter](CancellationToken cancellationToken, Int32 estimatedSize)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at System.Net.Security.SslStream.ReadAsyncInternal[TIOAdapter](Memory`1 buffer, CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at System.Net.Http.HttpConnection.<EnsureReadAheadTaskHasStarted>g__ReadAheadWithZeroByteReadAsync|40_0()
+   at System.Net.Http.HttpConnection.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnection.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.DiagnosticsHandler.SendAsyncCore(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Http.Logging.LoggingHttpMessageHandler.<SendCoreAsync>g__Core|5_0(HttpRequestMessage request, Boolean useAsync, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Http.Logging.LoggingScopeHttpMessageHandler.<SendCoreAsync>g__Core|5_0(HttpRequestMessage request, Boolean useAsync, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at FrontOffice.Infrastructure.Services.MomoPaymentService.GetAccessTokenAsync() in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Infrastructure\Services\MomoPaymentService.cs:line 43
+   at FrontOffice.Application.Features.Paiements.Commands.PayByMomo.PayByMomoCommandHandler.Handle(PayByMomoCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Paiements\Commands\PayByMomo\PayByMomoCommandHandler.cs:line 55
+   at PaiementsController.PayByMomo(Guid dossierId, PayByMomoCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\PaiementsController.cs:line 22
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at FrontOffice.Api.Middleware.ErrorHandlingMiddleware.Invoke(HttpContext context) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Middleware\ErrorHandlingMiddleware.cs:line 34
+2025-12-07 00:26:29.937 +01:00 [INF] Now listening on: https://localhost:7016
+2025-12-07 00:26:29.979 +01:00 [INF] Now listening on: http://localhost:5041
+2025-12-07 00:26:30.089 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-07 00:26:30.100 +01:00 [INF] Hosting environment: Development
+2025-12-07 00:26:30.124 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2025-12-07 00:26:43.561 +01:00 [INF] Executed DbCommand (115ms) [Parameters=[@__request_DossierId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [t0].[Id], [t0].[Date], [t0].[DateCreation], [t0].[DateModification], [t0].[DossierId], [t0].[IdDemande], [t0].[MontantControle], [t0].[MontantEtude], [t0].[MontantHomologation], [t0].[PaiementMobileId], [t0].[PaiementOk], [t0].[UtilisateurCreation], [t0].[UtilisateurModification]
+FROM (
+    SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[Id] = @__request_DossierId_0 AND [d].[IdClient] = @__userId_Value_1
+) AS [t]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[Date], [t1].[DateCreation], [t1].[DateModification], [t1].[DossierId], [t1].[IdDemande], [t1].[MontantControle], [t1].[MontantEtude], [t1].[MontantHomologation], [t1].[PaiementMobileId], [t1].[PaiementOk], [t1].[UtilisateurCreation], [t1].[UtilisateurModification], [t1].[IdDossier]
+    FROM (
+        SELECT [d1].[Id], [d1].[Date], [d1].[DateCreation], [d1].[DateModification], [d1].[DossierId], [d1].[IdDemande], [d1].[MontantControle], [d1].[MontantEtude], [d1].[MontantHomologation], [d1].[PaiementMobileId], [d1].[PaiementOk], [d1].[UtilisateurCreation], [d1].[UtilisateurModification], [d0].[IdDossier], ROW_NUMBER() OVER(PARTITION BY [d0].[IdDossier] ORDER BY [d0].[Id], [d1].[Id]) AS [row]
+        FROM [demandes] AS [d0]
+        INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+        WHERE [d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL
+    ) AS [t1]
+    WHERE [t1].[row] <= 1
+) AS [t0] ON [t].[Id] = [t0].[IdDossier]
+2025-12-07 00:26:43.866 +01:00 [INF] Demande de token d'accès MTN à l'URL : https://sandbox.momodeveloper.mtn.com/collection/token/
+2025-12-07 00:26:43.881 +01:00 [INF] Start processing HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/token/
+2025-12-07 00:26:43.886 +01:00 [INF] Sending HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/token/
+2025-12-07 00:26:45.319 +01:00 [INF] Received HTTP response headers after 1424.6931ms - 401
+2025-12-07 00:26:45.324 +01:00 [INF] End processing HTTP request after 1450.5329ms - 401
+2025-12-07 00:26:45.332 +01:00 [ERR] Échec de l'obtention du token MTN. Statut: "Unauthorized", Réponse: { "statusCode": 401, "message": "Access denied due to invalid subscription key. Make sure to provide a valid key for an active subscription." }
+2025-12-07 00:26:45.511 +01:00 [ERR] HTTP POST /api/paiements/dossier/8b16fa6e-06da-4843-bc3a-1dc181ad26f2/momo responded 500 in 5866.8358 ms
+System.Exception: Impossible d'obtenir le token d'accès MTN MoMo.
+   at FrontOffice.Infrastructure.Services.MomoPaymentService.GetAccessTokenAsync() in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Infrastructure\Services\MomoPaymentService.cs:line 62
+   at FrontOffice.Application.Features.Paiements.Commands.PayByMomo.PayByMomoCommandHandler.Handle(PayByMomoCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Paiements\Commands\PayByMomo\PayByMomoCommandHandler.cs:line 55
+   at PaiementsController.PayByMomo(Guid dossierId, PayByMomoCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\PaiementsController.cs:line 22
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-12-07 00:26:45.635 +01:00 [ERR] Une exception non gérée a été interceptée par le middleware.
+System.Exception: Impossible d'obtenir le token d'accès MTN MoMo.
+   at FrontOffice.Infrastructure.Services.MomoPaymentService.GetAccessTokenAsync() in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Infrastructure\Services\MomoPaymentService.cs:line 62
+   at FrontOffice.Application.Features.Paiements.Commands.PayByMomo.PayByMomoCommandHandler.Handle(PayByMomoCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Paiements\Commands\PayByMomo\PayByMomoCommandHandler.cs:line 55
+   at PaiementsController.PayByMomo(Guid dossierId, PayByMomoCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\PaiementsController.cs:line 22
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at FrontOffice.Api.Middleware.ErrorHandlingMiddleware.Invoke(HttpContext context) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Middleware\ErrorHandlingMiddleware.cs:line 34
+2025-12-07 00:28:42.636 +01:00 [INF] Executed DbCommand (18ms) [Parameters=[@__request_DossierId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [t0].[Id], [t0].[Date], [t0].[DateCreation], [t0].[DateModification], [t0].[DossierId], [t0].[IdDemande], [t0].[MontantControle], [t0].[MontantEtude], [t0].[MontantHomologation], [t0].[PaiementMobileId], [t0].[PaiementOk], [t0].[UtilisateurCreation], [t0].[UtilisateurModification]
+FROM (
+    SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[Id] = @__request_DossierId_0 AND [d].[IdClient] = @__userId_Value_1
+) AS [t]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[Date], [t1].[DateCreation], [t1].[DateModification], [t1].[DossierId], [t1].[IdDemande], [t1].[MontantControle], [t1].[MontantEtude], [t1].[MontantHomologation], [t1].[PaiementMobileId], [t1].[PaiementOk], [t1].[UtilisateurCreation], [t1].[UtilisateurModification], [t1].[IdDossier]
+    FROM (
+        SELECT [d1].[Id], [d1].[Date], [d1].[DateCreation], [d1].[DateModification], [d1].[DossierId], [d1].[IdDemande], [d1].[MontantControle], [d1].[MontantEtude], [d1].[MontantHomologation], [d1].[PaiementMobileId], [d1].[PaiementOk], [d1].[UtilisateurCreation], [d1].[UtilisateurModification], [d0].[IdDossier], ROW_NUMBER() OVER(PARTITION BY [d0].[IdDossier] ORDER BY [d0].[Id], [d1].[Id]) AS [row]
+        FROM [demandes] AS [d0]
+        INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+        WHERE [d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL
+    ) AS [t1]
+    WHERE [t1].[row] <= 1
+) AS [t0] ON [t].[Id] = [t0].[IdDossier]
+2025-12-07 00:28:42.647 +01:00 [INF] Demande de token d'accès MTN à l'URL : https://sandbox.momodeveloper.mtn.com/collection/token/
+2025-12-07 00:28:42.650 +01:00 [INF] Start processing HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/token/
+2025-12-07 00:28:42.653 +01:00 [INF] Sending HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/token/
+2025-12-07 00:28:44.445 +01:00 [INF] Received HTTP response headers after 1788.7324ms - 401
+2025-12-07 00:28:44.454 +01:00 [INF] End processing HTTP request after 1803.7437ms - 401
+2025-12-07 00:28:44.459 +01:00 [ERR] Échec de l'obtention du token MTN. Statut: "Unauthorized", Réponse: { "statusCode": 401, "message": "Access denied due to invalid subscription key. Make sure to provide a valid key for an active subscription." }
+2025-12-07 00:28:44.626 +01:00 [ERR] HTTP POST /api/paiements/dossier/8b16fa6e-06da-4843-bc3a-1dc181ad26f2/momo responded 500 in 2042.7611 ms
+System.Exception: Impossible d'obtenir le token d'accès MTN MoMo.
+   at FrontOffice.Infrastructure.Services.MomoPaymentService.GetAccessTokenAsync() in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Infrastructure\Services\MomoPaymentService.cs:line 62
+   at FrontOffice.Application.Features.Paiements.Commands.PayByMomo.PayByMomoCommandHandler.Handle(PayByMomoCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Paiements\Commands\PayByMomo\PayByMomoCommandHandler.cs:line 55
+   at PaiementsController.PayByMomo(Guid dossierId, PayByMomoCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\PaiementsController.cs:line 22
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-12-07 00:28:44.784 +01:00 [ERR] Une exception non gérée a été interceptée par le middleware.
+System.Exception: Impossible d'obtenir le token d'accès MTN MoMo.
+   at FrontOffice.Infrastructure.Services.MomoPaymentService.GetAccessTokenAsync() in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Infrastructure\Services\MomoPaymentService.cs:line 62
+   at FrontOffice.Application.Features.Paiements.Commands.PayByMomo.PayByMomoCommandHandler.Handle(PayByMomoCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Paiements\Commands\PayByMomo\PayByMomoCommandHandler.cs:line 55
+   at PaiementsController.PayByMomo(Guid dossierId, PayByMomoCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\PaiementsController.cs:line 22
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at FrontOffice.Api.Middleware.ErrorHandlingMiddleware.Invoke(HttpContext context) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Middleware\ErrorHandlingMiddleware.cs:line 34
+2025-12-07 02:50:22.562 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-12-07 02:50:23.310 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 920.7859 ms
+2025-12-07 02:50:54.343 +01:00 [INF] Executed DbCommand (14ms) [Parameters=[@__request_DossierId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [t0].[Id], [t0].[Date], [t0].[DateCreation], [t0].[DateModification], [t0].[DossierId], [t0].[IdDemande], [t0].[MontantControle], [t0].[MontantEtude], [t0].[MontantHomologation], [t0].[PaiementMobileId], [t0].[PaiementOk], [t0].[UtilisateurCreation], [t0].[UtilisateurModification]
+FROM (
+    SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[Id] = @__request_DossierId_0 AND [d].[IdClient] = @__userId_Value_1
+) AS [t]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[Date], [t1].[DateCreation], [t1].[DateModification], [t1].[DossierId], [t1].[IdDemande], [t1].[MontantControle], [t1].[MontantEtude], [t1].[MontantHomologation], [t1].[PaiementMobileId], [t1].[PaiementOk], [t1].[UtilisateurCreation], [t1].[UtilisateurModification], [t1].[IdDossier]
+    FROM (
+        SELECT [d1].[Id], [d1].[Date], [d1].[DateCreation], [d1].[DateModification], [d1].[DossierId], [d1].[IdDemande], [d1].[MontantControle], [d1].[MontantEtude], [d1].[MontantHomologation], [d1].[PaiementMobileId], [d1].[PaiementOk], [d1].[UtilisateurCreation], [d1].[UtilisateurModification], [d0].[IdDossier], ROW_NUMBER() OVER(PARTITION BY [d0].[IdDossier] ORDER BY [d0].[Id], [d1].[Id]) AS [row]
+        FROM [demandes] AS [d0]
+        INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+        WHERE [d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL
+    ) AS [t1]
+    WHERE [t1].[row] <= 1
+) AS [t0] ON [t].[Id] = [t0].[IdDossier]
+2025-12-07 02:50:54.350 +01:00 [INF] Demande de token d'accès MTN à l'URL : https://sandbox.momodeveloper.mtn.com/collection/token/
+2025-12-07 02:50:54.352 +01:00 [INF] Start processing HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/token/
+2025-12-07 02:50:54.355 +01:00 [INF] Sending HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/token/
+2025-12-07 02:50:55.094 +01:00 [INF] Received HTTP response headers after 733.8928ms - 200
+2025-12-07 02:50:55.110 +01:00 [INF] End processing HTTP request after 757.8477ms - 200
+2025-12-07 02:50:55.333 +01:00 [INF] Token d'accès MTN obtenu avec succès.
+2025-12-07 02:50:55.407 +01:00 [INF] Initiation du paiement MoMo pour ExternalId 782e484d-e13e-42d9-a8eb-9be81829e91d
+2025-12-07 02:50:55.410 +01:00 [INF] Start processing HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/v1_0/requesttopay
+2025-12-07 02:50:55.413 +01:00 [INF] Sending HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/v1_0/requesttopay
+2025-12-07 02:50:56.277 +01:00 [INF] Received HTTP response headers after 860.476ms - 500
+2025-12-07 02:50:56.283 +01:00 [INF] End processing HTTP request after 873.0811ms - 500
+2025-12-07 02:50:56.289 +01:00 [ERR] Échec de la demande de paiement MTN MoMo. Statut: "InternalServerError", Contenu: {"message":"Currency not supported.","code":"INVALID_CURRENCY"}
+2025-12-07 02:50:56.447 +01:00 [ERR] HTTP POST /api/paiements/dossier/8b16fa6e-06da-4843-bc3a-1dc181ad26f2/momo responded 500 in 2132.6907 ms
+System.Exception: La demande de paiement auprès de l'opérateur a échoué.
+   at FrontOffice.Infrastructure.Services.MomoPaymentService.RequestPaymentAsync(MomoPaymentRequest requestData, String accessToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Infrastructure\Services\MomoPaymentService.cs:line 130
+   at FrontOffice.Application.Features.Paiements.Commands.PayByMomo.PayByMomoCommandHandler.Handle(PayByMomoCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Paiements\Commands\PayByMomo\PayByMomoCommandHandler.cs:line 67
+   at PaiementsController.PayByMomo(Guid dossierId, PayByMomoCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\PaiementsController.cs:line 22
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-12-07 02:50:56.597 +01:00 [ERR] Une exception non gérée a été interceptée par le middleware.
+System.Exception: La demande de paiement auprès de l'opérateur a échoué.
+   at FrontOffice.Infrastructure.Services.MomoPaymentService.RequestPaymentAsync(MomoPaymentRequest requestData, String accessToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Infrastructure\Services\MomoPaymentService.cs:line 130
+   at FrontOffice.Application.Features.Paiements.Commands.PayByMomo.PayByMomoCommandHandler.Handle(PayByMomoCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Paiements\Commands\PayByMomo\PayByMomoCommandHandler.cs:line 67
+   at PaiementsController.PayByMomo(Guid dossierId, PayByMomoCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\PaiementsController.cs:line 22
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at FrontOffice.Api.Middleware.ErrorHandlingMiddleware.Invoke(HttpContext context) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Middleware\ErrorHandlingMiddleware.cs:line 34
+2025-12-07 02:57:15.056 +01:00 [INF] Executed DbCommand (11ms) [Parameters=[@__request_DossierId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [t0].[Id], [t0].[Date], [t0].[DateCreation], [t0].[DateModification], [t0].[DossierId], [t0].[IdDemande], [t0].[MontantControle], [t0].[MontantEtude], [t0].[MontantHomologation], [t0].[PaiementMobileId], [t0].[PaiementOk], [t0].[UtilisateurCreation], [t0].[UtilisateurModification]
+FROM (
+    SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[Id] = @__request_DossierId_0 AND [d].[IdClient] = @__userId_Value_1
+) AS [t]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[Date], [t1].[DateCreation], [t1].[DateModification], [t1].[DossierId], [t1].[IdDemande], [t1].[MontantControle], [t1].[MontantEtude], [t1].[MontantHomologation], [t1].[PaiementMobileId], [t1].[PaiementOk], [t1].[UtilisateurCreation], [t1].[UtilisateurModification], [t1].[IdDossier]
+    FROM (
+        SELECT [d1].[Id], [d1].[Date], [d1].[DateCreation], [d1].[DateModification], [d1].[DossierId], [d1].[IdDemande], [d1].[MontantControle], [d1].[MontantEtude], [d1].[MontantHomologation], [d1].[PaiementMobileId], [d1].[PaiementOk], [d1].[UtilisateurCreation], [d1].[UtilisateurModification], [d0].[IdDossier], ROW_NUMBER() OVER(PARTITION BY [d0].[IdDossier] ORDER BY [d0].[Id], [d1].[Id]) AS [row]
+        FROM [demandes] AS [d0]
+        INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+        WHERE [d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL
+    ) AS [t1]
+    WHERE [t1].[row] <= 1
+) AS [t0] ON [t].[Id] = [t0].[IdDossier]
+2025-12-07 02:57:15.064 +01:00 [INF] Demande de token d'accès MTN à l'URL : https://sandbox.momodeveloper.mtn.com/collection/token/
+2025-12-07 02:57:15.066 +01:00 [INF] Start processing HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/token/
+2025-12-07 02:57:15.069 +01:00 [INF] Sending HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/token/
+2025-12-07 02:57:15.741 +01:00 [INF] Received HTTP response headers after 668.2747ms - 200
+2025-12-07 02:57:15.747 +01:00 [INF] End processing HTTP request after 681.4826ms - 200
+2025-12-07 02:57:15.751 +01:00 [INF] Token d'accès MTN obtenu avec succès.
+2025-12-07 02:57:15.754 +01:00 [INF] Initiation du paiement MoMo pour ExternalId 782e484d-e13e-42d9-a8eb-9be81829e91d
+2025-12-07 02:57:15.756 +01:00 [INF] Start processing HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/v1_0/requesttopay
+2025-12-07 02:57:15.761 +01:00 [INF] Sending HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/v1_0/requesttopay
+2025-12-07 02:57:16.096 +01:00 [INF] Received HTTP response headers after 332.3326ms - 500
+2025-12-07 02:57:16.100 +01:00 [INF] End processing HTTP request after 344.3677ms - 500
+2025-12-07 02:57:16.103 +01:00 [ERR] Échec de la demande de paiement MTN MoMo. Statut: "InternalServerError", Contenu: {"message":"Currency not supported.","code":"INVALID_CURRENCY"}
+2025-12-07 02:57:16.222 +01:00 [ERR] HTTP POST /api/paiements/dossier/8b16fa6e-06da-4843-bc3a-1dc181ad26f2/momo responded 500 in 1206.1566 ms
+System.Exception: La demande de paiement auprès de l'opérateur a échoué.
+   at FrontOffice.Infrastructure.Services.MomoPaymentService.RequestPaymentAsync(MomoPaymentRequest requestData, String accessToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Infrastructure\Services\MomoPaymentService.cs:line 130
+   at FrontOffice.Application.Features.Paiements.Commands.PayByMomo.PayByMomoCommandHandler.Handle(PayByMomoCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Paiements\Commands\PayByMomo\PayByMomoCommandHandler.cs:line 67
+   at PaiementsController.PayByMomo(Guid dossierId, PayByMomoCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\PaiementsController.cs:line 22
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-12-07 02:57:16.407 +01:00 [ERR] Une exception non gérée a été interceptée par le middleware.
+System.Exception: La demande de paiement auprès de l'opérateur a échoué.
+   at FrontOffice.Infrastructure.Services.MomoPaymentService.RequestPaymentAsync(MomoPaymentRequest requestData, String accessToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Infrastructure\Services\MomoPaymentService.cs:line 130
+   at FrontOffice.Application.Features.Paiements.Commands.PayByMomo.PayByMomoCommandHandler.Handle(PayByMomoCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Paiements\Commands\PayByMomo\PayByMomoCommandHandler.cs:line 67
+   at PaiementsController.PayByMomo(Guid dossierId, PayByMomoCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\PaiementsController.cs:line 22
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at FrontOffice.Api.Middleware.ErrorHandlingMiddleware.Invoke(HttpContext context) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Middleware\ErrorHandlingMiddleware.cs:line 34

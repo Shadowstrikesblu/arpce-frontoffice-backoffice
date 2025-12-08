@@ -26,6 +26,7 @@ public class StatutConfiguration : IEntityTypeConfiguration<Statut>
              new Statut { Id = Guid.NewGuid(), Code = "DevisEmit", Libelle = "Devis émis" },
              new Statut { Id = Guid.NewGuid(), Code = "DevisValide", Libelle = "Devis validé par client" },
              new Statut { Id = Guid.NewGuid(), Code = "DevisRefuser", Libelle = "Devis refusé par client" },
+             new Statut { Id = Guid.NewGuid(), Code = "DevisPaiement", Libelle = "En attente de paiement" },
              new Statut { Id = Guid.NewGuid(), Code = "PaiementRejete", Libelle = "Paiement non accepté" },
              new Statut { Id = Guid.NewGuid(), Code = "PaiementExpirer", Libelle = "Paiement expiré" },
              new Statut { Id = Guid.NewGuid(), Code = "DossierPayer", Libelle = "Paiement effectué" },

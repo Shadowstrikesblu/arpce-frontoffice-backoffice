@@ -18,5 +18,7 @@ public enum StatutDossierEnum
     PaiementExpirer = 14,
     DossierPayer = 15,  
     DossierSignature = 16,
-    DossierSigne = 17  
+    DossierSigne = 17 ,
+    Exempt = 99,
+    Paid = 100
 }
