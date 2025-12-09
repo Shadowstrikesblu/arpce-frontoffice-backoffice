@@ -47,7 +47,8 @@ public class ConfirmAccountCommandHandler : IRequestHandler<ConfirmAccountComman
         }
 
         // Vérification de l'expiration du code
-        if (client.VerificationTokenExpiry < DateTime.UtcNow)
+        long nowAsUnixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        if (client.VerificationTokenExpiry < nowAsUnixTimestamp)
         {
             throw new InvalidOperationException("Le code de vérification a expiré. Veuillez redemander une inscription pour obtenir un nouveau code.");
         }

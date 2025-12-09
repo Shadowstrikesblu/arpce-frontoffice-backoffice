@@ -63,14 +63,14 @@ public class FrontOfficeDbContext : DbContext, IApplicationDbContext
             {
                 // Cas où une nouvelle entité est ajoutée à la base de données
                 case EntityState.Added:
-                    entry.Entity.UtilisateurCreation = currentUserId; 
-                    entry.Entity.DateCreation = DateTime.UtcNow;
+                    entry.Entity.UtilisateurCreation = currentUserId;
+                    entry.Entity.DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
                     break;
 
                 // Cas où une entité existante est modifiée
                 case EntityState.Modified:
-                    entry.Entity.UtilisateurModification = currentUserId; 
-                    entry.Entity.DateModification = DateTime.UtcNow;
+                    entry.Entity.UtilisateurModification = currentUserId;
+                    entry.Entity.DateModification = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
                     break;
             }
         }

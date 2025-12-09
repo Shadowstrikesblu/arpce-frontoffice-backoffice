@@ -24,8 +24,10 @@ public class ConfirmAccountCommandHandlerTests
     }
 
     [Fact]
+
     public async Task Handle_ShouldSetNiveauValidationTo1_WhenCodeIsValidAndTokenNotExpired()
     {
+        var verificationTokenExpiry = DateTimeOffset.UtcNow.AddMinutes(30).ToUnixTimeMilliseconds();
         // ARRANGE
         var command = new ConfirmAccountCommand { Code = "123456" };
         var userId = Guid.NewGuid();
@@ -36,7 +38,7 @@ public class ConfirmAccountCommandHandlerTests
             IsVerified = false,
             NiveauValidation = 0,
             VerificationCode = "123456",
-            VerificationTokenExpiry = DateTime.UtcNow.AddMinutes(10) // Le token est valide
+            VerificationTokenExpiry = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
         };
 
         // Simule la récupération de l'utilisateur depuis le token
@@ -71,7 +73,7 @@ public class ConfirmAccountCommandHandlerTests
             Id = userId,
             NiveauValidation = 0,
             VerificationCode = "123456",
-            VerificationTokenExpiry = DateTime.UtcNow.AddMinutes(10)
+            VerificationTokenExpiry = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
         };
 
         _mockCurrentUserService.Setup(s => s.UserId).Returns(userId);
@@ -95,7 +97,7 @@ public class ConfirmAccountCommandHandlerTests
             Id = userId,
             NiveauValidation = 0,
             VerificationCode = "123456",
-            VerificationTokenExpiry = DateTime.UtcNow.AddMinutes(-10) 
+            VerificationTokenExpiry = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
         };
 
         _mockCurrentUserService.Setup(s => s.UserId).Returns(userId);
@@ -120,7 +122,7 @@ public class ConfirmAccountCommandHandlerTests
             NiveauValidation = 1, 
             IsVerified = true,
             VerificationCode = "123456",
-            VerificationTokenExpiry = DateTime.UtcNow.AddMinutes(10)
+            VerificationTokenExpiry = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
         };
 
         _mockCurrentUserService.Setup(s => s.UserId).Returns(userId);
