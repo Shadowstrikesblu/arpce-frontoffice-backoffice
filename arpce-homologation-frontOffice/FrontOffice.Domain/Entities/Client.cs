@@ -10,10 +10,14 @@ public class Client : AuditableEntity
     public string? MotPasse { get; set; }
     public byte? ChangementMotPasse { get; set; }
     public byte? Desactive { get; set; }
+
     public string? ContactNom { get; set; }
     public string? ContactTelephone { get; set; }
     public string? ContactFonction { get; set; }
+
     public string? Email { get; set; }
+
+    // --- NOUVEAUX CHAMPS COMPLETS ---
     public string? Adresse { get; set; }
     public string? Bp { get; set; }
     public string? Ville { get; set; }
@@ -34,7 +38,7 @@ public class Client : AuditableEntity
     public int NiveauValidation { get; set; } = 0;
     public bool IsVerified { get; set; } = false;
     public string? VerificationCode { get; set; }
-    public DateTime? VerificationTokenExpiry { get; set; }
+    public long? VerificationTokenExpiry { get; set; }
 
     public virtual ICollection<Dossier> Dossiers { get; set; } = new List<Dossier>();
 }

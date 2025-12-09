@@ -432,3 +432,157 @@ System.Exception: La demande de paiement auprès de l'opérateur a échoué.
    at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
    at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
    at FrontOffice.Api.Middleware.ErrorHandlingMiddleware.Invoke(HttpContext context) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Middleware\ErrorHandlingMiddleware.cs:line 34
+2025-12-07 03:31:14.273 +01:00 [INF] Now listening on: https://localhost:7016
+2025-12-07 03:31:14.304 +01:00 [INF] Now listening on: http://localhost:5041
+2025-12-07 03:31:14.355 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-07 03:31:14.358 +01:00 [INF] Hosting environment: Development
+2025-12-07 03:31:14.360 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2025-12-07 03:31:26.461 +01:00 [INF] Executed DbCommand (122ms) [Parameters=[@__request_DossierId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [t0].[Id], [t0].[Date], [t0].[DateCreation], [t0].[DateModification], [t0].[DossierId], [t0].[IdDemande], [t0].[MontantControle], [t0].[MontantEtude], [t0].[MontantHomologation], [t0].[PaiementMobileId], [t0].[PaiementOk], [t0].[UtilisateurCreation], [t0].[UtilisateurModification]
+FROM (
+    SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[Id] = @__request_DossierId_0 AND [d].[IdClient] = @__userId_Value_1
+) AS [t]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[Date], [t1].[DateCreation], [t1].[DateModification], [t1].[DossierId], [t1].[IdDemande], [t1].[MontantControle], [t1].[MontantEtude], [t1].[MontantHomologation], [t1].[PaiementMobileId], [t1].[PaiementOk], [t1].[UtilisateurCreation], [t1].[UtilisateurModification], [t1].[IdDossier]
+    FROM (
+        SELECT [d1].[Id], [d1].[Date], [d1].[DateCreation], [d1].[DateModification], [d1].[DossierId], [d1].[IdDemande], [d1].[MontantControle], [d1].[MontantEtude], [d1].[MontantHomologation], [d1].[PaiementMobileId], [d1].[PaiementOk], [d1].[UtilisateurCreation], [d1].[UtilisateurModification], [d0].[IdDossier], ROW_NUMBER() OVER(PARTITION BY [d0].[IdDossier] ORDER BY [d0].[Id], [d1].[Id]) AS [row]
+        FROM [demandes] AS [d0]
+        INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+        WHERE [d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL
+    ) AS [t1]
+    WHERE [t1].[row] <= 1
+) AS [t0] ON [t].[Id] = [t0].[IdDossier]
+2025-12-07 03:31:26.684 +01:00 [INF] Demande de token d'accès MTN à l'URL : https://sandbox.momodeveloper.mtn.com/collection/token/
+2025-12-07 03:31:26.714 +01:00 [INF] Start processing HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/token/
+2025-12-07 03:31:26.722 +01:00 [INF] Sending HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/token/
+2025-12-07 03:31:27.529 +01:00 [INF] Received HTTP response headers after 795.2647ms - 200
+2025-12-07 03:31:27.535 +01:00 [INF] End processing HTTP request after 838.1718ms - 200
+2025-12-07 03:31:27.714 +01:00 [INF] Token d'accès MTN obtenu avec succès.
+2025-12-07 03:31:27.785 +01:00 [INF] Initiation du paiement MoMo pour ExternalId 782e484d-e13e-42d9-a8eb-9be81829e91d
+2025-12-07 03:31:27.795 +01:00 [INF] Start processing HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/v1_0/requesttopay
+2025-12-07 03:31:27.799 +01:00 [INF] Sending HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/v1_0/requesttopay
+2025-12-07 03:31:28.137 +01:00 [INF] Received HTTP response headers after 334.4268ms - 500
+2025-12-07 03:31:28.143 +01:00 [INF] End processing HTTP request after 347.9821ms - 500
+2025-12-07 03:31:28.147 +01:00 [ERR] Échec de la demande de paiement MTN MoMo. Statut: "InternalServerError", Contenu: {"message":"Currency not supported.","code":"INVALID_CURRENCY"}
+2025-12-07 03:31:28.150 +01:00 [INF] Demande de paiement MoMo pour ExternalId 782e484d-e13e-42d9-a8eb-9be81829e91d initiée avec succès. ReferenceId: f7b842ba-425b-4d61-a691-6c85d449fc9b
+2025-12-07 03:31:28.511 +01:00 [INF] Executed DbCommand (10ms) [Parameters=[@p3='?' (DbType = Guid), @p0='?' (DbType = DateTime2), @p1='?' (Size = 60), @p2='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [devis] SET [DateModification] = @p0, [PaiementMobileId] = @p1, [UtilisateurModification] = @p2
+OUTPUT 1
+WHERE [Id] = @p3;
+2025-12-07 03:31:28.576 +01:00 [INF] HTTP POST /api/paiements/dossier/8b16fa6e-06da-4843-bc3a-1dc181ad26f2/momo responded 200 in 6023.5180 ms
+2025-12-07 03:32:59.928 +01:00 [INF] Executed DbCommand (10ms) [Parameters=[@__request_DossierId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [t0].[Id], [t0].[Date], [t0].[DateCreation], [t0].[DateModification], [t0].[DossierId], [t0].[IdDemande], [t0].[MontantControle], [t0].[MontantEtude], [t0].[MontantHomologation], [t0].[PaiementMobileId], [t0].[PaiementOk], [t0].[UtilisateurCreation], [t0].[UtilisateurModification]
+FROM (
+    SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[Id] = @__request_DossierId_0 AND [d].[IdClient] = @__userId_Value_1
+) AS [t]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[Date], [t1].[DateCreation], [t1].[DateModification], [t1].[DossierId], [t1].[IdDemande], [t1].[MontantControle], [t1].[MontantEtude], [t1].[MontantHomologation], [t1].[PaiementMobileId], [t1].[PaiementOk], [t1].[UtilisateurCreation], [t1].[UtilisateurModification], [t1].[IdDossier]
+    FROM (
+        SELECT [d1].[Id], [d1].[Date], [d1].[DateCreation], [d1].[DateModification], [d1].[DossierId], [d1].[IdDemande], [d1].[MontantControle], [d1].[MontantEtude], [d1].[MontantHomologation], [d1].[PaiementMobileId], [d1].[PaiementOk], [d1].[UtilisateurCreation], [d1].[UtilisateurModification], [d0].[IdDossier], ROW_NUMBER() OVER(PARTITION BY [d0].[IdDossier] ORDER BY [d0].[Id], [d1].[Id]) AS [row]
+        FROM [demandes] AS [d0]
+        INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+        WHERE [d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL
+    ) AS [t1]
+    WHERE [t1].[row] <= 1
+) AS [t0] ON [t].[Id] = [t0].[IdDossier]
+2025-12-07 03:32:59.938 +01:00 [INF] Demande de token d'accès MTN à l'URL : https://sandbox.momodeveloper.mtn.com/collection/token/
+2025-12-07 03:32:59.941 +01:00 [INF] Start processing HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/token/
+2025-12-07 03:32:59.944 +01:00 [INF] Sending HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/token/
+2025-12-07 03:33:00.602 +01:00 [INF] Received HTTP response headers after 652.7586ms - 200
+2025-12-07 03:33:00.606 +01:00 [INF] End processing HTTP request after 665.2061ms - 200
+2025-12-07 03:33:00.612 +01:00 [INF] Token d'accès MTN obtenu avec succès.
+2025-12-07 03:33:00.617 +01:00 [INF] Initiation du paiement MoMo pour ExternalId 782e484d-e13e-42d9-a8eb-9be81829e91d
+2025-12-07 03:33:00.620 +01:00 [INF] Start processing HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/v1_0/requesttopay
+2025-12-07 03:33:00.622 +01:00 [INF] Sending HTTP request POST https://sandbox.momodeveloper.mtn.com/collection/v1_0/requesttopay
+2025-12-07 03:33:00.998 +01:00 [INF] Received HTTP response headers after 374.0078ms - 500
+2025-12-07 03:33:01.009 +01:00 [INF] End processing HTTP request after 389.5772ms - 500
+2025-12-07 03:33:01.020 +01:00 [ERR] Échec de la demande de paiement MTN MoMo. Statut: "InternalServerError", Contenu: {"message":"Currency not supported.","code":"INVALID_CURRENCY"}
+2025-12-07 03:33:01.025 +01:00 [INF] Demande de paiement MoMo pour ExternalId 782e484d-e13e-42d9-a8eb-9be81829e91d initiée avec succès. ReferenceId: 182ab2ef-7e66-4256-b23c-99e9199de3ff
+2025-12-07 03:33:01.038 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@p2='?' (DbType = Guid), @p0='?' (DbType = DateTime2), @p1='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [devis] SET [DateModification] = @p0, [PaiementMobileId] = @p1
+OUTPUT 1
+WHERE [Id] = @p2;
+2025-12-07 03:33:01.050 +01:00 [INF] HTTP POST /api/paiements/dossier/8b16fa6e-06da-4843-bc3a-1dc181ad26f2/momo responded 200 in 1175.7614 ms
+2025-12-07 03:35:32.463 +01:00 [INF] Executed DbCommand (30ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__statutPaiementCode_1='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[Numero] AS [NumeroDossier], (
+    SELECT COALESCE(SUM([d5].[MontantEtude] + COALESCE([d5].[MontantHomologation], 0.0) + COALESCE([d5].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d4]
+    INNER JOIN [devis] AS [d5] ON [d4].[Id] = [d5].[IdDemande]
+    WHERE [d].[Id] = [d4].[IdDossier] AND ([d5].[PaiementOk] <> CAST(1 AS tinyint) OR [d5].[PaiementOk] IS NULL)) AS [Montant], (
+    SELECT TOP(1) [d7].[Date]
+    FROM [demandes] AS [d6]
+    INNER JOIN [devis] AS [d7] ON [d6].[Id] = [d7].[IdDemande]
+    WHERE [d].[Id] = [d6].[IdDossier] AND ([d7].[PaiementOk] <> CAST(1 AS tinyint) OR [d7].[PaiementOk] IS NULL)
+    ORDER BY [d7].[Date] DESC) AS [DateEcheance]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] = @__statutPaiementCode_1 AND (
+    SELECT COALESCE(SUM([d1].[MontantEtude] + COALESCE([d1].[MontantHomologation], 0.0) + COALESCE([d1].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d0]
+    INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+    WHERE [d].[Id] = [d0].[IdDossier] AND ([d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL)) > 0.0 AND (
+    SELECT TOP(1) CAST(1 AS bit)
+    FROM [demandes] AS [d2]
+    INNER JOIN [devis] AS [d3] ON [d2].[Id] = [d3].[IdDemande]
+    WHERE [d].[Id] = [d2].[IdDossier] AND ([d3].[PaiementOk] <> CAST(1 AS tinyint) OR [d3].[PaiementOk] IS NULL)
+    ORDER BY [d3].[Date] DESC) = CAST(1 AS bit)
+2025-12-07 03:35:32.494 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 282.2848 ms
+2025-12-07 04:18:25.186 +01:00 [INF] Webhook MTN reçu pour ExternalId 782E484D-E13E-42D9-A8EB-9BE81829E91D avec statut SUCCESSFUL
+2025-12-07 04:18:25.277 +01:00 [INF] Executed DbCommand (12ms) [Parameters=[@__devisId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[Date], [d].[DateCreation], [d].[DateModification], [d].[DossierId], [d].[IdDemande], [d].[MontantControle], [d].[MontantEtude], [d].[MontantHomologation], [d].[PaiementMobileId], [d].[PaiementOk], [d].[UtilisateurCreation], [d].[UtilisateurModification], [d0].[Id], [d0].[ContactEmail], [d0].[ContactNom], [d0].[DateCreation], [d0].[DateModification], [d0].[Description], [d0].[Equipement], [d0].[EstHomologable], [d0].[Fabricant], [d0].[IdCategorie], [d0].[IdDossier], [d0].[IdMotifRejet], [d0].[IdProposition], [d0].[Marque], [d0].[Modele], [d0].[NumeroDemande], [d0].[PrixUnitaire], [d0].[QuantiteEquipements], [d0].[Remise], [d0].[Type], [d0].[UtilisateurCreation], [d0].[UtilisateurModification], [d1].[Id], [d1].[DateCreation], [d1].[DateModification], [d1].[DateOuverture], [d1].[IdClient], [d1].[IdModeReglement], [d1].[IdStatut], [d1].[Libelle], [d1].[Numero], [d1].[UtilisateurCreation], [d1].[UtilisateurModification]
+FROM [devis] AS [d]
+INNER JOIN [demandes] AS [d0] ON [d].[IdDemande] = [d0].[Id]
+INNER JOIN [dossiers] AS [d1] ON [d0].[IdDossier] = [d1].[Id]
+WHERE [d].[Id] = @__devisId_0
+2025-12-07 04:18:25.406 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Code], [s].[Libelle]
+FROM [statuts] AS [s]
+WHERE [s].[Code] = N'DossierPayer'
+2025-12-07 04:18:25.418 +01:00 [INF] Paiement MTN validé pour le devis "782e484d-e13e-42d9-a8eb-9be81829e91d", dossier "8b16fa6e-06da-4843-bc3a-1dc181ad26f2"
+2025-12-07 04:18:25.525 +01:00 [INF] Executed DbCommand (12ms) [Parameters=[@p3='?' (DbType = Guid), @p0='?' (DbType = DateTime2), @p1='?' (Size = 1) (DbType = Byte), @p2='?' (Size = 4000), @p7='?' (DbType = Guid), @p4='?' (DbType = DateTime2), @p5='?' (DbType = Guid), @p6='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [devis] SET [DateModification] = @p0, [PaiementOk] = @p1, [UtilisateurModification] = @p2
+OUTPUT 1
+WHERE [Id] = @p3;
+UPDATE [dossiers] SET [DateModification] = @p4, [IdStatut] = @p5, [UtilisateurModification] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+2025-12-07 04:18:25.551 +01:00 [INF] HTTP POST /api/paiements/momo-webhook responded 200 in 434.8951 ms
+2025-12-07 04:18:41.040 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 401 in 11.7722 ms
+2025-12-07 04:18:49.102 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2025-12-07 04:18:49.653 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 576.1624 ms
+2025-12-07 04:19:45.667 +01:00 [INF] Executed DbCommand (19ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__statutPaiementCode_1='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[Numero] AS [NumeroDossier], (
+    SELECT COALESCE(SUM([d5].[MontantEtude] + COALESCE([d5].[MontantHomologation], 0.0) + COALESCE([d5].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d4]
+    INNER JOIN [devis] AS [d5] ON [d4].[Id] = [d5].[IdDemande]
+    WHERE [d].[Id] = [d4].[IdDossier] AND ([d5].[PaiementOk] <> CAST(1 AS tinyint) OR [d5].[PaiementOk] IS NULL)) AS [Montant], (
+    SELECT TOP(1) [d7].[Date]
+    FROM [demandes] AS [d6]
+    INNER JOIN [devis] AS [d7] ON [d6].[Id] = [d7].[IdDemande]
+    WHERE [d].[Id] = [d6].[IdDossier] AND ([d7].[PaiementOk] <> CAST(1 AS tinyint) OR [d7].[PaiementOk] IS NULL)
+    ORDER BY [d7].[Date] DESC) AS [DateEcheance]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] = @__statutPaiementCode_1 AND (
+    SELECT COALESCE(SUM([d1].[MontantEtude] + COALESCE([d1].[MontantHomologation], 0.0) + COALESCE([d1].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d0]
+    INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+    WHERE [d].[Id] = [d0].[IdDossier] AND ([d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL)) > 0.0 AND (
+    SELECT TOP(1) CAST(1 AS bit)
+    FROM [demandes] AS [d2]
+    INNER JOIN [devis] AS [d3] ON [d2].[Id] = [d3].[IdDemande]
+    WHERE [d].[Id] = [d2].[IdDossier] AND ([d3].[PaiementOk] <> CAST(1 AS tinyint) OR [d3].[PaiementOk] IS NULL)
+    ORDER BY [d3].[Date] DESC) = CAST(1 AS bit)
+2025-12-07 04:19:45.672 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 52.6678 ms

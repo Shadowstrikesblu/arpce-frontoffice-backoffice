@@ -42,7 +42,7 @@ public class Client : AuditableEntity
     public int NiveauValidation { get; set; } = 0;
     public bool IsVerified { get; set; } = false;
     public string? VerificationCode { get; set; }
-    public DateTime? VerificationTokenExpiry { get; set; }
+    public long? VerificationTokenExpiry { get; set; }
 
     public virtual ICollection<Dossier> Dossiers { get; set; } = new List<Dossier>();
 }
