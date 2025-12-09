@@ -1,3 +1,0 @@
-C:\Users\Administrator\Desktop\BackOffice\publish\BackOffice.Domain.dll
-C:\Users\Administrator\Desktop\BackOffice\publish\BackOffice.Domain.deps.json
-C:\Users\Administrator\Desktop\BackOffice\publish\BackOffice.Domain.pdb
