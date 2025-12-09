@@ -17,8 +17,9 @@ public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand,
     public async Task<bool> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
     {
         var client = await _context.Clients.FirstOrDefaultAsync(c => c.Email == request.Email, cancellationToken);
+        long nowAsUnixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
-        if (client == null || client.VerificationCode != request.OtpCode || client.VerificationTokenExpiry < DateTime.UtcNow)
+        if (client == null || client.VerificationCode != request.OtpCode || client.VerificationTokenExpiry < nowAsUnixTimestamp)
         {
             throw new InvalidOperationException("Code invalide ou expiré.");
         }

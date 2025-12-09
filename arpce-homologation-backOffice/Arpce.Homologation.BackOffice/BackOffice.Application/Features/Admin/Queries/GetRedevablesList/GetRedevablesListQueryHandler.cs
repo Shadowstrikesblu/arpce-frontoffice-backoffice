@@ -1,4 +1,5 @@
-﻿using BackOffice.Application.Common.Interfaces;
+﻿using BackOffice.Application.Common.Exceptions;
+using BackOffice.Application.Common.Interfaces;
 using BackOffice.Domain.Entities; 
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -61,7 +62,7 @@ public class GetRedevablesListQueryHandler : IRequestHandler<GetRedevablesListQu
             Email = c.Email ?? "",
             Ville = c.Ville,
             Pays = c.Pays,
-            DateCreation = c.DateCreation,
+            DateCreation = c.DateCreation.FromUnixTimeMilliseconds(),
             NbDossier = c.Dossiers.Count
         }).ToList();
 

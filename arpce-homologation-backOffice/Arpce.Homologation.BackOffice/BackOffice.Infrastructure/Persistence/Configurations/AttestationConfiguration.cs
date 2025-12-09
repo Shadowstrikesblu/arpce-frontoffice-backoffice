@@ -21,11 +21,11 @@ public class AttestationConfiguration : IEntityTypeConfiguration<Attestation>
             .IsRequired(); 
 
         builder.Property(a => a.DateDelivrance)
-            .HasColumnType("date") 
+            .HasColumnType("bigint") 
             .IsRequired();
 
         builder.Property(a => a.DateExpiration)
-            .HasColumnType("date")
+            .HasColumnType("bigint")
             .IsRequired();
 
         // Définition de la relation avec Demande (clé étrangère IdDemande)

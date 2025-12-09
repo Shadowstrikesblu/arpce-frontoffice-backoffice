@@ -49,7 +49,7 @@ public class LoginAgentQueryHandler : IRequestHandler<LoginAgentQuery, Authentic
         }
 
         // Met à jour la date de dernière connexion 
-        agent.DerniereConnexion = DateTime.UtcNow;
+        agent.DerniereConnexion = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(); 
         await _context.SaveChangesAsync(cancellationToken);
 
 

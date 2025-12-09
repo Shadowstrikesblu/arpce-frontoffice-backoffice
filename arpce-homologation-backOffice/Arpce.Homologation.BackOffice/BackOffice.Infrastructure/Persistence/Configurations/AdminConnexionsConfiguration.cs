@@ -17,7 +17,7 @@ public class AdminConnexionsConfiguration : IEntityTypeConfiguration<AdminConnex
         builder.HasKey(ac => ac.Id); 
 
         builder.Property(ac => ac.Utilisateur).HasMaxLength(60).IsRequired(); 
-        builder.Property(ac => ac.DateConnexion).HasColumnType("datetime").IsRequired(); 
+        builder.Property(ac => ac.DateConnexion).HasColumnType("bigint").IsRequired(); 
         builder.Property(ac => ac.Ip).HasMaxLength(60);                                 
     }
 }

@@ -38,7 +38,7 @@ public class ModeReglement
     /// <summary>
     /// Date et heure de création de l'entité.
     /// </summary>
-    public DateTime? DateCreation { get; set; }
+    public long? DateCreation { get; set; }
 
     /// <summary>
     /// Nom de l'utilisateur qui a modifié l'entité pour la dernière fois.
@@ -48,5 +48,5 @@ public class ModeReglement
     /// <summary>
     /// Date et heure de la dernière modification de l'entité.
     /// </summary>
-    public DateTime? DateModification { get; set; }
+    public long? DateModification { get; set; }
 }

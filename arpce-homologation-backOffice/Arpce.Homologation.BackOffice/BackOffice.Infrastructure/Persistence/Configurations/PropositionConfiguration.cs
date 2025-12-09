@@ -26,8 +26,8 @@ public class PropositionConfiguration : IEntityTypeConfiguration<Proposition>
 
         // Champs d'audit hérités de AuditableEntity
         builder.Property(p => p.UtilisateurCreation).HasMaxLength(60);
-        builder.Property(p => p.DateCreation).HasColumnType("datetime");
+        builder.Property(p => p.DateCreation).HasColumnType("bigint");
         builder.Property(p => p.UtilisateurModification).HasMaxLength(60);
-        builder.Property(p => p.DateModification).HasColumnType("datetime");
+        builder.Property(p => p.DateModification).HasColumnType("bigint");
     }
 }

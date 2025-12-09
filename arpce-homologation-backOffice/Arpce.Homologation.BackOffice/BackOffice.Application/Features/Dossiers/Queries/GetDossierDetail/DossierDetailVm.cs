@@ -8,7 +8,7 @@ namespace BackOffice.Application.Features.Dossiers.Queries.GetDossierDetail;
 public class DossierDetailVm
 {
     public Guid Id { get; set; }
-    public DateTime DateOuverture { get; set; }
+    public long DateOuverture { get; set; }
     public string Numero { get; set; } = string.Empty;
     public string Libelle { get; set; } = string.Empty;
 

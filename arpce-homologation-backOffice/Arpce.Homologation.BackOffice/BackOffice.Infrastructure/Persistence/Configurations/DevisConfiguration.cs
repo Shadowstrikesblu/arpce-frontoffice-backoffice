@@ -17,7 +17,7 @@ public class DevisConfiguration : IEntityTypeConfiguration<Devis>
         builder.HasKey(d => d.Id); 
 
         builder.Property(d => d.Date)
-            .HasColumnType("date")
+            .HasColumnType("bigint")
             .IsRequired();
 
         builder.Property(d => d.MontantEtude)
@@ -37,8 +37,8 @@ public class DevisConfiguration : IEntityTypeConfiguration<Devis>
 
         // Champs d'audit hérités de AuditableEntity
         builder.Property(c => c.UtilisateurCreation).HasMaxLength(60);
-        builder.Property(c => c.DateCreation).HasColumnType("datetime");
+        builder.Property(c => c.DateCreation).HasColumnType("bigint");
         builder.Property(c => c.UtilisateurModification).HasMaxLength(60);
-        builder.Property(c => c.DateModification).HasColumnType("datetime");
+        builder.Property(c => c.DateModification).HasColumnType("bigint");
     }
 }

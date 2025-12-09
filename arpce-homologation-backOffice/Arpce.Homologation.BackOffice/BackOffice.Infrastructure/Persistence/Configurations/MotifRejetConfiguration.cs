@@ -28,8 +28,8 @@ public class MotifRejetConfiguration : IEntityTypeConfiguration<MotifRejet>
 
         // Champs d'audit hérités de AuditableEntity
         builder.Property(m => m.UtilisateurCreation).HasMaxLength(60);
-        builder.Property(m => m.DateCreation).HasColumnType("datetime");
+        builder.Property(m => m.DateCreation).HasColumnType("bigint");
         builder.Property(m => m.UtilisateurModification).HasMaxLength(60);
-        builder.Property(m => m.DateModification).HasColumnType("datetime");
+        builder.Property(m => m.DateModification).HasColumnType("bigint");
     }
 }

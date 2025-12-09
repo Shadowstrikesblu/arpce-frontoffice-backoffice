@@ -25,7 +25,7 @@ public class DossierConfiguration : IEntityTypeConfiguration<Dossier>
             .IsRequired();
 
         builder.Property(d => d.DateOuverture)
-            .HasColumnType("date")
+            .HasColumnType("bigint")
             .IsRequired();
 
         // Définition des relations principales
@@ -53,8 +53,8 @@ public class DossierConfiguration : IEntityTypeConfiguration<Dossier>
 
         // Champs d'audit hérités de AuditableEntity
         builder.Property(c => c.UtilisateurCreation).HasMaxLength(60);
-        builder.Property(c => c.DateCreation).HasColumnType("datetime");
+        builder.Property(c => c.DateCreation).HasColumnType("bigint");
         builder.Property(c => c.UtilisateurModification).HasMaxLength(60);
-        builder.Property(c => c.DateModification).HasColumnType("datetime");
+        builder.Property(c => c.DateModification).HasColumnType("bigint");
     }
 }

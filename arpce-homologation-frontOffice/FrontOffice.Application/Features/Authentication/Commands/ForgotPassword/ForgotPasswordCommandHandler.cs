@@ -22,7 +22,7 @@ public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordComman
             // Générer un OTP et une date d'expiration
             var code = new Random().Next(100000, 999999).ToString();
             client.VerificationCode = code;
-            client.VerificationTokenExpiry = DateTime.UtcNow.AddMinutes(15);
+            client.VerificationTokenExpiry = DateTimeOffset.UtcNow.AddMinutes(30).ToUnixTimeMilliseconds();
 
             await _context.SaveChangesAsync(cancellationToken);
 

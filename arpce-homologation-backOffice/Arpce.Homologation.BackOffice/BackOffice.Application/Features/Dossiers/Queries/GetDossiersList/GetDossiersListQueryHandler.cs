@@ -3,37 +3,26 @@ using BackOffice.Application.Common.Interfaces;
 using BackOffice.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using BackOffice.Application.Common.Exceptions;
+using BackOffice.Application.Common;
 
 namespace BackOffice.Application.Features.Dossiers.Queries.GetDossiersList;
 
-/// <summary>
-/// Gère la logique de la requête pour obtenir la liste paginée et filtrée de tous les dossiers
-/// pour le Back Office.
-/// </summary>
 public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery, DossiersListVm>
 {
-    // Déclaration unique du contexte
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _currentUserService;
 
-    /// <summary>
-    /// Initialise une nouvelle instance du handler.
-    /// </summary>
     public GetDossiersListQueryHandler(IApplicationDbContext context, ICurrentUserService currentUserService)
     {
         _context = context;
         _currentUserService = currentUserService;
     }
 
-    /// <summary>
-    /// Exécute la requête pour récupérer et traiter la liste des dossiers.
-    /// </summary>
     public async Task<DossiersListVm> Handle(GetDossiersListQuery request, CancellationToken cancellationToken)
     {
-        // Création de la requête de base
         IQueryable<Dossier> query = _context.Dossiers.AsNoTracking();
 
-        // Application des filtres
         if (!string.IsNullOrWhiteSpace(request.Parameters.Recherche))
         {
             var searchTerm = request.Parameters.Recherche.Trim().ToLower();
@@ -50,7 +39,6 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
             query = query.Where(d => d.Statut.Code == statusTerm);
         }
 
-        // Application du tri
         bool isDescending = request.Parameters.Ordre?.ToLower() == "desc";
 
         switch (request.Parameters.TrierPar?.ToLower())
@@ -69,14 +57,12 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
                 break;
         }
 
-        // Comptage
         var totalCount = await query.CountAsync(cancellationToken);
         if (totalCount == 0)
         {
             return new DossiersListVm { Page = request.Parameters.Page, TotalPage = 0, PageTaille = request.Parameters.TaillePage, Dossiers = new() };
         }
 
-        // Pagination et Chargement des données
         var dossiersPaged = await query
             .Include(d => d.Client)
             .Include(d => d.Statut)
@@ -85,11 +71,10 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
             .Take(request.Parameters.TaillePage)
             .ToListAsync(cancellationToken);
 
-        // Mapping
         var dossierDtos = dossiersPaged.Select(dossier => new DossierListItemDto
         {
             Id = dossier.Id,
-            DateOuverture = dossier.DateOuverture,
+            DateOuverture = dossier.DateOuverture.FromUnixTimeMilliseconds(),
             Numero = dossier.Numero,
             Libelle = dossier.Libelle,
             Client = dossier.Client != null ? new ClientDto
@@ -112,7 +97,6 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
             }).ToList()
         }).ToList();
 
-        // Retourne du ViewModel
         var viewModel = new DossiersListVm
         {
             Dossiers = dossierDtos,

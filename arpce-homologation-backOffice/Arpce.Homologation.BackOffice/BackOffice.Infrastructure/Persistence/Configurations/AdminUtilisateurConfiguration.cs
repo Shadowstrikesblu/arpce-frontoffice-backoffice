@@ -22,12 +22,12 @@ public class AdminUtilisateurConfiguration : IEntityTypeConfiguration<AdminUtili
 
         builder.Property(u => u.Desactive).HasColumnType("bit");
         builder.Property(u => u.ChangementMotPasse).HasColumnType("bit");
-        builder.Property(u => u.DerniereConnexion).HasColumnType("datetime");
+        builder.Property(u => u.DerniereConnexion).HasColumnType("bigint");
 
         builder.Property(u => u.UtilisateurCreation).HasMaxLength(60);
-        builder.Property(u => u.DateCreation).HasColumnType("datetime");
+        builder.Property(u => u.DateCreation).HasColumnType("bigint");
         builder.Property(u => u.UtilisateurModification).HasMaxLength(60);
-        builder.Property(u => u.DateModification).HasColumnType("datetime");
+        builder.Property(u => u.DateModification).HasColumnType("bigint");
         builder.Property(u => u.Remarques).HasMaxLength(512);
 
         builder.Property(u => u.IdProfil).IsRequired(false); 
@@ -61,7 +61,7 @@ public class AdminUtilisateurConfiguration : IEntityTypeConfiguration<AdminUtili
                 Desactive = false,
                 ChangementMotPasse = true,
                 DerniereConnexion = null,
-                DateCreation = DateTime.Parse("2025-01-01"),
+                DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
                 UtilisateurCreation = "SYSTEM_SEED"
             }
         );

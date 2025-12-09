@@ -1,6 +1,9 @@
-﻿using BackOffice.Application.Common.Interfaces;
+﻿using BackOffice.Application.Common.Exceptions;
+using BackOffice.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+// AJOUTEZ CETTE LIGNE SI ELLE N'Y EST PAS
+using BackOffice.Application.Common;
 
 namespace BackOffice.Application.Features.Admin.Queries.GetRedevableDetail;
 
@@ -43,15 +46,18 @@ public class GetRedevableDetailQueryHandler : IRequestHandler<GetRedevableDetail
             Pays = client.Pays,
             Remarques = client.Remarques,
             UtilisateurCreation = client.UtilisateurCreation,
-            DateCreation = client.DateCreation,
+
+            // --- CORRECTIONS ---
+            DateCreation = client.DateCreation.FromUnixTimeMilliseconds(),
             UtilisateurModification = client.UtilisateurModification,
-            DateModification = client.DateModification,
+            DateModification = client.DateModification.FromUnixTimeMilliseconds(),
+
             Dossiers = client.Dossiers.Select(d => new DossierRedevableDto
             {
                 Id = d.Id,
                 Numero = d.Numero,
                 Libelle = d.Libelle,
-                DateOuverture = d.DateOuverture,
+                DateOuverture = d.DateOuverture.FromUnixTimeMilliseconds(),
                 StatutLibelle = d.Statut?.Libelle ?? "Inconnu",
                 NombreEquipements = d.Demandes.Count
             }).ToList()

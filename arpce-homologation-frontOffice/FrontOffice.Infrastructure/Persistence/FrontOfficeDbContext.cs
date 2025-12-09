@@ -61,13 +61,13 @@ public class FrontOfficeDbContext : DbContext, IApplicationDbContext
             switch (entry.State)
             {
                 case EntityState.Added:
-                    entry.Entity.UtilisateurCreation = currentUserId; 
-                    entry.Entity.DateCreation = DateTime.UtcNow;
+                    entry.Entity.UtilisateurCreation = currentUserId;
+                    entry.Entity.DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
                     break;
 
                 case EntityState.Modified:
-                    entry.Entity.UtilisateurModification = currentUserId; 
-                    entry.Entity.DateModification = DateTime.UtcNow;
+                    entry.Entity.UtilisateurModification = currentUserId;
+                    entry.Entity.DateModification = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
                     break;
             }
         }

@@ -6,7 +6,8 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore; 
+using Microsoft.EntityFrameworkCore;
+using BackOffice.Application.Common.Exceptions;
 
 namespace BackOffice.Application.Features.Demandes.Commands.UploadCertificat;
 
@@ -48,8 +49,8 @@ public class UploadCertificatCommandHandler : IRequestHandler<UploadCertificatCo
         {
             Id = Guid.NewGuid(),
             IdDemande = demande.Id,
-            DateDelivrance = request.DateDelivrance,
-            DateExpiration = request.DateExpiration,
+            DateDelivrance = new DateTimeOffset(request.DateDelivrance).ToUnixTimeMilliseconds(),
+            DateExpiration = new DateTimeOffset(request.DateExpiration).ToUnixTimeMilliseconds(),
             Donnees = fileData, 
             Extension = Path.GetExtension(file.FileName).TrimStart('.')
         };

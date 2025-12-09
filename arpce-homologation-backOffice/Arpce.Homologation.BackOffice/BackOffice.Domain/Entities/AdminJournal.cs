@@ -6,7 +6,7 @@ public class AdminJournal
     public string Application { get; set; } = string.Empty;
     public string AdresseIP { get; set; } = string.Empty;
     public string Utilisateur { get; set; } = string.Empty;
-    public DateTime DateEvenement { get; set; }
+    public long DateEvenement { get; set; }
     public string Page { get; set; } = string.Empty;
     public string? Libelle { get; set; }
     public Guid? IdDossier { get; set; } 
