@@ -53,9 +53,9 @@ public class DemandeConfiguration : IEntityTypeConfiguration<Demande>
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.Property(c => c.UtilisateurCreation).HasMaxLength(60);
-        builder.Property(c => c.DateCreation).HasColumnType("datetime");
+        builder.Property(c => c.DateCreation).HasColumnType("bigint");
         builder.Property(c => c.UtilisateurModification).HasMaxLength(60);
-        builder.Property(c => c.DateModification).HasColumnType("datetime");
+        builder.Property(c => c.DateModification).HasColumnType("bigint");
 
         builder.Property(d => d.EstHomologable)
             .HasColumnType("bit") 

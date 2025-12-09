@@ -1,4 +1,5 @@
-﻿using BackOffice.Application.Common.Interfaces;
+﻿using BackOffice.Application.Common.Exceptions;
+using BackOffice.Application.Common.Interfaces;
 using BackOffice.Domain.Entities; 
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -62,8 +63,8 @@ public class GetAdminUsersListQueryHandler : IRequestHandler<GetAdminUsersListQu
             ChangementMotPasse = u.ChangementMotPasse,
             Desactive = u.Desactive,
             Remarques = u.Remarques,
-            DerniereConnexion = u.DerniereConnexion,
-            DateCreation = u.DateCreation,
+            DerniereConnexion = u.DerniereConnexion.FromUnixTimeMilliseconds(),
+            DateCreation = u.DateCreation.FromUnixTimeMilliseconds(),
             TypeUtilisateur = u.UtilisateurType != null ? new AdminUserTypeSimpleDto
             {
                 Libelle = u.UtilisateurType.Libelle

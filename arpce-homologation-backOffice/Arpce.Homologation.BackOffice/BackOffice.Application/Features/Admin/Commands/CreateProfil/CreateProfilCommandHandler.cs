@@ -24,7 +24,7 @@ public class CreateProfilCommandHandler : IRequestHandler<CreateProfilCommand, b
             Code = request.Code,
             Libelle = request.Libelle,
             Remarques = request.Remarques,
-            DateCreation = DateTime.UtcNow
+            DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
         };
 
         _context.AdminProfils.Add(profil);

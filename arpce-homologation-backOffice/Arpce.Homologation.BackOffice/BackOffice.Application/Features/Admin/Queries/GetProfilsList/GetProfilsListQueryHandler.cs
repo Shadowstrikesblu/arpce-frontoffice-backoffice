@@ -1,4 +1,5 @@
 ﻿using BackOffice.Application.Common.DTOs;
+using BackOffice.Application.Common.Exceptions;
 using BackOffice.Application.Common.Interfaces;
 using BackOffice.Application.Features.Authentication.Queries.CheckToken;
 using BackOffice.Domain.Entities;
@@ -45,7 +46,7 @@ public class GetProfilsListQueryHandler : IRequestHandler<GetProfilsListQuery, P
             Libelle = p.Libelle,
             Remarques = p.Remarques,
             UtilisateurCreation = p.UtilisateurCreation,
-            DateCreation = p.DateCreation,
+            DateCreation = p.DateCreation.FromUnixTimeMilliseconds(),
             Utilisateurs = p.Utilisateurs.Select(u => new AdminUserSimpleDto { Id = u.Id, Compte = u.Compte, Nom = u.Nom, Prenoms = u.Prenoms }).ToList(),
             UtilisateursLDAP = p.AdminProfilsUtilisateursLDAP.Select(l => new AdminProfilsUtilisateursLDAPDto { Utilisateur = l.Utilisateur, IdProfil = l.IdProfil }).ToList(),
             Acces = p.AdminProfilsAcces.Select(a => new AdminProfilAccesDto

@@ -5,6 +5,8 @@ using BackOffice.Domain.Entities;
 using BackOffice.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using BackOffice.Application.Common.Exceptions;
+using BackOffice.Application.Common;
 
 namespace BackOffice.Application.Features.Documents.Queries.GetPaiementsList;
 
@@ -19,7 +21,6 @@ public class GetPaiementsListQueryHandler : IRequestHandler<GetPaiementsListQuer
 
     public async Task<DocumentListVm> Handle(GetPaiementsListQuery request, CancellationToken cancellationToken)
     {
-        // Statut cible : Dossier payé (DossierPayer) - Assurez-vous que cet enum existe
         var targetStatus = StatutDossierEnum.DossierPayer.ToString();
 
         IQueryable<Dossier> query = _context.Dossiers.AsNoTracking();
@@ -59,7 +60,7 @@ public class GetPaiementsListQueryHandler : IRequestHandler<GetPaiementsListQuer
                     Libelle = d.Libelle,
                     Devis = devis != null ? new DevisInfoInDocDto
                     {
-                        Date = devis.Date,
+                        Date = devis.Date.FromUnixTimeMilliseconds(),
                         MontantEtude = devis.MontantEtude,
                         MontantHomologation = devis.MontantHomologation,
                         MontantControle = devis.MontantControle,

@@ -20,7 +20,7 @@ public class AdminJournalConfiguration : IEntityTypeConfiguration<AdminJournal>
         builder.Property(aj => aj.Application).HasMaxLength(120).IsRequired(); 
         builder.Property(aj => aj.AdresseIP).HasMaxLength(120).IsRequired();   
         builder.Property(aj => aj.Utilisateur).HasMaxLength(120).IsRequired(); 
-        builder.Property(aj => aj.DateEvenement).HasColumnType("datetime").IsRequired(); 
+        builder.Property(aj => aj.DateEvenement).HasColumnType("bigint").IsRequired(); 
         builder.Property(aj => aj.Page).HasMaxLength(120).IsRequired();        
         builder.Property(aj => aj.Libelle).HasMaxLength(255);                
 

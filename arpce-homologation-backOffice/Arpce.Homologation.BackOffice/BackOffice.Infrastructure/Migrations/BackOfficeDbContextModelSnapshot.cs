@@ -82,8 +82,8 @@ namespace BackOffice.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DateConnexion")
-                        .HasColumnType("datetime");
+                    b.Property<long>("DateConnexion")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Ip")
                         .HasMaxLength(60)
@@ -121,61 +121,61 @@ namespace BackOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("263a9c09-801d-4997-963d-928c2c2a5bff"),
+                            Id = new Guid("8a749a85-a248-4671-b6cb-5a399e7b92b1"),
                             Code = "CREATION",
                             Libelle = "Création de données"
                         },
                         new
                         {
-                            Id = new Guid("70ee37d2-cfd2-48a2-935b-001d0b77bd28"),
+                            Id = new Guid("ec2c74ec-e9fd-41b7-b960-bb9013c4df85"),
                             Code = "MODIFICATION",
                             Libelle = "Modification de données"
                         },
                         new
                         {
-                            Id = new Guid("3f23dbc9-c370-4707-9312-0661b9ef1c25"),
+                            Id = new Guid("a80eabd9-f0ea-4d58-b3bd-5aeb0f6ac9b4"),
                             Code = "SUPPRESSION",
                             Libelle = "Suppression de données"
                         },
                         new
                         {
-                            Id = new Guid("5e5dd1d9-0980-4284-980a-ee1852b76b41"),
+                            Id = new Guid("5e55129d-98e8-43d5-b90a-8caad34f4fa3"),
                             Code = "VALIDATION",
                             Libelle = "Validation de processus"
                         },
                         new
                         {
-                            Id = new Guid("67c852b9-389a-4eb3-a5ff-909e495e67fe"),
+                            Id = new Guid("cbb297fa-56e3-44fe-9c79-7fc07d632e47"),
                             Code = "CONNEXION",
                             Libelle = "Modification"
                         },
                         new
                         {
-                            Id = new Guid("d328af29-e167-4883-82cb-7070bb68003c"),
+                            Id = new Guid("2955437d-103c-44bb-a47e-ad59b8637450"),
                             Code = "MODIFICATION",
                             Libelle = "Connexion utilisateur"
                         },
                         new
                         {
-                            Id = new Guid("0332324d-d489-48e9-a167-06ba72f1ea43"),
+                            Id = new Guid("b6ea1763-7045-4aa6-8d2d-2bfdb8aadd43"),
                             Code = "ATTRIBUTION",
                             Libelle = "Attribution de droits/profils"
                         },
                         new
                         {
-                            Id = new Guid("d20aff18-082b-408c-9426-eccd1da0036e"),
+                            Id = new Guid("5e6fb52f-febb-495f-b9b5-5198b9fec121"),
                             Code = "SECURITE",
                             Libelle = "Action de sécurité"
                         },
                         new
                         {
-                            Id = new Guid("9896f722-b648-40b3-b119-013fee9f5523"),
+                            Id = new Guid("5b717876-c345-4399-9adb-85230c9f6deb"),
                             Code = "COMMUNICATION",
                             Libelle = "Envoi de communication"
                         },
                         new
                         {
-                            Id = new Guid("783c67f9-acd9-4931-bda6-c04b1340db14"),
+                            Id = new Guid("f8499e5b-3bf6-4fb2-b2f3-a15d569a8cfe"),
                             Code = "QUALIFICATION",
                             Libelle = "Qualification de données"
                         });
@@ -197,8 +197,8 @@ namespace BackOffice.Infrastructure.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
-                    b.Property<DateTime>("DateEvenement")
-                        .HasColumnType("datetime");
+                    b.Property<long>("DateEvenement")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid?>("DossierId")
                         .HasColumnType("uniqueidentifier");
@@ -330,11 +330,11 @@ namespace BackOffice.Infrastructure.Migrations
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
 
-                    b.Property<DateTime?>("DateCreation")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("DateModification")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Libelle")
                         .IsRequired()
@@ -456,14 +456,14 @@ namespace BackOffice.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTime?>("DateCreation")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("DateModification")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("DerniereConnexion")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DerniereConnexion")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("Desactive")
                         .HasColumnType("bit");
@@ -515,13 +515,13 @@ namespace BackOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("88470286-364f-436b-a493-a6deaf76fd75"),
+                            Id = new Guid("09cd7f49-c536-4f7c-9f8a-c77442d071c3"),
                             ChangementMotPasse = true,
                             Compte = "admin",
-                            DateCreation = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateCreation = 1765249942993L,
                             Desactive = false,
                             IdUtilisateurType = new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"),
-                            MotPasse = "$2a$11$fUG72GORad7dOeOhA2GfA.k2clywHzP6nJ/SRGMNqlGLgG9EQ6cEK",
+                            MotPasse = "$2a$11$9kpMlakEzMzwyUUGazvE1u7OZs7KShBxlF3uhn.lLXoyTlNCcSZ7C",
                             Nom = "Administrateur",
                             Prenoms = "ARPCE",
                             UtilisateurCreation = "SYSTEM_SEED"
@@ -551,12 +551,12 @@ namespace BackOffice.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("aab35ca3-d6b0-400e-9d14-c1a3075ba150"),
+                            Id = new Guid("c58fe069-9f47-49df-97b4-0bc2c6a82d57"),
                             Libelle = "Utilisateur Standard"
                         },
                         new
                         {
-                            Id = new Guid("02dfd0d6-a310-462c-8589-edeb23165a6d"),
+                            Id = new Guid("5cdd3f85-4ea4-44ff-8efc-0d1fa17b5362"),
                             Libelle = "Auditeur"
                         });
                 });
@@ -567,11 +567,11 @@ namespace BackOffice.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DateDelivrance")
-                        .HasColumnType("date");
+                    b.Property<long>("DateDelivrance")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime>("DateExpiration")
-                        .HasColumnType("date");
+                    b.Property<long>("DateExpiration")
+                        .HasColumnType("bigint");
 
                     b.Property<byte[]>("Donnees")
                         .HasColumnType("varbinary(max)");
@@ -602,11 +602,11 @@ namespace BackOffice.Infrastructure.Migrations
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
 
-                    b.Property<DateTime?>("DateCreation")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("DateModification")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("FormuleHomologation")
                         .HasMaxLength(255)
@@ -699,11 +699,11 @@ namespace BackOffice.Infrastructure.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<DateTime?>("DateCreation")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("DateModification")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
 
                     b.Property<byte?>("Desactive")
                         .HasColumnType("tinyint");
@@ -762,8 +762,8 @@ namespace BackOffice.Infrastructure.Migrations
                         .HasMaxLength(6)
                         .HasColumnType("nvarchar(6)");
 
-                    b.Property<DateTime?>("VerificationTokenExpiry")
-                        .HasColumnType("datetime2");
+                    b.Property<long?>("VerificationTokenExpiry")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Ville")
                         .HasMaxLength(100)
@@ -785,14 +785,14 @@ namespace BackOffice.Infrastructure.Migrations
                         .HasColumnType("nvarchar(512)")
                         .HasColumnName("commentaire");
 
-                    b.Property<DateTime>("DateCommentaire")
-                        .HasColumnType("datetime");
+                    b.Property<long>("DateCommentaire")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("DateCreation")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("DateModification")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid>("IdDossier")
                         .HasColumnType("uniqueidentifier");
@@ -834,11 +834,11 @@ namespace BackOffice.Infrastructure.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
-                    b.Property<DateTime?>("DateCreation")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("DateModification")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Description")
                         .HasMaxLength(512)
@@ -921,14 +921,14 @@ namespace BackOffice.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("date");
+                    b.Property<long>("Date")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("DateCreation")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("DateModification")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid>("IdDossier")
                         .HasColumnType("uniqueidentifier");
@@ -970,11 +970,11 @@ namespace BackOffice.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreation")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("DateModification")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
 
                     b.Property<byte[]>("Donnees")
                         .HasColumnType("varbinary(max)");
@@ -1016,11 +1016,11 @@ namespace BackOffice.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreation")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("DateModification")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
 
                     b.Property<byte[]>("Donnees")
                         .HasColumnType("varbinary(max)");
@@ -1065,14 +1065,14 @@ namespace BackOffice.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DateCreation")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("DateModification")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime>("DateOuverture")
-                        .HasColumnType("date");
+                    b.Property<long>("DateOuverture")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid?>("IdAgentInstructeur")
                         .HasColumnType("uniqueidentifier");
@@ -1128,11 +1128,11 @@ namespace BackOffice.Infrastructure.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
-                    b.Property<DateTime?>("DateCreation")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("DateModification")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Libelle")
                         .IsRequired()
@@ -1161,28 +1161,28 @@ namespace BackOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1b99351c-d90a-42a0-821d-35a8d373b380"),
+                            Id = new Guid("5cdf7e8e-024e-47a7-a864-f698baa45c26"),
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("a7178787-7b1d-4b62-8aea-fc545b3330d7"),
+                            Id = new Guid("8ef5fcaa-25b3-466b-89a8-9606dd9f2d9b"),
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("0ecaf06d-899e-48d3-bf6e-e13991a6b229"),
+                            Id = new Guid("813dbf7d-3a12-4ec7-8b69-a0dc63d20013"),
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("d01004b4-8383-444d-bf63-95f1bd3efe1e"),
+                            Id = new Guid("bc12430d-7126-4c06-a424-e844570c0d71"),
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1
@@ -1200,11 +1200,11 @@ namespace BackOffice.Infrastructure.Migrations
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
 
-                    b.Property<DateTime?>("DateCreation")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("DateModification")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Libelle")
                         .IsRequired()
@@ -1239,11 +1239,11 @@ namespace BackOffice.Infrastructure.Migrations
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
 
-                    b.Property<DateTime?>("DateCreation")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("DateModification")
-                        .HasColumnType("datetime");
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Libelle")
                         .IsRequired()
@@ -1286,97 +1286,103 @@ namespace BackOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7d56c7ef-d5ba-402c-97af-d3cfb92c6f32"),
+                            Id = new Guid("c6cde884-a9b4-4344-969d-00e2a2ca4466"),
                             Code = "NouveauDossier",
                             Libelle = "Nouvelle demande"
                         },
                         new
                         {
-                            Id = new Guid("11efba0c-70e4-48c4-9589-9e275d3ede32"),
+                            Id = new Guid("6b32d0f1-e83d-4902-b7be-d8e03e330653"),
                             Code = "RefusDossier",
                             Libelle = "Refus de la demande"
                         },
                         new
                         {
-                            Id = new Guid("2ed57986-a1f1-4adf-9088-b07350616385"),
+                            Id = new Guid("8f58b0e3-8be4-4fbc-a03e-232137c008f9"),
                             Code = "Instruction",
                             Libelle = "En cours d'instruction"
                         },
                         new
                         {
-                            Id = new Guid("9edad74e-f770-40eb-8e43-7185f1099082"),
+                            Id = new Guid("7b0e1093-6f07-400e-8314-4e50c908e2bd"),
                             Code = "ApprobationInstruction",
                             Libelle = "Envoyé pour approbation"
                         },
                         new
                         {
-                            Id = new Guid("4a26211e-42cb-4913-814c-659986d418e8"),
+                            Id = new Guid("153f2f2f-3dba-4d7b-8b04-b0694fe56b84"),
                             Code = "InstructionApprouve",
                             Libelle = "Instruction Approuvée"
                         },
                         new
                         {
-                            Id = new Guid("24ff51f7-f933-46b6-b242-24649aeea117"),
+                            Id = new Guid("4928f3cd-d765-4df8-b8f4-28c158568f4c"),
                             Code = "DevisCreer",
                             Libelle = "Devis créé"
                         },
                         new
                         {
-                            Id = new Guid("c8d9fd74-1ee2-4461-8e68-596bec7c0496"),
+                            Id = new Guid("6b7ae6ac-a6a0-481f-8876-0c03fb5011b4"),
                             Code = "DevisValideSC",
                             Libelle = "Devis validé par Chef Service"
                         },
                         new
                         {
-                            Id = new Guid("52ec3ca1-c2ab-4fc9-9844-6e94d756218d"),
+                            Id = new Guid("6dc44468-4905-4126-9b35-426fb9ac1c02"),
                             Code = "DevisValideTr",
                             Libelle = "Devis validé par Trésorerie"
                         },
                         new
                         {
-                            Id = new Guid("95737168-461e-442d-a33f-ac2345668d2a"),
+                            Id = new Guid("59f06244-7a09-4217-a180-d2d69846036e"),
                             Code = "DevisEmit",
                             Libelle = "Devis émis"
                         },
                         new
                         {
-                            Id = new Guid("400ccd2c-5afa-40c7-b16d-386745603b72"),
+                            Id = new Guid("39a78829-cb4e-450d-a8f4-23ea0dd97518"),
                             Code = "DevisValide",
                             Libelle = "Devis validé par client"
                         },
                         new
                         {
-                            Id = new Guid("7b8eb3ca-ef46-43c0-9ed8-f20f278ddbd2"),
+                            Id = new Guid("f638942a-9601-4bbf-9f63-90c23d019a8e"),
                             Code = "DevisRefuser",
                             Libelle = "Devis refusé par client"
                         },
                         new
                         {
-                            Id = new Guid("ba26384e-f01c-43ab-b6b1-9c9a4015a76c"),
+                            Id = new Guid("ee4e2878-23c5-4188-918c-3e3bae271b3e"),
+                            Code = "DevisPaiement",
+                            Libelle = "En attente de paiement"
+                        },
+                        new
+                        {
+                            Id = new Guid("f7446050-3bcd-4ab2-b203-16cc37e6419b"),
                             Code = "PaiementRejete",
                             Libelle = "Paiement non accepté"
                         },
                         new
                         {
-                            Id = new Guid("b78566b4-a201-4b42-9807-1ddc31bceda8"),
+                            Id = new Guid("b358fcd4-4b06-45e5-94ef-4533635f9ca7"),
                             Code = "PaiementExpirer",
                             Libelle = "Paiement expiré"
                         },
                         new
                         {
-                            Id = new Guid("4921955b-0c32-448f-b12c-cd2aab312a33"),
+                            Id = new Guid("29d70d7e-e979-4662-bf5c-840f808cff31"),
                             Code = "DossierPayer",
                             Libelle = "Paiement effectué"
                         },
                         new
                         {
-                            Id = new Guid("a097573e-69c5-40aa-b764-d9cfb056efcb"),
+                            Id = new Guid("ca74bf48-e5e6-4c8e-9f21-f53e09f5fdaf"),
                             Code = "DossierSignature",
                             Libelle = "Attestation en signature"
                         },
                         new
                         {
-                            Id = new Guid("67be2cdf-a781-4227-a9b1-571f43bfe206"),
+                            Id = new Guid("c185544c-129b-4e7a-901f-76bfb6eaaa93"),
                             Code = "DossierSigner",
                             Libelle = "Attestation signée"
                         });

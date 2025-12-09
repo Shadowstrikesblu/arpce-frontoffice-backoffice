@@ -37,7 +37,7 @@ public class AuditService : IAuditService
             Application = "BackOffice",
             AdresseIP = _httpContextAccessor.HttpContext?.Connection?.RemoteIpAddress?.ToString() ?? "N/A",
             Utilisateur = userName,
-            DateEvenement = DateTime.UtcNow,
+            DateEvenement = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
             Page = page,
             Libelle = libelle,
             IdEvenementType = eventType.Id,

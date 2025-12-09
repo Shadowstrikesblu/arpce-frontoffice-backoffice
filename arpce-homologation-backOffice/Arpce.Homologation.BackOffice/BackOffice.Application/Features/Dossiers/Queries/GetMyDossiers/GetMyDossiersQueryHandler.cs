@@ -1,4 +1,5 @@
 ﻿using BackOffice.Application.Common.DTOs;
+using BackOffice.Application.Common.Exceptions;
 using BackOffice.Application.Common.Interfaces;
 using BackOffice.Application.Features.Dossiers.Queries.GetDossiersList; 
 using MediatR;
@@ -87,7 +88,7 @@ public class GetMyDossiersQueryHandler : IRequestHandler<GetMyDossiersQuery, Dos
         var dossierDtos = dossiersPaged.Select(dossier => new DossierListItemDto
         {
             Id = dossier.Id,
-            DateOuverture = dossier.DateOuverture,
+            DateOuverture = dossier.DateOuverture.FromUnixTimeMilliseconds(),
             Numero = dossier.Numero,
             Libelle = dossier.Libelle,
             Client = dossier.Client != null ? new ClientDto { Id = dossier.Client.Id, RaisonSociale = dossier.Client.RaisonSociale } : null,

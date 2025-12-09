@@ -1,4 +1,5 @@
 ﻿using BackOffice.Application.Common.DTOs.Documents;
+using BackOffice.Application.Common.Exceptions;
 using BackOffice.Application.Common.Interfaces;
 using BackOffice.Domain.Entities; 
 using BackOffice.Domain.Enums;
@@ -63,7 +64,7 @@ public class GetFacturesListQueryHandler : IRequestHandler<GetFacturesListQuery,
                     Libelle = d.Libelle,
                     Devis = devis != null ? new DevisInfoInDocDto
                     {
-                        Date = devis.Date,
+                        Date = devis.Date.FromUnixTimeMilliseconds(),
                         MontantEtude = devis.MontantEtude,
                         MontantHomologation = devis.MontantHomologation,
                         MontantControle = devis.MontantControle,

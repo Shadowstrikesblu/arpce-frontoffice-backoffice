@@ -43,7 +43,7 @@ public class RejectDossierCommandHandler : IRequestHandler<RejectDossierCommand,
                 Code = request.MotifRejet.Code,
                 Libelle = request.MotifRejet.Libelle,
                 Remarques = request.MotifRejet.Remarques,
-                DateCreation = DateTime.UtcNow
+                DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
             };
             _context.MotifsRejets.Add(motif);
             // Sauvegarde pour avoir l'ID si on vient de le créer
@@ -64,7 +64,7 @@ public class RejectDossierCommandHandler : IRequestHandler<RejectDossierCommand,
         {
             Id = Guid.NewGuid(),
             IdDossier = dossier.Id,
-            DateCommentaire = DateTime.UtcNow,
+            DateCommentaire = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
             CommentaireTexte = $"Dossier REJETÉ. Motif : {motif.Libelle}. Remarques : {motif.Remarques}",
             NomInstructeur = "Système/Agent" // Idéalement, récupérer le nom de l'agent via ICurrentUserService
         };

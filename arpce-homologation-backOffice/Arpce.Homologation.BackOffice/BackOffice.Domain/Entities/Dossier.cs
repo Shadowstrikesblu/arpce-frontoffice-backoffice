@@ -6,7 +6,7 @@ public class Dossier : AuditableEntity
     public Guid IdClient { get; set; }
     public Guid IdStatut { get; set; }
     public Guid? IdModeReglement { get; set; }
-    public DateTime DateOuverture { get; set; }
+    public long DateOuverture { get; set; }
     public string Numero { get; set; } = string.Empty;
     public string Libelle { get; set; } = string.Empty;
 

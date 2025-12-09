@@ -52,7 +52,7 @@ public class LoginLdapQueryHandler : IRequestHandler<LoginLdapQuery, Authenticat
                 Compte = request.Username,
                 Nom = request.Username,
                 IdProfil = profil.Id,
-                DateCreation = DateTime.UtcNow,
+                DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
                 Desactive = false,
                 ChangementMotPasse = false
             };
@@ -61,7 +61,7 @@ public class LoginLdapQueryHandler : IRequestHandler<LoginLdapQuery, Authenticat
         else
         {
             adminUser.IdProfil = profil.Id; // Mise à jour du profil
-            adminUser.DerniereConnexion = DateTime.UtcNow;
+            adminUser.DerniereConnexion = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         }
 
         await _context.SaveChangesAsync(cancellationToken);

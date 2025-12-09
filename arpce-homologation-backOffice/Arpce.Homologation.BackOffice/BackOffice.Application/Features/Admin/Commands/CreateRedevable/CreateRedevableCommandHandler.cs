@@ -45,8 +45,8 @@ public class CreateRedevableCommandHandler : IRequestHandler<CreateRedevableComm
             Pays = request.Pays,
             Remarques = request.Remarques,
             IsVerified = true,
-            ChangementMotPasse = 1, 
-            DateCreation = DateTime.UtcNow
+            ChangementMotPasse = 1,
+            DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
         };
 
         _context.Clients.Add(client);

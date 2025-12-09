@@ -2,6 +2,8 @@
 using BackOffice.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using BackOffice.Application.Common.Exceptions;
+using BackOffice.Application.Common;
 
 namespace BackOffice.Application.Features.Documents.Queries.GetAttestationsList;
 
@@ -41,15 +43,16 @@ public class GetAttestationsListQueryHandler : IRequestHandler<GetAttestationsLi
 
         var items = attestations.Select(a => new AttestationItemDto
         {
-            DateDelivrance = a.DateDelivrance,
-            DateExpiration = a.DateExpiration,
+            
+            DateDelivrance = a.DateDelivrance.FromUnixTimeMilliseconds(),
+            DateExpiration = a.DateExpiration.FromUnixTimeMilliseconds(),
             Extension = a.Extension,
-            Url = $"/api/documents/attestation/{a.Id}", 
+            Url = $"/api/documents/attestation/{a.Id}",
             Dossier = new DossierSimpleDto
             {
                 Numero = a.Demande.Dossier.Numero,
                 Libelle = a.Demande.Dossier.Libelle,
-                Url = $"/api/dossiers/{a.Demande.Dossier.Id}" 
+                Url = $"/api/dossiers/{a.Demande.Dossier.Id}"
             }
         }).ToList();
 

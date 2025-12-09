@@ -107,14 +107,14 @@ public class BackOfficeDbContext : DbContext, IApplicationDbContext
             {
                 case EntityState.Added:
                     // Pour une nouvelle entité, remplit les champs de création.
-                    entry.Entity.UtilisateurCreation = currentUserId ?? "SYSTEM_BO"; 
-                    entry.Entity.DateCreation = DateTime.UtcNow;
+                    entry.Entity.UtilisateurCreation = currentUserId ?? "SYSTEM_BO";
+                    entry.Entity.DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
                     break;
 
                 case EntityState.Modified:
                     // Pour une entité modifiée, remplit les champs de modification.
                     entry.Entity.UtilisateurModification = currentUserId ?? "SYSTEM_BO";
-                    entry.Entity.DateModification = DateTime.UtcNow;
+                    entry.Entity.DateModification = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
                     break;
             }
         }
