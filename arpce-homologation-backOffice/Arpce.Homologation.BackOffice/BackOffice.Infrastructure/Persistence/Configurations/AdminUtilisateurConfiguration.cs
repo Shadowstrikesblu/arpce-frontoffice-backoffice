@@ -67,7 +67,7 @@ public class AdminUtilisateurConfiguration : IEntityTypeConfiguration<AdminUtili
                 IdUtilisateurType = adminTypeId,
                 IdProfil = null,
                 Compte = "admin",
-                Nom = "Administrateur", 
+                Nom = "root", 
                 Prenoms = "ARPCE",
                 MotPasse = adminPasswordHash,
                 Desactive = false,
