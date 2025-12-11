@@ -23,6 +23,7 @@ public enum StatutDossierEnum
     DossierPayer = 15, 
     DossierSignature = 16,
     DossierSigne = 17,
+    Echantillon = 18,
     Exempt = 99,
     Paid = 100 
 }

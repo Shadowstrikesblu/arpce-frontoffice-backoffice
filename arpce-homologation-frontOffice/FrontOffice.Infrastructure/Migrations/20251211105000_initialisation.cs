@@ -102,9 +102,9 @@ namespace FrontOffice.Infrastructure.Migrations
                     Libelle = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     Remarques = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
                     UtilisateurCreation = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateCreation = table.Column<DateTime>(type: "smalldatetime", nullable: true),
+                    DateCreation = table.Column<long>(type: "bigint", nullable: true),
                     UtilisateurModification = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateModification = table.Column<DateTime>(type: "smalldatetime", nullable: true)
+                    DateModification = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -152,9 +152,9 @@ namespace FrontOffice.Infrastructure.Migrations
                     TarifControle = table.Column<decimal>(type: "money", nullable: true),
                     Remarques = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
                     UtilisateurCreation = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateCreation = table.Column<DateTime>(type: "smalldatetime", nullable: true),
+                    DateCreation = table.Column<long>(type: "bigint", nullable: true),
                     UtilisateurModification = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DateModification = table.Column<DateTime>(type: "smalldatetime", nullable: true)
+                    DateModification = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -589,10 +589,10 @@ namespace FrontOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "DateCreation", "DateModification", "Libelle", "MobileBanking", "Remarques", "UtilisateurCreation", "UtilisateurModification" },
                 values: new object[,]
                 {
-                    { new Guid("32475333-ef90-4d5c-9549-951a7aee4a63"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
-                    { new Guid("3576f8e0-dca6-4b41-a239-17c6f3e95986"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
-                    { new Guid("7f381aa7-713d-4e29-8ba1-95c97238beec"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
-                    { new Guid("c71c4161-f06b-432f-8e2c-3603718c5af8"), "Cheque", null, null, "Chèque", (byte)0, null, null, null }
+                    { new Guid("6b0caa08-80dd-4a61-a2bd-bec20fbaf2ba"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
+                    { new Guid("98323566-b28f-41b4-9d0f-f22b46c3f85d"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
+                    { new Guid("d5310f58-41b5-41d9-95bc-5d1839fafa59"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
+                    { new Guid("e1ba5c8d-1874-4272-8f0d-aee263583da5"), "Cheque", null, null, "Chèque", (byte)0, null, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -600,23 +600,24 @@ namespace FrontOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "Libelle" },
                 values: new object[,]
                 {
-                    { new Guid("0c24baa5-c687-4c6f-ba55-7d37f4b787d6"), "NouveauDossier", "Nouvelle demande" },
-                    { new Guid("143875bb-8116-47d9-a81e-0ff328fdc6fe"), "DevisValideTr", "Devis validé par Trésorerie" },
-                    { new Guid("39cd1c7c-d6eb-420d-a4f0-b33c357f8272"), "RefusDossier", "Refus de la demande" },
-                    { new Guid("3eb585c7-0a61-40a5-8550-1df3212840ce"), "DevisRefuser", "Devis refusé par client" },
-                    { new Guid("4da53a8e-63c7-45bd-8608-20b5a522bef1"), "DevisValide", "Devis validé par client" },
-                    { new Guid("57307c78-7557-4a19-b5fc-9558834c7596"), "DevisEmit", "Devis émis" },
-                    { new Guid("64f32eae-f7cb-4c6e-99bc-a8683f256541"), "DevisPaiement", "En attente de paiement" },
-                    { new Guid("83bb6d9d-c28a-4887-be7d-19f82080fc52"), "DevisValideSC", "Devis validé par Chef Service" },
-                    { new Guid("879f1b63-7e86-45fb-ba8b-d8d76cd6d740"), "ApprobationInstruction", "Envoyé pour approbation" },
-                    { new Guid("9afd0e0a-2c8e-4278-b315-2136caa51460"), "DossierSigner", "Attestation signée" },
-                    { new Guid("9b6a575b-c89a-4227-90c9-957e9cb1cd99"), "PaiementExpirer", "Paiement expiré" },
-                    { new Guid("c75454fe-e700-44ac-9522-9d4cae52e879"), "DossierSignature", "Attestation en signature" },
-                    { new Guid("cda11aa4-cd92-4139-9f70-d1507129887d"), "InstructionApprouve", "Instruction Approuvée" },
-                    { new Guid("ed9509da-1a4e-455f-bb02-cd9d8d479d5c"), "Instruction", "En cours d'instruction" },
-                    { new Guid("f0192bc1-e618-4aa8-a8d2-c7874dfd360a"), "DevisCreer", "Devis créé" },
-                    { new Guid("f1c214c9-0ce3-464d-b666-168598a78912"), "DossierPayer", "Paiement effectué" },
-                    { new Guid("f6f6cad6-2fae-4445-aa8a-d6f95b557af9"), "PaiementRejete", "Paiement non accepté" }
+                    { new Guid("0c47f66c-3ae3-4dbf-af5b-1b7eb3f2a213"), "PaiementRejete", "Paiement non accepté" },
+                    { new Guid("0d4f6e52-ad8e-4b67-9a11-985b66dca204"), "ApprobationInstruction", "Envoyé pour approbation" },
+                    { new Guid("0e9a8bb4-7989-4eb8-9f21-4f9b7ffca216"), "DossierSignature", "Attestation en signature" },
+                    { new Guid("1a173ab7-6db7-4b9f-906e-a85352a4a212"), "DevisPaiement", "En attente de paiement" },
+                    { new Guid("33b7bd1d-5901-4afe-be70-d4c10e3fa215"), "DossierPayer", "Paiement effectué" },
+                    { new Guid("3b9ed3a1-1e24-4d0c-8f13-7c55c9baa203"), "Instruction", "En cours d'instruction" },
+                    { new Guid("84c6d32b-1f44-4fbd-8c91-12e3b5e0a205"), "InstructionApprouve", "Instruction Approuvée" },
+                    { new Guid("8c2bc784-06a3-4d73-a9f4-5f6d94a7a210"), "DevisValide", "Devis validé par client" },
+                    { new Guid("9f1c2f69-5d8e-4ec8-a6a1-0aa1e1c5a201"), "NouveauDossier", "Nouvelle demande" },
+                    { new Guid("a7c55954-7b1c-4f43-9cc4-1f2af3cca202"), "RefusDossier", "Refus de la demande" },
+                    { new Guid("ae906d70-a1c2-4b2a-8db7-b22c6d4ca207"), "DevisValideSC", "Devis validé par Chef Service" },
+                    { new Guid("ccf4f5b7-8be7-4f01-9c09-fa5522d6a209"), "DevisEmit", "Devis émis" },
+                    { new Guid("cd3c7e21-6909-4a29-9f0e-90e9ac2da211"), "DevisRefuser", "Devis refusé par client" },
+                    { new Guid("d62e63cb-4c2f-4e24-b5a2-8fae11e0a206"), "DevisCreer", "Devis créé" },
+                    { new Guid("df4bb5aa-17d5-4c04-8545-48f59c59a214"), "PaiementExpirer", "Paiement expiré" },
+                    { new Guid("ed13c54b-5e63-4a0f-a0a7-332a7c27a217"), "DossierSigner", "Attestation signée" },
+                    { new Guid("f1a2b3c4-d5e6-4f78-9012-34567890a218"), "Echantillon", "En attente échantillon" },
+                    { new Guid("fc01b3e8-82d8-4e55-953f-0fc9edb2a208"), "DevisValideTr", "Devis validé par Trésorerie" }
                 });
 
             migrationBuilder.CreateIndex(
