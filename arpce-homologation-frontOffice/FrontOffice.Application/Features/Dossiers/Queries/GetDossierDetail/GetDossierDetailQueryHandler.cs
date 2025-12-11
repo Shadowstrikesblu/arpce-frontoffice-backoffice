@@ -151,7 +151,7 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                 Nom = doc.Nom,
                 Type = doc.Type,
                 Extension = doc.Extension,
-                FilePath = doc.FilePath
+                FilePath = doc.FilePath 
             }).ToList(),
 
             Attestations = dossier.Demandes.SelectMany(dem => dem.Attestations)

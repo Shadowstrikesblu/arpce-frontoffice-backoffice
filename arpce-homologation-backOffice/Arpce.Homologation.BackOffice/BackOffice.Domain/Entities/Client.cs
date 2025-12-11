@@ -21,7 +21,6 @@ public class Client : AuditableEntity
 
     public string? Email { get; set; }
 
-    // --- NOUVEAUX CHAMPS COMPLETS ---
     public string? Adresse { get; set; }
     public string? Bp { get; set; }
     public string? Ville { get; set; }
@@ -32,13 +31,6 @@ public class Client : AuditableEntity
     /// Type de client : "Particulier" ou "Entreprise".
     /// </summary>
     public string TypeClient { get; set; } = "Entreprise";
-
-    /// <summary>
-    /// Niveau de validation du compte.
-    /// 0 : Inscrit (en attente OTP)
-    /// 1 : OTP Validé (en attente ARPCE)
-    /// 2 : Validé ARPCE (Actif)
-    /// </summary>
     public int NiveauValidation { get; set; } = 0;
     public bool IsVerified { get; set; } = false;
     public string? VerificationCode { get; set; }

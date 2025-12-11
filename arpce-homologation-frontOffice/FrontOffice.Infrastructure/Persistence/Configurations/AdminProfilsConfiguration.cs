@@ -11,12 +11,16 @@ public class AdminProfilsConfiguration : IEntityTypeConfiguration<AdminProfils>
         builder.ToTable("adminProfils");
         builder.HasKey(ap => ap.Id);
 
-        builder.Property(ap => ap.Code).HasMaxLength(12).HasColumnType("nvarchar(12)"); 
-        builder.Property(ap => ap.Libelle).HasMaxLength(120).IsRequired().HasColumnType("nvarchar(120)"); 
-        builder.Property(ap => ap.Remarques).HasMaxLength(512).HasColumnType("nvarchar(512)"); 
-        builder.Property(ap => ap.UtilisateurCreation).HasMaxLength(60).HasColumnType("nvarchar(60)"); 
-        builder.Property(ap => ap.DateCreation).HasColumnType("smalldatetime"); 
-        builder.Property(ap => ap.UtilisateurModification).HasMaxLength(60).HasColumnType("nvarchar(60)"); 
-        builder.Property(ap => ap.DateModification).HasColumnType("smalldatetime"); 
+        builder.Property(ap => ap.Code).HasMaxLength(12);
+        builder.Property(ap => ap.Libelle).HasMaxLength(120).IsRequired();
+        builder.Property(ap => ap.Remarques).HasMaxLength(512);
+
+        // Audit
+        builder.Property(ap => ap.UtilisateurCreation).HasMaxLength(60);
+        builder.Property(p => p.DateCreation)
+               .HasColumnType("bigint");
+        builder.Property(ap => ap.UtilisateurModification).HasMaxLength(60);
+        builder.Property(p => p.DateModification)
+                .HasColumnType("bigint");
     }
 }

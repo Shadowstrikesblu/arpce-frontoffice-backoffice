@@ -27,5 +27,6 @@ public class DossierListItemDto
     /// <summary>
     /// La liste des équipements (demandes) contenus dans ce dossier.
     /// </summary>
+    public List<DocumentDossierDto> Documents { get; set; } = new();
     public List<DemandeDto> Demandes { get; set; } = new List<DemandeDto>();
 }

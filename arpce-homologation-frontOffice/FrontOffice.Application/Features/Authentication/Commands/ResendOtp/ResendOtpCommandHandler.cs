@@ -28,7 +28,7 @@ public class ResendOtpCommandHandler : IRequestHandler<ResendOtpCommand, bool>
         // Générer un nouveau code
         var newCode = RandomNumberGenerator.GetInt32(100000, 999999).ToString("D6");
         client.VerificationCode = newCode;
-        client.VerificationTokenExpiry = DateTime.UtcNow.AddMinutes(30);
+        client.VerificationTokenExpiry = DateTimeOffset.UtcNow.AddMinutes(30).ToUnixTimeMilliseconds();
 
         await _context.SaveChangesAsync(cancellationToken);
 

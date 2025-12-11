@@ -10,7 +10,7 @@ public class CommentaireConfiguration : IEntityTypeConfiguration<Commentaire>
     {
         builder.ToTable("commentaires");
         builder.HasKey(c => c.Id);
-        builder.Property(c => c.DateCommentaire).HasColumnType("datetime").IsRequired();
+        builder.Property(c => c.DateCommentaire).HasColumnType("bigint").IsRequired();
         builder.Property(c => c.CommentaireTexte).HasColumnName("commentaire").HasMaxLength(512);
         builder.Property(c => c.NomInstructeur).HasMaxLength(60);
         builder.Property(c => c.Proposition).HasMaxLength(512);
@@ -22,8 +22,8 @@ public class CommentaireConfiguration : IEntityTypeConfiguration<Commentaire>
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.Property(c => c.UtilisateurCreation).HasMaxLength(60);
-        builder.Property(c => c.DateCreation).HasColumnType("datetime");
+        builder.Property(c => c.DateCreation).HasColumnType("bigint");
         builder.Property(c => c.UtilisateurModification).HasMaxLength(60);
-        builder.Property(c => c.DateModification).HasColumnType("datetime");
+        builder.Property(c => c.DateModification).HasColumnType("bigint");
     }
 }

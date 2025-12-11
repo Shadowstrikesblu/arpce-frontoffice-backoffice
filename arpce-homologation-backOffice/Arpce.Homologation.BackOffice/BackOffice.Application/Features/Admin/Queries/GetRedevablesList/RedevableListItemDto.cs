@@ -8,9 +8,11 @@
         public string? ContactNom { get; set; }
         public string? ContactTelephone { get; set; }
         public string Email { get; set; } = string.Empty;
+        public string RaisonSociale { get; set; } = string.Empty;
         public string? Ville { get; set; }
         public string? Pays { get; set; }
         public DateTime? DateCreation { get; set; }
         public int NbDossier { get; set; }
+        public int NiveauValidation { get; set; }
     }
 }

@@ -17,8 +17,10 @@ public class AdminProfilsConfiguration : IEntityTypeConfiguration<AdminProfils>
 
         // Audit
         builder.Property(ap => ap.UtilisateurCreation).HasMaxLength(60);
-        builder.Property(ap => ap.DateCreation).HasColumnType("datetime");
+        builder.Property(p => p.DateCreation)
+               .HasColumnType("bigint");
         builder.Property(ap => ap.UtilisateurModification).HasMaxLength(60);
-        builder.Property(ap => ap.DateModification).HasColumnType("datetime");
+        builder.Property(p => p.DateModification)
+                .HasColumnType("bigint");
     }
 }

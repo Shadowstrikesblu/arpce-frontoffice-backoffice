@@ -9,7 +9,7 @@ namespace BackOffice.Application.Common.DTOs
     public class DevisDto
     {
         public Guid Id { get; set; }
-        public DateTime Date { get; set; }
+        public long Date { get; set; }
         public decimal MontantEtude { get; set; }
         public decimal? MontantHomologation { get; set; }
         public decimal? MontantControle { get; set; }

@@ -96,7 +96,8 @@ public class RegisterClientCommandHandler : IRequestHandler<RegisterClientComman
 
         // Génération du code OTP (6 chiffres) et de sa date d'expiration (30 min)
         var verificationCode = GenerateVerificationCode();
-        var verificationTokenExpiry = DateTime.UtcNow.AddMinutes(30);
+        long verificationTokenExpiry = DateTimeOffset.UtcNow.AddMinutes(30).ToUnixTimeMilliseconds();
+
 
         // Création de l'entité Client avec mappage complet des champs de la requête
         var newClient = new Client
@@ -133,7 +134,7 @@ public class RegisterClientCommandHandler : IRequestHandler<RegisterClientComman
             VerificationTokenExpiry = verificationTokenExpiry,
 
             // Audit
-            DateCreation = DateTime.UtcNow,
+            DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
             UtilisateurCreation = "SYSTEM_REGISTER"
         };
 
@@ -168,7 +169,7 @@ public class RegisterClientCommandHandler : IRequestHandler<RegisterClientComman
 
         // Régénération d'un nouveau code et extension de la durée de validité
         client.VerificationCode = GenerateVerificationCode();
-        client.VerificationTokenExpiry = DateTime.UtcNow.AddMinutes(30);
+        client.VerificationTokenExpiry = DateTimeOffset.UtcNow.AddMinutes(30).ToUnixTimeMilliseconds();
 
         // Mise à jour en base
         await _context.SaveChangesAsync(cancellationToken);

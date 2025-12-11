@@ -55,7 +55,7 @@ public class ChangeDossierStatusCommandHandler : IRequestHandler<ChangeDossierSt
             {
                 Id = Guid.NewGuid(),
                 IdDossier = dossier.Id,
-                DateCommentaire = DateTime.UtcNow,
+                DateCommentaire = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
                 CommentaireTexte = request.Commentaire,
                 NomInstructeur = nomAgent
             };

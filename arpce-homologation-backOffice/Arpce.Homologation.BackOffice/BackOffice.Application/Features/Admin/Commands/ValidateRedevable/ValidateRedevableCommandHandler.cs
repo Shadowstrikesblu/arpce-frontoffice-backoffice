@@ -1,5 +1,8 @@
 ﻿using BackOffice.Application.Common.Interfaces;
 using MediatR;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Admin.Commands.ValidateRedevable;
 
@@ -38,6 +41,7 @@ public class ValidateRedevableCommandHandler : IRequestHandler<ValidateRedevable
 
         // Mettre à jour le niveau de validation
         client.NiveauValidation = 2; // Validé ARPCE
+
         // On s'assure aussi qu'il n'est pas désactivé
         client.Desactive = 0;
 
@@ -59,13 +63,14 @@ public class ValidateRedevableCommandHandler : IRequestHandler<ValidateRedevable
             }
             catch
             {
+                // On ignore l'erreur d'envoi d'email pour ne pas bloquer la transaction
             }
         }
 
         await _auditService.LogAsync(
-    page: "Validation Redevable",
-    libelle: $"Le compte du redevable '{client.RaisonSociale}' (ID: {client.Id}) a été validé (Niveau 2).",
-    eventTypeCode: "VALIDATION");
+            page: "Validation Redevable",
+            libelle: $"Le compte du redevable '{client.RaisonSociale}' (ID: {client.Id}) a été validé (Niveau 2).",
+            eventTypeCode: "VALIDATION");
 
         return true;
     }

@@ -46,17 +46,20 @@ public class LoginClientQueryHandler : IRequestHandler<LoginClientQuery, Authent
 
         // Vérifie le Niveau de Validation (Workflow d'inscription)
 
-        // Cas 0 : Inscrit mais OTP non validé
+        // Niveau 0 : Inscrit mais OTP non validé
         if (client.NiveauValidation == 0)
         {
             throw new UnauthorizedAccessException("Votre adresse e-mail n'a pas encore été vérifiée. Veuillez utiliser le code reçu lors de l'inscription.");
         }
 
-        // Cas 1 : OTP validé mais en attente validation ARPCE
+        // Niveau 1 : OTP validé mais en attente validation ARPCE
+        // L'utilisateur doit attendre que l'admin passe le niveau à 2.
         if (client.NiveauValidation == 1)
         {
-            throw new AccountPendingValidationException("Votre compte est en attente de validation");
+            throw new AccountPendingValidationException("Votre compte est en cours de validation par l'administration ARPCE (Niveau 1). Vous recevrez une notification dès qu'il sera actif.");
         }
+
+        // Si on arrive ici, NiveauValidation >= 2 (Validé ARPCE)
 
         // Générer le token de connexion
         var token = _jwtTokenGenerator.GenerateToken(client.Id, client.Email);

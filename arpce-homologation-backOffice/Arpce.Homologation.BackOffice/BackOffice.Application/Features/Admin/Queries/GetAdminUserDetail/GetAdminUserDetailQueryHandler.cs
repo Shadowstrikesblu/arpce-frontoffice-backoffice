@@ -1,4 +1,5 @@
 ﻿using BackOffice.Application.Common.DTOs;
+using BackOffice.Application.Common.Exceptions;
 using BackOffice.Application.Common.Interfaces;
 using BackOffice.Application.Features.Authentication.Queries.CheckToken;
 using MediatR;
@@ -43,11 +44,11 @@ public class GetAdminUserDetailQueryHandler : IRequestHandler<GetAdminUserDetail
             ChangementMotPasse = user.ChangementMotPasse,
             Desactive = user.Desactive,
             Remarques = user.Remarques,
-            DerniereConnexion = user.DerniereConnexion,
+            DerniereConnexion = user.DerniereConnexion.FromUnixTimeMilliseconds(),
             UtilisateurCreation = user.UtilisateurCreation,
-            DateCreation = user.DateCreation,
+            DateCreation = user.DateCreation.FromUnixTimeMilliseconds(),
             UtilisateurModification = user.UtilisateurModification,
-            DateModification = user.DateModification,
+            DateModification = user.DateModification.FromUnixTimeMilliseconds(),
             IdUtilisateurType = user.IdUtilisateurType,
         };
 
@@ -70,7 +71,7 @@ public class GetAdminUserDetailQueryHandler : IRequestHandler<GetAdminUserDetail
                     Libelle = profil.Libelle,
                     Remarques = profil.Remarques,
                     UtilisateurCreation = profil.UtilisateurCreation,
-                    DateCreation = profil.DateCreation,
+                    DateCreation = profil.DateCreation.FromUnixTimeMilliseconds(),
                     Acces = accessList.Select(a => new AdminProfilAccesDto
                     {
                         IdProfil = a.IdProfil,

@@ -1,6 +1,4 @@
-﻿// Fichier : BackOffice.Infrastructure/Persistence/Configurations/AdminAccessConfiguration.cs
-
-using BackOffice.Domain.Entities;
+﻿using BackOffice.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

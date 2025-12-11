@@ -70,7 +70,7 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
             {
                 Id = Guid.NewGuid(),
                 IdDossier = dossier.Id,
-                DateCommentaire = DateTime.UtcNow,
+                DateCommentaire = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
                 CommentaireTexte = request.Remarque,
                 NomInstructeur = nomAgent
             };

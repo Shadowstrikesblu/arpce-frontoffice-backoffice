@@ -35,7 +35,7 @@ public class CreateAdminCommandHandler : IRequestHandler<CreateAdminCommand, boo
 
             IdUtilisateurType = request.IdUtilisateurType,
 
-            DateCreation = DateTime.UtcNow
+            DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
         };
 
         _context.AdminUtilisateurs.Add(admin);

@@ -1,8 +1,11 @@
 ﻿using BackOffice.Application.Common.DTOs;
 using BackOffice.Application.Common.Interfaces;
-using BackOffice.Application.Features.Admin.Queries.GetAdminUsersList; 
+using BackOffice.Application.Features.Admin.Queries.GetAdminUsersList;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using BackOffice.Application.Common.Exceptions;
+// AJOUTEZ CETTE LIGNE SI ELLE N'Y EST PAS
+using BackOffice.Application.Common;
 
 namespace BackOffice.Application.Features.Authentication.Queries.CheckToken;
 
@@ -22,10 +25,9 @@ public class CheckTokenQueryHandler : IRequestHandler<CheckTokenQuery, AdminUser
         var userId = _currentUserService.UserId;
         if (!userId.HasValue) throw new UnauthorizedAccessException("Token invalide.");
 
-        // Chargement complet de l'utilisateur, de son profil et de son TYPE
         var user = await _context.AdminUtilisateurs
             .AsNoTracking()
-            .Include(u => u.UtilisateurType) 
+            .Include(u => u.UtilisateurType)
             .FirstOrDefaultAsync(u => u.Id == userId.Value, cancellationToken);
 
         if (user == null) throw new UnauthorizedAccessException("Utilisateur introuvable.");
@@ -42,18 +44,21 @@ public class CheckTokenQueryHandler : IRequestHandler<CheckTokenQuery, AdminUser
             ChangementMotPasse = user.ChangementMotPasse,
             Desactive = user.Desactive,
             Remarques = user.Remarques,
-            DerniereConnexion = user.DerniereConnexion,
-            UtilisateurCreation = user.UtilisateurCreation,
-            DateCreation = user.DateCreation,
+
+            // --- CORRECTIONS ---
+            DerniereConnexion = user.DerniereConnexion.FromUnixTimeMilliseconds(),
+            UtilisateurCreation = user.UtilisateurCreation, // C'est un string, on ne le convertit pas
+            DateCreation = user.DateCreation.FromUnixTimeMilliseconds(),
             UtilisateurModification = user.UtilisateurModification,
-            DateModification = user.DateModification,
+            DateModification = user.DateModification.FromUnixTimeMilliseconds(),
+            // --- FIN CORRECTIONS ---
 
             TypeUtilisateur = user.UtilisateurType != null ? new AdminUserTypeSimpleDto
             {
                 Libelle = user.UtilisateurType.Libelle
             } : null,
 
-            Profil = null 
+            Profil = null
         };
 
         if (user.IdProfil.HasValue)
@@ -77,7 +82,11 @@ public class CheckTokenQueryHandler : IRequestHandler<CheckTokenQuery, AdminUser
                     Libelle = profil.Libelle,
                     Remarques = profil.Remarques,
                     UtilisateurCreation = profil.UtilisateurCreation,
-                    DateCreation = profil.DateCreation,
+
+                    // --- CORRECTION ---
+                    DateCreation = profil.DateCreation.FromUnixTimeMilliseconds(),
+                    // --- FIN CORRECTION ---
+
                     Acces = accessList.Select(a => new AdminProfilAccesDto
                     {
                         IdProfil = a.IdProfil,
