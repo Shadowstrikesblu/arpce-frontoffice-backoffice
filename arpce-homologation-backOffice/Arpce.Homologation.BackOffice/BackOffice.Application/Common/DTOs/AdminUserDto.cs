@@ -22,6 +22,6 @@ public class AdminUserDto
     public DateTime? DateCreation { get; set; }
     public string? UtilisateurModification { get; set; }
     public DateTime? DateModification { get; set; }
-
+    public int NiveauValidation { get; set; }
     public AdminProfilDto? Profil { get; set; }
 }

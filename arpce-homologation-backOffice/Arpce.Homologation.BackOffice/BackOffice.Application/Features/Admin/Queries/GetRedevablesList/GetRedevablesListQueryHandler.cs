@@ -63,7 +63,8 @@ public class GetRedevablesListQueryHandler : IRequestHandler<GetRedevablesListQu
             Ville = c.Ville,
             Pays = c.Pays,
             DateCreation = c.DateCreation.FromUnixTimeMilliseconds(),
-            NbDossier = c.Dossiers.Count
+            NbDossier = c.Dossiers.Count,
+            NiveauValidation = c.NiveauValidation
         }).ToList();
 
         return new RedevableListVm

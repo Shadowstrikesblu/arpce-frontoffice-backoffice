@@ -19,7 +19,7 @@
         public DateTime? DateCreation { get; set; }
         public string? UtilisateurModification { get; set; }
         public DateTime? DateModification { get; set; }
-
+        public int NiveauValidation { get; set; }
         public List<DossierRedevableDto> Dossiers { get; set; } = new();
     }
 }

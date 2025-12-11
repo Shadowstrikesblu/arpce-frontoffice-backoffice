@@ -64,12 +64,16 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
         }
 
         var dossiersPaged = await query
-            .Include(d => d.Client)
-            .Include(d => d.Statut)
-            .Include(d => d.Demandes)
-            .Skip((request.Parameters.Page - 1) * request.Parameters.TaillePage)
-            .Take(request.Parameters.TaillePage)
-            .ToListAsync(cancellationToken);
+         .Skip((request.Parameters.Page - 1) * request.Parameters.TaillePage)
+         .Take(request.Parameters.TaillePage)
+         .Include(d => d.Client)
+         .Include(d => d.Statut)
+         .Include(d => d.Demandes)
+            .ThenInclude(dem => dem.CategorieEquipement)
+         .Include(d => d.Demandes)
+            .ThenInclude(dem => dem.MotifRejet)
+         .Include(d => d.DocumentsDossiers)
+         .ToListAsync(cancellationToken);
 
         var dossierDtos = dossiersPaged.Select(dossier => new DossierListItemDto
         {
@@ -94,6 +98,14 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
                 Equipement = demande.Equipement,
                 Modele = demande.Modele,
                 Marque = demande.Marque
+            }).ToList(),
+            Documents = dossier.DocumentsDossiers.Select(doc => new DocumentDossierDto
+            {
+                Id = doc.Id,
+                Nom = doc.Nom,
+                Type = doc.Type,
+                Extension = doc.Extension,
+                FilePath = doc.FilePath 
             }).ToList()
         }).ToList();
 

@@ -47,7 +47,7 @@ public class GetRedevableDetailQueryHandler : IRequestHandler<GetRedevableDetail
             Remarques = client.Remarques,
             UtilisateurCreation = client.UtilisateurCreation,
 
-            // --- CORRECTIONS ---
+            NiveauValidation = client.NiveauValidation,
             DateCreation = client.DateCreation.FromUnixTimeMilliseconds(),
             UtilisateurModification = client.UtilisateurModification,
             DateModification = client.DateModification.FromUnixTimeMilliseconds(),

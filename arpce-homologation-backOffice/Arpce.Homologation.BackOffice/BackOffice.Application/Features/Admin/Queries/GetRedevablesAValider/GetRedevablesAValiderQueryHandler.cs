@@ -1,9 +1,13 @@
 ﻿using BackOffice.Application.Common.Exceptions;
 using BackOffice.Application.Common.Interfaces;
-using BackOffice.Application.Features.Admin.Queries.GetRedevablesList; 
+using BackOffice.Application.Common; // Pour l'extension FromUnixTimeMilliseconds
+using BackOffice.Application.Features.Admin.Queries.GetRedevablesList;
 using BackOffice.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Admin.Queries.GetRedevablesAValider;
 
@@ -24,7 +28,7 @@ public class GetRedevablesAValiderQueryHandler : IRequestHandler<GetRedevablesAV
         // Requête de base avec le filtre principal : NiveauValidation == 1
         IQueryable<Client> query = _context.Clients
             .AsNoTracking()
-            .Where(c => c.NiveauValidation == 1); 
+            .Where(c => c.NiveauValidation == 1);
 
         // Filtre de recherche
         if (!string.IsNullOrWhiteSpace(request.Recherche))
@@ -54,7 +58,7 @@ public class GetRedevablesAValiderQueryHandler : IRequestHandler<GetRedevablesAV
         var items = await query
             .Skip((request.Page - 1) * request.PageTaille)
             .Take(request.PageTaille)
-            .Include(c => c.Dossiers) 
+            .Include(c => c.Dossiers)
             .ToListAsync(cancellationToken);
 
         // Mapping vers le DTO
@@ -68,8 +72,13 @@ public class GetRedevablesAValiderQueryHandler : IRequestHandler<GetRedevablesAV
             Email = c.Email ?? "",
             Ville = c.Ville,
             Pays = c.Pays,
+            RaisonSociale = c.RaisonSociale,
             DateCreation = c.DateCreation.FromUnixTimeMilliseconds(),
-            NbDossier = c.Dossiers.Count
+            NbDossier = c.Dossiers.Count,
+
+            // --- AJOUT DEMANDÉ ---
+            NiveauValidation = c.NiveauValidation
+            // ---------------------
         }).ToList();
 
         return new RedevableListVm

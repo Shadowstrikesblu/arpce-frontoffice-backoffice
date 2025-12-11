@@ -511,3 +511,50 @@ VALUES (N'20251209031227_Initialisation', N'9.0.11');
 DECLARE @result int;
 EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
 SELECT @result
+2025-12-09 04:15:42.470 +01:00 [INF] Now listening on: https://localhost:7238
+2025-12-09 04:15:42.643 +01:00 [INF] Now listening on: http://localhost:5126
+2025-12-09 04:15:42.954 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-09 04:15:42.963 +01:00 [INF] Hosting environment: Development
+2025-12-09 04:15:42.992 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api
+2025-12-09 04:16:33.729 +01:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2025-12-09 04:16:43.260 +01:00 [INF] Executed DbCommand (400ms) [Parameters=[@__request_Compte_0='?' (Size = 100)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AdminProfilsId], [a].[ChangementMotPasse], [a].[Compte], [a].[DateCreation], [a].[DateModification], [a].[DerniereConnexion], [a].[Desactive], [a].[IdProfil], [a].[IdUtilisateurType], [a].[MotPasse], [a].[Nom], [a].[Prenoms], [a].[Remarques], [a].[UtilisateurCreation], [a].[UtilisateurModification]
+FROM [AdminUtilisateurs] AS [a]
+WHERE [a].[Compte] = @__request_Compte_0
+2025-12-09 04:16:44.045 +01:00 [INF] Executed DbCommand (42ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [AdminUtilisateurs] SET [DerniereConnexion] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+2025-12-09 04:18:19.330 +01:00 [INF] Executed DbCommand (9ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 1) (DbType = Byte), @p2='?' (Size = 120), @p3='?' (Size = 4000), @p4='?' (Size = 120), @p5='?' (Size = 1) (DbType = Byte), @p6='?' (Size = 1) (DbType = Byte), @p7='?' (Size = 120), @p8='?' (Size = 120), @p9='?' (Size = 1) (DbType = Byte), @p10='?' (Size = 120), @p11='?' (Size = 1) (DbType = Byte)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [adminAccess] ([Id], [Ajouter], [Application], [Code], [Groupe], [Imprimer], [Inactif], [Libelle], [Page], [Supprimer], [Type], [Valider])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11);
+2025-12-09 04:18:19.402 +01:00 [INF] Executed DbCommand (28ms) [Parameters=[@__eventTypeCode_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[Code], [a].[Libelle]
+FROM [adminEvenementsTypes] AS [a]
+WHERE [a].[Code] = @__eventTypeCode_0
+2025-12-09 04:18:19.680 +01:00 [INF] Executed DbCommand (12ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AdminProfilsId], [a].[ChangementMotPasse], [a].[Compte], [a].[DateCreation], [a].[DateModification], [a].[DerniereConnexion], [a].[Desactive], [a].[IdProfil], [a].[IdUtilisateurType], [a].[MotPasse], [a].[Nom], [a].[Prenoms], [a].[Remarques], [a].[UtilisateurCreation], [a].[UtilisateurModification]
+FROM [AdminUtilisateurs] AS [a]
+WHERE [a].[Id] = @__p_0
+2025-12-09 04:18:19.943 +01:00 [INF] Executed DbCommand (23ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 120), @p2='?' (Size = 120), @p3='?' (DbType = Int64), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?' (Size = 255), @p8='?' (Size = 120), @p9='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [adminJournal] ([Id], [AdresseIP], [Application], [DateEvenement], [DossierId], [IdDossier], [IdEvenementType], [Libelle], [Page], [Utilisateur])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+2025-12-09 04:18:40.851 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [adminJournal] AS [a]
+2025-12-09 04:18:41.035 +01:00 [INF] Executed DbCommand (27ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a1].[Id], [a1].[AdresseIP], [a1].[Application], [a1].[DateEvenement], [a1].[DossierId], [a1].[IdDossier], [a1].[IdEvenementType], [a1].[Libelle], [a1].[Page], [a1].[Utilisateur], [a0].[Id], [a0].[Code], [a0].[Libelle]
+FROM (
+    SELECT [a].[Id], [a].[AdresseIP], [a].[Application], [a].[DateEvenement], [a].[DossierId], [a].[IdDossier], [a].[IdEvenementType], [a].[Libelle], [a].[Page], [a].[Utilisateur]
+    FROM [adminJournal] AS [a]
+    ORDER BY [a].[DateEvenement] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [a1]
+INNER JOIN [adminEvenementsTypes] AS [a0] ON [a1].[IdEvenementType] = [a0].[Id]
+ORDER BY [a1].[DateEvenement] DESC
