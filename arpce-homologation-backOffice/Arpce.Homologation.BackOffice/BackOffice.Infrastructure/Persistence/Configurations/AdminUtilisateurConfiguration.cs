@@ -2,6 +2,7 @@
 using BackOffice.Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace BackOffice.Infrastructure.Persistence.Configurations;
 
@@ -30,30 +31,36 @@ public class AdminUtilisateurConfiguration : IEntityTypeConfiguration<AdminUtili
         builder.Property(u => u.DateModification).HasColumnType("bigint");
         builder.Property(u => u.Remarques).HasMaxLength(512);
 
-        builder.Property(u => u.IdProfil).IsRequired(false); 
+        builder.Property(u => u.IdProfil).IsRequired(false);
         builder.HasOne(u => u.Profil)
-            .WithMany() 
+            .WithMany()
             .HasForeignKey(u => u.IdProfil)
             .OnDelete(DeleteBehavior.SetNull);
 
-        builder.Property(u => u.IdUtilisateurType).IsRequired(); 
+        builder.Property(u => u.IdUtilisateurType).IsRequired();
 
         builder.HasOne(u => u.UtilisateurType)
-            .WithMany() 
+            .WithMany()
             .HasForeignKey(u => u.IdUtilisateurType)
             .OnDelete(DeleteBehavior.Restrict);
+
+        // --- SEEDING ---
 
         var passwordHasher = new PasswordHasher();
         var adminPasswordHash = passwordHasher.Hash("admin.arpce@2025");
 
-        var adminTypeId = Guid.Parse("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6");
+        // Utilisation de 'new Guid' avec une chaîne réécrite manuellement pour éviter les caractères cachés
+        var adminTypeId = new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6");
+
+        // ID FIXE pour l'admin (Important : ne pas utiliser Guid.NewGuid() ici sinon duplication à chaque démarrage)
+        var adminUserId = new Guid("88888888-8888-8888-8888-888888888888");
 
         builder.HasData(
             new AdminUtilisateur
             {
-                Id = Guid.NewGuid(),
-                IdUtilisateurType = adminTypeId, 
-                IdProfil = null, 
+                Id = adminUserId,
+                IdUtilisateurType = adminTypeId,
+                IdProfil = null,
                 Compte = "admin",
                 Nom = "Administrateur",
                 Prenoms = "ARPCE",
