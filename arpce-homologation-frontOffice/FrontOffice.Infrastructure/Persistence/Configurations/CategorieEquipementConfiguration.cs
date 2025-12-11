@@ -15,8 +15,8 @@ public class CategorieEquipementConfiguration : IEntityTypeConfiguration<Categor
         builder.Property(c => c.TarifControle).HasColumnType("money");
         builder.Property(c => c.Remarques).HasMaxLength(512);
         builder.Property(c => c.UtilisateurCreation).HasMaxLength(60);
-        builder.Property(c => c.DateCreation).HasColumnType("smalldatetime");
+        builder.Property(c => c.DateCreation).HasColumnType("bigint");
         builder.Property(c => c.UtilisateurModification).HasMaxLength(60);
-        builder.Property(c => c.DateModification).HasColumnType("smalldatetime");
+        builder.Property(c => c.DateModification).HasColumnType("bigint");
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace FrontOffice.Domain.Entities;
+﻿using FrontOffice.Domain.Common;
 
-public class AdminProfils
+namespace FrontOffice.Domain.Entities;
+
+public class AdminProfils : AuditableEntity
 {
     public Guid Id { get; set; } 
     public string? Code { get; set; } 
