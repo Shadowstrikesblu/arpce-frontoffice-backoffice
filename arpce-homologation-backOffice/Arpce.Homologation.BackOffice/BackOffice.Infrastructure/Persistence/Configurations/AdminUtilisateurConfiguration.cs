@@ -14,10 +14,17 @@ public class AdminUtilisateurConfiguration : IEntityTypeConfiguration<AdminUtili
 
         builder.HasKey(u => u.Id);
 
+        // Configuration du Compte (Login)
         builder.Property(u => u.Compte).HasMaxLength(100).IsRequired();
-        builder.HasIndex(u => u.Compte).IsUnique();
+        builder.HasIndex(u => u.Compte).IsUnique(); // Le compte est unique
 
+        // Configuration du Nom
         builder.Property(u => u.Nom).HasMaxLength(100).IsRequired();
+
+        // --- AJOUT DEMANDÉ : Rendre le NOM unique ---
+        builder.HasIndex(u => u.Nom).IsUnique();
+        // -------------------------------------------
+
         builder.Property(u => u.Prenoms).HasMaxLength(150);
         builder.Property(u => u.MotPasse).HasMaxLength(255);
 
@@ -44,15 +51,13 @@ public class AdminUtilisateurConfiguration : IEntityTypeConfiguration<AdminUtili
             .HasForeignKey(u => u.IdUtilisateurType)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // --- SEEDING ---
 
         var passwordHasher = new PasswordHasher();
         var adminPasswordHash = passwordHasher.Hash("admin.arpce@2025");
 
-        // Utilisation de 'new Guid' avec une chaîne réécrite manuellement pour éviter les caractères cachés
+        // Utilisation de 'new Guid' avec une chaîne propre
         var adminTypeId = new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6");
 
-        // ID FIXE pour l'admin (Important : ne pas utiliser Guid.NewGuid() ici sinon duplication à chaque démarrage)
         var adminUserId = new Guid("88888888-8888-8888-8888-888888888888");
 
         builder.HasData(
@@ -62,7 +67,7 @@ public class AdminUtilisateurConfiguration : IEntityTypeConfiguration<AdminUtili
                 IdUtilisateurType = adminTypeId,
                 IdProfil = null,
                 Compte = "admin",
-                Nom = "Administrateur",
+                Nom = "Administrateur", 
                 Prenoms = "ARPCE",
                 MotPasse = adminPasswordHash,
                 Desactive = false,
