@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FrontOffice.Infrastructure.Migrations
 {
     [DbContext(typeof(FrontOfficeDbContext))]
-    [Migration("20251211105000_initialisation")]
-    partial class initialisation
+    [Migration("20251211115449_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -953,28 +953,28 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d5310f58-41b5-41d9-95bc-5d1839fafa59"),
+                            Id = new Guid("5c31ce59-5aa9-494d-9293-44a6d6fff2e1"),
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("e1ba5c8d-1874-4272-8f0d-aee263583da5"),
+                            Id = new Guid("ecfc50a9-1b56-4e1a-b30b-aa61f22a19ce"),
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("6b0caa08-80dd-4a61-a2bd-bec20fbaf2ba"),
+                            Id = new Guid("6d77ac5f-a58c-4786-9c3a-ce5b63fb1e3a"),
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("98323566-b28f-41b4-9d0f-f22b46c3f85d"),
+                            Id = new Guid("1bd4c012-580b-4d4f-b48a-42968dc33591"),
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1

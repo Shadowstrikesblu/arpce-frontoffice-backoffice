@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FrontOffice.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class initialisation : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -589,10 +589,10 @@ namespace FrontOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "DateCreation", "DateModification", "Libelle", "MobileBanking", "Remarques", "UtilisateurCreation", "UtilisateurModification" },
                 values: new object[,]
                 {
-                    { new Guid("6b0caa08-80dd-4a61-a2bd-bec20fbaf2ba"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
-                    { new Guid("98323566-b28f-41b4-9d0f-f22b46c3f85d"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
-                    { new Guid("d5310f58-41b5-41d9-95bc-5d1839fafa59"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
-                    { new Guid("e1ba5c8d-1874-4272-8f0d-aee263583da5"), "Cheque", null, null, "Chèque", (byte)0, null, null, null }
+                    { new Guid("1bd4c012-580b-4d4f-b48a-42968dc33591"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
+                    { new Guid("5c31ce59-5aa9-494d-9293-44a6d6fff2e1"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
+                    { new Guid("6d77ac5f-a58c-4786-9c3a-ce5b63fb1e3a"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
+                    { new Guid("ecfc50a9-1b56-4e1a-b30b-aa61f22a19ce"), "Cheque", null, null, "Chèque", (byte)0, null, null, null }
                 });
 
             migrationBuilder.InsertData(
