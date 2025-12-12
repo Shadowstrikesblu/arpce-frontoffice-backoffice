@@ -16,7 +16,7 @@ public interface IApplicationDbContext
     public DbSet<AdminProfilsAcces> AdminProfilsAcces { get; }
     public DbSet<AdminProfilsUtilisateursLDAP> AdminProfilsUtilisateursLDAP { get; }
    public DbSet<AdminReporting> AdminReporting { get; }
-    public DbSet<AdminUtilisateurs> AdminUtilisateurs { get; }
+    public DbSet<AdminUtilisateur> AdminUtilisateurs { get; }
     public DbSet<AdminUtilisateurTypes> AdminUtilisateurTypes { get; }
     DbSet<Attestation> Attestations { get; }
     DbSet<CategorieEquipement> CategoriesEquipements { get; }

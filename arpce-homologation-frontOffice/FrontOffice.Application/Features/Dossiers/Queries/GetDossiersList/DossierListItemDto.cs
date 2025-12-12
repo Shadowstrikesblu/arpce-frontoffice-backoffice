@@ -16,7 +16,7 @@ public class DossierListItemDto
     /// <summary>
     /// La date de création du dossier.
     /// </summary>
-    public DateTime DateOuverture { get; set; }
+    public long DateOuverture { get; set; }
 
     /// <summary>
     /// Le numéro unique du dossier.

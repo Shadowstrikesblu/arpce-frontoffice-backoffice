@@ -41,7 +41,7 @@ public class GetPaiementsEnAttenteListQueryHandler : IRequestHandler<GetPaiement
                     .SelectMany(dem => dem.Devis)
                     .Where(devis => devis.PaiementOk != 1)
                     .OrderByDescending(devis => devis.Date)
-                    .Select(devis => (DateTime?)devis.Date) // Cast en nullable
+                    .Select(devis => (long?)devis.Date) // Cast en nullable
                     .FirstOrDefault()
             })
             .Where(x => x.MontantAPayer > 0 && x.DerniereEcheance.HasValue) // On filtre après le calcul

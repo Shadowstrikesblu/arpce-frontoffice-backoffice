@@ -21,6 +21,7 @@ public class FrontOfficeDbContext : DbContext, IApplicationDbContext
     }
 
     // --- Déclaration de toutes les tables de la base de données ---
+<<<<<<< HEAD
     public DbSet<AdminAccess> AdminAccesses => Set<AdminAccess>();
     public DbSet<AdminConnexions> AdminConnexions => Set<AdminConnexions>(); 
     public DbSet<AdminEvenementsTypes> AdminEvenementsTypes => Set<AdminEvenementsTypes>();
@@ -45,6 +46,33 @@ public class FrontOfficeDbContext : DbContext, IApplicationDbContext
     public DbSet<MotifRejet> MotifsRejets => Set<MotifRejet>();
     public DbSet<Proposition> Propositions => Set<Proposition>();
     public DbSet<Statut> Statuts => Set<Statut>();
+=======
+
+    public DbSet<AdminAccess> AdminAccesses { get; set; }
+    public DbSet<AdminConnexions> AdminConnexions { get; set; } 
+    public DbSet<AdminEvenementsTypes> AdminEvenementsTypes { get; set; }
+    public DbSet<AdminJournal> AdminJournals { get; set; }
+    public DbSet<AdminOptions> AdminOptions { get; set; } 
+    public DbSet<AdminProfils> AdminProfils { get; set; }
+    public DbSet<AdminProfilsAcces> AdminProfilsAcces { get; set; }
+    public DbSet<AdminProfilsUtilisateursLDAP> AdminProfilsUtilisateursLDAP { get; set; }
+    public DbSet<AdminReporting> AdminReporting { get; set; }
+    public DbSet<AdminUtilisateur> AdminUtilisateurs { get; set; }
+    public DbSet<AdminUtilisateurTypes> AdminUtilisateurTypes { get; set; }
+    public DbSet<Attestation> Attestations { get; set; }
+    public DbSet<CategorieEquipement> CategoriesEquipements { get; set; }
+    public DbSet<Client> Clients { get; set; }
+    public DbSet<Commentaire> Commentaires { get; set; }
+    public DbSet<Demande> Demandes { get; set; }
+    public DbSet<Devis> Devis { get; set; }
+    public DbSet<DocumentDemande> DocumentsDemandes { get; set; }
+    public DbSet<DocumentDossier> DocumentsDossiers { get; set; }
+    public DbSet<Dossier> Dossiers { get; set; }
+    public DbSet<ModeReglement> ModesReglements { get; set; }
+    public DbSet<MotifRejet> MotifsRejets { get; set; }
+    public DbSet<Proposition> Propositions { get; set; }
+    public DbSet<Statut> Statuts { get; set; }
+>>>>>>> 7a55aea422e4438075a73bade99823b32b369e91
 
 
     /// <summary>

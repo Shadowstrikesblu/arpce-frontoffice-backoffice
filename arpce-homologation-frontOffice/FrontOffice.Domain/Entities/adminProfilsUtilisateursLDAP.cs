@@ -2,9 +2,8 @@
 
 public class AdminProfilsUtilisateursLDAP
 {
-    public string Utilisateur { get; set; } = string.Empty; 
-    public Guid IdProfil { get; set; } 
+    public string Utilisateur { get; set; } = string.Empty;
+    public Guid IdProfil { get; set; }
 
-    public AdminProfils? Profil { get; set; }
-   
+    public virtual AdminProfils? Profil { get; set; }
 }

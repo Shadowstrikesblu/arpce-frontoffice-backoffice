@@ -23,7 +23,7 @@ public class PaiementEnAttenteDto
     /// <summary>
     /// Date limite pour effectuer le paiement.
     /// </summary>
-    public DateTime DateEcheance { get; set; } 
+    public long DateEcheance { get; set; } 
     public string NumeroDossier { get; set; }= string.Empty;
     /// <summary>
     /// Mode de règlement choisi pour ce dossier.

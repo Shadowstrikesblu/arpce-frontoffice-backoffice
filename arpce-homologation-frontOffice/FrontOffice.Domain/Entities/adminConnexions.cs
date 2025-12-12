@@ -2,7 +2,8 @@
 
 public class AdminConnexions
 {
-    public string Utilisateur { get; set; } = string.Empty; 
-    public DateTime DateConnexion { get; set; } 
-    public string? Ip { get; set; } 
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public string Utilisateur { get; set; } = string.Empty;
+    public long DateConnexion { get; set; }
+    public string? Ip { get; set; }
 }

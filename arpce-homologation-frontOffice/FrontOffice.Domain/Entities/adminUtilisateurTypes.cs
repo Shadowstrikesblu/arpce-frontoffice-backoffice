@@ -2,6 +2,6 @@
 
 public class AdminUtilisateurTypes
 {
-    public Guid Id { get; set; } 
-    public string Libelle { get; set; } = string.Empty; 
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public string Libelle { get; set; } = string.Empty;
 }

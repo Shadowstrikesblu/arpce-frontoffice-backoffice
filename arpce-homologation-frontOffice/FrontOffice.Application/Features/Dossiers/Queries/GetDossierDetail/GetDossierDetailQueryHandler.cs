@@ -107,8 +107,8 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                     Id = dem.CategorieEquipement.Id,
                     Code = dem.CategorieEquipement.Code,
                     Libelle = dem.CategorieEquipement.Libelle,
-                    TarifEtude = dem.CategorieEquipement.TarifEtude,
-                    TarifHomologation = dem.CategorieEquipement.TarifHomologation,
+                    FraisEtude = dem.CategorieEquipement.FraisEtude,
+                    FraisHomologation = dem.CategorieEquipement.FraisHomologation,
                 } : null,
 
                 MotifRejet = dem.MotifRejet != null ? new MotifRejetDto
