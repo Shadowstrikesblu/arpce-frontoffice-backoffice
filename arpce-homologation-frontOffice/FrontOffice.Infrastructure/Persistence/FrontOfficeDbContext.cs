@@ -31,7 +31,7 @@ public class FrontOfficeDbContext : DbContext, IApplicationDbContext
     public DbSet<AdminProfilsAcces> AdminProfilsAcces { get; set; }
     public DbSet<AdminProfilsUtilisateursLDAP> AdminProfilsUtilisateursLDAP { get; set; }
     public DbSet<AdminReporting> AdminReporting { get; set; }
-    public DbSet<AdminUtilisateurs> AdminUtilisateurs { get; set; }
+    public DbSet<AdminUtilisateur> AdminUtilisateurs { get; set; }
     public DbSet<AdminUtilisateurTypes> AdminUtilisateurTypes { get; set; }
     public DbSet<Attestation> Attestations { get; set; }
     public DbSet<CategorieEquipement> CategoriesEquipements { get; set; }

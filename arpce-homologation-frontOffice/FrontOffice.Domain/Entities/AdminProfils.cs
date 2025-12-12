@@ -4,13 +4,13 @@ namespace FrontOffice.Domain.Entities;
 
 public class AdminProfils : AuditableEntity
 {
-    public Guid Id { get; set; } 
-    public string? Code { get; set; } 
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public string Code { get; set; } = string.Empty;
     public string Libelle { get; set; } = string.Empty;
-    public string? Remarques { get; set; } 
-    public string? UtilisateurCreation { get; set; } 
-    public DateTime? DateCreation { get; set; } 
-    public string? UtilisateurModification { get; set; } 
-    public DateTime? DateModification { get; set; } 
+    public string? Remarques { get; set; }
 
+
+    public virtual ICollection<AdminUtilisateur> Utilisateurs { get; set; } = new List<AdminUtilisateur>();
+    public virtual ICollection<AdminProfilsAcces> AdminProfilsAcces { get; set; } = new List<AdminProfilsAcces>();
+    public virtual ICollection<AdminProfilsUtilisateursLDAP> AdminProfilsUtilisateursLDAP { get; set; } = new List<AdminProfilsUtilisateursLDAP>();
 }

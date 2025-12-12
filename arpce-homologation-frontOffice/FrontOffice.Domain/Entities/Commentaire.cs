@@ -1,13 +1,16 @@
-﻿namespace FrontOffice.Domain.Entities;
+﻿using FrontOffice.Domain.Common;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class Commentaire
+namespace FrontOffice.Domain.Entities;
+
+public class Commentaire : AuditableEntity
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
     public Guid IdDossier { get; set; }
-    public DateTime DateCommentaire { get; set; }
-    public string? CommentaireTexte { get; set; } 
+    public long DateCommentaire { get; set; }
+    public string? CommentaireTexte { get; set; }
     public string? NomInstructeur { get; set; }
     public string? Proposition { get; set; }
 
-    public virtual Dossier Dossier { get; set; }
+    [ForeignKey(nameof(IdDossier))]
+    public virtual Dossier Dossier { get; set; } = default!;
 }

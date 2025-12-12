@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FrontOffice.Infrastructure.Persistence.Configurations;
 
-public class AdminUtilisateursConfiguration : IEntityTypeConfiguration<AdminUtilisateurs>
+public class AdminUtilisateursConfiguration : IEntityTypeConfiguration<AdminUtilisateur>
 {
-    public void Configure(EntityTypeBuilder<AdminUtilisateurs> builder)
+    public void Configure(EntityTypeBuilder<AdminUtilisateur> builder)
     {
         builder.ToTable("adminUtilisateurs");
         builder.HasKey(au => au.Id);

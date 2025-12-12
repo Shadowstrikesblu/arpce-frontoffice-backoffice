@@ -1,8 +1,9 @@
-﻿namespace FrontOffice.Domain.Entities;
+﻿using FrontOffice.Domain.Common;
 
-public class DocumentDemande
+namespace FrontOffice.Domain.Entities;
+
+public class DocumentDemande : AuditableEntity
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
     public Guid IdDemande { get; set; }
     public string? Nom { get; set; }
     public byte[]? Donnees { get; set; }

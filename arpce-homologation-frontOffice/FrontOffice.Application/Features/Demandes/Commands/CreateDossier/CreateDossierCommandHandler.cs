@@ -71,7 +71,7 @@ public class CreateDossierCommandHandler : IRequestHandler<CreateDossierCommand,
             IdClient = userId.Value,
             IdStatut = defaultStatut.Id,
             IdModeReglement = null,
-            DateOuverture = DateTime.UtcNow,
+            DateOuverture = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
             Numero = $"HOM-{DateTime.UtcNow:yyyyMMddHHmmssfff}",
             Libelle = request.Libelle,
         };
