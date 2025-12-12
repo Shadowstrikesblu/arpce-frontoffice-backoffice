@@ -1,6 +1,6 @@
 ﻿using BackOffice.Domain.Common; 
 namespace BackOffice.Domain.Entities;
-public class Demande : AuditableEntity 
+public class Demande : AuditableEntity
 {
     public Guid IdDossier { get; set; }
     public Guid? IdCategorie { get; set; }
@@ -16,23 +16,14 @@ public class Demande : AuditableEntity
     public int? QuantiteEquipements { get; set; }
     public string? ContactNom { get; set; }
     public string? ContactEmail { get; set; }
-    /// <summary>
-    /// Prix unitaire de l'homologation pour ce type d'équipement.
-    /// Renseigné par l'agent du Back Office lors de l'instruction.
-    /// </summary>
+
+    // Champs de facturation
     public decimal? PrixUnitaire { get; set; }
-    /// <summary>
-    /// Pourcentage de remise appliqué sur cet équipement.
-    /// Renseigné par l'agent du Back Office.
-    /// </summary>
-    /// 
-    
-    /// <summary>
-    /// Indique si l'équipement est soumis à homologation.
-    /// Par défaut, il est considéré comme homologable (true).
-    /// </summary>
-    public bool EstHomologable { get; set; } = true;
     public decimal? Remise { get; set; }
+    public bool EstHomologable { get; set; } = true;
+
+    public virtual ICollection<Devis> Devis { get; set; } = new List<Devis>();
+
     public virtual Dossier Dossier { get; set; } = default!;
     public virtual CategorieEquipement? CategorieEquipement { get; set; }
     public virtual MotifRejet? MotifRejet { get; set; }

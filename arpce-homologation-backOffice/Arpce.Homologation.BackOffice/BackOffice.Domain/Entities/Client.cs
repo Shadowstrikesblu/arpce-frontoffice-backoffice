@@ -14,22 +14,15 @@ public class Client : AuditableEntity
     public string? MotPasse { get; set; }
     public byte? ChangementMotPasse { get; set; }
     public byte? Desactive { get; set; }
-
     public string? ContactNom { get; set; }
     public string? ContactTelephone { get; set; }
     public string? ContactFonction { get; set; }
-
     public string? Email { get; set; }
-
     public string? Adresse { get; set; }
     public string? Bp { get; set; }
     public string? Ville { get; set; }
     public string? Pays { get; set; }
     public string? Remarques { get; set; }
-
-    /// <summary>
-    /// Type de client : "Particulier" ou "Entreprise".
-    /// </summary>
     public string TypeClient { get; set; } = "Entreprise";
     public int NiveauValidation { get; set; } = 0;
     public bool IsVerified { get; set; } = false;
