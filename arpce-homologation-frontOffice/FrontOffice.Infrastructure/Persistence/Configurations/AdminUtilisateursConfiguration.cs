@@ -18,11 +18,11 @@ public class AdminUtilisateursConfiguration : IEntityTypeConfiguration<AdminUtil
         builder.Property(au => au.ChangementMotPasse).HasColumnType("tinyint"); 
         builder.Property(au => au.Desactive).HasColumnType("tinyint"); 
         builder.Property(au => au.Remarques).HasMaxLength(512).HasColumnType("nvarchar(512)"); 
-        builder.Property(au => au.DerniereConnexion).HasColumnType("smalldatetime"); 
+        builder.Property(au => au.DerniereConnexion).HasColumnType("bigint"); 
         builder.Property(au => au.UtilisateurCreation).HasMaxLength(60).HasColumnType("nvarchar(60)");
-        builder.Property(au => au.DateCreation).HasColumnType("smalldatetime"); 
+        builder.Property(au => au.DateCreation).HasColumnType("bigint"); 
         builder.Property(au => au.UtilisateurModification).HasMaxLength(60).HasColumnType("nvarchar(60)"); 
-        builder.Property(au => au.DateModification).HasColumnType("smalldatetime"); 
+        builder.Property(au => au.DateModification).HasColumnType("bigint"); 
 
         // Relations
         builder.HasOne(au => au.UtilisateurType)

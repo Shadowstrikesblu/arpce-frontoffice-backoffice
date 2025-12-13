@@ -12,8 +12,8 @@ public class MotifRejetConfiguration : IEntityTypeConfiguration<MotifRejet>
         builder.Property(m => m.Libelle).HasMaxLength(120).IsRequired();
         builder.Property(m => m.Remarques).HasMaxLength(512);
         builder.Property(m => m.UtilisateurCreation).HasMaxLength(60);
-        builder.Property(m => m.DateCreation).HasColumnType("smalldatetime");
+        builder.Property(m => m.DateCreation).HasColumnType("bigint");
         builder.Property(m => m.UtilisateurModification).HasMaxLength(60);
-        builder.Property(m => m.DateModification).HasColumnType("smalldatetime");
+        builder.Property(m => m.DateModification).HasColumnType("bigint");
     }
 }

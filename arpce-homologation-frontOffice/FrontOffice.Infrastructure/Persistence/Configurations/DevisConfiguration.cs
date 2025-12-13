@@ -8,7 +8,7 @@ public class DevisConfiguration : IEntityTypeConfiguration<Devis>
     {
         builder.ToTable("devis");
         builder.HasKey(d => d.Id);
-        builder.Property(d => d.Date).HasColumnType("date").IsRequired();
+        builder.Property(d => d.Date).HasColumnType("bigint").IsRequired();
         builder.Property(d => d.MontantEtude).HasColumnType("money").IsRequired();
         builder.Property(d => d.MontantHomologation).HasColumnType("money");
         builder.Property(d => d.MontantControle).HasColumnType("money");

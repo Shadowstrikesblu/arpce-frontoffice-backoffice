@@ -13,7 +13,7 @@ public class AdminConnexionsConfiguration : IEntityTypeConfiguration<AdminConnex
         builder.HasKey(ac => new { ac.Utilisateur, ac.DateConnexion }); 
 
         builder.Property(ac => ac.Utilisateur).HasMaxLength(60).IsRequired().HasColumnType("nvarchar(60)"); 
-        builder.Property(ac => ac.DateConnexion).HasColumnType("smalldatetime").IsRequired(); 
+        builder.Property(ac => ac.DateConnexion).HasColumnType("bigint").IsRequired(); 
         builder.Property(ac => ac.Ip).HasMaxLength(60).HasColumnType("nvarchar(60)"); 
     }
 }

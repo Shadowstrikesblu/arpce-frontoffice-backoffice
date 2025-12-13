@@ -28,8 +28,8 @@ namespace FrontOffice.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("date");
+                    b.Property<long>("Date")
+                        .HasColumnType("bigint");
 
                     b.Property<long?>("DateCreation")
                         .HasColumnType("bigint");
@@ -88,6 +88,10 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Groupe")
                         .IsRequired()
                         .HasMaxLength(120)
@@ -130,8 +134,11 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
-                    b.Property<DateTime>("DateConnexion")
-                        .HasColumnType("smalldatetime");
+                    b.Property<long>("DateConnexion")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Ip")
                         .HasMaxLength(60)
@@ -147,6 +154,10 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Libelle")
                         .IsRequired()
@@ -174,8 +185,14 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
-                    b.Property<DateTime>("DateEvenement")
-                        .HasColumnType("datetime");
+                    b.Property<long>("DateEvenement")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid?>("DossierId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("IdDossier")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdEvenementType")
                         .HasColumnType("uniqueidentifier");
@@ -194,6 +211,8 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DossierId");
 
                     b.HasIndex("IdEvenementType");
 
@@ -287,6 +306,7 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
+                        .IsRequired()
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
 
@@ -326,6 +346,9 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Property<Guid>("IdAccess")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("AdminProfilsId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<byte?>("Ajouter")
                         .HasColumnType("tinyint");
 
@@ -339,6 +362,8 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasColumnType("tinyint");
 
                     b.HasKey("IdProfil", "IdAccess");
+
+                    b.HasIndex("AdminProfilsId");
 
                     b.HasIndex("IdAccess");
 
@@ -354,7 +379,12 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Property<Guid>("IdProfil")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("AdminProfilsId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Utilisateur", "IdProfil");
+
+                    b.HasIndex("AdminProfilsId");
 
                     b.HasIndex("IdProfil");
 
@@ -389,29 +419,16 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.ToTable("adminReporting", (string)null);
                 });
 
-            modelBuilder.Entity("FrontOffice.Domain.Entities.AdminUtilisateurTypes", b =>
+            modelBuilder.Entity("FrontOffice.Domain.Entities.AdminUtilisateur", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Libelle")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("adminUtilisateurTypes", (string)null);
-                });
-
-            modelBuilder.Entity("FrontOffice.Domain.Entities.AdminUtilisateurs", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid?>("AdminProfilsId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<byte?>("ChangementMotPasse")
+                    b.Property<byte>("ChangementMotPasse")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("Compte")
@@ -419,16 +436,16 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
-                    b.Property<DateTime?>("DateCreation")
-                        .HasColumnType("smalldatetime");
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("DateModification")
-                        .HasColumnType("smalldatetime");
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("DerniereConnexion")
-                        .HasColumnType("smalldatetime");
+                    b.Property<long?>("DerniereConnexion")
+                        .HasColumnType("bigint");
 
-                    b.Property<byte?>("Desactive")
+                    b.Property<byte>("Desactive")
                         .HasColumnType("tinyint");
 
                     b.Property<Guid?>("IdProfil")
@@ -464,11 +481,29 @@ namespace FrontOffice.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AdminProfilsId");
+
                     b.HasIndex("IdProfil");
 
                     b.HasIndex("IdUtilisateurType");
 
                     b.ToTable("adminUtilisateurs", (string)null);
+                });
+
+            modelBuilder.Entity("FrontOffice.Domain.Entities.AdminUtilisateurTypes", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Libelle")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("adminUtilisateurTypes", (string)null);
                 });
 
             modelBuilder.Entity("FrontOffice.Domain.Entities.Attestation", b =>
@@ -477,11 +512,11 @@ namespace FrontOffice.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DateDelivrance")
-                        .HasColumnType("date");
+                    b.Property<long>("DateDelivrance")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime>("DateExpiration")
-                        .HasColumnType("date");
+                    b.Property<long>("DateExpiration")
+                        .HasColumnType("bigint");
 
                     b.Property<byte[]>("Donnees")
                         .HasColumnType("varbinary(max)");
@@ -518,29 +553,43 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Property<long?>("DateModification")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("FormuleHomologation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("FraisControle")
+                        .HasColumnType("money");
+
+                    b.Property<decimal?>("FraisEtude")
+                        .HasColumnType("money");
+
+                    b.Property<decimal?>("FraisHomologation")
+                        .HasColumnType("money");
+
+                    b.Property<byte?>("FraisHomologationParLot")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int?>("FraisHomologationQuantiteParLot")
+                        .HasColumnType("int");
+
                     b.Property<string>("Libelle")
                         .IsRequired()
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
+                    b.Property<int?>("QuantiteReference")
+                        .HasColumnType("int");
+
                     b.Property<string>("Remarques")
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
-                    b.Property<decimal?>("TarifControle")
-                        .HasColumnType("money");
+                    b.Property<string>("TypeClient")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("TarifEtude")
-                        .HasColumnType("money");
-
-                    b.Property<decimal?>("TarifHomologation")
-                        .HasColumnType("money");
-
-                    b.Property<byte?>("TarifHomologationParLot")
-                        .HasColumnType("tinyint");
-
-                    b.Property<int?>("TarifHomologationQuantiteParLot")
-                        .HasColumnType("int");
+                    b.Property<string>("TypeEquipement")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UtilisateurCreation")
                         .HasMaxLength(60)
@@ -675,8 +724,14 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasColumnType("nvarchar(512)")
                         .HasColumnName("commentaire");
 
-                    b.Property<DateTime>("DateCommentaire")
-                        .HasColumnType("date");
+                    b.Property<long>("DateCommentaire")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid>("IdDossier")
                         .HasColumnType("uniqueidentifier");
@@ -686,6 +741,12 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("Proposition")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UtilisateurCreation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UtilisateurModification")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -794,6 +855,12 @@ namespace FrontOffice.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
+
                     b.Property<byte[]>("Donnees")
                         .HasColumnType("varbinary(max)");
 
@@ -813,6 +880,12 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
+                    b.Property<string>("UtilisateurCreation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UtilisateurModification")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IdDemande");
@@ -825,6 +898,12 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
 
                     b.Property<byte[]>("Donnees")
                         .HasColumnType("varbinary(max)");
@@ -848,6 +927,12 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Property<byte?>("Type")
                         .HasColumnType("tinyint");
 
+                    b.Property<string>("UtilisateurCreation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UtilisateurModification")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IdDossier");
@@ -867,8 +952,11 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Property<long?>("DateModification")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("DateOuverture")
-                        .HasColumnType("date");
+                    b.Property<long>("DateOuverture")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid?>("IdAgentInstructeur")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdClient")
                         .HasColumnType("uniqueidentifier");
@@ -917,11 +1005,11 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
-                    b.Property<DateTime?>("DateCreation")
-                        .HasColumnType("smalldatetime");
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("DateModification")
-                        .HasColumnType("smalldatetime");
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Libelle")
                         .IsRequired()
@@ -950,28 +1038,28 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d5310f58-41b5-41d9-95bc-5d1839fafa59"),
+                            Id = new Guid("f2001635-ec3e-46fb-b876-414bc4ce1a18"),
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("e1ba5c8d-1874-4272-8f0d-aee263583da5"),
+                            Id = new Guid("bc947f38-22fe-4379-8930-1224559b6316"),
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("6b0caa08-80dd-4a61-a2bd-bec20fbaf2ba"),
+                            Id = new Guid("3e38fc1b-01c2-438e-a872-500275b8ad99"),
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("98323566-b28f-41b4-9d0f-f22b46c3f85d"),
+                            Id = new Guid("708dec01-3ee1-4a01-8366-3f7161ceb42f"),
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1
@@ -989,11 +1077,11 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
 
-                    b.Property<DateTime?>("DateCreation")
-                        .HasColumnType("smalldatetime");
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("DateModification")
-                        .HasColumnType("smalldatetime");
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Libelle")
                         .IsRequired()
@@ -1028,10 +1116,22 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
 
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Libelle")
                         .IsRequired()
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("UtilisateurCreation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UtilisateurModification")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1186,17 +1286,27 @@ namespace FrontOffice.Infrastructure.Migrations
 
             modelBuilder.Entity("FrontOffice.Domain.Entities.AdminJournal", b =>
                 {
+                    b.HasOne("FrontOffice.Domain.Entities.Dossier", "Dossier")
+                        .WithMany()
+                        .HasForeignKey("DossierId");
+
                     b.HasOne("FrontOffice.Domain.Entities.AdminEvenementsTypes", "EvenementType")
                         .WithMany()
                         .HasForeignKey("IdEvenementType")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Dossier");
+
                     b.Navigation("EvenementType");
                 });
 
             modelBuilder.Entity("FrontOffice.Domain.Entities.AdminProfilsAcces", b =>
                 {
+                    b.HasOne("FrontOffice.Domain.Entities.AdminProfils", null)
+                        .WithMany("AdminProfilsAcces")
+                        .HasForeignKey("AdminProfilsId");
+
                     b.HasOne("FrontOffice.Domain.Entities.AdminAccess", "Access")
                         .WithMany()
                         .HasForeignKey("IdAccess")
@@ -1216,6 +1326,10 @@ namespace FrontOffice.Infrastructure.Migrations
 
             modelBuilder.Entity("FrontOffice.Domain.Entities.AdminProfilsUtilisateursLDAP", b =>
                 {
+                    b.HasOne("FrontOffice.Domain.Entities.AdminProfils", null)
+                        .WithMany("AdminProfilsUtilisateursLDAP")
+                        .HasForeignKey("AdminProfilsId");
+
                     b.HasOne("FrontOffice.Domain.Entities.AdminProfils", "Profil")
                         .WithMany()
                         .HasForeignKey("IdProfil")
@@ -1225,8 +1339,12 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Navigation("Profil");
                 });
 
-            modelBuilder.Entity("FrontOffice.Domain.Entities.AdminUtilisateurs", b =>
+            modelBuilder.Entity("FrontOffice.Domain.Entities.AdminUtilisateur", b =>
                 {
+                    b.HasOne("FrontOffice.Domain.Entities.AdminProfils", null)
+                        .WithMany("Utilisateurs")
+                        .HasForeignKey("AdminProfilsId");
+
                     b.HasOne("FrontOffice.Domain.Entities.AdminProfils", "Profil")
                         .WithMany()
                         .HasForeignKey("IdProfil")
@@ -1343,6 +1461,15 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Navigation("ModeReglement");
 
                     b.Navigation("Statut");
+                });
+
+            modelBuilder.Entity("FrontOffice.Domain.Entities.AdminProfils", b =>
+                {
+                    b.Navigation("AdminProfilsAcces");
+
+                    b.Navigation("AdminProfilsUtilisateursLDAP");
+
+                    b.Navigation("Utilisateurs");
                 });
 
             modelBuilder.Entity("FrontOffice.Domain.Entities.Client", b =>
