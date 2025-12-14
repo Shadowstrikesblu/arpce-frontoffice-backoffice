@@ -14,9 +14,9 @@ public class ModeReglementConfiguration : IEntityTypeConfiguration<ModeReglement
         builder.Property(m => m.MobileBanking).IsRequired();
         builder.Property(m => m.Remarques).HasMaxLength(512);
         builder.Property(m => m.UtilisateurCreation).HasMaxLength(60);
-        builder.Property(m => m.DateCreation).HasColumnType("smalldatetime");
+        builder.Property(m => m.DateCreation).HasColumnType("bigint");
         builder.Property(m => m.UtilisateurModification).HasMaxLength(60);
-        builder.Property(m => m.DateModification).HasColumnType("smalldatetime");
+        builder.Property(m => m.DateModification).HasColumnType("bigint");
 
         // --- Ajout des données initiales (Seed) ---
         builder.HasData(

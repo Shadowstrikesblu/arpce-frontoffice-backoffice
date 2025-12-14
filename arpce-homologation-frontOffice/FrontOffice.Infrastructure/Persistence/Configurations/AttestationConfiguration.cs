@@ -14,8 +14,8 @@ namespace FrontOffice.Infrastructure.Persistence.Configurations
             builder.ToTable("attestations");
             builder.HasKey(a => a.Id);
             builder.Property(a => a.Extension).HasMaxLength(12).IsRequired();
-            builder.Property(a => a.DateDelivrance).HasColumnType("date").IsRequired();
-            builder.Property(a => a.DateExpiration).HasColumnType("date").IsRequired();
+            builder.Property(a => a.DateDelivrance).HasColumnType("bigint").IsRequired();
+            builder.Property(a => a.DateExpiration).HasColumnType("bigint").IsRequired();
             builder.HasOne(a => a.Demande).WithMany(d => d.Attestations).HasForeignKey(a => a.IdDemande);
         }
 

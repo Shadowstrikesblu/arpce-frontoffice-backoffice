@@ -11,9 +11,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BackOffice.Infrastructure.Migrations
 {
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
     [DbContext(typeof(BackOfficeDbContext))]
-    [Migration("20251211104659_Initialisation")]
-    partial class Initialisation
+    [Migration("20251212212252_InitialCreate")]
+    partial class InitialCreate
+========
+    [DbContext(typeof(FrontOfficeDbContext))]
+    [Migration("20251212214022_init")]
+    partial class init
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +31,63 @@ namespace BackOffice.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
             modelBuilder.Entity("BackOffice.Domain.Entities.AdminAccess", b =>
+========
+            modelBuilder.Entity("Devis", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("Date")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid?>("DossierId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdDemande")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("MontantControle")
+                        .HasColumnType("money");
+
+                    b.Property<decimal>("MontantEtude")
+                        .HasColumnType("money");
+
+                    b.Property<decimal?>("MontantHomologation")
+                        .HasColumnType("money");
+
+                    b.Property<string>("PaiementMobileId")
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<byte?>("PaiementOk")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("UtilisateurCreation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UtilisateurModification")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DossierId");
+
+                    b.HasIndex("IdDemande");
+
+                    b.ToTable("devis", (string)null);
+                });
+
+            modelBuilder.Entity("FrontOffice.Domain.Entities.AdminAccess", b =>
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -87,6 +149,12 @@ namespace BackOffice.Infrastructure.Migrations
 
                     b.Property<long>("DateConnexion")
                         .HasColumnType("bigint");
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
+========
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
 
                     b.Property<string>("Ip")
                         .HasMaxLength(60)
@@ -124,61 +192,61 @@ namespace BackOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("05e59a5b-f30e-4db5-8ce5-16f667066115"),
+                            Id = new Guid("8b610d0d-fccb-4552-8434-e83e983d107f"),
                             Code = "CREATION",
                             Libelle = "Création de données"
                         },
                         new
                         {
-                            Id = new Guid("2e0beca1-ad02-4bc4-a732-69408167aff8"),
+                            Id = new Guid("6dd2c94b-da0b-45c3-9771-b269ca54fb11"),
                             Code = "MODIFICATION",
                             Libelle = "Modification de données"
                         },
                         new
                         {
-                            Id = new Guid("3e437778-949b-46cb-ad8c-339decf002d6"),
+                            Id = new Guid("3c9e0acc-6712-4456-86a7-4c894ff94a25"),
                             Code = "SUPPRESSION",
                             Libelle = "Suppression de données"
                         },
                         new
                         {
-                            Id = new Guid("7a7d4247-435a-46fe-a483-9db29640577c"),
+                            Id = new Guid("a52c1339-08e5-4223-a9d1-01fd9d6bea07"),
                             Code = "VALIDATION",
                             Libelle = "Validation de processus"
                         },
                         new
                         {
-                            Id = new Guid("657de49c-1bd8-4046-9f6f-0a961a733efb"),
+                            Id = new Guid("815b2cfb-942c-4d29-9be2-a490aea7d2a5"),
                             Code = "CONNEXION",
                             Libelle = "Modification"
                         },
                         new
                         {
-                            Id = new Guid("43dbc7c4-fbfc-48f4-8a04-f62e947c3d5a"),
+                            Id = new Guid("fcf83bfd-a2ae-4d2b-8fa6-3611d18439fd"),
                             Code = "MODIFICATION",
                             Libelle = "Connexion utilisateur"
                         },
                         new
                         {
-                            Id = new Guid("7e869c0d-1a10-40f4-9a87-05db4f1f7e48"),
+                            Id = new Guid("00108f77-b2d4-4230-a7b9-9e3c8b95f2ed"),
                             Code = "ATTRIBUTION",
                             Libelle = "Attribution de droits/profils"
                         },
                         new
                         {
-                            Id = new Guid("e0d4f382-7102-483c-a147-359a70cc21d4"),
+                            Id = new Guid("eda93f2f-c76d-4999-b32e-deabcd980172"),
                             Code = "SECURITE",
                             Libelle = "Action de sécurité"
                         },
                         new
                         {
-                            Id = new Guid("cfe6baae-ae9a-42e7-b416-6338eca28ba7"),
+                            Id = new Guid("63c158ee-df56-429a-b024-dad316c3ac8b"),
                             Code = "COMMUNICATION",
                             Libelle = "Envoi de communication"
                         },
                         new
                         {
-                            Id = new Guid("1360e688-2370-46a4-aa6e-678ca8490efa"),
+                            Id = new Guid("4601a315-aa4c-4961-97c2-df72660c4656"),
                             Code = "QUALIFICATION",
                             Libelle = "Qualification de données"
                         });
@@ -442,7 +510,11 @@ namespace BackOffice.Infrastructure.Migrations
                     b.ToTable("adminReporting", (string)null);
                 });
 
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
             modelBuilder.Entity("BackOffice.Domain.Entities.AdminUtilisateur", b =>
+========
+            modelBuilder.Entity("FrontOffice.Domain.Entities.AdminUtilisateur", b =>
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -451,8 +523,13 @@ namespace BackOffice.Infrastructure.Migrations
                     b.Property<Guid?>("AdminProfilsId")
                         .HasColumnType("uniqueidentifier");
 
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
                     b.Property<bool>("ChangementMotPasse")
                         .HasColumnType("bit");
+========
+                    b.Property<byte>("ChangementMotPasse")
+                        .HasColumnType("tinyint");
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
 
                     b.Property<string>("Compte")
                         .IsRequired()
@@ -468,8 +545,13 @@ namespace BackOffice.Infrastructure.Migrations
                     b.Property<long?>("DerniereConnexion")
                         .HasColumnType("bigint");
 
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
                     b.Property<bool>("Desactive")
                         .HasColumnType("bit");
+========
+                    b.Property<byte>("Desactive")
+                        .HasColumnType("tinyint");
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
 
                     b.Property<Guid?>("IdProfil")
                         .HasColumnType("uniqueidentifier");
@@ -506,12 +588,18 @@ namespace BackOffice.Infrastructure.Migrations
 
                     b.HasIndex("AdminProfilsId");
 
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
                     b.HasIndex("Compte")
                         .IsUnique();
 
+========
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
                     b.HasIndex("IdProfil");
 
                     b.HasIndex("IdUtilisateurType");
+
+                    b.HasIndex("Nom")
+                        .IsUnique();
 
                     b.ToTable("AdminUtilisateurs", (string)null);
 
@@ -521,22 +609,43 @@ namespace BackOffice.Infrastructure.Migrations
                             Id = new Guid("88888888-8888-8888-8888-888888888888"),
                             ChangementMotPasse = true,
                             Compte = "admin",
-                            DateCreation = 1765450013002L,
+                            DateCreation = 1765574571027L,
                             Desactive = false,
                             IdUtilisateurType = new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"),
-                            MotPasse = "$2a$11$0DaRl5MB2oXLyfFnpDXrpO.n330Pm2YjGkDesNqtK/R5ofdfEZebm",
-                            Nom = "Administrateur",
+                            MotPasse = "$2a$11$liznrld3jmsQCzlEREJnLuAQYfKMbfnmD6xzk8QGmRm0tHbuByue2",
+                            Nom = "root",
                             Prenoms = "ARPCE",
                             UtilisateurCreation = "SYSTEM_SEED"
                         });
                 });
 
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
             modelBuilder.Entity("BackOffice.Domain.Entities.AdminUtilisateurTypes", b =>
+========
+            modelBuilder.Entity("FrontOffice.Domain.Entities.AdminUtilisateurTypes", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Libelle")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("adminUtilisateurTypes", (string)null);
+                });
+
+            modelBuilder.Entity("FrontOffice.Domain.Entities.Attestation", b =>
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
                     b.Property<string>("Libelle")
                         .IsRequired()
                         .HasMaxLength(120)
@@ -554,12 +663,12 @@ namespace BackOffice.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7c89e33c-21f8-42f5-b519-220e00f9dfce"),
+                            Id = new Guid("d0916bee-2154-4a2c-99bb-90b74854d3ec"),
                             Libelle = "Utilisateur Standard"
                         },
                         new
                         {
-                            Id = new Guid("66ca5edd-ea4b-4fe4-8932-688068305744"),
+                            Id = new Guid("0e0ac5cf-ee48-4462-8d25-8fb3412e1608"),
                             Libelle = "Auditeur"
                         });
                 });
@@ -573,6 +682,11 @@ namespace BackOffice.Infrastructure.Migrations
                     b.Property<long>("DateDelivrance")
                         .HasColumnType("bigint");
 
+========
+                    b.Property<long>("DateDelivrance")
+                        .HasColumnType("bigint");
+
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
                     b.Property<long>("DateExpiration")
                         .HasColumnType("bigint");
 
@@ -612,6 +726,7 @@ namespace BackOffice.Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("FormuleHomologation")
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -626,6 +741,18 @@ namespace BackOffice.Infrastructure.Migrations
                     b.Property<byte?>("FraisHomologation")
                         .HasColumnType("tinyint")
                         .HasColumnName("TarifHomologation");
+========
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("FraisControle")
+                        .HasColumnType("money");
+
+                    b.Property<decimal?>("FraisEtude")
+                        .HasColumnType("money");
+
+                    b.Property<decimal?>("FraisHomologation")
+                        .HasColumnType("money");
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
 
                     b.Property<byte?>("FraisHomologationParLot")
                         .HasColumnType("tinyint");
@@ -647,6 +774,7 @@ namespace BackOffice.Infrastructure.Migrations
 
                     b.Property<string>("TypeClient")
                         .IsRequired()
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -654,6 +782,13 @@ namespace BackOffice.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+========
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TypeEquipement")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
 
                     b.Property<string>("UtilisateurCreation")
                         .HasMaxLength(60)
@@ -816,6 +951,12 @@ namespace BackOffice.Infrastructure.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
+                    b.Property<string>("UtilisateurCreation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UtilisateurModification")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IdDossier");
@@ -924,6 +1065,7 @@ namespace BackOffice.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
                     b.Property<long>("Date")
                         .HasColumnType("bigint");
 
@@ -932,6 +1074,9 @@ namespace BackOffice.Infrastructure.Migrations
 
                     b.Property<long?>("DateModification")
                         .HasColumnType("bigint");
+
+                    b.Property<Guid?>("DemandeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdDossier")
                         .HasColumnType("uniqueidentifier");
@@ -962,6 +1107,8 @@ namespace BackOffice.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DemandeId");
+
                     b.HasIndex("IdDossier");
 
                     b.ToTable("devis", (string)null);
@@ -973,6 +1120,8 @@ namespace BackOffice.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+========
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
                     b.Property<long?>("DateCreation")
                         .HasColumnType("bigint");
 
@@ -999,12 +1148,19 @@ namespace BackOffice.Infrastructure.Migrations
                         .HasColumnType("nvarchar(120)");
 
                     b.Property<string>("UtilisateurCreation")
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("UtilisateurModification")
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
+========
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UtilisateurModification")
+                        .HasColumnType("nvarchar(max)");
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
 
                     b.HasKey("Id");
 
@@ -1048,12 +1204,19 @@ namespace BackOffice.Infrastructure.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<string>("UtilisateurCreation")
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("UtilisateurModification")
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
+========
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UtilisateurModification")
+                        .HasColumnType("nvarchar(max)");
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
 
                     b.HasKey("Id");
 
@@ -1164,28 +1327,44 @@ namespace BackOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2af42a33-1ead-4444-adef-676863c583da"),
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
+                            Id = new Guid("e186de6e-53f2-4ea7-81b0-b25b2b688355"),
+========
+                            Id = new Guid("f2001635-ec3e-46fb-b876-414bc4ce1a18"),
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("04df1228-f27d-4ce1-bc79-dd267f9950bc"),
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
+                            Id = new Guid("e447a939-79c3-4f6b-b875-ce9812b1e9f3"),
+========
+                            Id = new Guid("bc947f38-22fe-4379-8930-1224559b6316"),
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("bdc870c5-3702-4317-b1be-54246a4d6a66"),
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
+                            Id = new Guid("4da4a406-9e1e-431b-af72-3b35c8c5c277"),
+========
+                            Id = new Guid("3e38fc1b-01c2-438e-a872-500275b8ad99"),
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("cb14133a-13af-47a5-bc5c-1f0683c48baa"),
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
+                            Id = new Guid("c0cb7af8-b23b-46b3-990a-6ca42f21cf5f"),
+========
+                            Id = new Guid("708dec01-3ee1-4a01-8366-3f7161ceb42f"),
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1
@@ -1254,12 +1433,19 @@ namespace BackOffice.Infrastructure.Migrations
                         .HasColumnType("nvarchar(120)");
 
                     b.Property<string>("UtilisateurCreation")
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("UtilisateurModification")
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
+========
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UtilisateurModification")
+                        .HasColumnType("nvarchar(max)");
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
 
                     b.HasKey("Id");
 
@@ -1403,7 +1589,26 @@ namespace BackOffice.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("DossierId");
 
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
                     b.HasOne("BackOffice.Domain.Entities.AdminEvenementsTypes", "EvenementType")
+========
+                    b.HasOne("FrontOffice.Domain.Entities.Demande", "Demande")
+                        .WithMany("Devis")
+                        .HasForeignKey("IdDemande")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Demande");
+                });
+
+            modelBuilder.Entity("FrontOffice.Domain.Entities.AdminJournal", b =>
+                {
+                    b.HasOne("FrontOffice.Domain.Entities.Dossier", "Dossier")
+                        .WithMany()
+                        .HasForeignKey("DossierId");
+
+                    b.HasOne("FrontOffice.Domain.Entities.AdminEvenementsTypes", "EvenementType")
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
                         .WithMany()
                         .HasForeignKey("IdEvenementType")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1416,11 +1621,19 @@ namespace BackOffice.Infrastructure.Migrations
 
             modelBuilder.Entity("BackOffice.Domain.Entities.AdminProfilsAcces", b =>
                 {
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
                     b.HasOne("BackOffice.Domain.Entities.AdminProfils", null)
                         .WithMany("AdminProfilsAcces")
                         .HasForeignKey("AdminProfilsId");
 
                     b.HasOne("BackOffice.Domain.Entities.AdminAccess", "Access")
+========
+                    b.HasOne("FrontOffice.Domain.Entities.AdminProfils", null)
+                        .WithMany("AdminProfilsAcces")
+                        .HasForeignKey("AdminProfilsId");
+
+                    b.HasOne("FrontOffice.Domain.Entities.AdminAccess", "Access")
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
                         .WithMany()
                         .HasForeignKey("IdAccess")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1439,11 +1652,19 @@ namespace BackOffice.Infrastructure.Migrations
 
             modelBuilder.Entity("BackOffice.Domain.Entities.AdminProfilsUtilisateursLDAP", b =>
                 {
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
                     b.HasOne("BackOffice.Domain.Entities.AdminProfils", null)
                         .WithMany("AdminProfilsUtilisateursLDAP")
                         .HasForeignKey("AdminProfilsId");
 
                     b.HasOne("BackOffice.Domain.Entities.AdminProfils", "Profil")
+========
+                    b.HasOne("FrontOffice.Domain.Entities.AdminProfils", null)
+                        .WithMany("AdminProfilsUtilisateursLDAP")
+                        .HasForeignKey("AdminProfilsId");
+
+                    b.HasOne("FrontOffice.Domain.Entities.AdminProfils", "Profil")
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
                         .WithMany()
                         .HasForeignKey("IdProfil")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1452,6 +1673,7 @@ namespace BackOffice.Infrastructure.Migrations
                     b.Navigation("Profil");
                 });
 
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
             modelBuilder.Entity("BackOffice.Domain.Entities.AdminUtilisateur", b =>
                 {
                     b.HasOne("BackOffice.Domain.Entities.AdminProfils", null)
@@ -1459,6 +1681,15 @@ namespace BackOffice.Infrastructure.Migrations
                         .HasForeignKey("AdminProfilsId");
 
                     b.HasOne("BackOffice.Domain.Entities.AdminProfils", "Profil")
+========
+            modelBuilder.Entity("FrontOffice.Domain.Entities.AdminUtilisateur", b =>
+                {
+                    b.HasOne("FrontOffice.Domain.Entities.AdminProfils", null)
+                        .WithMany("Utilisateurs")
+                        .HasForeignKey("AdminProfilsId");
+
+                    b.HasOne("FrontOffice.Domain.Entities.AdminProfils", "Profil")
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
                         .WithMany()
                         .HasForeignKey("IdProfil")
                         .OnDelete(DeleteBehavior.SetNull);
@@ -1530,6 +1761,10 @@ namespace BackOffice.Infrastructure.Migrations
 
             modelBuilder.Entity("BackOffice.Domain.Entities.Devis", b =>
                 {
+                    b.HasOne("BackOffice.Domain.Entities.Demande", null)
+                        .WithMany("Devis")
+                        .HasForeignKey("DemandeId");
+
                     b.HasOne("BackOffice.Domain.Entities.Dossier", "Dossier")
                         .WithMany("Devis")
                         .HasForeignKey("IdDossier")
@@ -1592,7 +1827,11 @@ namespace BackOffice.Infrastructure.Migrations
                     b.Navigation("Statut");
                 });
 
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
             modelBuilder.Entity("BackOffice.Domain.Entities.AdminProfils", b =>
+========
+            modelBuilder.Entity("FrontOffice.Domain.Entities.AdminProfils", b =>
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
                 {
                     b.Navigation("AdminProfilsAcces");
 
@@ -1601,7 +1840,11 @@ namespace BackOffice.Infrastructure.Migrations
                     b.Navigation("Utilisateurs");
                 });
 
+<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212212252_InitialCreate.Designer.cs
             modelBuilder.Entity("BackOffice.Domain.Entities.Client", b =>
+========
+            modelBuilder.Entity("FrontOffice.Domain.Entities.Client", b =>
+>>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20251212214022_init.Designer.cs
                 {
                     b.Navigation("Dossiers");
                 });
@@ -1609,6 +1852,8 @@ namespace BackOffice.Infrastructure.Migrations
             modelBuilder.Entity("BackOffice.Domain.Entities.Demande", b =>
                 {
                     b.Navigation("Attestations");
+
+                    b.Navigation("Devis");
 
                     b.Navigation("DocumentsDemandes");
                 });

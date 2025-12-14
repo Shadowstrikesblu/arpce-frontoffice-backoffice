@@ -10,7 +10,7 @@ public class DossierConfiguration : IEntityTypeConfiguration<Dossier>
         builder.HasKey(d => d.Id);
         builder.Property(d => d.Numero).HasMaxLength(30).IsRequired();
         builder.Property(d => d.Libelle).HasMaxLength(120).IsRequired();
-        builder.Property(d => d.DateOuverture).HasColumnType("date").IsRequired();
+        builder.Property(d => d.DateOuverture).HasColumnType("bigint").IsRequired();
 
         builder.HasOne(d => d.Client)
             .WithMany(c => c.Dossiers)

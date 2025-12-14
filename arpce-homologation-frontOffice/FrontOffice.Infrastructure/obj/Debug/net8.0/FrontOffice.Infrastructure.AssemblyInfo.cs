@@ -13,7 +13,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FrontOffice.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< HEAD
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+934bb8da3a1dd0f47338ebf30115c60f152fe210")]
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7a55aea422e4438075a73bade99823b32b369e91")]
+>>>>>>> 8caf2139681d5e1ffa745bdafb14f25b4b9e2689
 [assembly: System.Reflection.AssemblyProductAttribute("FrontOffice.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FrontOffice.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
