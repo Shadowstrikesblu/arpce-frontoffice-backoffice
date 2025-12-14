@@ -21,32 +21,6 @@ public class FrontOfficeDbContext : DbContext, IApplicationDbContext
     }
 
     // --- Déclaration de toutes les tables de la base de données ---
-<<<<<<< HEAD
-    public DbSet<AdminAccess> AdminAccesses => Set<AdminAccess>();
-    public DbSet<AdminConnexions> AdminConnexions => Set<AdminConnexions>(); 
-    public DbSet<AdminEvenementsTypes> AdminEvenementsTypes => Set<AdminEvenementsTypes>();
-    public DbSet<AdminJournal> AdminJournals => Set<AdminJournal>();
-    public DbSet<AdminOptions> AdminOptions => Set<AdminOptions>(); 
-    public DbSet<AdminProfils> AdminProfils => Set<AdminProfils>();
-    public DbSet<AdminProfilsAcces> AdminProfilsAcces => Set<AdminProfilsAcces>();
-    public DbSet<AdminProfilsUtilisateursLDAP> AdminProfilsUtilisateursLDAP => Set<AdminProfilsUtilisateursLDAP>();
-    public DbSet<AdminReporting> AdminReporting => Set<AdminReporting>();
-    public DbSet<AdminUtilisateurs> AdminUtilisateurs => Set<AdminUtilisateurs>();
-    public DbSet<AdminUtilisateurTypes> AdminUtilisateurTypes => Set<AdminUtilisateurTypes>();
-    public DbSet<Attestation> Attestations => Set<Attestation>();
-    public DbSet<CategorieEquipement> CategoriesEquipements => Set<CategorieEquipement>();
-    public DbSet<Client> Clients => Set<Client>();
-    public DbSet<Commentaire> Commentaires => Set<Commentaire>();
-    public DbSet<Demande> Demandes => Set<Demande>();
-    public DbSet<Devis> Devis => Set<Devis>();
-    public DbSet<DocumentDemande> DocumentsDemandes => Set<DocumentDemande>();
-    public DbSet<DocumentDossier> DocumentsDossiers => Set<DocumentDossier>();
-    public DbSet<Dossier> Dossiers => Set<Dossier>();
-    public DbSet<ModeReglement> ModesReglements => Set<ModeReglement>();
-    public DbSet<MotifRejet> MotifsRejets => Set<MotifRejet>();
-    public DbSet<Proposition> Propositions => Set<Proposition>();
-    public DbSet<Statut> Statuts => Set<Statut>();
-=======
 
     public DbSet<AdminAccess> AdminAccesses { get; set; }
     public DbSet<AdminConnexions> AdminConnexions { get; set; } 
@@ -72,7 +46,6 @@ public class FrontOfficeDbContext : DbContext, IApplicationDbContext
     public DbSet<MotifRejet> MotifsRejets { get; set; }
     public DbSet<Proposition> Propositions { get; set; }
     public DbSet<Statut> Statuts { get; set; }
->>>>>>> 7a55aea422e4438075a73bade99823b32b369e91
 
 
     /// <summary>
