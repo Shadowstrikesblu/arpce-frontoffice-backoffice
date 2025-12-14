@@ -121,61 +121,101 @@ namespace BackOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("8b610d0d-fccb-4552-8434-e83e983d107f"),
+=======
+                            Id = new Guid("7a9fc0e5-a731-418a-ae19-4e075f9b164c"),
+>>>>>>> d6352f000ab0dfbf17929b9d71f5985e16e23c29
                             Code = "CREATION",
                             Libelle = "Création de données"
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("6dd2c94b-da0b-45c3-9771-b269ca54fb11"),
+=======
+                            Id = new Guid("8d68dd60-c098-4b2a-82e7-3bb3ab8b7f41"),
+>>>>>>> d6352f000ab0dfbf17929b9d71f5985e16e23c29
                             Code = "MODIFICATION",
                             Libelle = "Modification de données"
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("3c9e0acc-6712-4456-86a7-4c894ff94a25"),
+=======
+                            Id = new Guid("8e6cf061-3fd5-4147-bab6-8130b01b7911"),
+>>>>>>> d6352f000ab0dfbf17929b9d71f5985e16e23c29
                             Code = "SUPPRESSION",
                             Libelle = "Suppression de données"
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("a52c1339-08e5-4223-a9d1-01fd9d6bea07"),
+=======
+                            Id = new Guid("ecf66f28-2618-49ae-9525-522a0f721f77"),
+>>>>>>> d6352f000ab0dfbf17929b9d71f5985e16e23c29
                             Code = "VALIDATION",
                             Libelle = "Validation de processus"
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("815b2cfb-942c-4d29-9be2-a490aea7d2a5"),
+=======
+                            Id = new Guid("89211b41-4d24-4235-b629-93452d510821"),
+>>>>>>> d6352f000ab0dfbf17929b9d71f5985e16e23c29
                             Code = "CONNEXION",
                             Libelle = "Modification"
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("fcf83bfd-a2ae-4d2b-8fa6-3611d18439fd"),
+=======
+                            Id = new Guid("8d6fa96d-ea2e-4af7-a11d-3c4b426edbe8"),
+>>>>>>> d6352f000ab0dfbf17929b9d71f5985e16e23c29
                             Code = "MODIFICATION",
                             Libelle = "Connexion utilisateur"
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("00108f77-b2d4-4230-a7b9-9e3c8b95f2ed"),
+=======
+                            Id = new Guid("41b6be1b-c167-4041-8b75-d17273b9bbf3"),
+>>>>>>> d6352f000ab0dfbf17929b9d71f5985e16e23c29
                             Code = "ATTRIBUTION",
                             Libelle = "Attribution de droits/profils"
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("eda93f2f-c76d-4999-b32e-deabcd980172"),
+=======
+                            Id = new Guid("92c689bc-a675-4f75-9067-a086763dc649"),
+>>>>>>> d6352f000ab0dfbf17929b9d71f5985e16e23c29
                             Code = "SECURITE",
                             Libelle = "Action de sécurité"
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("63c158ee-df56-429a-b024-dad316c3ac8b"),
+=======
+                            Id = new Guid("d2a9dc50-2a35-44a6-b918-9451c86149d7"),
+>>>>>>> d6352f000ab0dfbf17929b9d71f5985e16e23c29
                             Code = "COMMUNICATION",
                             Libelle = "Envoi de communication"
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("4601a315-aa4c-4961-97c2-df72660c4656"),
+=======
+                            Id = new Guid("390ece3c-08f2-4ae2-9396-547b5a60559e"),
+>>>>>>> d6352f000ab0dfbf17929b9d71f5985e16e23c29
                             Code = "QUALIFICATION",
                             Libelle = "Qualification de données"
                         });
@@ -521,10 +561,17 @@ namespace BackOffice.Infrastructure.Migrations
                             Id = new Guid("88888888-8888-8888-8888-888888888888"),
                             ChangementMotPasse = true,
                             Compte = "admin",
+<<<<<<< HEAD
                             DateCreation = 1765574571027L,
                             Desactive = false,
                             IdUtilisateurType = new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"),
                             MotPasse = "$2a$11$liznrld3jmsQCzlEREJnLuAQYfKMbfnmD6xzk8QGmRm0tHbuByue2",
+=======
+                            DateCreation = 1765575145519L,
+                            Desactive = false,
+                            IdUtilisateurType = new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"),
+                            MotPasse = "$2a$11$sIYhhCUqEB5O1RAp36wHdunmgMoLn/BNIn6cJBUsv7axVdREih6G6",
+>>>>>>> d6352f000ab0dfbf17929b9d71f5985e16e23c29
                             Nom = "root",
                             Prenoms = "ARPCE",
                             UtilisateurCreation = "SYSTEM_SEED"
@@ -554,12 +601,20 @@ namespace BackOffice.Infrastructure.Migrations
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("d0916bee-2154-4a2c-99bb-90b74854d3ec"),
+=======
+                            Id = new Guid("e4a63583-4450-42f8-8a2f-081496578e00"),
+>>>>>>> d6352f000ab0dfbf17929b9d71f5985e16e23c29
                             Libelle = "Utilisateur Standard"
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("0e0ac5cf-ee48-4462-8d25-8fb3412e1608"),
+=======
+                            Id = new Guid("233299e4-d4e2-424a-a3c2-b69d782eca35"),
+>>>>>>> d6352f000ab0dfbf17929b9d71f5985e16e23c29
                             Libelle = "Auditeur"
                         });
                 });
@@ -1169,28 +1224,44 @@ namespace BackOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("e186de6e-53f2-4ea7-81b0-b25b2b688355"),
+=======
+                            Id = new Guid("c7573900-5a9c-4d1d-bb0b-cf5739a9e6ff"),
+>>>>>>> d6352f000ab0dfbf17929b9d71f5985e16e23c29
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("e447a939-79c3-4f6b-b875-ce9812b1e9f3"),
+=======
+                            Id = new Guid("bd35b328-213d-42a0-8b00-8d9e7a8bfc0a"),
+>>>>>>> d6352f000ab0dfbf17929b9d71f5985e16e23c29
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("4da4a406-9e1e-431b-af72-3b35c8c5c277"),
+=======
+                            Id = new Guid("bb6dd42e-c5de-4fea-9aa5-7da142d82cf5"),
+>>>>>>> d6352f000ab0dfbf17929b9d71f5985e16e23c29
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("c0cb7af8-b23b-46b3-990a-6ca42f21cf5f"),
+=======
+                            Id = new Guid("921924ca-83a9-4635-a738-f0dcd0bb2493"),
+>>>>>>> d6352f000ab0dfbf17929b9d71f5985e16e23c29
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1

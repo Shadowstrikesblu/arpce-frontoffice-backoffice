@@ -12,7 +12,9 @@ using BackOffice.Application.Features.Admin.Commands.DeleteAcces;
 using BackOffice.Application.Features.Admin.Commands.DeleteAdmin;
 using BackOffice.Application.Features.Admin.Commands.DeleteProfil;
 using BackOffice.Application.Features.Admin.Commands.DeleteRedevable;
+using BackOffice.Application.Features.Admin.Commands.UpdateAccess;
 using BackOffice.Application.Features.Admin.Commands.UpdateAdmin;
+using BackOffice.Application.Features.Admin.Commands.UpdateProfil;
 using BackOffice.Application.Features.Admin.Commands.UpdateRedevable;
 using BackOffice.Application.Features.Admin.Commands.ValidateRedevable;
 using BackOffice.Application.Features.Admin.Queries.GetAccessList;
@@ -155,6 +157,20 @@ public class AdminController : ControllerBase
     }
 
     /// <summary>
+    /// Modifie un profil existant.
+    /// </summary>
+    [HttpPatch("profils/{id:guid}")] // Ou [HttpPut] selon votre convention
+    public async Task<IActionResult> UpdateProfil(Guid id, [FromBody] UpdateProfilCommand command)
+    {
+        if (id != command.Id)
+        {
+            command.Id = id;
+        }
+        var result = await _mediator.Send(command);
+        return Ok(new { ok = result });
+    }
+
+    /// <summary>
     /// Attribue un profil à un utilisateur administrateur.
     /// </summary>
     [HttpPatch("utilisateurs/attribution-profil")]
@@ -201,6 +217,20 @@ public class AdminController : ControllerBase
     public async Task<IActionResult> DeleteAcces(Guid id)
     {
         var result = await _mediator.Send(new DeleteAccesCommand(id));
+        return Ok(new { ok = result });
+    }
+
+    /// <summary>
+    /// Modifie un accès existant.
+    /// </summary>
+    [HttpPatch("acces/{id:guid}")] 
+    public async Task<IActionResult> UpdateAccess(Guid id, [FromBody] UpdateAccessCommand command)
+    {
+        if (id != command.Id)
+        {
+            command.Id = id;
+        }
+        var result = await _mediator.Send(command);
         return Ok(new { ok = result });
     }
 
