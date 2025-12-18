@@ -161,15 +161,6 @@ D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\
 D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.pdb
 D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.genruntimeconfig.cache
 D:\CDS\work_space\arpce-microservice-frontOffice\Arpce.Homologation.FrontOffice\FrontOffice.Api\obj\Debug\net8.0\ref\FrontOffice.Api.dll
-D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.csproj.AssemblyReference.cache
-D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\rpswa.dswa.cache.json
-D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.GeneratedMSBuildEditorConfig.editorconfig
-D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.AssemblyInfoInputs.cache
-D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.AssemblyInfo.cs
-D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.csproj.CoreCompileInputs.cache
-D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.MvcApplicationPartsAssemblyInfo.cache
-D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.sourcelink.json
-D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.MvcApplicationPartsAssemblyInfo.cs
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\bin\Debug\net8.0\appsettings.Development.json
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\bin\Debug\net8.0\appsettings.json
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\bin\Debug\net8.0\FrontOffice.Api.staticwebassets.runtime.json
@@ -219,6 +210,7 @@ D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\bin\Debug\net8.0\MimeKit.dll
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\bin\Debug\net8.0\Mono.TextTemplating.dll
+D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\bin\Debug\net8.0\Newtonsoft.Json.dll
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\bin\Debug\net8.0\Serilog.dll
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\bin\Debug\net8.0\Serilog.AspNetCore.dll
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\bin\Debug\net8.0\Serilog.Extensions.Hosting.dll
@@ -317,6 +309,15 @@ D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\bin\Debug\net8.0\FrontOffice.Application.pdb
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\bin\Debug\net8.0\FrontOffice.Infrastructure.pdb
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\bin\Debug\net8.0\FrontOffice.Domain.pdb
+D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.csproj.AssemblyReference.cache
+D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\rpswa.dswa.cache.json
+D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.GeneratedMSBuildEditorConfig.editorconfig
+D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.AssemblyInfoInputs.cache
+D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.AssemblyInfo.cs
+D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.csproj.CoreCompileInputs.cache
+D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.MvcApplicationPartsAssemblyInfo.cs
+D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.MvcApplicationPartsAssemblyInfo.cache
+D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.sourcelink.json
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\rjimswa.dswa.cache.json
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
@@ -332,4 +333,3 @@ D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.pdb
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\FrontOffice.Api.genruntimeconfig.cache
 D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\obj\Debug\net8.0\ref\FrontOffice.Api.dll
-D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\bin\Debug\net8.0\Newtonsoft.Json.dll

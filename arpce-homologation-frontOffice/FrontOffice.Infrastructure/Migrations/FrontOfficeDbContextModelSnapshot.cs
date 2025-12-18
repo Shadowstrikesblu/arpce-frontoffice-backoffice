@@ -512,13 +512,20 @@ namespace FrontOffice.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("DateDelivrance")
                         .HasColumnType("bigint");
 
                     b.Property<long>("DateExpiration")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
+
                     b.Property<byte[]>("Donnees")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Extension")
@@ -529,9 +536,22 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Property<Guid>("IdDemande")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("NumeroSequentiel")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<string>("UtilisateurCreation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UtilisateurModification")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IdDemande");
+
+                    b.HasIndex("NumeroSequentiel");
 
                     b.ToTable("attestations", (string)null);
                 });
@@ -1038,28 +1058,28 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f2001635-ec3e-46fb-b876-414bc4ce1a18"),
+                            Id = new Guid("6abd20d2-d689-42ee-a7e8-2a0e623a1110"),
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("bc947f38-22fe-4379-8930-1224559b6316"),
+                            Id = new Guid("20541611-b51a-4925-b139-05e00ba7ac01"),
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("3e38fc1b-01c2-438e-a872-500275b8ad99"),
+                            Id = new Guid("702d6a8c-aad6-4592-bfb0-ea7d0b088114"),
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("708dec01-3ee1-4a01-8366-3f7161ceb42f"),
+                            Id = new Guid("0d917fde-b112-401a-b842-8c53288078d1"),
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1
@@ -1191,6 +1211,12 @@ namespace FrontOffice.Infrastructure.Migrations
                         },
                         new
                         {
+                            Id = new Guid("f1a2b3c4-d5e6-4f78-9012-34567890a218"),
+                            Code = "Echantillon",
+                            Libelle = "En attente échantillon"
+                        },
+                        new
+                        {
                             Id = new Guid("d62e63cb-4c2f-4e24-b5a2-8fae11e0a206"),
                             Code = "DevisCreer",
                             Libelle = "Devis créé"
@@ -1227,15 +1253,27 @@ namespace FrontOffice.Infrastructure.Migrations
                         },
                         new
                         {
+                            Id = new Guid("0c47f66c-3ae3-4dbf-af5b-1b7eb3f2a213"),
+                            Code = "PaiementRejete",
+                            Libelle = "Paiement non accepté"
+                        },
+                        new
+                        {
                             Id = new Guid("1a173ab7-6db7-4b9f-906e-a85352a4a212"),
                             Code = "DevisPaiement",
                             Libelle = "En attente de paiement"
                         },
                         new
                         {
-                            Id = new Guid("0c47f66c-3ae3-4dbf-af5b-1b7eb3f2a213"),
-                            Code = "PaiementRejete",
-                            Libelle = "Paiement non accepté"
+                            Id = new Guid("5a6b7c8d-9e0f-1a2b-3c4d-5e6f70809000"),
+                            Code = "EnPaiement",
+                            Libelle = "Dossier en attente de paiement"
+                        },
+                        new
+                        {
+                            Id = new Guid("11223344-5566-7788-99aa-bbccddeeff00"),
+                            Code = "PaiementBanque",
+                            Libelle = "Dossier payé par la banque"
                         },
                         new
                         {
@@ -1251,6 +1289,12 @@ namespace FrontOffice.Infrastructure.Migrations
                         },
                         new
                         {
+                            Id = new Guid("aa11bb22-cc33-dd44-ee55-ff6600112233"),
+                            Code = "Certification",
+                            Libelle = "Certification initiée"
+                        },
+                        new
+                        {
                             Id = new Guid("0e9a8bb4-7989-4eb8-9f21-4f9b7ffca216"),
                             Code = "DossierSignature",
                             Libelle = "Attestation en signature"
@@ -1260,12 +1304,6 @@ namespace FrontOffice.Infrastructure.Migrations
                             Id = new Guid("ed13c54b-5e63-4a0f-a0a7-332a7c27a217"),
                             Code = "DossierSigner",
                             Libelle = "Attestation signée"
-                        },
-                        new
-                        {
-                            Id = new Guid("f1a2b3c4-d5e6-4f78-9012-34567890a218"),
-                            Code = "Echantillon",
-                            Libelle = "En attente échantillon"
                         });
                 });
 

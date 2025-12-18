@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FrontOffice.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Initialisation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -559,8 +559,13 @@ namespace FrontOffice.Infrastructure.Migrations
                     IdDemande = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DateDelivrance = table.Column<long>(type: "bigint", nullable: false),
                     DateExpiration = table.Column<long>(type: "bigint", nullable: false),
-                    Donnees = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    Extension = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false)
+                    Donnees = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Extension = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
+                    NumeroSequentiel = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    UtilisateurCreation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateCreation = table.Column<long>(type: "bigint", nullable: true),
+                    UtilisateurModification = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateModification = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -638,10 +643,10 @@ namespace FrontOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "DateCreation", "DateModification", "Libelle", "MobileBanking", "Remarques", "UtilisateurCreation", "UtilisateurModification" },
                 values: new object[,]
                 {
-                    { new Guid("3e38fc1b-01c2-438e-a872-500275b8ad99"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
-                    { new Guid("708dec01-3ee1-4a01-8366-3f7161ceb42f"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
-                    { new Guid("bc947f38-22fe-4379-8930-1224559b6316"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
-                    { new Guid("f2001635-ec3e-46fb-b876-414bc4ce1a18"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null }
+                    { new Guid("0d917fde-b112-401a-b842-8c53288078d1"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
+                    { new Guid("20541611-b51a-4925-b139-05e00ba7ac01"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
+                    { new Guid("6abd20d2-d689-42ee-a7e8-2a0e623a1110"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
+                    { new Guid("702d6a8c-aad6-4592-bfb0-ea7d0b088114"), "Especes", null, null, "Espèces", (byte)0, null, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -652,13 +657,16 @@ namespace FrontOffice.Infrastructure.Migrations
                     { new Guid("0c47f66c-3ae3-4dbf-af5b-1b7eb3f2a213"), "PaiementRejete", "Paiement non accepté" },
                     { new Guid("0d4f6e52-ad8e-4b67-9a11-985b66dca204"), "ApprobationInstruction", "Envoyé pour approbation" },
                     { new Guid("0e9a8bb4-7989-4eb8-9f21-4f9b7ffca216"), "DossierSignature", "Attestation en signature" },
+                    { new Guid("11223344-5566-7788-99aa-bbccddeeff00"), "PaiementBanque", "Dossier payé par la banque" },
                     { new Guid("1a173ab7-6db7-4b9f-906e-a85352a4a212"), "DevisPaiement", "En attente de paiement" },
                     { new Guid("33b7bd1d-5901-4afe-be70-d4c10e3fa215"), "DossierPayer", "Paiement effectué" },
                     { new Guid("3b9ed3a1-1e24-4d0c-8f13-7c55c9baa203"), "Instruction", "En cours d'instruction" },
+                    { new Guid("5a6b7c8d-9e0f-1a2b-3c4d-5e6f70809000"), "EnPaiement", "Dossier en attente de paiement" },
                     { new Guid("84c6d32b-1f44-4fbd-8c91-12e3b5e0a205"), "InstructionApprouve", "Instruction Approuvée" },
                     { new Guid("8c2bc784-06a3-4d73-a9f4-5f6d94a7a210"), "DevisValide", "Devis validé par client" },
                     { new Guid("9f1c2f69-5d8e-4ec8-a6a1-0aa1e1c5a201"), "NouveauDossier", "Nouvelle demande" },
                     { new Guid("a7c55954-7b1c-4f43-9cc4-1f2af3cca202"), "RefusDossier", "Refus de la demande" },
+                    { new Guid("aa11bb22-cc33-dd44-ee55-ff6600112233"), "Certification", "Certification initiée" },
                     { new Guid("ae906d70-a1c2-4b2a-8db7-b22c6d4ca207"), "DevisValideSC", "Devis validé par Chef Service" },
                     { new Guid("ccf4f5b7-8be7-4f01-9c09-fa5522d6a209"), "DevisEmit", "Devis émis" },
                     { new Guid("cd3c7e21-6909-4a29-9f0e-90e9ac2da211"), "DevisRefuser", "Devis refusé par client" },
@@ -718,6 +726,11 @@ namespace FrontOffice.Infrastructure.Migrations
                 name: "IX_attestations_IdDemande",
                 table: "attestations",
                 column: "IdDemande");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_attestations_NumeroSequentiel",
+                table: "attestations",
+                column: "NumeroSequentiel");
 
             migrationBuilder.CreateIndex(
                 name: "IX_commentaires_IdDossier",

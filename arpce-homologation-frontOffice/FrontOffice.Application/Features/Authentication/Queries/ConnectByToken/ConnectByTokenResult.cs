@@ -1,4 +1,6 @@
-﻿namespace FrontOffice.Application.Features.Authentication.Queries.ConnectByToken;
+﻿using System;
+
+namespace FrontOffice.Application.Features.Authentication.Queries.ConnectByToken;
 
 public class ConnectByTokenResult
 {
@@ -15,6 +17,6 @@ public class ConnectByTokenResult
     public string? Bp { get; set; }
     public string? Ville { get; set; }
     public string? Pays { get; set; }
-    // IsVerified, etc. peuvent être utiles aussi
     public bool IsVerified { get; set; }
+    public int NiveauValidation { get; set; }
 }
