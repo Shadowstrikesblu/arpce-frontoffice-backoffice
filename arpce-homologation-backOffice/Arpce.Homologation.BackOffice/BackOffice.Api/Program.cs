@@ -19,9 +19,6 @@ Log.Logger = new LoggerConfiguration()
 
 Log.Information("DÃ©marrage du microservice BackOffice API sur le VPS...");
 
-<<<<<<< HEAD
-try
-=======
 // Logique de Serilog
 builder.Host.UseSerilog((context, services, configuration) => configuration
     .ReadFrom.Configuration(context.Configuration)
@@ -29,16 +26,15 @@ builder.Host.UseSerilog((context, services, configuration) => configuration
     .Enrich.FromLogContext()
     .WriteTo.Console());
 
-// Ajoute les contrôleurs
+// Ajoute les contrï¿½leurs
 builder.Services.AddControllers();
 
-// Ajout du Service SignalR (Nécessaire pour les notifications temps réel)
+// Ajout du Service SignalR (Nï¿½cessaire pour les notifications temps rï¿½el)
 builder.Services.AddSignalR();
 
 // Configuration Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
->>>>>>> 36359f874de50d0f93958ab3232de9e6c33edd73
 {
     var builder = WebApplication.CreateBuilder(args);
 
@@ -123,31 +119,11 @@ builder.Services.AddSwaggerGen(options =>
     builder.Services.AddScoped<IAuditService, AuditService>();
     builder.Services.AddScoped<IFileStorageProvider, DatabaseFileStorageProvider>();
 
-<<<<<<< HEAD
-    // JWT Auth
-    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(options =>
-        {
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
-                ValidAudience = builder.Configuration["JwtSettings:Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
-            };
-        });
-
-    // Kestrel port
-    builder.WebHost.ConfigureKestrel(options =>
-=======
 // Ajouter MediatR
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(AssemblyReference).Assembly));
 
-// Ajoute les services pour la sécurité et l'utilisateur courant
+// Ajoute les services pour la sï¿½curitï¿½ et l'utilisateur courant
 builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
 builder.Services.AddHttpContextAccessor();
@@ -174,14 +150,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
         };
 
-        // --- Configuration spécifique pour SignalR ---
+        // --- Configuration spï¿½cifique pour SignalR ---
         options.Events = new JwtBearerEvents
         {
             OnMessageReceived = context =>
             {
                 var accessToken = context.Request.Query["access_token"];
 
-                // Si la requête a un token ET qu'elle cible le Hub SignalR
+                // Si la requï¿½te a un token ET qu'elle cible le Hub SignalR
                 var path = context.HttpContext.Request.Path;
                 if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs/notifications"))
                 {
@@ -221,7 +197,6 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(options =>
->>>>>>> 36359f874de50d0f93958ab3232de9e6c33edd73
     {
         options.ListenAnyIP(4000);
     });
@@ -287,8 +262,6 @@ finally
 {
     Log.CloseAndFlush();
 }
-<<<<<<< HEAD
-=======
 
 app.UseHttpsRedirection();
 
@@ -303,8 +276,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// Mapping du Hub SignalR à l'URL "/hubs/notifications"
+// Mapping du Hub SignalR ï¿½ l'URL "/hubs/notifications"
 app.MapHub<NotificationHub>("/hubs/notifications");
 
 app.Run();
->>>>>>> 36359f874de50d0f93958ab3232de9e6c33edd73
