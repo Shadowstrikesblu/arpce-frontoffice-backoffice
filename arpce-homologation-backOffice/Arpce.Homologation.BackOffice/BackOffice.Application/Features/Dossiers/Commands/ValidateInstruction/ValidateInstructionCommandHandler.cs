@@ -13,17 +13,20 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
     private readonly ICurrentUserService _currentUserService;
     private readonly ILogger<ValidateInstructionCommandHandler> _logger;
     private readonly IAuditService _auditService;
+    private readonly INotificationService _notificationService;
 
     public ValidateInstructionCommandHandler(
         IApplicationDbContext context,
         ICurrentUserService currentUserService,
-        ILogger<ValidateInstructionCommandHandler> logger, IAuditService auditService)
+        ILogger<ValidateInstructionCommandHandler> logger,
+        IAuditService auditService,
+        INotificationService notificationService)
     {
         _context = context;
         _currentUserService = currentUserService;
         _logger = logger;
         _auditService = auditService;
-        _auditService = auditService;
+        _notificationService = notificationService;
     }
 
     public async Task<bool> Handle(ValidateInstructionCommand request, CancellationToken cancellationToken)
@@ -43,11 +46,14 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
             throw new Exception($"Le dossier avec l'ID '{request.DossierId}' est introuvable.");
         }
 
+        // Validation stricte du statut (Selon demande "Ne passe pas")
         if (dossier.Statut?.Code != StatutDossierEnum.Instruction.ToString())
         {
-            throw new InvalidOperationException($"L'opération de validation n'est pas autorisée. Le dossier est actuellement au statut '{dossier.Statut?.Libelle}' mais doit être 'En cours d'instruction' ({StatutDossierEnum.Instruction}).");
+            // On peut relâcher cette contrainte si nécessaire, mais c'est le workflow normal.
+            throw new InvalidOperationException($"L'opération de validation n'est pas autorisée. Le dossier est actuellement au statut '{dossier.Statut?.Libelle}'.");
         }
 
+        // Statut cible : ApprobationInstruction
         var nouveauStatut = await _context.Statuts
             .FirstOrDefaultAsync(s => s.Code == StatutDossierEnum.ApprobationInstruction.ToString(), cancellationToken);
 
@@ -84,6 +90,15 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
             libelle: $"L'instruction du dossier '{dossier.Numero}' a été validée.",
             eventTypeCode: "VALIDATION",
             dossierId: dossier.Id);
+
+        await _notificationService.SendToGroupAsync(
+            profilCode: "DOSSIERS", 
+            title: "Approbation Requise",
+            message: $"Le dossier {dossier.Numero} est en attente d'approbation.",
+            type: "T", 
+            targetUrl: $"/dossiers/{dossier.Id}",
+            entityId: dossier.Id.ToString()
+        );
 
         return true;
     }

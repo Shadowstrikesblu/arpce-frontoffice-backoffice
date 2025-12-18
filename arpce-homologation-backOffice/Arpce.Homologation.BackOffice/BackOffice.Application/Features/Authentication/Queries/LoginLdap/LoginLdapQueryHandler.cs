@@ -1,7 +1,7 @@
 ﻿using BackOffice.Application.Common.Interfaces;
 using BackOffice.Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore; 
+using Microsoft.EntityFrameworkCore;
 
 namespace BackOffice.Application.Features.Authentication.Queries.LoginLdap;
 
@@ -60,14 +60,14 @@ public class LoginLdapQueryHandler : IRequestHandler<LoginLdapQuery, Authenticat
         }
         else
         {
-            adminUser.IdProfil = profil.Id; // Mise à jour du profil
+            adminUser.IdProfil = profil.Id; 
             adminUser.DerniereConnexion = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         }
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        // Génére token
-        var token = _jwtTokenGenerator.GenerateToken(adminUser.Id, adminUser.Compte);
+        // Génére token en passant le profileCode obtenu du LDAP
+        var token = _jwtTokenGenerator.GenerateToken(adminUser.Id, adminUser.Compte, profileCode);
 
         return new AuthenticationResult
         {

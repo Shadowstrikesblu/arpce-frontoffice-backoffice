@@ -2,6 +2,7 @@
 
 using BackOffice.Application.Common.DTOs.Documents;
 using BackOffice.Application.Features.Demandes.Queries.DownloadDocument;
+using BackOffice.Application.Features.Documents.Queries.DownloadAttestation;
 using BackOffice.Application.Features.Documents.Queries.GetAttestationsList;
 using BackOffice.Application.Features.Documents.Queries.GetFacturesList;
 using BackOffice.Application.Features.Documents.Queries.GetPaiementsList;
@@ -66,5 +67,24 @@ public class DocumentsController : ControllerBase
         {
             return NotFound(new { error = ex.Message });
         }
+    }
+
+    /// <summary>
+    /// Télécharge une attestation (Certificat ou Lettre) par son ID.
+    /// </summary>
+    /// <param name="attestationId">L'ID de l'attestation à télécharger.</param>
+    [HttpGet("attestation/{attestationId:guid}")]
+    public async Task<IActionResult> DownloadAttestation(Guid attestationId)
+    {
+        var query = new DownloadAttestationQuery { AttestationId = attestationId };
+        var fileResult = await _mediator.Send(query);
+
+        if (fileResult == null)
+        {
+            return NotFound("Fichier non trouvé.");
+        }
+
+        // Utilise la classe File de ASP.NET Core pour renvoyer le fichier binaire
+        return File(fileResult.FileContents, fileResult.ContentType, fileResult.FileDownloadName);
     }
 }

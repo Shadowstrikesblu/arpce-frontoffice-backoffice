@@ -1,0 +1,34 @@
+﻿using BackOffice.Domain.Common;
+
+namespace BackOffice.Domain.Entities;
+
+/// <summary>
+/// Représente une notification envoyée à un utilisateur ou un groupe.
+/// Stockée en base pour l'historique.
+/// </summary>
+public class Notification : AuditableEntity
+{
+    public Guid Id { get; set; }
+
+    // Contenu
+    public string Title { get; set; } = string.Empty;
+    public string Message { get; set; } = string.Empty;
+    public string Type { get; set; } = "Info"; // Info, Success, Warning, Error
+
+    // Navigation / Action
+    public string? TargetUrl { get; set; }
+    public string? EntityId { get; set; } // ID de l'objet concerné (ex: DossierId)
+
+    // Ciblage
+    public Guid? UserId { get; set; } // Si null et ProfilCode null, vérifier IsBroadcast
+    public string? ProfilCode { get; set; } // Si rempli, notif pour tout le groupe
+
+    /// <summary>
+    /// Indique si c'est une notification envoyée à tout le monde.
+    /// </summary>
+    public bool IsBroadcast { get; set; } = false;
+
+    // État
+    public bool IsRead { get; set; } = false;
+    public long DateEnvoi { get; set; }
+}

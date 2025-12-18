@@ -1,7 +1,4 @@
-﻿// Fichier : BackOffice.Api/Controllers/AdminController.cs
-
-// --- Usings pour les Commandes et Requêtes MediatR ---
-using BackOffice.Application.Features.Admin.Commands.AssignProfilToAdmin;
+﻿using BackOffice.Application.Features.Admin.Commands.AssignProfilToAdmin;
 using BackOffice.Application.Features.Admin.Commands.AssignProfilToLdapUser;
 using BackOffice.Application.Features.Admin.Commands.ChangeAdminPassword;
 using BackOffice.Application.Features.Admin.Commands.CreateAccess;
@@ -41,7 +38,7 @@ namespace BackOffice.Api.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/admin")]
-[Authorize] // Sécurisé par défaut, nécessite un token d'agent valide
+[Authorize] 
 public class AdminController : ControllerBase
 {
     private readonly ISender _mediator;
@@ -159,7 +156,7 @@ public class AdminController : ControllerBase
     /// <summary>
     /// Modifie un profil existant.
     /// </summary>
-    [HttpPatch("profils/{id:guid}")] // Ou [HttpPut] selon votre convention
+    [HttpPatch("profils/{id:guid}")] 
     public async Task<IActionResult> UpdateProfil(Guid id, [FromBody] UpdateProfilCommand command)
     {
         if (id != command.Id)

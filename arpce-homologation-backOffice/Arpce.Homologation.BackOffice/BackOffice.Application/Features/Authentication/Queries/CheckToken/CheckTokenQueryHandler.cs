@@ -4,8 +4,6 @@ using BackOffice.Application.Features.Admin.Queries.GetAdminUsersList;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using BackOffice.Application.Common.Exceptions;
-// AJOUTEZ CETTE LIGNE SI ELLE N'Y EST PAS
-using BackOffice.Application.Common;
 
 namespace BackOffice.Application.Features.Authentication.Queries.CheckToken;
 
@@ -45,13 +43,11 @@ public class CheckTokenQueryHandler : IRequestHandler<CheckTokenQuery, AdminUser
             Desactive = user.Desactive,
             Remarques = user.Remarques,
 
-            // --- CORRECTIONS ---
             DerniereConnexion = user.DerniereConnexion.FromUnixTimeMilliseconds(),
-            UtilisateurCreation = user.UtilisateurCreation, // C'est un string, on ne le convertit pas
+            UtilisateurCreation = user.UtilisateurCreation,
             DateCreation = user.DateCreation.FromUnixTimeMilliseconds(),
             UtilisateurModification = user.UtilisateurModification,
             DateModification = user.DateModification.FromUnixTimeMilliseconds(),
-            // --- FIN CORRECTIONS ---
 
             TypeUtilisateur = user.UtilisateurType != null ? new AdminUserTypeSimpleDto
             {
@@ -83,9 +79,7 @@ public class CheckTokenQueryHandler : IRequestHandler<CheckTokenQuery, AdminUser
                     Remarques = profil.Remarques,
                     UtilisateurCreation = profil.UtilisateurCreation,
 
-                    // --- CORRECTION ---
                     DateCreation = profil.DateCreation.FromUnixTimeMilliseconds(),
-                    // --- FIN CORRECTION ---
 
                     Acces = accessList.Select(a => new AdminProfilAccesDto
                     {

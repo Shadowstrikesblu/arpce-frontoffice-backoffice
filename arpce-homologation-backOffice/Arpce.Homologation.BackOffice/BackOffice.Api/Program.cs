@@ -4,11 +4,10 @@ using BackOffice.Application.Common.Interfaces;
 using BackOffice.Infrastructure.Persistence;
 using BackOffice.Infrastructure.Security;
 using BackOffice.Infrastructure.Services;
+using BackOffice.Infrastructure.SignalR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Text;
@@ -24,8 +23,11 @@ builder.Host.UseSerilog((context, services, configuration) => configuration
     .Enrich.FromLogContext()
     .WriteTo.Console());
 
-// Ajouter les contrôleurs
+// Ajoute les contrôleurs
 builder.Services.AddControllers();
+
+// Ajout du Service SignalR (Nécessaire pour les notifications temps réel)
+builder.Services.AddSignalR();
 
 // Configuration Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
@@ -75,7 +77,7 @@ builder.Services.AddScoped<IApplicationDbContext>(provider =>
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(AssemblyReference).Assembly));
 
-// Ajouter les services pour la sécurité et l'utilisateur courant
+// Ajoute les services pour la sécurité et l'utilisateur courant
 builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
 builder.Services.AddHttpContextAccessor();
@@ -84,6 +86,8 @@ builder.Services.AddTransient<IEmailService, EmailService>();
 builder.Services.AddTransient<ILdapService, LdapService>();
 builder.Services.AddScoped<IAuditService, AuditService>();
 builder.Services.AddScoped<IFileStorageProvider, DatabaseFileStorageProvider>();
+builder.Services.AddTransient<INotificationService, SignalRNotificationService>();
+builder.Services.AddTransient<ICertificateGeneratorService, CertificateGeneratorService>();
 
 // Configuration de l'Authentification JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -99,18 +103,40 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidAudience = builder.Configuration["JwtSettings:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
         };
+
+        // --- Configuration spécifique pour SignalR ---
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+
+                // Si la requête a un token ET qu'elle cible le Hub SignalR
+                var path = context.HttpContext.Request.Path;
+                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs/notifications"))
+                {
+                    // On injecte le token manuellement dans le contexte pour que l'authentification fonctionne
+                    context.Token = accessToken;
+                }
+                return Task.CompletedTask;
+            }
+        };
     });
 
+
 // Politique CORS
+// Attention : Pour SignalR avec Authentification, AllowAnyOrigin() n'est pas permis.
+// Il faut utiliser WithOrigins(...) et AllowCredentials().
 var corsPolicyName = "AllowWebApp";
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: corsPolicyName,
                       policy =>
                       {
-                          policy.AllowAnyOrigin()
+                          policy.AllowAnyMethod()
                                 .AllowAnyHeader()
-                                .AllowAnyMethod();
+                                .AllowCredentials() 
+                                .SetIsOriginAllowed(origin => true); // Autorise toutes les origines tout en permettant AllowCredentials
                       });
 });
 
@@ -136,7 +162,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// IMPORTANT : Permet de servir les fichiers statiques (comme le fichier CSS dans wwwroot)
+// Permet de servir les fichiers statiques (comme le fichier CSS dans wwwroot)
 app.UseStaticFiles();
 
 app.UseCors(corsPolicyName);
@@ -146,5 +172,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Mapping du Hub SignalR à l'URL "/hubs/notifications"
+app.MapHub<NotificationHub>("/hubs/notifications");
 
 app.Run();

@@ -1,4 +1,6 @@
-﻿namespace BackOffice.Application.Common.Interfaces;
+﻿using System;
+
+namespace BackOffice.Application.Common.Interfaces;
 
 /// <summary>
 /// Définit un contrat pour un service de génération de tokens d'authentification JWT.
@@ -10,6 +12,7 @@ public interface IJwtTokenGenerator
     /// </summary>
     /// <param name="userId">L'identifiant unique de l'utilisateur.</param>
     /// <param name="userAccount">Le nom de compte (login) de l'utilisateur.</param>
+    /// <param name="profilCode">Le code du profil de l'utilisateur (Optionnel, nécessaire pour SignalR).</param>
     /// <returns>Une chaîne de caractères représentant le token JWT.</returns>
-    string GenerateToken(Guid userId, string userAccount);
+    string GenerateToken(Guid userId, string userAccount, string? profilCode = null);
 }

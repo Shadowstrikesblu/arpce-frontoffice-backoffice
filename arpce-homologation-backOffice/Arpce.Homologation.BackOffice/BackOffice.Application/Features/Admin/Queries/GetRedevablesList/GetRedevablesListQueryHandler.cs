@@ -1,6 +1,6 @@
 ﻿using BackOffice.Application.Common.Exceptions;
 using BackOffice.Application.Common.Interfaces;
-using BackOffice.Domain.Entities; 
+using BackOffice.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,8 +17,9 @@ public class GetRedevablesListQueryHandler : IRequestHandler<GetRedevablesListQu
 
     public async Task<RedevableListVm> Handle(GetRedevablesListQuery request, CancellationToken cancellationToken)
     {
-        // Défini la requête de base comme IQueryable<Client> (sans Include pour l'instant)
         IQueryable<Client> query = _context.Clients.AsNoTracking();
+
+        query = query.Where(c => c.Desactive == 0 || c.Desactive == null);
 
         // Applique les filtres de recherche
         if (!string.IsNullOrWhiteSpace(request.Recherche))
@@ -32,7 +33,7 @@ public class GetRedevablesListQueryHandler : IRequestHandler<GetRedevablesListQu
             );
         }
 
-        // Applique le tri (toujours sur IQueryable<Client>)
+        // Applique le tri
         if (request.Ordre?.ToLower() == "asc")
         {
             query = query.OrderBy(c => c.DateCreation);
@@ -42,13 +43,13 @@ public class GetRedevablesListQueryHandler : IRequestHandler<GetRedevablesListQu
             query = query.OrderByDescending(c => c.DateCreation);
         }
 
-        // Compte le total (avant pagination)
+        // Compte le total 
         var totalCount = await query.CountAsync(cancellationToken);
 
         var items = await query
             .Skip((request.Page - 1) * request.PageTaille)
             .Take(request.PageTaille)
-            .Include(c => c.Dossiers) 
+            .Include(c => c.Dossiers)
             .ToListAsync(cancellationToken);
 
         // Mappe vers le DTO

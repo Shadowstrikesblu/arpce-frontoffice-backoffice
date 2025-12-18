@@ -9,5 +9,6 @@ public class CreateAdminCommand : IRequest<bool>
     public string? MotPasse { get; set; }
     public bool Desactive { get; set; }
     public string? Remarques { get; set; }
+    public Guid? IdProfil { get; set; }
     public Guid IdUtilisateurType { get; set; }
 }

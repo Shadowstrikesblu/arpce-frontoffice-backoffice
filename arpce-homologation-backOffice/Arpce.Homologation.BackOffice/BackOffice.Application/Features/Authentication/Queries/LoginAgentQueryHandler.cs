@@ -1,6 +1,9 @@
 ﻿using BackOffice.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Authentication.Queries.Login;
 
@@ -33,6 +36,7 @@ public class LoginAgentQueryHandler : IRequestHandler<LoginAgentQuery, Authentic
     {
         // Recherche l'agent dans la base de données par son nom de compte.
         var agent = await _context.AdminUtilisateurs
+            .Include(u => u.Profil)
             .FirstOrDefaultAsync(u => u.Compte == request.Compte, cancellationToken);
 
         // Valide l'existence de l'agent et la validité du mot de passe.
@@ -49,12 +53,14 @@ public class LoginAgentQueryHandler : IRequestHandler<LoginAgentQuery, Authentic
         }
 
         // Met à jour la date de dernière connexion 
-        agent.DerniereConnexion = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(); 
+        agent.DerniereConnexion = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         await _context.SaveChangesAsync(cancellationToken);
 
+        // Récupération du Code Profil pour le token
+        string? profilCode = agent.Profil?.Code;
 
-        // Si l'authentification est réussie, génére un nouveau token JWT.
-        var token = _jwtTokenGenerator.GenerateToken(agent.Id, agent.Compte);
+        // Si l'authentification est réussie, génére un nouveau token JWT incluant le ProfilCode.
+        var token = _jwtTokenGenerator.GenerateToken(agent.Id, agent.Compte, profilCode);
 
         // Retourne le résultat avec un message de succès et le token.
         return new AuthenticationResult
