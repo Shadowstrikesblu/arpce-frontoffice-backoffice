@@ -16,7 +16,7 @@ public class PaiementsController : ControllerBase
     }
 
     [HttpPost("dossier/{dossierId:guid}/momo")]
-    public async Task<IActionResult> PayByMomo(Guid dossierId, [FromBody] PayByMomoCommand command)
+    public async Task<IActionResult> PayByMomo(Guid dossierId, [FromBody] PayByProviderCommand command)
     {
         command.DossierId = dossierId;
         var result = await _mediator.Send(command);

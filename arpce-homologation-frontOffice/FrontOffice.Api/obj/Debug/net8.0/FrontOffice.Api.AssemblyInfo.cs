@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FrontOffice.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d6352f000ab0dfbf17929b9d71f5985e16e23c29")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+36359f874de50d0f93958ab3232de9e6c33edd73")]
 [assembly: System.Reflection.AssemblyProductAttribute("FrontOffice.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FrontOffice.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -33,12 +33,25 @@ try
     // Accesseur au contexte HTTP (nécessaire pour ICurrentUserService)
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddScoped<IFileStorageProvider, DatabaseFileStorageProvider>();
-    // Enregistrement du service pour l'utilisateur courant
     builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
     builder.Services.AddTransient<IEmailService, EmailService>();
     builder.Services.AddHttpClient<ICaptchaValidator, GoogleCaptchaValidator>();
-    builder.Services.AddHttpClient<IMomoPaymentService, MomoPaymentService>();
-    
+    builder.Services.AddHttpClient<MtnPaymentService>();
+    builder.Services.AddHttpClient<AirtelPaymentService>();
+
+    // Enregistre tous les IPaymentService dans le conteneur
+    builder.Services.AddTransient<IPaymentService, MtnPaymentService>();
+    builder.Services.AddTransient<IPaymentService, AirtelPaymentService>();
+
+    // Crée une "factory" simple pour les récupérer par leur code
+    builder.Services.AddTransient<Func<string, IPaymentService>>(serviceProvider => providerCode =>
+    {
+        var services = serviceProvider.GetServices<IPaymentService>();
+        return services.FirstOrDefault(s => s.ProviderCode.Equals(providerCode, StringComparison.OrdinalIgnoreCase))
+            ?? throw new InvalidOperationException($"Service de paiement '{providerCode}' non supporté.");
+    });
+
+
 
     // Politique CORS
     var corsPolicyName = "AllowWebApp";
