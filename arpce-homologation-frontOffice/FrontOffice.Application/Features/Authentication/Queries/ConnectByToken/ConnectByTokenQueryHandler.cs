@@ -1,4 +1,5 @@
 ﻿using FrontOffice.Application.Common.Interfaces;
+using FrontOffice.Application.Common.Exceptions; 
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,6 +33,16 @@ public class ConnectByTokenQueryHandler : IRequestHandler<ConnectByTokenQuery, C
             throw new UnauthorizedAccessException("L'utilisateur associé à ce token n'existe plus.");
         }
 
+        if (client.NiveauValidation < 2)
+        {
+            throw new AccountPendingValidationException("Votre compte est en attente de validation par l'administration (Niveau 2 requis).");
+        }
+
+        if (client.Desactive == 1)
+        {
+            throw new UnauthorizedAccessException("Ce compte a été désactivé.");
+        }
+
         return new ConnectByTokenResult
         {
             Message = "Session validée avec succès.",
@@ -47,7 +58,8 @@ public class ConnectByTokenQueryHandler : IRequestHandler<ConnectByTokenQuery, C
             Bp = client.Bp,
             Ville = client.Ville,
             Pays = client.Pays,
-            IsVerified = client.IsVerified
+            IsVerified = client.IsVerified,
+            NiveauValidation = client.NiveauValidation
         };
     }
 }

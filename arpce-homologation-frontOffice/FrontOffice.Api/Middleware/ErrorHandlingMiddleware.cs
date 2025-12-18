@@ -1,10 +1,6 @@
 ﻿using FrontOffice.Application.Common.Exceptions;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using System;
 using System.Net;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace FrontOffice.Api.Middleware;
 
@@ -55,18 +51,18 @@ public class ErrorHandlingMiddleware
         {
             // --- Cas des erreurs d'autorisation ---
             case UnauthorizedAccessException:
-                statusCode = HttpStatusCode.Unauthorized; 
+                statusCode = HttpStatusCode.Unauthorized;
                 errorResponse = new
                 {
                     title = "Accès Non Autorisé, vérifier vos infos de connexion",
-                    detail = exception.Message, 
+                    detail = exception.Message,
                     status = (int)HttpStatusCode.Unauthorized
                 };
                 break;
 
             // --- Cas spécifique : Compte en attente de validation ARPCE ---
             case AccountPendingValidationException:
-                statusCode = HttpStatusCode.NotAcceptable; // Code 406
+                statusCode = HttpStatusCode.NotAcceptable; 
                 errorResponse = new
                 {
                     title = "Compte Non Validé",
@@ -77,7 +73,7 @@ public class ErrorHandlingMiddleware
 
             // --- Cas des erreurs de validation ou métier prévues ---
             case InvalidOperationException:
-                statusCode = HttpStatusCode.UnprocessableEntity; 
+                statusCode = HttpStatusCode.UnprocessableEntity;
                 errorResponse = new
                 {
                     title = "Opération Invalide",
@@ -88,7 +84,7 @@ public class ErrorHandlingMiddleware
 
             // --- Cas par défaut pour toutes les autres erreurs inattendues ---
             default:
-                statusCode = HttpStatusCode.InternalServerError; 
+                statusCode = HttpStatusCode.InternalServerError;
                 errorResponse = new
                 {
                     title = "Erreur Interne du Serveur",

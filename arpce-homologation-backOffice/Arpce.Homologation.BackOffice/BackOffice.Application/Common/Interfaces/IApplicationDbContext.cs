@@ -40,6 +40,7 @@ public interface IApplicationDbContext
     DbSet<Proposition> Propositions { get; }
     DbSet<Statut> Statuts { get; }
     DatabaseFacade Database { get; }
+    public DbSet<Notification> Notifications { get; set; }
 
     /// <summary>
     /// Sauvegarde toutes les modifications en attente dans la base de données.

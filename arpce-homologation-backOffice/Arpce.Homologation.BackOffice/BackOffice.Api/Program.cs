@@ -4,6 +4,7 @@ using BackOffice.Application.Common.Interfaces;
 using BackOffice.Infrastructure.Persistence;
 using BackOffice.Infrastructure.Security;
 using BackOffice.Infrastructure.Services;
+using BackOffice.Infrastructure.SignalR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -18,7 +19,26 @@ Log.Logger = new LoggerConfiguration()
 
 Log.Information("DÃ©marrage du microservice BackOffice API sur le VPS...");
 
+<<<<<<< HEAD
 try
+=======
+// Logique de Serilog
+builder.Host.UseSerilog((context, services, configuration) => configuration
+    .ReadFrom.Configuration(context.Configuration)
+    .ReadFrom.Services(services)
+    .Enrich.FromLogContext()
+    .WriteTo.Console());
+
+// Ajoute les contrôleurs
+builder.Services.AddControllers();
+
+// Ajout du Service SignalR (Nécessaire pour les notifications temps réel)
+builder.Services.AddSignalR();
+
+// Configuration Swagger/OpenAPI
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+>>>>>>> 36359f874de50d0f93958ab3232de9e6c33edd73
 {
     var builder = WebApplication.CreateBuilder(args);
 
@@ -103,6 +123,7 @@ try
     builder.Services.AddScoped<IAuditService, AuditService>();
     builder.Services.AddScoped<IFileStorageProvider, DatabaseFileStorageProvider>();
 
+<<<<<<< HEAD
     // JWT Auth
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
@@ -121,6 +142,86 @@ try
 
     // Kestrel port
     builder.WebHost.ConfigureKestrel(options =>
+=======
+// Ajouter MediatR
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(typeof(AssemblyReference).Assembly));
+
+// Ajoute les services pour la sécurité et l'utilisateur courant
+builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddTransient<IEmailService, EmailService>();
+builder.Services.AddTransient<ILdapService, LdapService>();
+builder.Services.AddScoped<IAuditService, AuditService>();
+builder.Services.AddScoped<IFileStorageProvider, DatabaseFileStorageProvider>();
+builder.Services.AddTransient<INotificationService, SignalRNotificationService>();
+builder.Services.AddTransient<ICertificateGeneratorService, CertificateGeneratorService>();
+
+// Configuration de l'Authentification JWT
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+            ValidAudience = builder.Configuration["JwtSettings:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
+        };
+
+        // --- Configuration spécifique pour SignalR ---
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+
+                // Si la requête a un token ET qu'elle cible le Hub SignalR
+                var path = context.HttpContext.Request.Path;
+                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs/notifications"))
+                {
+                    // On injecte le token manuellement dans le contexte pour que l'authentification fonctionne
+                    context.Token = accessToken;
+                }
+                return Task.CompletedTask;
+            }
+        };
+    });
+
+
+// Politique CORS
+// Attention : Pour SignalR avec Authentification, AllowAnyOrigin() n'est pas permis.
+// Il faut utiliser WithOrigins(...) et AllowCredentials().
+var corsPolicyName = "AllowWebApp";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: corsPolicyName,
+                      policy =>
+                      {
+                          policy.AllowAnyMethod()
+                                .AllowAnyHeader()
+                                .AllowCredentials() 
+                                .SetIsOriginAllowed(origin => true); // Autorise toutes les origines tout en permettant AllowCredentials
+                      });
+});
+
+var app = builder.Build();
+
+// --- Configuration du Pipeline HTTP ---
+
+// Utiliser le middleware de gestion d'erreurs
+app.UseMiddleware<ErrorHandlingMiddleware>();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+>>>>>>> 36359f874de50d0f93958ab3232de9e6c33edd73
     {
         options.ListenAnyIP(4000);
     });
@@ -186,3 +287,24 @@ finally
 {
     Log.CloseAndFlush();
 }
+<<<<<<< HEAD
+=======
+
+app.UseHttpsRedirection();
+
+// Permet de servir les fichiers statiques (comme le fichier CSS dans wwwroot)
+app.UseStaticFiles();
+
+app.UseCors(corsPolicyName);
+
+// Activer l'authentification et l'autorisation
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
+
+// Mapping du Hub SignalR à l'URL "/hubs/notifications"
+app.MapHub<NotificationHub>("/hubs/notifications");
+
+app.Run();
+>>>>>>> 36359f874de50d0f93958ab3232de9e6c33edd73

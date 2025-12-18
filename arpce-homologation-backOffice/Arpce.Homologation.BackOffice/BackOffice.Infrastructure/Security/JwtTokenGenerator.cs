@@ -24,17 +24,21 @@ public class JwtTokenGenerator : IJwtTokenGenerator
     /// <summary>
     /// Génère un token JWT avec les claims essentiels de l'utilisateur.
     /// </summary>
-    public string GenerateToken(Guid userId, string userAccount)
+    public string GenerateToken(Guid userId, string userAccount, string? profilCode = null)
     {
-        // Création des "claims" 
-        var claims = new[]
+        // Création de la liste des "claims"
+        var claims = new List<Claim>
         {
             new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-            
             new Claim(JwtRegisteredClaimNames.Name, userAccount),
-            
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
+
+        // Ajout du ProfilCode s'il est fourni (Indispensable pour les groupes SignalR)
+        if (!string.IsNullOrEmpty(profilCode))
+        {
+            claims.Add(new Claim("ProfilCode", profilCode));
+        }
 
         // Récupération de la clé secrète depuis la configuration et encodage en bytes.
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:Secret"]));
@@ -42,14 +46,14 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         // Création des crédentials de signature avec l'algorithme HMAC SHA256.
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-        // Définition de la date d'expiration du token (par exemple, 1 heure à partir de maintenant).
+        // Définition de la date d'expiration du token 
         var expires = DateTime.UtcNow.AddHours(1);
 
         // Création de l'objet token avec tous ses paramètres.
         var token = new JwtSecurityToken(
             issuer: _configuration["JwtSettings:Issuer"],
             audience: _configuration["JwtSettings:Audience"],
-            claims: claims,
+            claims: claims, 
             expires: expires,
             signingCredentials: creds
         );

@@ -32,9 +32,8 @@ public class CreateAdminCommandHandler : IRequestHandler<CreateAdminCommand, boo
             MotPasse = hashedPassword,
             Desactive = request.Desactive,
             Remarques = request.Remarques,
-
             IdUtilisateurType = request.IdUtilisateurType,
-
+            IdProfil = request.IdProfil,
             DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
         };
 
@@ -42,9 +41,9 @@ public class CreateAdminCommandHandler : IRequestHandler<CreateAdminCommand, boo
         await _context.SaveChangesAsync(cancellationToken);
 
         await _auditService.LogAsync(
-    page: "Gestion des Utilisateurs",
-    libelle: $"Création de l'utilisateur admin '{request.Compte}'.",
-    eventTypeCode: "CREATION");
+            page: "Gestion des Utilisateurs",
+            libelle: $"Création de l'utilisateur admin '{request.Compte}'.",
+            eventTypeCode: "CREATION");
 
         return true;
     }
