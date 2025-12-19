@@ -64,7 +64,10 @@ public class CertificateGeneratorService : ICertificateGeneratorService
             if (existingAttestation == null) nextSequence++;
 
             string formattedSeq = seqNumber.ToString("D4");
-            string referenceNumber = $"N°/{formattedSeq}/ARPCE-DG/DAJI/DRSCE/{currentYear}";
+
+            // --- CORRECTION DU FORMAT DU NUMÉRO ---
+            string referenceNumber = $"N°/{formattedSeq}/ARPCE-DG/{currentYear}";
+            // ------------------------------------
 
             byte[] pdfBytes = demande.EstHomologable
                 ? GenerateCertificatePdf(dossier, demande, referenceNumber, logoBytes)
@@ -118,9 +121,17 @@ public class CertificateGeneratorService : ICertificateGeneratorService
                 page.PageColor(Colors.White);
                 page.DefaultTextStyle(x => x.FontSize(11).FontFamily("New Century Schoolbook"));
 
-                page.Background().Row(row => { DrawColorBar(row.ConstantItem(15, Unit.Millimetre)); row.RelativeItem(); });
+                page.Background().Row(row =>
+                {
+                    // --- CORRECTION DE LA MARGE ---
+                    row.ConstantItem(1, Unit.Centimetre); // Marge de 1cm
+                    // ------------------------------
+                    DrawColorBar(row.ConstantItem(15, Unit.Millimetre));
+                    row.RelativeItem();
+                });
 
-                page.Content().PaddingLeft(2.5f, Unit.Centimetre).PaddingRight(2, Unit.Centimetre).PaddingVertical(1.5f, Unit.Centimetre).Column(col =>
+                // On ajuste le padding gauche du contenu pour qu'il soit bien aligné
+                page.Content().PaddingLeft(3f, Unit.Centimetre).PaddingRight(2, Unit.Centimetre).PaddingVertical(1.5f, Unit.Centimetre).Column(col =>
                 {
                     col.Item().Row(row =>
                     {
@@ -140,13 +151,7 @@ public class CertificateGeneratorService : ICertificateGeneratorService
                     col.Item().Table(table =>
                     {
                         table.ColumnsDefinition(columns => { columns.ConstantColumn(180); columns.RelativeColumn(); });
-
-                        void AddRow(string label, string? value)
-                        {
-                            table.Cell().PaddingBottom(2).Text(label).Bold();
-                            table.Cell().PaddingBottom(2).Text(value ?? "N/A");
-                        }
-
+                        void AddRow(string label, string? value) { table.Cell().PaddingBottom(2).Text(label).Bold(); table.Cell().PaddingBottom(2).Text(value ?? "N/A"); }
                         AddRow("Equipement", $": {demande.Equipement}");
                         AddRow("Modèle", $": {demande.Modele}");
                         AddRow("Marque", $": {demande.Marque}");
@@ -196,9 +201,17 @@ public class CertificateGeneratorService : ICertificateGeneratorService
                 page.PageColor(Colors.White);
                 page.DefaultTextStyle(x => x.FontSize(11).FontFamily(Fonts.Arial));
 
-                page.Background().Row(row => { DrawColorBar(row.ConstantItem(15, Unit.Millimetre)); row.RelativeItem(); });
+                page.Background().Row(row =>
+                {
+                    // --- CORRECTION DE LA MARGE ---
+                    row.ConstantItem(1, Unit.Centimetre); // Marge de 1cm
+                    // ------------------------------
+                    DrawColorBar(row.ConstantItem(15, Unit.Millimetre));
+                    row.RelativeItem();
+                });
 
-                page.Content().PaddingLeft(2.5f, Unit.Centimetre).PaddingRight(2, Unit.Centimetre).PaddingVertical(1.5f, Unit.Centimetre).Column(col =>
+                // On ajuste le padding gauche du contenu
+                page.Content().PaddingLeft(3f, Unit.Centimetre).PaddingRight(2, Unit.Centimetre).PaddingVertical(1.5f, Unit.Centimetre).Column(col =>
                 {
                     col.Item().Row(row =>
                     {
