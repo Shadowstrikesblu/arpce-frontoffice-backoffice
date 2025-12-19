@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BackOffice.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initialisation : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -674,16 +674,16 @@ namespace BackOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "Libelle" },
                 values: new object[,]
                 {
-                    { new Guid("048a445b-79e5-4deb-bc4a-9c437496f742"), "ATTRIBUTION", "Attribution de droits/profils" },
-                    { new Guid("09aaae7f-3f77-42d6-97fa-95451cd5bdaf"), "SUPPRESSION", "Suppression de données" },
-                    { new Guid("22f2ad42-136d-4174-80fb-d67c6ebab29f"), "MODIFICATION", "Modification de données" },
-                    { new Guid("23365957-39c5-4384-8b50-31661879d8f1"), "COMMUNICATION", "Envoi de communication" },
-                    { new Guid("2e644f40-d09c-47db-92da-4d25421d7b76"), "CONNEXION", "Modification" },
-                    { new Guid("7db35ca8-d5cb-4b5c-9390-c718b85b3655"), "SECURITE", "Action de sécurité" },
-                    { new Guid("8c57c93e-c6c8-4274-b50e-acf5e39ec9de"), "CREATION", "Création de données" },
-                    { new Guid("9e4bbce6-ffd8-4160-8fb2-08e5ef74da0d"), "MODIFICATION", "Connexion utilisateur" },
-                    { new Guid("c1421a26-68a5-4339-a53c-0a223b280b82"), "VALIDATION", "Validation de processus" },
-                    { new Guid("c7e1cefb-8e1c-4cd5-8a7f-b1637ba5fad0"), "QUALIFICATION", "Qualification de données" }
+                    { new Guid("17d0b09c-a242-427c-9f2b-e156fdee7f53"), "CONNEXION", "Modification" },
+                    { new Guid("26cd7feb-cdb4-4f8a-8afd-c165975cd738"), "MODIFICATION", "Connexion utilisateur" },
+                    { new Guid("2b1d4336-3b6d-4b6d-85cb-04348af55210"), "QUALIFICATION", "Qualification de données" },
+                    { new Guid("310ba670-dfbf-454b-8e2f-1aa3a869f460"), "ATTRIBUTION", "Attribution de droits/profils" },
+                    { new Guid("4d3fd7ff-7df5-460d-9e58-496a3dda2c48"), "CREATION", "Création de données" },
+                    { new Guid("8a82d9f6-6851-47b9-8e94-b5b7af3b0570"), "SUPPRESSION", "Suppression de données" },
+                    { new Guid("8c3d6945-34e1-4ed6-84ce-91180fee2b75"), "MODIFICATION", "Modification de données" },
+                    { new Guid("8fecbc1e-924e-4183-b3fd-96511001264a"), "VALIDATION", "Validation de processus" },
+                    { new Guid("de612389-ebee-4d2a-b004-7f6c4892116b"), "COMMUNICATION", "Envoi de communication" },
+                    { new Guid("efca1a47-40c1-4fd6-8acc-87597b3ca123"), "SECURITE", "Action de sécurité" }
                 });
 
             migrationBuilder.InsertData(
@@ -691,9 +691,9 @@ namespace BackOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Libelle" },
                 values: new object[,]
                 {
-                    { new Guid("4dda8dc7-238e-43c0-8c8a-1745113aee7a"), "Auditeur" },
-                    { new Guid("68105a03-542a-4077-a8ea-2cee5d19406d"), "Utilisateur Standard" },
-                    { new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"), "Administrateur" }
+                    { new Guid("74df334d-ea2f-4c7c-979b-be3e17a1c7dc"), "Auditeur" },
+                    { new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"), "Administrateur" },
+                    { new Guid("c9557ee1-11ce-4f89-9912-16588e7d5bca"), "Utilisateur Standard" }
                 });
 
             migrationBuilder.InsertData(
@@ -701,10 +701,10 @@ namespace BackOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "DateCreation", "DateModification", "Libelle", "MobileBanking", "Remarques", "UtilisateurCreation", "UtilisateurModification" },
                 values: new object[,]
                 {
-                    { new Guid("4030f6f7-a1d0-4179-81e3-1552b55cf94b"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
-                    { new Guid("82b58440-bca0-4aa3-a24f-8c3dd622b601"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
-                    { new Guid("baf89fc2-1bce-49f3-8d58-a70563a7e763"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
-                    { new Guid("c3225ebf-bd64-4cfd-9653-cd84987153fc"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null }
+                    { new Guid("2508a162-733d-4cc0-b1e0-26ce1642dc97"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
+                    { new Guid("55ac2e57-6519-4621-9cf1-9d7adf370d7a"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
+                    { new Guid("5b798846-7af6-4dd1-bbcf-8e0d1996cc61"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
+                    { new Guid("831d60c6-5040-4f49-88bb-bf1f6fbd544e"), "Cheque", null, null, "Chèque", (byte)0, null, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -738,7 +738,7 @@ namespace BackOffice.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "AdminUtilisateurs",
                 columns: new[] { "Id", "AdminProfilsId", "ChangementMotPasse", "Compte", "DateCreation", "DateModification", "DerniereConnexion", "Desactive", "IdProfil", "IdUtilisateurType", "MotPasse", "Nom", "Prenoms", "Remarques", "UtilisateurCreation", "UtilisateurModification" },
-                values: new object[] { new Guid("88888888-8888-8888-8888-888888888888"), null, true, "admin", 1766073424627L, null, null, false, null, new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"), "$2a$11$rbD5ujoMnKOtpNaW2jTo7.Fr7S8RvYKFVDRMbsROJIYfcBwXd9Aiq", "root", "ARPCE", null, "SYSTEM_SEED", null });
+                values: new object[] { new Guid("88888888-8888-8888-8888-888888888888"), null, true, "admin", 1766122211700L, null, null, false, null, new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"), "$2a$11$Hk9MpzCvPxVGjAvgB0E7bOnag./FFkEV2tU0NPCbELdKBy/dcXnTW", "root", "ARPCE", null, "SYSTEM_SEED", null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_adminJournal_DossierId",

@@ -26,7 +26,7 @@ public class BackOfficeDbContext : DbContext, IApplicationDbContext
     /// <param name="currentUserService">Service pour récupérer l'utilisateur courant, injecté via DI.</param>
     public BackOfficeDbContext(
         DbContextOptions<BackOfficeDbContext> options,
-        ICurrentUserService currentUserService)
+        ICurrentUserService ? currentUserService = null)
         : base(options)
     {
         _currentUserService = currentUserService;
