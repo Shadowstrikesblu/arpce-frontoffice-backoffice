@@ -2,11 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace FrontOffice.Infrastructure.Services;
 
@@ -14,13 +11,18 @@ namespace FrontOffice.Infrastructure.Services;
 /// Implémentation du service pour interagir avec l'API MTN Mobile Money (MoMo).
 /// Gère l'authentification, l'initiation de paiement et la vérification de statut.
 /// </summary>
-public class MomoPaymentService : IMomoPaymentService
+public class MtnPaymentService : IPaymentService
 {
     private readonly IConfiguration _configuration;
     private readonly HttpClient _httpClient;
-    private readonly ILogger<MomoPaymentService> _logger;
+    private readonly ILogger<MtnPaymentService> _logger;
 
-    public MomoPaymentService(IConfiguration configuration, HttpClient httpClient, ILogger<MomoPaymentService> logger)
+    /// <summary>
+    /// Code unique identifiant ce fournisseur de paiement.
+    /// </summary>
+    public string ProviderCode => "mtn";
+
+    public MtnPaymentService(IConfiguration configuration, HttpClient httpClient, ILogger<MtnPaymentService> logger)
     {
         _configuration = configuration;
         _httpClient = httpClient;
@@ -82,7 +84,7 @@ public class MomoPaymentService : IMomoPaymentService
     /// <param name="requestData">Les détails de la transaction (montant, numéro, etc.).</param>
     /// <param name="accessToken">Le token d'accès obtenu à l'étape 1.</param>
     /// <returns>L'identifiant de référence de la transaction (X-Reference-Id) pour un suivi ultérieur.</returns>
-    public async Task<string> RequestPaymentAsync(MomoPaymentRequest requestData, string accessToken)
+    public async Task<string> RequestPaymentAsync(PaymentRequest requestData, string accessToken)
     {
         var baseUrl = _configuration["MomoApiSettings:BaseUrl"];
         var subscriptionKey = _configuration["MomoApiSettings:SubscriptionKey"];
@@ -94,7 +96,7 @@ public class MomoPaymentService : IMomoPaymentService
 
         var payload = new
         {
-            amount = requestData.Amount.ToString("F0"), // Format sans décimales si requis
+            amount = requestData.Amount.ToString("F0"), 
             currency = requestData.Currency,
             externalId = requestData.ExternalId,
             payer = new { partyIdType = "MSISDN", partyId = requestData.PayerPhoneNumber },
@@ -109,7 +111,7 @@ public class MomoPaymentService : IMomoPaymentService
             // L'authentification pour cette requête se fait avec le token "Bearer"
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             request.Headers.Add("X-Reference-Id", transactionId);
-            request.Headers.Add("X-Target-Environment", "sandbox"); // À changer/enlever pour la production
+            request.Headers.Add("X-Target-Environment", "sandbox"); 
             request.Headers.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
 
             // Si une URL de webhook est configurée, on l'ajoute à la requête
@@ -127,7 +129,7 @@ public class MomoPaymentService : IMomoPaymentService
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
                 _logger.LogError("Échec de la demande de paiement MTN MoMo. Statut: {status}, Contenu: {content}", response.StatusCode, errorContent);
-                //throw new Exception("La demande de paiement auprès de l'opérateur a échoué.");
+                throw new Exception("La demande de paiement auprès de l'opérateur a échoué.");
             }
 
             _logger.LogInformation("Demande de paiement MoMo pour ExternalId {ExternalId} initiée avec succès. ReferenceId: {TransactionId}", requestData.ExternalId, transactionId);

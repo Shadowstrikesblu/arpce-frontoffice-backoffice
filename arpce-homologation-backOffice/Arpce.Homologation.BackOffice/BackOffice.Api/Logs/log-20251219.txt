@@ -1,0 +1,293 @@
+2025-12-19 13:10:01.393 +01:00 [INF] Now listening on: https://localhost:7238
+2025-12-19 13:10:01.502 +01:00 [INF] Now listening on: http://localhost:5126
+2025-12-19 13:10:01.710 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-19 13:10:01.719 +01:00 [INF] Hosting environment: Development
+2025-12-19 13:10:01.727 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api
+2025-12-19 13:11:10.495 +01:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2025-12-19 13:11:16.698 +01:00 [INF] Executed DbCommand (213ms) [Parameters=[@__request_Compte_0='?' (Size = 100)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AdminProfilsId], [a].[ChangementMotPasse], [a].[Compte], [a].[DateCreation], [a].[DateModification], [a].[DerniereConnexion], [a].[Desactive], [a].[IdProfil], [a].[IdUtilisateurType], [a].[MotPasse], [a].[Nom], [a].[Prenoms], [a].[Remarques], [a].[UtilisateurCreation], [a].[UtilisateurModification], [a0].[Id], [a0].[Code], [a0].[DateCreation], [a0].[DateModification], [a0].[Libelle], [a0].[Remarques], [a0].[UtilisateurCreation], [a0].[UtilisateurModification]
+FROM [AdminUtilisateurs] AS [a]
+LEFT JOIN [adminProfils] AS [a0] ON [a].[IdProfil] = [a0].[Id]
+WHERE [a].[Compte] = @__request_Compte_0
+2025-12-19 13:11:32.129 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@__request_Compte_0='?' (Size = 100)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AdminProfilsId], [a].[ChangementMotPasse], [a].[Compte], [a].[DateCreation], [a].[DateModification], [a].[DerniereConnexion], [a].[Desactive], [a].[IdProfil], [a].[IdUtilisateurType], [a].[MotPasse], [a].[Nom], [a].[Prenoms], [a].[Remarques], [a].[UtilisateurCreation], [a].[UtilisateurModification], [a0].[Id], [a0].[Code], [a0].[DateCreation], [a0].[DateModification], [a0].[Libelle], [a0].[Remarques], [a0].[UtilisateurCreation], [a0].[UtilisateurModification]
+FROM [AdminUtilisateurs] AS [a]
+LEFT JOIN [adminProfils] AS [a0] ON [a].[IdProfil] = [a0].[Id]
+WHERE [a].[Compte] = @__request_Compte_0
+2025-12-19 13:11:32.605 +01:00 [INF] Executed DbCommand (11ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [AdminUtilisateurs] SET [DerniereConnexion] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+2025-12-19 13:13:18.832 +01:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_AttestationId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation], [a].[UtilisateurModification], [d].[Id], [d].[ContactEmail], [d].[ContactNom], [d].[DateCreation], [d].[DateModification], [d].[Description], [d].[Equipement], [d].[EstHomologable], [d].[Fabricant], [d].[IdCategorie], [d].[IdDossier], [d].[IdMotifRejet], [d].[IdProposition], [d].[Marque], [d].[Modele], [d].[NumeroDemande], [d].[PrixUnitaire], [d].[QuantiteEquipements], [d].[Remise], [d].[Type], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+FROM [attestations] AS [a]
+INNER JOIN [demandes] AS [d] ON [a].[IdDemande] = [d].[Id]
+WHERE [a].[Id] = @__request_AttestationId_0
+2025-12-19 13:13:48.696 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__request_AttestationId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation], [a].[UtilisateurModification], [d].[Id], [d].[ContactEmail], [d].[ContactNom], [d].[DateCreation], [d].[DateModification], [d].[Description], [d].[Equipement], [d].[EstHomologable], [d].[Fabricant], [d].[IdCategorie], [d].[IdDossier], [d].[IdMotifRejet], [d].[IdProposition], [d].[Marque], [d].[Modele], [d].[NumeroDemande], [d].[PrixUnitaire], [d].[QuantiteEquipements], [d].[Remise], [d].[Type], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+FROM [attestations] AS [a]
+INNER JOIN [demandes] AS [d] ON [a].[IdDemande] = [d].[Id]
+WHERE [a].[Id] = @__request_AttestationId_0
+2025-12-19 13:14:04.603 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__request_AttestationId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation], [a].[UtilisateurModification], [d].[Id], [d].[ContactEmail], [d].[ContactNom], [d].[DateCreation], [d].[DateModification], [d].[Description], [d].[Equipement], [d].[EstHomologable], [d].[Fabricant], [d].[IdCategorie], [d].[IdDossier], [d].[IdMotifRejet], [d].[IdProposition], [d].[Marque], [d].[Modele], [d].[NumeroDemande], [d].[PrixUnitaire], [d].[QuantiteEquipements], [d].[Remise], [d].[Type], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+FROM [attestations] AS [a]
+INNER JOIN [demandes] AS [d] ON [a].[IdDemande] = [d].[Id]
+WHERE [a].[Id] = @__request_AttestationId_0
+2025-12-19 13:35:20.254 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+FROM [dossiers] AS [d]
+WHERE [d].[Id] = @__p_0
+2025-12-19 13:35:20.338 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__request_CodeStatut_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Code], [s].[Libelle]
+FROM [statuts] AS [s]
+WHERE [s].[Code] = @__request_CodeStatut_0
+2025-12-19 13:35:20.382 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AdminProfilsId], [a].[ChangementMotPasse], [a].[Compte], [a].[DateCreation], [a].[DateModification], [a].[DerniereConnexion], [a].[Desactive], [a].[IdProfil], [a].[IdUtilisateurType], [a].[MotPasse], [a].[Nom], [a].[Prenoms], [a].[Remarques], [a].[UtilisateurCreation], [a].[UtilisateurModification]
+FROM [AdminUtilisateurs] AS [a]
+WHERE [a].[Id] = @__p_0
+2025-12-19 13:35:20.535 +01:00 [INF] Executed DbCommand (9ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 512), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (DbType = Int64), @p5='?' (DbType = Guid), @p6='?' (Size = 60), @p7='?' (Size = 512), @p8='?' (Size = 60), @p9='?' (Size = 60), @p13='?' (DbType = Guid), @p10='?' (DbType = Int64), @p11='?' (DbType = Guid), @p12='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [commentaires] ([Id], [commentaire], [DateCommentaire], [DateCreation], [DateModification], [IdDossier], [NomInstructeur], [Proposition], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+UPDATE [dossiers] SET [DateModification] = @p10, [IdStatut] = @p11, [UtilisateurModification] = @p12
+OUTPUT 1
+WHERE [Id] = @p13;
+2025-12-19 13:35:20.575 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@__eventTypeCode_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[Code], [a].[Libelle]
+FROM [adminEvenementsTypes] AS [a]
+WHERE [a].[Code] = @__eventTypeCode_0
+2025-12-19 13:35:20.669 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 120), @p2='?' (Size = 120), @p3='?' (DbType = Int64), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?' (Size = 255), @p8='?' (Size = 120), @p9='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [adminJournal] ([Id], [AdresseIP], [Application], [DateEvenement], [DossierId], [IdDossier], [IdEvenementType], [Libelle], [Page], [Utilisateur])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+2025-12-19 13:35:20.777 +01:00 [INF] Executed DbCommand (9ms) [Parameters=[@__dossierId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[DateCreation], [s].[DateModification], [s].[DateOuverture], [s].[IdAgentInstructeur], [s].[IdClient], [s].[IdModeReglement], [s].[IdStatut], [s].[Libelle], [s].[Numero], [s].[UtilisateurCreation], [s].[UtilisateurModification], [s].[Id0], [d0].[Id], [d0].[ContactEmail], [d0].[ContactNom], [d0].[DateCreation], [d0].[DateModification], [d0].[Description], [d0].[Equipement], [d0].[EstHomologable], [d0].[Fabricant], [d0].[IdCategorie], [d0].[IdDossier], [d0].[IdMotifRejet], [d0].[IdProposition], [d0].[Marque], [d0].[Modele], [d0].[NumeroDemande], [d0].[PrixUnitaire], [d0].[QuantiteEquipements], [d0].[Remise], [d0].[Type], [d0].[UtilisateurCreation], [d0].[UtilisateurModification], [s].[Adresse], [s].[Bp], [s].[ChangementMotPasse], [s].[Code], [s].[ContactFonction], [s].[ContactNom], [s].[ContactTelephone], [s].[DateCreation0], [s].[DateModification0], [s].[Desactive], [s].[Email], [s].[IsVerified], [s].[MotPasse], [s].[NiveauValidation], [s].[Pays], [s].[RaisonSociale], [s].[RegistreCommerce], [s].[Remarques], [s].[TypeClient], [s].[UtilisateurCreation0], [s].[UtilisateurModification0], [s].[VerificationCode], [s].[VerificationTokenExpiry], [s].[Ville]
+FROM (
+    SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification], [c].[Id] AS [Id0], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation] AS [DateCreation0], [c].[DateModification] AS [DateModification0], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation] AS [UtilisateurCreation0], [c].[UtilisateurModification] AS [UtilisateurModification0], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+    FROM [dossiers] AS [d]
+    INNER JOIN [clients] AS [c] ON [d].[IdClient] = [c].[Id]
+    WHERE [d].[Id] = @__dossierId_0
+) AS [s]
+LEFT JOIN [demandes] AS [d0] ON [s].[Id] = [d0].[IdDossier]
+ORDER BY [s].[Id], [s].[Id0]
+2025-12-19 13:35:20.972 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@__ToUnixTimeMilliseconds_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT MAX([a].[NumeroSequentiel])
+FROM [attestations] AS [a]
+WHERE [a].[DateDelivrance] >= @__ToUnixTimeMilliseconds_0
+2025-12-19 13:35:21.012 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__demande_Id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation], [a].[UtilisateurModification]
+FROM [attestations] AS [a]
+WHERE [a].[IdDemande] = @__demande_Id_0
+2025-12-19 13:35:21.328 +01:00 [ERR] Une exception non gérée a été interceptée.
+QuestPDF.Drawing.Exceptions.DocumentComposeException: You should not assign multiple child elements to a single-child container. This may happen when a container variable is used outside of its scope/closure OR the container is used in multiple fluent API chains OR the container is used incorrectly in a loop. This exception is thrown to help you detect that some part of the code is overriding fragments of the document layout with a new content - essentially destroying existing content.
+   at QuestPDF.Fluent.ElementExtensions.Element[T](IContainer element, T child)
+   at QuestPDF.Fluent.PaddingExtensions.Padding(IContainer element, Single top, Single bottom, Single left, Single right)
+   at QuestPDF.Fluent.PaddingExtensions.PaddingBottom(IContainer element, Single value, Unit unit)
+   at BackOffice.Infrastructure.Services.CertificateGeneratorService.<>c.<GenerateCertificatePdf>b__8_11(ITableCellContainer cell, String label, String value) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Infrastructure\Services\CertificateGeneratorService.cs:line 144
+   at BackOffice.Infrastructure.Services.CertificateGeneratorService.<>c__DisplayClass8_0.<GenerateCertificatePdf>b__7(TableDescriptor table) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Infrastructure\Services\CertificateGeneratorService.cs:line 146
+   at QuestPDF.Fluent.TableExtensions.Table(IContainer element, Action`1 handler)
+   at BackOffice.Infrastructure.Services.CertificateGeneratorService.<>c__DisplayClass8_0.<GenerateCertificatePdf>b__4(ColumnDescriptor col) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Infrastructure\Services\CertificateGeneratorService.cs:line 141
+   at QuestPDF.Fluent.ColumnExtensions.Column(IContainer element, Action`1 handler)
+   at BackOffice.Infrastructure.Services.CertificateGeneratorService.<>c__DisplayClass8_0.<GenerateCertificatePdf>b__1(PageDescriptor page) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Infrastructure\Services\CertificateGeneratorService.cs:line 124
+   at QuestPDF.Fluent.PageExtensions.Page(IDocumentContainer document, Action`1 handler)
+   at BackOffice.Infrastructure.Services.CertificateGeneratorService.<>c__DisplayClass8_0.<GenerateCertificatePdf>b__0(IDocumentContainer container) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Infrastructure\Services\CertificateGeneratorService.cs:line 115
+   at QuestPDF.Fluent.Document.Compose(IDocumentContainer container)
+   at QuestPDF.Drawing.DocumentGenerator.ConfigureContent(IDocument document, DocumentSettings settings, SemanticTreeManager semanticTreeManager, Boolean useOriginalImages)
+   at QuestPDF.Drawing.DocumentGenerator.RenderDocument(IDocumentCanvas canvas, IDocument document, DocumentSettings settings)
+   at QuestPDF.Drawing.DocumentGenerator.GeneratePdf(SkWriteStream stream, IDocument document)
+   at QuestPDF.Fluent.GenerateExtensions.GeneratePdf(IDocument document, Stream stream)
+   at QuestPDF.Fluent.GenerateExtensions.GeneratePdf(IDocument document)
+   at BackOffice.Infrastructure.Services.CertificateGeneratorService.GenerateCertificatePdf(Dossier dossier, Demande demande, String referenceNumber, Byte[] logoBytes) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Infrastructure\Services\CertificateGeneratorService.cs:line 113
+   at BackOffice.Infrastructure.Services.CertificateGeneratorService.GenerateAttestationsForDossierAsync(Guid dossierId) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Infrastructure\Services\CertificateGeneratorService.cs:line 70
+   at BackOffice.Application.Features.Dossiers.Commands.ChangeStatus.ChangeDossierStatusCommandHandler.Handle(ChangeDossierStatusCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Application\Features\Dossiers\Commands\ChangeStatus\ChangeDossierStatusCommandHandler.cs:line 71
+   at BackOffice.Api.Controllers.DossiersController.ChangeStatus(Guid dossierId, ChangeDossierStatusCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\Controllers\DossiersController.cs:line 211
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at BackOffice.Api.Middleware.ErrorHandlingMiddleware.Invoke(HttpContext context) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\Middleware\ErrorHandlingMiddleware.cs:line 21
+2025-12-19 13:35:57.967 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+2025-12-19 13:35:57.986 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__statutSuccessCode_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [s].[Code] = @__statutSuccessCode_0
+2025-12-19 13:35:58.081 +01:00 [INF] Executed DbCommand (21ms) [Parameters=[@__statutsFailedCodes_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [s].[Code] IN (
+    SELECT [s0].[value]
+    FROM OPENJSON(@__statutsFailedCodes_0) WITH ([value] nvarchar(120) '$') AS [s0]
+)
+2025-12-19 13:35:58.114 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@__statutsInProgressCodes_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [s].[Code] IN (
+    SELECT [s0].[value]
+    FROM OPENJSON(@__statutsInProgressCodes_0) WITH ([value] nvarchar(120) '$') AS [s0]
+)
+2025-12-19 13:43:34.539 +01:00 [INF] Now listening on: https://localhost:7238
+2025-12-19 13:43:34.585 +01:00 [INF] Now listening on: http://localhost:5126
+2025-12-19 13:43:34.748 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-19 13:43:34.751 +01:00 [INF] Hosting environment: Development
+2025-12-19 13:43:34.755 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api
+2025-12-19 13:44:01.757 +01:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2025-12-19 13:44:05.667 +01:00 [INF] Executed DbCommand (84ms) [Parameters=[@__request_Compte_0='?' (Size = 100)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AdminProfilsId], [a].[ChangementMotPasse], [a].[Compte], [a].[DateCreation], [a].[DateModification], [a].[DerniereConnexion], [a].[Desactive], [a].[IdProfil], [a].[IdUtilisateurType], [a].[MotPasse], [a].[Nom], [a].[Prenoms], [a].[Remarques], [a].[UtilisateurCreation], [a].[UtilisateurModification], [a0].[Id], [a0].[Code], [a0].[DateCreation], [a0].[DateModification], [a0].[Libelle], [a0].[Remarques], [a0].[UtilisateurCreation], [a0].[UtilisateurModification]
+FROM [AdminUtilisateurs] AS [a]
+LEFT JOIN [adminProfils] AS [a0] ON [a].[IdProfil] = [a0].[Id]
+WHERE [a].[Compte] = @__request_Compte_0
+2025-12-19 13:44:06.680 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [AdminUtilisateurs] SET [DerniereConnexion] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+2025-12-19 13:45:49.972 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+FROM [dossiers] AS [d]
+WHERE [d].[Id] = @__p_0
+2025-12-19 13:45:50.037 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__request_CodeStatut_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Code], [s].[Libelle]
+FROM [statuts] AS [s]
+WHERE [s].[Code] = @__request_CodeStatut_0
+2025-12-19 13:45:50.069 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AdminProfilsId], [a].[ChangementMotPasse], [a].[Compte], [a].[DateCreation], [a].[DateModification], [a].[DerniereConnexion], [a].[Desactive], [a].[IdProfil], [a].[IdUtilisateurType], [a].[MotPasse], [a].[Nom], [a].[Prenoms], [a].[Remarques], [a].[UtilisateurCreation], [a].[UtilisateurModification]
+FROM [AdminUtilisateurs] AS [a]
+WHERE [a].[Id] = @__p_0
+2025-12-19 13:45:50.184 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 512), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (DbType = Int64), @p5='?' (DbType = Guid), @p6='?' (Size = 60), @p7='?' (Size = 512), @p8='?' (Size = 60), @p9='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [commentaires] ([Id], [commentaire], [DateCommentaire], [DateCreation], [DateModification], [IdDossier], [NomInstructeur], [Proposition], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+2025-12-19 13:45:50.203 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__eventTypeCode_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[Code], [a].[Libelle]
+FROM [adminEvenementsTypes] AS [a]
+WHERE [a].[Code] = @__eventTypeCode_0
+2025-12-19 13:45:50.272 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 120), @p2='?' (Size = 120), @p3='?' (DbType = Int64), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?' (Size = 255), @p8='?' (Size = 120), @p9='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [adminJournal] ([Id], [AdresseIP], [Application], [DateEvenement], [DossierId], [IdDossier], [IdEvenementType], [Libelle], [Page], [Utilisateur])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+2025-12-19 13:45:50.365 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@__dossierId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[DateCreation], [s].[DateModification], [s].[DateOuverture], [s].[IdAgentInstructeur], [s].[IdClient], [s].[IdModeReglement], [s].[IdStatut], [s].[Libelle], [s].[Numero], [s].[UtilisateurCreation], [s].[UtilisateurModification], [s].[Id0], [d0].[Id], [d0].[ContactEmail], [d0].[ContactNom], [d0].[DateCreation], [d0].[DateModification], [d0].[Description], [d0].[Equipement], [d0].[EstHomologable], [d0].[Fabricant], [d0].[IdCategorie], [d0].[IdDossier], [d0].[IdMotifRejet], [d0].[IdProposition], [d0].[Marque], [d0].[Modele], [d0].[NumeroDemande], [d0].[PrixUnitaire], [d0].[QuantiteEquipements], [d0].[Remise], [d0].[Type], [d0].[UtilisateurCreation], [d0].[UtilisateurModification], [s].[Adresse], [s].[Bp], [s].[ChangementMotPasse], [s].[Code], [s].[ContactFonction], [s].[ContactNom], [s].[ContactTelephone], [s].[DateCreation0], [s].[DateModification0], [s].[Desactive], [s].[Email], [s].[IsVerified], [s].[MotPasse], [s].[NiveauValidation], [s].[Pays], [s].[RaisonSociale], [s].[RegistreCommerce], [s].[Remarques], [s].[TypeClient], [s].[UtilisateurCreation0], [s].[UtilisateurModification0], [s].[VerificationCode], [s].[VerificationTokenExpiry], [s].[Ville]
+FROM (
+    SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification], [c].[Id] AS [Id0], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation] AS [DateCreation0], [c].[DateModification] AS [DateModification0], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation] AS [UtilisateurCreation0], [c].[UtilisateurModification] AS [UtilisateurModification0], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+    FROM [dossiers] AS [d]
+    INNER JOIN [clients] AS [c] ON [d].[IdClient] = [c].[Id]
+    WHERE [d].[Id] = @__dossierId_0
+) AS [s]
+LEFT JOIN [demandes] AS [d0] ON [s].[Id] = [d0].[IdDossier]
+ORDER BY [s].[Id], [s].[Id0]
+2025-12-19 13:45:50.572 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@__ToUnixTimeMilliseconds_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT MAX([a].[NumeroSequentiel])
+FROM [attestations] AS [a]
+WHERE [a].[DateDelivrance] >= @__ToUnixTimeMilliseconds_0
+2025-12-19 13:45:50.598 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__demande_Id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation], [a].[UtilisateurModification]
+FROM [attestations] AS [a]
+WHERE [a].[IdDemande] = @__demande_Id_0
+2025-12-19 13:45:51.833 +01:00 [INF] Executed DbCommand (12ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Int64), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (DbType = Int64), @p5='?' (Size = -1) (DbType = Binary), @p6='?' (Size = 12), @p7='?' (DbType = Guid), @p8='?' (DbType = Int32), @p9='?' (Size = 4000), @p10='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [attestations] ([Id], [DateCreation], [DateDelivrance], [DateExpiration], [DateModification], [Donnees], [Extension], [IdDemande], [NumeroSequentiel], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10);
+2025-12-19 13:45:51.839 +01:00 [INF] Documents générés pour le dossier DOS-CERTIF-001.
+2025-12-19 13:45:51.889 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Int64), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (Size = 100), @p5='?' (DbType = Boolean), @p6='?' (DbType = Boolean), @p7='?' (Size = 1000), @p8='?' (Size = 100), @p9='?' (Size = 500), @p10='?' (Size = 200), @p11='?' (Size = 50), @p12='?' (DbType = Guid), @p13='?' (Size = 4000), @p14='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [notifications] ([Id], [DateCreation], [DateEnvoi], [DateModification], [EntityId], [IsBroadcast], [IsRead], [Message], [ProfilCode], [TargetUrl], [Title], [Type], [UserId], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-12-19 13:46:38.454 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+FROM [dossiers] AS [d]
+WHERE [d].[Id] = @__p_0
+2025-12-19 13:46:38.465 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__request_CodeStatut_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Code], [s].[Libelle]
+FROM [statuts] AS [s]
+WHERE [s].[Code] = @__request_CodeStatut_0
+2025-12-19 13:46:38.477 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AdminProfilsId], [a].[ChangementMotPasse], [a].[Compte], [a].[DateCreation], [a].[DateModification], [a].[DerniereConnexion], [a].[Desactive], [a].[IdProfil], [a].[IdUtilisateurType], [a].[MotPasse], [a].[Nom], [a].[Prenoms], [a].[Remarques], [a].[UtilisateurCreation], [a].[UtilisateurModification]
+FROM [AdminUtilisateurs] AS [a]
+WHERE [a].[Id] = @__p_0
+2025-12-19 13:46:38.526 +01:00 [INF] Executed DbCommand (11ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 512), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (DbType = Int64), @p5='?' (DbType = Guid), @p6='?' (Size = 60), @p7='?' (Size = 512), @p8='?' (Size = 60), @p9='?' (Size = 60), @p13='?' (DbType = Guid), @p10='?' (DbType = Int64), @p11='?' (DbType = Guid), @p12='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [commentaires] ([Id], [commentaire], [DateCommentaire], [DateCreation], [DateModification], [IdDossier], [NomInstructeur], [Proposition], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+UPDATE [dossiers] SET [DateModification] = @p10, [IdStatut] = @p11, [UtilisateurModification] = @p12
+OUTPUT 1
+WHERE [Id] = @p13;
+2025-12-19 13:46:38.554 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__eventTypeCode_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[Code], [a].[Libelle]
+FROM [adminEvenementsTypes] AS [a]
+WHERE [a].[Code] = @__eventTypeCode_0
+2025-12-19 13:46:38.568 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 120), @p2='?' (Size = 120), @p3='?' (DbType = Int64), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?' (Size = 255), @p8='?' (Size = 120), @p9='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [adminJournal] ([Id], [AdresseIP], [Application], [DateEvenement], [DossierId], [IdDossier], [IdEvenementType], [Libelle], [Page], [Utilisateur])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+2025-12-19 13:46:38.583 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@__dossierId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[DateCreation], [s].[DateModification], [s].[DateOuverture], [s].[IdAgentInstructeur], [s].[IdClient], [s].[IdModeReglement], [s].[IdStatut], [s].[Libelle], [s].[Numero], [s].[UtilisateurCreation], [s].[UtilisateurModification], [s].[Id0], [d0].[Id], [d0].[ContactEmail], [d0].[ContactNom], [d0].[DateCreation], [d0].[DateModification], [d0].[Description], [d0].[Equipement], [d0].[EstHomologable], [d0].[Fabricant], [d0].[IdCategorie], [d0].[IdDossier], [d0].[IdMotifRejet], [d0].[IdProposition], [d0].[Marque], [d0].[Modele], [d0].[NumeroDemande], [d0].[PrixUnitaire], [d0].[QuantiteEquipements], [d0].[Remise], [d0].[Type], [d0].[UtilisateurCreation], [d0].[UtilisateurModification], [s].[Adresse], [s].[Bp], [s].[ChangementMotPasse], [s].[Code], [s].[ContactFonction], [s].[ContactNom], [s].[ContactTelephone], [s].[DateCreation0], [s].[DateModification0], [s].[Desactive], [s].[Email], [s].[IsVerified], [s].[MotPasse], [s].[NiveauValidation], [s].[Pays], [s].[RaisonSociale], [s].[RegistreCommerce], [s].[Remarques], [s].[TypeClient], [s].[UtilisateurCreation0], [s].[UtilisateurModification0], [s].[VerificationCode], [s].[VerificationTokenExpiry], [s].[Ville]
+FROM (
+    SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification], [c].[Id] AS [Id0], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation] AS [DateCreation0], [c].[DateModification] AS [DateModification0], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation] AS [UtilisateurCreation0], [c].[UtilisateurModification] AS [UtilisateurModification0], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+    FROM [dossiers] AS [d]
+    INNER JOIN [clients] AS [c] ON [d].[IdClient] = [c].[Id]
+    WHERE [d].[Id] = @__dossierId_0
+) AS [s]
+LEFT JOIN [demandes] AS [d0] ON [s].[Id] = [d0].[IdDossier]
+ORDER BY [s].[Id], [s].[Id0]
+2025-12-19 13:46:38.601 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@__ToUnixTimeMilliseconds_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT MAX([a].[NumeroSequentiel])
+FROM [attestations] AS [a]
+WHERE [a].[DateDelivrance] >= @__ToUnixTimeMilliseconds_0
+2025-12-19 13:46:38.613 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__demande_Id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation], [a].[UtilisateurModification]
+FROM [attestations] AS [a]
+WHERE [a].[IdDemande] = @__demande_Id_0
+2025-12-19 13:46:38.890 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Int64), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (DbType = Int64), @p5='?' (Size = -1) (DbType = Binary), @p6='?' (Size = 12), @p7='?' (DbType = Guid), @p8='?' (DbType = Int32), @p9='?' (Size = 4000), @p10='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [attestations] ([Id], [DateCreation], [DateDelivrance], [DateExpiration], [DateModification], [Donnees], [Extension], [IdDemande], [NumeroSequentiel], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10);
+2025-12-19 13:46:38.896 +01:00 [INF] Documents générés pour le dossier DOS-LETTRE-002.
+2025-12-19 13:46:38.905 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Int64), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (Size = 100), @p5='?' (DbType = Boolean), @p6='?' (DbType = Boolean), @p7='?' (Size = 1000), @p8='?' (Size = 100), @p9='?' (Size = 500), @p10='?' (Size = 200), @p11='?' (Size = 50), @p12='?' (DbType = Guid), @p13='?' (Size = 4000), @p14='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [notifications] ([Id], [DateCreation], [DateEnvoi], [DateModification], [EntityId], [IsBroadcast], [IsRead], [Message], [ProfilCode], [TargetUrl], [Title], [Type], [UserId], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-12-19 13:47:36.084 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@__request_AttestationId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation], [a].[UtilisateurModification], [d].[Id], [d].[ContactEmail], [d].[ContactNom], [d].[DateCreation], [d].[DateModification], [d].[Description], [d].[Equipement], [d].[EstHomologable], [d].[Fabricant], [d].[IdCategorie], [d].[IdDossier], [d].[IdMotifRejet], [d].[IdProposition], [d].[Marque], [d].[Modele], [d].[NumeroDemande], [d].[PrixUnitaire], [d].[QuantiteEquipements], [d].[Remise], [d].[Type], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+FROM [attestations] AS [a]
+INNER JOIN [demandes] AS [d] ON [a].[IdDemande] = [d].[Id]
+WHERE [a].[Id] = @__request_AttestationId_0
+2025-12-19 13:47:39.194 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__request_AttestationId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation], [a].[UtilisateurModification], [d].[Id], [d].[ContactEmail], [d].[ContactNom], [d].[DateCreation], [d].[DateModification], [d].[Description], [d].[Equipement], [d].[EstHomologable], [d].[Fabricant], [d].[IdCategorie], [d].[IdDossier], [d].[IdMotifRejet], [d].[IdProposition], [d].[Marque], [d].[Modele], [d].[NumeroDemande], [d].[PrixUnitaire], [d].[QuantiteEquipements], [d].[Remise], [d].[Type], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+FROM [attestations] AS [a]
+INNER JOIN [demandes] AS [d] ON [a].[IdDemande] = [d].[Id]
+WHERE [a].[Id] = @__request_AttestationId_0
+2025-12-19 13:48:44.951 +01:00 [INF] Executed DbCommand (10ms) [Parameters=[@__request_AttestationId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation], [a].[UtilisateurModification], [d].[Id], [d].[ContactEmail], [d].[ContactNom], [d].[DateCreation], [d].[DateModification], [d].[Description], [d].[Equipement], [d].[EstHomologable], [d].[Fabricant], [d].[IdCategorie], [d].[IdDossier], [d].[IdMotifRejet], [d].[IdProposition], [d].[Marque], [d].[Modele], [d].[NumeroDemande], [d].[PrixUnitaire], [d].[QuantiteEquipements], [d].[Remise], [d].[Type], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+FROM [attestations] AS [a]
+INNER JOIN [demandes] AS [d] ON [a].[IdDemande] = [d].[Id]
+WHERE [a].[Id] = @__request_AttestationId_0
+2025-12-19 13:48:48.056 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__request_AttestationId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation], [a].[UtilisateurModification], [d].[Id], [d].[ContactEmail], [d].[ContactNom], [d].[DateCreation], [d].[DateModification], [d].[Description], [d].[Equipement], [d].[EstHomologable], [d].[Fabricant], [d].[IdCategorie], [d].[IdDossier], [d].[IdMotifRejet], [d].[IdProposition], [d].[Marque], [d].[Modele], [d].[NumeroDemande], [d].[PrixUnitaire], [d].[QuantiteEquipements], [d].[Remise], [d].[Type], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+FROM [attestations] AS [a]
+INNER JOIN [demandes] AS [d] ON [a].[IdDemande] = [d].[Id]
+WHERE [a].[Id] = @__request_AttestationId_0
