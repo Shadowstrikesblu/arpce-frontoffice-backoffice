@@ -1421,17 +1421,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PayByMomoCommand"
+                "$ref": "#/components/schemas/PayByProviderCommand"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/PayByMomoCommand"
+                "$ref": "#/components/schemas/PayByProviderCommand"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/PayByMomoCommand"
+                "$ref": "#/components/schemas/PayByProviderCommand"
               }
             }
           }
@@ -1516,12 +1516,12 @@
             "format": "uuid"
           },
           "dateDelivrance": {
-            "type": "string",
-            "format": "date-time"
+            "type": "integer",
+            "format": "int64"
           },
           "dateExpiration": {
-            "type": "string",
-            "format": "date-time"
+            "type": "integer",
+            "format": "int64"
           }
         },
         "additionalProperties": false
@@ -1555,12 +1555,12 @@
             "type": "string",
             "nullable": true
           },
-          "tarifEtude": {
+          "fraisEtude": {
             "type": "number",
             "format": "double",
             "nullable": true
           },
-          "tarifHomologation": {
+          "fraisHomologation": {
             "type": "number",
             "format": "double",
             "nullable": true
@@ -1654,8 +1654,8 @@
             "format": "uuid"
           },
           "dateCommentaire": {
-            "type": "string",
-            "format": "date-time"
+            "type": "integer",
+            "format": "int64"
           },
           "commentaireTexte": {
             "type": "string",
@@ -1735,6 +1735,10 @@
           },
           "isVerified": {
             "type": "boolean"
+          },
+          "niveauValidation": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -1870,8 +1874,8 @@
             "format": "uuid"
           },
           "date": {
-            "type": "string",
-            "format": "date-time"
+            "type": "integer",
+            "format": "int64"
           },
           "montantEtude": {
             "type": "number",
@@ -1930,8 +1934,8 @@
             "format": "uuid"
           },
           "dateOuverture": {
-            "type": "string",
-            "format": "date-time"
+            "type": "integer",
+            "format": "int64"
           },
           "numero": {
             "type": "string",
@@ -1993,8 +1997,8 @@
             "format": "uuid"
           },
           "dateOuverture": {
-            "type": "string",
-            "format": "date-time"
+            "type": "integer",
+            "format": "int64"
           },
           "numero": {
             "type": "string",
@@ -2060,8 +2064,8 @@
             "format": "uuid"
           },
           "dateOuverture": {
-            "type": "string",
-            "format": "date-time"
+            "type": "integer",
+            "format": "int64"
           },
           "numero": {
             "type": "string",
@@ -2105,8 +2109,8 @@
             "nullable": true
           },
           "dateOuverture": {
-            "type": "string",
-            "format": "date-time"
+            "type": "integer",
+            "format": "int64"
           },
           "numero": {
             "type": "string",
@@ -2280,8 +2284,8 @@
             "format": "double"
           },
           "dateEcheance": {
-            "type": "string",
-            "format": "date-time"
+            "type": "integer",
+            "format": "int64"
           },
           "numeroDossier": {
             "type": "string",
@@ -2290,9 +2294,13 @@
         },
         "additionalProperties": false
       },
-      "PayByMomoCommand": {
+      "PayByProviderCommand": {
         "type": "object",
         "properties": {
+          "dossierId": {
+            "type": "string",
+            "format": "uuid"
+          },
           "phoneNumber": {
             "type": "string",
             "nullable": true

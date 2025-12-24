@@ -829,7 +829,7 @@
       },
       {
         "Name": "command",
-        "Type": "FrontOffice.Application.Features.Paiements.Commands.PayByMomo.PayByMomoCommand",
+        "Type": "FrontOffice.Application.Features.Paiements.Commands.PayByMomo.PayByProviderCommand",
         "IsRequired": true
       }
     ],
