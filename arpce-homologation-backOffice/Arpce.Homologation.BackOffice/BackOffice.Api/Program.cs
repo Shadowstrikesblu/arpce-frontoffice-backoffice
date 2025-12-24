@@ -17,11 +17,12 @@ var builder = WebApplication.CreateBuilder(args);
 // ------------------------------------------------------
 // SERILOG
 // ------------------------------------------------------
-builder.Host.UseSerilog((context, services, configuration) => configuration
-    .ReadFrom.Configuration(context.Configuration)
-    .ReadFrom.Services(services)
-    .Enrich.FromLogContext()
-    .WriteTo.Console());
+builder.Host.UseSerilog((context, services, configuration) =>
+    configuration
+        .ReadFrom.Configuration(context.Configuration)
+        .ReadFrom.Services(services)
+        .Enrich.FromLogContext()
+        .WriteTo.Console());
 
 // ------------------------------------------------------
 // SERVICES
@@ -60,10 +61,11 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(corsPolicyName, policy =>
     {
-        policy.AllowAnyMethod()
-              .AllowAnyHeader()
-              .AllowCredentials()
-              .SetIsOriginAllowed(_ => true);
+        policy
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials()
+            .SetIsOriginAllowed(_ => true);
     });
 });
 
@@ -71,6 +73,9 @@ builder.Services.AddCors(options =>
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        var secret = builder.Configuration["JwtSettings:Secret"]
+            ?? throw new InvalidOperationException("JWT Secret is not configured");
+
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -80,9 +85,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
             ValidAudience = builder.Configuration["JwtSettings:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
+                Encoding.UTF8.GetBytes(secret))
         };
 
+        // SignalR JWT support
         options.Events = new JwtBearerEvents
         {
             OnMessageReceived = context =>
@@ -119,7 +125,7 @@ builder.Services.AddSwaggerGen(options =>
         Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer",
         In = ParameterLocation.Header,
-        Description = "Bearer {token}"
+        Description = "Bearer {your JWT token}"
     });
 
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -149,11 +155,23 @@ var app = builder.Build();
 app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseSerilogRequestLogging();
 
-if (app.Environment.IsDevelopment())
+// ✅ Swagger enabled in Production via config
+bool enableSwagger =
+    app.Environment.IsDevelopment() ||
+    app.Configuration.GetValue<bool>("EnableSwaggerUI");
+
+if (enableSwagger)
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "BackOffice API v1");
+        options.RoutePrefix = string.Empty; // => /swagger
+    });
 }
+
+// Optional root endpoint (avoids 404 on /)
+app.MapGet("/", () => Results.Ok("BackOffice API is running"));
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
