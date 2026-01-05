@@ -12,16 +12,18 @@ using Serilog;
 using System.Text;
 
 // --- Configuration initiale de Serilog ---
+// Permet de logger les erreurs survenant avant le d√©marrage complet de l'app
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateBootstrapLogger();
 
-Log.Information("Starting up the FrontOffice API");
+Log.Information("D√©marrage du microservice FrontOffice API sur le VPS...");
 
 try
 {
     var builder = WebApplication.CreateBuilder(args);
 
+    // --- Configuration de Serilog ---
     builder.Host.UseSerilog((context, services, configuration) => configuration
         .ReadFrom.Configuration(context.Configuration)
         .ReadFrom.Services(services)
@@ -30,7 +32,6 @@ try
 
     // --- Configuration des Services ---
 
-    // Accesseur au contexte HTTP (nÈcessaire pour ICurrentUserService)
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddScoped<IFileStorageProvider, DatabaseFileStorageProvider>();
     builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
@@ -53,7 +54,7 @@ try
 
 
 
-    // Politique CORS
+    // Politique CORS (Ouverte pour le Sandbox)
     var corsPolicyName = "AllowWebApp";
     builder.Services.AddCors(options =>
     {
@@ -66,17 +67,16 @@ try
                           });
     });
 
-    // Base de donnÈes avec SQL Server
+    // Base de donn√©es SQL Server
     builder.Services.AddDbContext<FrontOfficeDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
     builder.Services.AddScoped<IApplicationDbContext>(provider =>
         provider.GetRequiredService<FrontOfficeDbContext>());
 
-    // ContrÙleurs
     builder.Services.AddControllers();
 
-    // Documentation API (Swagger UI avec support JWT)
+    // Configuration Swagger
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen(options =>
     {
@@ -84,10 +84,9 @@ try
         {
             Title = "ARPCE Homologation - FrontOffice API",
             Version = "v1",
-            Description = "API pour la gestion des demandes d'homologation cÙtÈ client."
+            Description = "API pour la gestion des demandes d'homologation c√¥t√© client."
         });
 
-        // Configuration pour la sÈcuritÈ JWT dans Swagger
         options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
             In = ParameterLocation.Header,
@@ -101,55 +100,66 @@ try
             {
                 new OpenApiSecurityScheme
                 {
-                    Reference = new OpenApiReference
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                    }
+                    Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
                 },
                 new string[] {}
             }
         });
     });
 
-    // MediatR (pour CQRS)
+    // MediatR
     builder.Services.AddMediatR(cfg =>
         cfg.RegisterServicesFromAssembly(typeof(AssemblyReference).Assembly));
 
-    // Configuration de l'Authentification JWT
+    // --- Configuration Authentification JWT Robuste ---
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
         {
+            var jwtSecret = builder.Configuration["JwtSettings:Secret"];
+            var jwtIssuer = builder.Configuration["JwtSettings:Issuer"];
+            var jwtAudience = builder.Configuration["JwtSettings:Audience"];
+
+            // Logs pour aider l'infra √† d√©boguer (sans afficher le secret en clair)
+            Log.Information("FrontOffice - Config JWT - Secret: {SecretStatus}, Issuer: {Issuer}, Audience: {Audience}",
+                !string.IsNullOrWhiteSpace(jwtSecret) ? "PRESENT (Long: " + jwtSecret.Length + ")" : "MANQUANT",
+                jwtIssuer,
+                jwtAudience);
+
+            if (string.IsNullOrWhiteSpace(jwtSecret))
+            {
+                throw new ArgumentNullException("JwtSettings:Secret", "Le secret JWT est manquant dans la configuration.");
+            }
+
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = true,
                 ValidateAudience = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
-                ValidAudience = builder.Configuration["JwtSettings:Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
+                ValidIssuer = jwtIssuer,
+                ValidAudience = jwtAudience,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
             };
         });
 
-    // Injection des services personnalisÈs
+    // Injection des services personnalis√©s
     builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
     builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
-
     builder.Services.AddTransient<IEmailService, EmailService>();
 
-
-    // --- Pipeline de RequÍtes HTTP ---
+    // --- Construction de l'application ---
 
     var app = builder.Build();
 
-    // Le middleware de gestion d'erreurs doit Ítre l'un des premiers
     app.UseMiddleware<ErrorHandlingMiddleware>();
-
-    // Middleware Serilog pour logger les requÍtes HTTP
     app.UseSerilogRequestLogging();
 
-    if (app.Environment.IsDevelopment())
+    // --- Activation de Swagger (Logique Sandbox) ---
+    // Active Swagger si on est en Dev OU si le param√®tre EnableSwaggerUI est √† true dans appsettings.json
+    bool enableSwagger = app.Environment.IsDevelopment() ||
+                         builder.Configuration.GetValue<bool>("EnableSwaggerUI", false);
+
+    if (enableSwagger)
     {
         app.UseSwagger();
         app.UseSwaggerUI(options =>
@@ -158,25 +168,42 @@ try
             options.RoutePrefix = string.Empty;
             options.InjectStylesheet("/css/swagger-custom.css");
         });
+        Log.Information("Swagger UI activ√© sur FrontOffice.");
+    }
+
+    // --- Migration Automatique ---
+    bool applyMigrations = builder.Configuration.GetValue<bool>("ApplyMigrationsOnStartup", false);
+    
+    if (applyMigrations)
+    {
+        using (var scope = app.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+            try
+            {
+                var context = services.GetRequiredService<FrontOfficeDbContext>();
+                context.Database.Migrate();
+                Log.Information("Migrations EF Core appliqu√©es avec succ√®s au FrontOffice.");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Erreur critique lors de l'application des migrations sur le VPS.");
+            }
+        }
     }
 
     app.UseHttpsRedirection();
-
-    app.UseStaticFiles();
-
+    app.UseStaticFiles(); // Indispensable pour le CSS Swagger et les uploads
     app.UseCors(corsPolicyName);
-
-    // Activer l'authentification avant l'autorisation
     app.UseAuthentication();
     app.UseAuthorization();
-
     app.MapControllers();
 
     app.Run();
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "Application terminated unexpectedly");
+    Log.Fatal(ex, "L'application FrontOffice s'est arr√™t√©e de mani√®re inattendue sur le VPS.");
 }
 finally
 {

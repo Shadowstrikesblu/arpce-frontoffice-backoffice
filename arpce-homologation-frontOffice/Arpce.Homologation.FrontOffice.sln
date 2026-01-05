@@ -24,8 +24,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{A09D16CB-B55
 		C:\Users\Lenovo\Downloads\Status d’une demande _ mot clé.pdf = C:\Users\Lenovo\Downloads\Status d’une demande _ mot clé.pdf
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{95DFDF90-F876-4FAA-A523-93676D5B3DCD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontOffice.Domain", "FrontOffice.Domain\FrontOffice.Domain.csproj", "{A750F7F3-D86C-4BAD-BE1D-C2C191D6C114}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontOffice.Application", "FrontOffice.Application\FrontOffice.Application.csproj", "{2E58E38A-D25F-4994-A384-363BD4C2F423}"
@@ -33,8 +31,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontOffice.Infrastructure", "FrontOffice.Infrastructure\FrontOffice.Infrastructure.csproj", "{3B059CAE-2576-4F57-983E-220A379E8392}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontOffice.Api", "FrontOffice.Api\FrontOffice.Api.csproj", "{3FEE0F92-63B3-4155-B177-81FCCEE55C0B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontOffice.Application.UnitTests", "FrontOffice.Application.UnitTests\FrontOffice.Application.UnitTests.csproj", "{7A296FAA-EE05-4837-8C99-2510086A7540}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,10 +54,6 @@ Global
 		{3FEE0F92-63B3-4155-B177-81FCCEE55C0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FEE0F92-63B3-4155-B177-81FCCEE55C0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FEE0F92-63B3-4155-B177-81FCCEE55C0B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7A296FAA-EE05-4837-8C99-2510086A7540}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7A296FAA-EE05-4837-8C99-2510086A7540}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7A296FAA-EE05-4837-8C99-2510086A7540}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7A296FAA-EE05-4837-8C99-2510086A7540}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,7 +63,6 @@ Global
 		{2E58E38A-D25F-4994-A384-363BD4C2F423} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{3B059CAE-2576-4F57-983E-220A379E8392} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{3FEE0F92-63B3-4155-B177-81FCCEE55C0B} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{7A296FAA-EE05-4837-8C99-2510086A7540} = {95DFDF90-F876-4FAA-A523-93676D5B3DCD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7F4A025A-8584-4D4B-A453-F3DDCBC06C49}

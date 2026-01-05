@@ -61,13 +61,11 @@ public class FrontOfficeDbContext : DbContext, IApplicationDbContext
         {
             switch (entry.State)
             {
-                // Cas où une nouvelle entité est ajoutée à la base de données
                 case EntityState.Added:
                     entry.Entity.UtilisateurCreation = currentUserId;
                     entry.Entity.DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
                     break;
 
-                // Cas où une entité existante est modifiée
                 case EntityState.Modified:
                     entry.Entity.UtilisateurModification = currentUserId;
                     entry.Entity.DateModification = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
@@ -76,18 +74,12 @@ public class FrontOfficeDbContext : DbContext, IApplicationDbContext
         }
 
         var result = await base.SaveChangesAsync(cancellationToken);
-
         return result;
     }
 
-    /// <summary>
-    /// Les configurations des entités (Fluent API) lors de la création du modèle.
-    /// Il scanne l'assembly actuel (Infrastructure) pour trouver toutes les classes qui implémentent IEntityTypeConfiguration.
-    /// </summary>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
         base.OnModelCreating(builder);
     }
 }
