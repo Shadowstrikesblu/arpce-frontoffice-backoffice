@@ -1,5 +1,4 @@
-﻿// Fichier : FrontOffice.Infrastructure/Persistence/Configurations/DocumentDossierConfiguration.cs
-using FrontOffice.Domain.Entities;
+﻿using FrontOffice.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -1,183 +1,138 @@
 ﻿using FrontOffice.Application.Common.Interfaces;
+using FrontOffice.Domain.Entities;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 
-namespace FrontOffice.Infrastructure.Services
+namespace FrontOffice.Infrastructure.Services;
+
+/// <summary>
+/// Gère le stockage des fichiers directement dans la base de données via Entity Framework Core.
+/// Cette version est modifiée pour ne pas sauvegarder automatiquement, permettant le contrôle par une transaction externe.
+/// </summary>
+public class DatabaseFileStorageProvider : IFileStorageProvider
 {
-    public class DatabaseFileStorageProvider : IFileStorageProvider
+    private readonly IApplicationDbContext _context;
+
+    public DatabaseFileStorageProvider(IApplicationDbContext context)
     {
-        private readonly IApplicationDbContext _context;
-        private readonly string _tempUploadPath; // Chemin local temporaire sur le serveur
+        _context = context;
+    }
 
-        public DatabaseFileStorageProvider(IApplicationDbContext context, IConfiguration configuration)
+    /// <summary>
+    /// Prépare une entité DocumentDossier pour l'insertion sans la sauvegarder.
+    /// </summary>
+    public async Task<DocumentDossier> ImportDocumentDossierAsync(IFormFile file, string nom, byte type, Guid dossierId)
+    {
+        // Lit le contenu du fichier en mémoire
+        byte[] fileData;
+        using (var memoryStream = new MemoryStream())
         {
-            _context = context;
-            // Lire le chemin du dossier temporaire depuis la configuration
-            _tempUploadPath = configuration["FileStorageSettings:TempUploadPath"] ?? Path.Combine(Path.GetTempPath(), "arpce_uploads");
-            Directory.CreateDirectory(_tempUploadPath);
+            await file.CopyToAsync(memoryStream);
+            fileData = memoryStream.ToArray();
         }
 
-        /// <summary>
-        /// Importe un fichier pour un DocumentDossier.
-        /// </summary>
-        public async Task<Guid> ImportDocumentDossierAsync(IFormFile file, string nom, byte type, Guid dossierId)
+        // Crée l'entité DocumentDossier
+        var document = new DocumentDossier
         {
-            var tempFilePath = await SaveFileToTempLocation(file);
+            Id = Guid.NewGuid(),
+            IdDossier = dossierId,
+            Nom = nom,
+            Type = type,
+            Extension = Path.GetExtension(file.FileName)?.TrimStart('.').ToLowerInvariant() ?? string.Empty,
+            Donnees = fileData, 
+            UtilisateurCreation = "API_UPLOAD",
+            DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+        };
 
-            try
-            {
-                // Paramètres pour la procédure stockée ImporterDocumentDossier
-                var fileParam = new SqlParameter("@fichier", tempFilePath);
-                var nomParam = new SqlParameter("@nom", nom);
-                var typeParam = new SqlParameter("@type", type);
-                var dossierIdParam = new SqlParameter("@IDDossier", dossierId);
+        // Ajoute l'entité au contexte, mais NE PAS sauvegarder.
+        _context.DocumentsDossiers.Add(document);
 
-                // Paramètres de sortie
-                var idDocumentParam = new SqlParameter("@IDDocument", SqlDbType.UniqueIdentifier) { Direction = ParameterDirection.Output };
-                var errNumParam = new SqlParameter("@errNumero", SqlDbType.Int) { Direction = ParameterDirection.Output };
-                var errMsgParam = new SqlParameter("@errMessage", SqlDbType.NVarChar, 500) { Direction = ParameterDirection.Output };
+        return document;
+    }
 
-                await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC ImporterDocumentDossier @fichier, @nom, @type, @IDDossier, @IDDocument OUT, @errNumero OUT, @errMessage OUT",
-                    fileParam, nomParam, typeParam, dossierIdParam, idDocumentParam, errNumParam, errMsgParam
-                );
-
-                // Gérer les erreurs retournées par la procédure stockée
-                if ((int)errNumParam.Value != 0)
-                {
-                    throw new Exception($"Erreur SQL lors de l'import: {(string)errMsgParam.Value} (Code: {(int)errNumParam.Value})");
-                }
-
-                // Retourner l'ID du document créé
-                return (Guid)idDocumentParam.Value;
-            }
-            finally
-            {
-                // Nettoyer le fichier temporaire
-                if (File.Exists(tempFilePath))
-                {
-                    File.Delete(tempFilePath);
-                }
-            }
+    /// <summary>
+    /// Prépare une entité DocumentDemande pour l'insertion sans la sauvegarder.
+    /// </summary>
+    public async Task<DocumentDemande> ImportDocumentDemandeAsync(IFormFile file, string nom, Guid demandeId)
+    {
+        byte[] fileData;
+        using (var memoryStream = new MemoryStream())
+        {
+            await file.CopyToAsync(memoryStream);
+            fileData = memoryStream.ToArray();
         }
 
-        /// <summary>
-        /// Importe un fichier pour un DocumentDemande.
-        /// </summary>
-        public async Task<Guid> ImportDocumentDemandeAsync(IFormFile file, string nom, Guid demandeId)
+        var document = new DocumentDemande
         {
-            var tempFilePath = await SaveFileToTempLocation(file);
+            Id = Guid.NewGuid(),
+            IdDemande = demandeId,
+            Nom = nom,
+            Extension = Path.GetExtension(file.FileName)?.TrimStart('.').ToLowerInvariant() ?? string.Empty,
+            Donnees = fileData,
+            UtilisateurCreation = "API_UPLOAD",
+            DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+        };
 
-            try
-            {
-                var fileParam = new SqlParameter("@fichier", tempFilePath);
-                var nomParam = new SqlParameter("@nom", nom);
-                var demandeIdParam = new SqlParameter("@IDDemande", demandeId);
+        _context.DocumentsDemandes.Add(document);
 
-                var idDocumentParam = new SqlParameter("@IDDocument", SqlDbType.UniqueIdentifier) { Direction = ParameterDirection.Output };
-                var errNumParam = new SqlParameter("@errNumero", SqlDbType.Int) { Direction = ParameterDirection.Output };
-                var errMsgParam = new SqlParameter("@errMessage", SqlDbType.NVarChar, 500) { Direction = ParameterDirection.Output };
+        return document;
+    }
 
-                await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC ImporterDocumentDemande @fichier, @nom, @IDDemande, @IDDocument OUT, @errNumero OUT, @errMessage OUT",
-                    fileParam, nomParam, demandeIdParam, idDocumentParam, errNumParam, errMsgParam
-                );
+    /// <summary>
+    /// Récupère les données binaires d'un DocumentDossier depuis la base.
+    /// </summary>
+    public async Task<(byte[] content, string fileName, string contentType)> ExportDocumentDossierAsync(Guid documentId)
+    {
+        var document = await _context.DocumentsDossiers
+            .AsNoTracking()
+            .FirstOrDefaultAsync(d => d.Id == documentId);
 
-                if ((int)errNumParam.Value != 0)
-                {
-                    throw new Exception($"Erreur SQL lors de l'import: {(string)errMsgParam.Value} (Code: {(int)errNumParam.Value})");
-                }
-
-                return (Guid)idDocumentParam.Value;
-            }
-            finally
-            {
-                if (File.Exists(tempFilePath))
-                {
-                    File.Delete(tempFilePath);
-                }
-            }
+        if (document == null || document.Donnees == null || document.Donnees.Length == 0)
+        {
+            throw new FileNotFoundException("Document de dossier introuvable ou vide.");
         }
 
-        /// <summary>
-        /// Exporte un DocumentDossier en utilisant la procédure stockée.
-        /// </summary>
-        public async Task<(byte[] content, string fileName, string contentType)> ExportDocumentDossierAsync(Guid documentId)
+        var fileName = $"{document.Nom}.{document.Extension}";
+        var contentType = GetMimeType(fileName);
+
+        return (document.Donnees, fileName, contentType);
+    }
+
+    /// <summary>
+    /// Récupère les données binaires d'un DocumentDemande depuis la base.
+    /// </summary>
+    public async Task<(byte[] content, string fileName, string contentType)> ExportDocumentDemandeAsync(Guid documentId)
+    {
+        var document = await _context.DocumentsDemandes
+            .AsNoTracking()
+            .FirstOrDefaultAsync(d => d.Id == documentId);
+
+        if (document == null || document.Donnees == null || document.Donnees.Length == 0)
         {
-            // ... Logique d'exportation similaire à l'importation ...
-            // Le script fourni est problématique pour une API car il écrit sur un disque serveur.
-            // Une meilleure approche serait de lire directement les `Donnees` de la table.
-            // Je vais implémenter cette meilleure approche.
-
-            var document = await _context.DocumentsDossiers
-                .AsNoTracking()
-                .FirstOrDefaultAsync(d => d.Id == documentId);
-
-            if (document == null || document.Donnees == null)
-            {
-                throw new FileNotFoundException("Document introuvable ou vide.");
-            }
-
-            var fileName = $"{document.Nom}.{document.Extension}";
-            var contentType = GetMimeType(fileName); // Méthode utilitaire à créer
-
-            return (document.Donnees, fileName, contentType);
+            throw new FileNotFoundException("Document de demande introuvable ou vide.");
         }
 
-        // Logique d'exportation pour DocumentDemande (identique)
-        public async Task<(byte[] content, string fileName, string contentType)> ExportDocumentDemandeAsync(Guid documentId)
+        var fileName = $"{document.Nom}.{document.Extension}";
+        var contentType = GetMimeType(fileName);
+
+        return (document.Donnees, fileName, contentType);
+    }
+
+    private string GetMimeType(string fileName)
+    {
+        var extension = Path.GetExtension(fileName).ToLowerInvariant();
+        return extension switch
         {
-            var document = await _context.DocumentsDemandes
-                .AsNoTracking()
-                .FirstOrDefaultAsync(d => d.Id == documentId);
-
-            if (document == null || document.Donnees == null)
-            {
-                throw new FileNotFoundException("Document introuvable ou vide.");
-            }
-
-            var fileName = $"{document.Nom}.{document.Extension}";
-            var contentType = GetMimeType(fileName);
-
-            return (document.Donnees, fileName, contentType);
-        }
-
-
-        // --- Méthodes privées utilitaires ---
-
-        private async Task<string> SaveFileToTempLocation(IFormFile file)
-        {
-            // Crée un nom de fichier unique et le sauvegarde dans le dossier temporaire
-            var tempFilePath = Path.Combine(_tempUploadPath, Guid.NewGuid().ToString() + Path.GetExtension(file.FileName));
-            using (var stream = new FileStream(tempFilePath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-            return tempFilePath;
-        }
-
-        private string GetMimeType(string fileName)
-        {
-            // Logique simple pour déterminer le content type
-            var extension = Path.GetExtension(fileName).ToLowerInvariant();
-            return extension switch
-            {
-                ".pdf" => "application/pdf",
-                ".jpg" => "image/jpeg",
-                ".jpeg" => "image/jpeg",
-                ".png" => "image/png",
-                ".doc" => "application/msword",
-                ".docx" => "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                _ => "application/octet-stream",
-            };
-        }
+            ".pdf" => "application/pdf",
+            ".jpg" => "image/jpeg",
+            ".jpeg" => "image/jpeg",
+            ".png" => "image/png",
+            ".doc" => "application/msword",
+            ".docx" => "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            _ => "application/octet-stream",
+        };
     }
 }

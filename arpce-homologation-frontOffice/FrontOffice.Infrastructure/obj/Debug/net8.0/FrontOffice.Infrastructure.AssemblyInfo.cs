@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FrontOffice.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8612311e78b2546f0351f0d8189bd4e94f0928f8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9b11ce86ee8411491e157ff9619d687ebdcd61e4")]
 [assembly: System.Reflection.AssemblyProductAttribute("FrontOffice.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FrontOffice.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
