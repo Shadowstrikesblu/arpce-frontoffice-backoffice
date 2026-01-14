@@ -121,61 +121,61 @@ namespace BackOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8c57c93e-c6c8-4274-b50e-acf5e39ec9de"),
+                            Id = new Guid("8ed6be12-835a-4590-aa81-f8d05799decc"),
                             Code = "CREATION",
                             Libelle = "Création de données"
                         },
                         new
                         {
-                            Id = new Guid("22f2ad42-136d-4174-80fb-d67c6ebab29f"),
+                            Id = new Guid("ece5eb4a-d220-49bc-a3f7-753aaa1ba837"),
                             Code = "MODIFICATION",
                             Libelle = "Modification de données"
                         },
                         new
                         {
-                            Id = new Guid("09aaae7f-3f77-42d6-97fa-95451cd5bdaf"),
+                            Id = new Guid("fbc3a6f8-0e92-4923-8e9e-00ca32f0e460"),
                             Code = "SUPPRESSION",
                             Libelle = "Suppression de données"
                         },
                         new
                         {
-                            Id = new Guid("c1421a26-68a5-4339-a53c-0a223b280b82"),
+                            Id = new Guid("77737b0f-b3dd-4d4b-a6ba-9d721b00a5e7"),
                             Code = "VALIDATION",
                             Libelle = "Validation de processus"
                         },
                         new
                         {
-                            Id = new Guid("2e644f40-d09c-47db-92da-4d25421d7b76"),
+                            Id = new Guid("602fb1c3-6fe8-4ecc-928a-01c97eec7e59"),
                             Code = "CONNEXION",
                             Libelle = "Modification"
                         },
                         new
                         {
-                            Id = new Guid("9e4bbce6-ffd8-4160-8fb2-08e5ef74da0d"),
+                            Id = new Guid("2fe3fb8e-cbb3-4e38-a213-b1df4c3323b2"),
                             Code = "MODIFICATION",
                             Libelle = "Connexion utilisateur"
                         },
                         new
                         {
-                            Id = new Guid("048a445b-79e5-4deb-bc4a-9c437496f742"),
+                            Id = new Guid("54c3eb01-5fba-41f6-a3b3-46fe320bd2ce"),
                             Code = "ATTRIBUTION",
                             Libelle = "Attribution de droits/profils"
                         },
                         new
                         {
-                            Id = new Guid("7db35ca8-d5cb-4b5c-9390-c718b85b3655"),
+                            Id = new Guid("a247f515-a040-481b-8c8a-fa55b16882fc"),
                             Code = "SECURITE",
                             Libelle = "Action de sécurité"
                         },
                         new
                         {
-                            Id = new Guid("23365957-39c5-4384-8b50-31661879d8f1"),
+                            Id = new Guid("8a946a35-8916-49b7-a817-735c33c408ba"),
                             Code = "COMMUNICATION",
                             Libelle = "Envoi de communication"
                         },
                         new
                         {
-                            Id = new Guid("c7e1cefb-8e1c-4cd5-8a7f-b1637ba5fad0"),
+                            Id = new Guid("06087c37-5bf5-4e21-964d-4a4d4c4092ab"),
                             Code = "QUALIFICATION",
                             Libelle = "Qualification de données"
                         });
@@ -521,10 +521,10 @@ namespace BackOffice.Infrastructure.Migrations
                             Id = new Guid("88888888-8888-8888-8888-888888888888"),
                             ChangementMotPasse = true,
                             Compte = "admin",
-                            DateCreation = 1766073424627L,
+                            DateCreation = 1768414036890L,
                             Desactive = false,
                             IdUtilisateurType = new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"),
-                            MotPasse = "$2a$11$rbD5ujoMnKOtpNaW2jTo7.Fr7S8RvYKFVDRMbsROJIYfcBwXd9Aiq",
+                            MotPasse = "$2a$11$8Ba3nbM1h/elgvMO/tIypOpzVDnFlpDkQK1wjcqR/3T0MS55sRvxG",
                             Nom = "root",
                             Prenoms = "ARPCE",
                             UtilisateurCreation = "SYSTEM_SEED"
@@ -554,12 +554,12 @@ namespace BackOffice.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("68105a03-542a-4077-a8ea-2cee5d19406d"),
+                            Id = new Guid("d8e03a1c-019d-4d5a-818d-abf1ddbdb1dc"),
                             Libelle = "Utilisateur Standard"
                         },
                         new
                         {
-                            Id = new Guid("4dda8dc7-238e-43c0-8c8a-1745113aee7a"),
+                            Id = new Guid("901facb8-f6fb-4636-b237-7ed0aaa77ee0"),
                             Libelle = "Auditeur"
                         });
                 });
@@ -953,7 +953,7 @@ namespace BackOffice.Infrastructure.Migrations
                     b.Property<long?>("DateModification")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid?>("DemandeId")
+                    b.Property<Guid?>("IdDemande")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdDossier")
@@ -985,7 +985,7 @@ namespace BackOffice.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DemandeId");
+                    b.HasIndex("IdDemande");
 
                     b.HasIndex("IdDossier");
 
@@ -1189,28 +1189,28 @@ namespace BackOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4030f6f7-a1d0-4179-81e3-1552b55cf94b"),
+                            Id = new Guid("85df74fe-8bf9-40d2-87bc-ca5adc0b21a4"),
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("82b58440-bca0-4aa3-a24f-8c3dd622b601"),
+                            Id = new Guid("fccebfa0-726e-4176-92e6-04464131daf4"),
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("baf89fc2-1bce-49f3-8d58-a70563a7e763"),
+                            Id = new Guid("00ab6810-42da-4a76-a40c-6d9a261566d2"),
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("c3225ebf-bd64-4cfd-9653-cd84987153fc"),
+                            Id = new Guid("3acc7272-b4dd-4287-af98-b7363b3f09fb"),
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1
@@ -1643,15 +1643,18 @@ namespace BackOffice.Infrastructure.Migrations
 
             modelBuilder.Entity("BackOffice.Domain.Entities.Devis", b =>
                 {
-                    b.HasOne("BackOffice.Domain.Entities.Demande", null)
+                    b.HasOne("BackOffice.Domain.Entities.Demande", "Demande")
                         .WithMany("Devis")
-                        .HasForeignKey("DemandeId");
+                        .HasForeignKey("IdDemande")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("BackOffice.Domain.Entities.Dossier", "Dossier")
                         .WithMany("Devis")
                         .HasForeignKey("IdDossier")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Demande");
 
                     b.Navigation("Dossier");
                 });

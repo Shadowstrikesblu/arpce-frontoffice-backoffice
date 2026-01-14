@@ -11,6 +11,7 @@ namespace BackOffice.Domain.Entities
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public Guid IdDossier { get; set; }
+        public Guid? IdDemande { get; set; }
         public long Date { get; set; }
         public decimal MontantEtude { get; set; }
         public decimal? MontantHomologation { get; set; }
@@ -18,6 +19,7 @@ namespace BackOffice.Domain.Entities
         public byte? PaiementOk { get; set; }
         public string? PaiementMobileId { get; set; }
 
-        public virtual Dossier Dossier { get; set; }
+        public virtual Dossier Dossier { get; set; } = default!;
+        public virtual Demande? Demande { get; set; }
     }
 }

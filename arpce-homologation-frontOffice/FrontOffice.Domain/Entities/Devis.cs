@@ -1,10 +1,16 @@
-﻿using FrontOffice.Domain.Common;
-using FrontOffice.Domain.Entities;
+﻿using FrontOffice.Domain.Common; 
+using System;
+
+namespace FrontOffice.Domain.Entities;
 
 public class Devis : AuditableEntity
 {
     public Guid Id { get; set; } = Guid.NewGuid();
-    public Guid IdDemande { get; set; }
+
+    // On garde les deux relations pour la compatibilité
+    public Guid IdDossier { get; set; }
+    public Guid? IdDemande { get; set; } 
+
     public long Date { get; set; }
     public decimal MontantEtude { get; set; }
     public decimal? MontantHomologation { get; set; }
@@ -12,5 +18,6 @@ public class Devis : AuditableEntity
     public byte? PaiementOk { get; set; }
     public string? PaiementMobileId { get; set; }
 
-    public virtual Demande Demande { get; set; } = default!;
+    public virtual Dossier Dossier { get; set; } = default!;
+    public virtual Demande? Demande { get; set; }
 }

@@ -33,7 +33,13 @@ public class DevisConfiguration : IEntityTypeConfiguration<Devis>
         builder.HasOne(d => d.Dossier)
             .WithMany(dossier => dossier.Devis)
             .HasForeignKey(d => d.IdDossier)
-            .OnDelete(DeleteBehavior.Cascade); 
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(d => d.Demande)
+            .WithMany(demande => demande.Devis)
+            .HasForeignKey(d => d.IdDemande)
+            .IsRequired(false) // Un devis n'est pas forcément lié à une seule demande
+            .OnDelete(DeleteBehavior.NoAction);
 
         // Champs d'audit hérités de AuditableEntity
         builder.Property(c => c.UtilisateurCreation).HasMaxLength(60);
