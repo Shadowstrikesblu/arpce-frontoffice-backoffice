@@ -1,6 +1,8 @@
-﻿namespace FrontOffice.Domain.Entities;
+﻿using FrontOffice.Domain.Common;
 
-public class ModeReglement
+namespace FrontOffice.Domain.Entities;
+
+public class ModeReglement : AuditableEntity
 {
     /// <summary>
     /// Identifiant unique du mode de règlement.

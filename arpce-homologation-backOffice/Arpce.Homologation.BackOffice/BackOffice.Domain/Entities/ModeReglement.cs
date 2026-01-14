@@ -1,9 +1,11 @@
-﻿namespace BackOffice.Domain.Entities;
+﻿using BackOffice.Domain.Common;
+
+namespace BackOffice.Domain.Entities;
 
 /// <summary>
 /// Représente un mode de règlement pour les paiements.
 /// </summary>
-public class ModeReglement
+public class ModeReglement : AuditableEntity
 {
     /// <summary>
     /// Identifiant unique du mode de règlement.
