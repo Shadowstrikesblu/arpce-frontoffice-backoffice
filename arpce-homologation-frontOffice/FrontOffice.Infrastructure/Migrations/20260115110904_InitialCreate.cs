@@ -8,11 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FrontOffice.Infrastructure.Migrations
 {
     /// <inheritdoc />
-<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20260106130942_InitialCreate.cs
     public partial class InitialCreate : Migration
-========
-    public partial class BD_Commun : Migration
->>>>>>>> aed3c31c356ce60b4dfc8f7f68abdb6868877888:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20260114180632_BD_Commun.cs
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -653,17 +649,10 @@ namespace FrontOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "DateCreation", "DateModification", "Libelle", "MobileBanking", "Remarques", "UtilisateurCreation", "UtilisateurModification" },
                 values: new object[,]
                 {
-<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20260106130942_InitialCreate.cs
-                    { new Guid("59d568df-6392-4160-adbc-506a498ace88"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
-                    { new Guid("8855b03c-80f1-4035-abca-7c2f74741d17"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
-                    { new Guid("c161b5ff-d72f-44ca-9e12-ec46d55ada5c"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
-                    { new Guid("e624d490-4919-4aa4-9a43-e7d68f0030b1"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null }
-========
-                    { new Guid("48ddb9fc-8d4d-4ba6-a0b6-313be3997b9f"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
-                    { new Guid("9808246f-d7a4-44bf-9a15-e8a9f7b4670c"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
-                    { new Guid("ccf427b1-01a5-4dc9-afe6-91d4247c75d2"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
-                    { new Guid("ceaa2cf1-dcf2-4315-93a5-c303c75c29b5"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null }
->>>>>>>> aed3c31c356ce60b4dfc8f7f68abdb6868877888:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20260114180632_BD_Commun.cs
+                    { new Guid("054b1fef-737a-447c-856a-5c5588762db8"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
+                    { new Guid("1ca468c1-c944-45b6-8d69-8ea0e29dd080"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
+                    { new Guid("2125f742-4413-475a-af98-dacfeabce370"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
+                    { new Guid("823132e0-e982-4698-8827-56edff46c4c9"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null }
                 });
 
             migrationBuilder.InsertData(
