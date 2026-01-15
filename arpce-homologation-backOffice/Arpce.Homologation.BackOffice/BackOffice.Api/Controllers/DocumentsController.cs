@@ -1,6 +1,4 @@
-﻿// Fichier : BackOffice.Api/Controllers/DocumentsController.cs
-
-using BackOffice.Application.Common.DTOs.Documents;
+﻿using BackOffice.Application.Common.DTOs.Documents;
 using BackOffice.Application.Features.Demandes.Queries.DownloadDocument;
 using BackOffice.Application.Features.Documents.Queries.DownloadAttestation;
 using BackOffice.Application.Features.Documents.Queries.GetAttestationsList;

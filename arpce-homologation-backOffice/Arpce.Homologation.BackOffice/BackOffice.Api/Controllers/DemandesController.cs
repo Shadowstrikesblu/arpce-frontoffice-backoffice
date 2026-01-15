@@ -90,7 +90,7 @@ public class DemandesController : ControllerBase
     /// La récupération de l'équipement by id
     /// </summary>
     /// <param name="equipementId"></param>
-    /// <param name="command"></param>
+    /// <param name="command"></param>Ok
     /// <returns></returns>
     [HttpPatch("{equipementId:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]

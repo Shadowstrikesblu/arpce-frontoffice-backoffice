@@ -1564,6 +1564,11 @@
             "type": "number",
             "format": "double",
             "nullable": true
+          },
+          "fraisControle": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
           }
         },
         "additionalProperties": false

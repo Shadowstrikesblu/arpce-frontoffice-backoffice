@@ -13,16 +13,16 @@ public class CategorieEquipementConfiguration : IEntityTypeConfiguration<Categor
 
         builder.Property(c => c.Code).HasMaxLength(12).IsRequired();
         builder.Property(c => c.Libelle).HasMaxLength(120).IsRequired();
-
-        // On ajoute les champs du Back Office pour la cohérence
         builder.Property(c => c.TypeEquipement).HasMaxLength(50);
         builder.Property(c => c.TypeClient).HasMaxLength(50);
         builder.Property(c => c.FormuleHomologation).HasMaxLength(255);
 
-        // On garde les noms de colonnes du Back Office
         builder.Property(c => c.FraisEtude).HasColumnType("money");
         builder.Property(c => c.FraisHomologation).HasColumnType("money");
         builder.Property(c => c.FraisControle).HasColumnType("money");
+
+        builder.Property(c => c.FraisHomologationParLot).HasColumnType("tinyint");
+        builder.Property(c => c.FraisHomologationQuantiteParLot).HasColumnType("int");
 
         builder.Property(c => c.Remarques).HasMaxLength(512);
 
@@ -32,4 +32,5 @@ public class CategorieEquipementConfiguration : IEntityTypeConfiguration<Categor
         builder.Property(c => c.UtilisateurModification).HasMaxLength(60);
         builder.Property(c => c.DateModification).HasColumnType("bigint");
     }
+
 }

@@ -2,7 +2,12 @@
 using BackOffice.Application.Common.DTOs.Documents;
 using BackOffice.Application.Common.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Dossiers.Queries.GetDossierDetail;
 
@@ -11,15 +16,16 @@ namespace BackOffice.Application.Features.Dossiers.Queries.GetDossierDetail;
 /// </summary>
 public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuery, DossierDetailVm>
 {
-    // Déclaration unique du contexte
     private readonly IApplicationDbContext _context;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
     /// <summary>
     /// Initialise une nouvelle instance du handler.
     /// </summary>
-    public GetDossierDetailQueryHandler(IApplicationDbContext context)
+    public GetDossierDetailQueryHandler(IApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
     {
         _context = context;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     /// <summary>
@@ -27,39 +33,36 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
     /// </summary>
     public async Task<DossierDetailVm> Handle(GetDossierDetailQuery request, CancellationToken cancellationToken)
     {
-        // Construire la requête pour charger le dossier et TOUTES ses relations imbriquées.
-        // On utilise AsNoTracking() pour une meilleure performance en lecture seule.
         var dossier = await _context.Dossiers
             .AsNoTracking()
             .Where(d => d.Id == request.DossierId)
-
-            // Relations directes du Dossier
             .Include(d => d.Client)
             .Include(d => d.Statut)
             .Include(d => d.ModeReglement)
             .Include(d => d.Commentaires)
             .Include(d => d.Devis)
-            .Include(d => d.DocumentsDossiers)
-
-            // Relations liées aux Demandes (Équipements)
+            .Include(d => d.DocumentsDossiers) // Documents liés au dossier
             .Include(d => d.Demandes)
-                .ThenInclude(dem => dem.Attestations) // Attestations liées à la demande
+                .ThenInclude(dem => dem.DocumentsDemandes) // Documents liés à la demande (fiche tech)
             .Include(d => d.Demandes)
-                .ThenInclude(dem => dem.CategorieEquipement) // Catégorie liée à la demande
+                .ThenInclude(dem => dem.Attestations)
             .Include(d => d.Demandes)
-                .ThenInclude(dem => dem.MotifRejet) // Motif de rejet lié à la demande
+                .ThenInclude(dem => dem.CategorieEquipement)
             .Include(d => d.Demandes)
-                .ThenInclude(dem => dem.Proposition) // Proposition liée à la demande
-
+                .ThenInclude(dem => dem.MotifRejet)
+            .Include(d => d.Demandes)
+                .ThenInclude(dem => dem.Proposition)
             .FirstOrDefaultAsync(cancellationToken);
 
-        // Vérifie si le dossier a été trouvé.
         if (dossier == null)
         {
             throw new Exception($"Le dossier avec l'ID '{request.DossierId}' est introuvable.");
         }
 
-        // Mappe l'entité Dossier et ses relations vers le ViewModel de détail.
+        // Construction de l'URL de base (ex: https://api.arpce.cg)
+        var requestContext = _httpContextAccessor.HttpContext!.Request;
+        var baseUrl = $"{requestContext.Scheme}://{requestContext.Host}";
+
         var dossierVm = new DossierDetailVm
         {
             Id = dossier.Id,
@@ -87,7 +90,6 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                 Libelle = dossier.ModeReglement.Libelle
             } : null,
 
-            // Mapping complet des Demandes (Équipements)
             Demandes = dossier.Demandes.Select(dem => new DemandeDto
             {
                 Id = dem.Id,
@@ -106,7 +108,6 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                 Remise = dem.Remise,
                 EstHomologable = dem.EstHomologable,
 
-                // Mapping des objets imbriqués dans la demande
                 CategorieEquipement = dem.CategorieEquipement != null ? new CategorieEquipementDto
                 {
                     Id = dem.CategorieEquipement.Id,
@@ -135,8 +136,16 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                     Id = dem.Proposition.Id,
                     Code = dem.Proposition.Code,
                     Libelle = dem.Proposition.Libelle
-                } : null
+                } : null,
 
+                Documents = dem.DocumentsDemandes.Select(doc => new DocumentDossierDto
+                {
+                    Id = doc.Id,
+                    Nom = doc.Nom,
+                    Extension = doc.Extension,
+                    Type = null, // DocumentDemande n'a pas de "Type"
+                    FilePath = $"{baseUrl}/api/demandes/demande/{doc.Id}/download"
+                }).ToList()
             }).ToList(),
 
             Devis = dossier.Devis.Select(dev => new DevisDto
@@ -163,7 +172,7 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                 Nom = doc.Nom,
                 Type = doc.Type,
                 Extension = doc.Extension,
-                FilePath = doc.FilePath 
+                FilePath = $"/api/demandes/dossier/{doc.Id}/download"
             }).ToList(),
 
             Attestations = dossier.Demandes.SelectMany(dem => dem.Attestations)
