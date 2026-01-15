@@ -1,10 +1,16 @@
-﻿using BackOffice.Application.Common.DTOs;
+﻿using BackOffice.Application.Common;
+using BackOffice.Application.Common.DTOs;
+using BackOffice.Application.Common.Exceptions;
 using BackOffice.Application.Common.Interfaces;
 using BackOffice.Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using BackOffice.Application.Common.Exceptions;
-using BackOffice.Application.Common;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Dossiers.Queries.GetDossiersList;
 
@@ -12,11 +18,16 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _currentUserService;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public GetDossiersListQueryHandler(IApplicationDbContext context, ICurrentUserService currentUserService)
+    public GetDossiersListQueryHandler(
+        IApplicationDbContext context,
+        ICurrentUserService currentUserService,
+        IHttpContextAccessor httpContextAccessor)
     {
         _context = context;
         _currentUserService = currentUserService;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task<DossiersListVm> Handle(GetDossiersListQuery request, CancellationToken cancellationToken)
@@ -64,16 +75,16 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
         }
 
         var dossiersPaged = await query
-         .Skip((request.Parameters.Page - 1) * request.Parameters.TaillePage)
-         .Take(request.Parameters.TaillePage)
-         .Include(d => d.Client)
-         .Include(d => d.Statut)
-         .Include(d => d.Demandes)
-            .ThenInclude(dem => dem.CategorieEquipement)
-         .Include(d => d.Demandes)
-            .ThenInclude(dem => dem.MotifRejet)
-         .Include(d => d.DocumentsDossiers)
-         .ToListAsync(cancellationToken);
+            .Skip((request.Parameters.Page - 1) * request.Parameters.TaillePage)
+            .Take(request.Parameters.TaillePage)
+            .Include(d => d.Client)
+            .Include(d => d.Statut)
+            .Include(d => d.Demandes)
+            .Include(d => d.DocumentsDossiers) // Charger les documents du dossier
+            .ToListAsync(cancellationToken);
+
+        var requestContext = _httpContextAccessor.HttpContext!.Request;
+        var baseUrl = $"{requestContext.Scheme}://{requestContext.Host}";
 
         var dossierDtos = dossiersPaged.Select(dossier => new DossierListItemDto
         {
@@ -99,13 +110,15 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
                 Modele = demande.Modele,
                 Marque = demande.Marque
             }).ToList(),
+
+            // Construire l'URL pour les documents
             Documents = dossier.DocumentsDossiers.Select(doc => new DocumentDossierDto
             {
                 Id = doc.Id,
                 Nom = doc.Nom,
                 Type = doc.Type,
                 Extension = doc.Extension,
-                FilePath = doc.FilePath 
+                FilePath = $"/api/demandes/dossier/{doc.Id}/download"
             }).ToList()
         }).ToList();
 

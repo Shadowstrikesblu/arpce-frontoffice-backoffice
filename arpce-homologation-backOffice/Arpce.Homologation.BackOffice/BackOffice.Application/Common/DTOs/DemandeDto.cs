@@ -1,4 +1,7 @@
-﻿namespace BackOffice.Application.Common.DTOs;
+﻿using System;
+using System.Collections.Generic;
+
+namespace BackOffice.Application.Common.DTOs;
 
 public class DemandeDto
 {
@@ -14,14 +17,13 @@ public class DemandeDto
     public int? QuantiteEquipements { get; set; }
     public string? ContactNom { get; set; }
     public string? ContactEmail { get; set; }
-
-    // Champs de facturation et statut
     public decimal? PrixUnitaire { get; set; }
     public decimal? Remise { get; set; }
     public bool EstHomologable { get; set; }
 
-    // Objets complets liés
     public CategorieEquipementDto? CategorieEquipement { get; set; }
     public MotifRejetDto? MotifRejet { get; set; }
     public PropositionDto? Proposition { get; set; }
+
+    public List<DocumentDossierDto> Documents { get; set; } = new();
 }

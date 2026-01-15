@@ -573,3 +573,98 @@ WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] = @__statutPaiementCode_
     WHERE [d].[Id] = [d1].[IdDossier] AND ([d1].[PaiementOk] IS NULL OR [d1].[PaiementOk] = CAST(0 AS tinyint))
     ORDER BY [d1].[Date] DESC) = CAST(1 AS bit)
 2026-01-14 20:09:05.712 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 3599.1284 ms
+2026-01-14 20:23:01.117 +01:00 [INF] Now listening on: https://localhost:7016
+2026-01-14 20:23:01.165 +01:00 [INF] Now listening on: http://localhost:5041
+2026-01-14 20:23:01.249 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-14 20:23:01.253 +01:00 [INF] Hosting environment: Development
+2026-01-14 20:23:01.255 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2026-01-14 20:23:03.936 +01:00 [INF] HTTP GET /index.html responded 200 in 118.7708 ms
+2026-01-14 20:23:04.633 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 161.9639 ms
+2026-01-14 20:23:30.272 +01:00 [INF] Executed DbCommand (63ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-01-14 20:23:30.978 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 3458.6999 ms
+2026-01-14 20:24:32.238 +01:00 [INF] Executed DbCommand (11ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification], [s].[Id], [d0].[Id], [d0].[Date], [d0].[DateCreation], [d0].[DateModification], [d0].[IdDemande], [d0].[IdDossier], [d0].[MontantControle], [d0].[MontantEtude], [d0].[MontantHomologation], [d0].[PaiementMobileId], [d0].[PaiementOk], [d0].[UtilisateurCreation], [d0].[UtilisateurModification]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+LEFT JOIN [devis] AS [d0] ON [d].[Id] = [d0].[IdDossier]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] = N'EnPaiement'
+ORDER BY [d].[Id], [s].[Id]
+2026-01-14 20:24:32.274 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 348.4062 ms
+2026-01-14 20:45:28.161 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__request_IdDossier_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+FROM [dossiers] AS [d]
+WHERE [d].[Id] = @__request_IdDossier_0 AND [d].[IdClient] = @__userId_Value_1
+2026-01-14 20:45:28.539 +01:00 [INF] Executed DbCommand (16ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 60), @p2='?' (Size = 60), @p3='?' (DbType = Int64), @p4='?' (DbType = Int64), @p5='?' (Size = 512), @p6='?' (Size = 120), @p7='?' (Size = 120), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (DbType = Guid), @p11='?' (DbType = Guid), @p12='?' (Size = 120), @p13='?' (Size = 120), @p14='?' (Size = 12), @p15='?' (DbType = Currency), @p16='?' (DbType = Int32), @p17='?' (Precision = 5) (Scale = 2) (DbType = Decimal), @p18='?' (Size = 120), @p19='?' (Size = 60), @p20='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [demandes] ([Id], [ContactEmail], [ContactNom], [DateCreation], [DateModification], [Description], [Equipement], [Fabricant], [IdCategorie], [IdDossier], [IdMotifRejet], [IdProposition], [Marque], [Modele], [NumeroDemande], [PrixUnitaire], [QuantiteEquipements], [Remise], [Type], [UtilisateurCreation], [UtilisateurModification])
+OUTPUT INSERTED.[EstHomologable]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20);
+2026-01-14 20:45:28.619 +01:00 [INF] HTTP POST /api/dossiers/7A6D7DF4-8141-4F56-A72E-59E57A51AE73/equipements responded 200 in 741.4947 ms
+2026-01-14 20:46:28.098 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification], [s].[Id], [d0].[Id], [d0].[Date], [d0].[DateCreation], [d0].[DateModification], [d0].[IdDemande], [d0].[IdDossier], [d0].[MontantControle], [d0].[MontantEtude], [d0].[MontantHomologation], [d0].[PaiementMobileId], [d0].[PaiementOk], [d0].[UtilisateurCreation], [d0].[UtilisateurModification]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+LEFT JOIN [devis] AS [d0] ON [d].[Id] = [d0].[IdDossier]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] = N'EnPaiement'
+ORDER BY [d].[Id], [s].[Id]
+2026-01-14 20:46:28.110 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 46.8265 ms
+2026-01-14 20:46:37.659 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+WHERE [d].[IdClient] = @__userId_Value_0
+2026-01-14 20:46:37.691 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdAgentInstructeur], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [s].[Id], [s].[Code], [s].[Libelle]
+FROM (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[IdClient] = @__userId_Value_0
+    ORDER BY [d].[DateOuverture] DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [t]
+INNER JOIN [statuts] AS [s] ON [t].[IdStatut] = [s].[Id]
+ORDER BY [t].[DateOuverture] DESC
+2026-01-14 20:46:37.736 +01:00 [INF] HTTP GET /api/dossiers responded 200 in 131.5863 ms
+2026-01-14 20:47:26.768 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+WHERE [d].[IdClient] = @__userId_Value_0
+2026-01-14 20:47:26.774 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdAgentInstructeur], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [s].[Id], [s].[Code], [s].[Libelle]
+FROM (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[IdClient] = @__userId_Value_0
+    ORDER BY [d].[DateOuverture] DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [t]
+INNER JOIN [statuts] AS [s] ON [t].[IdStatut] = [s].[Id]
+ORDER BY [t].[DateOuverture] DESC
+2026-01-14 20:47:26.781 +01:00 [INF] HTTP GET /api/dossiers responded 200 in 40.7791 ms
+2026-01-14 20:47:27.036 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+WHERE [d].[IdClient] = @__userId_Value_0
+2026-01-14 20:47:27.048 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdAgentInstructeur], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [s].[Id], [s].[Code], [s].[Libelle]
+FROM (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[IdClient] = @__userId_Value_0
+    ORDER BY [d].[DateOuverture] DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [t]
+INNER JOIN [statuts] AS [s] ON [t].[IdStatut] = [s].[Id]
+ORDER BY [t].[DateOuverture] DESC
+2026-01-14 20:47:27.055 +01:00 [INF] HTTP GET /api/dossiers responded 200 in 23.4717 ms
+2026-01-14 20:47:35.499 +01:00 [INF] Executed DbCommand (22ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification], [s].[Id], [d0].[Id], [d0].[Date], [d0].[DateCreation], [d0].[DateModification], [d0].[IdDemande], [d0].[IdDossier], [d0].[MontantControle], [d0].[MontantEtude], [d0].[MontantHomologation], [d0].[PaiementMobileId], [d0].[PaiementOk], [d0].[UtilisateurCreation], [d0].[UtilisateurModification]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+LEFT JOIN [devis] AS [d0] ON [d].[Id] = [d0].[IdDossier]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] = N'EnPaiement'
+ORDER BY [d].[Id], [s].[Id]
+2026-01-14 20:47:35.511 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 35.5072 ms
