@@ -79,8 +79,9 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
             .Take(request.Parameters.TaillePage)
             .Include(d => d.Client)
             .Include(d => d.Statut)
+            .Include(d => d.DocumentsDossiers) 
             .Include(d => d.Demandes)
-            .Include(d => d.DocumentsDossiers) // Charger les documents du dossier
+                .ThenInclude(dem => dem.DocumentsDemandes) 
             .ToListAsync(cancellationToken);
 
         var requestContext = _httpContextAccessor.HttpContext!.Request;
@@ -108,10 +109,17 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
                 Id = demande.Id,
                 Equipement = demande.Equipement,
                 Modele = demande.Modele,
-                Marque = demande.Marque
+                Marque = demande.Marque,
+                Documents = demande.DocumentsDemandes.Select(doc => new DocumentDossierDto
+                {
+                    Id = doc.Id,
+                    Nom = doc.Nom,
+                    Extension = doc.Extension,
+                    Type = null,
+                    FilePath = $"/api/demandes/demande/{doc.Id}/download"
+                }).ToList()
             }).ToList(),
 
-            // Construire l'URL pour les documents
             Documents = dossier.DocumentsDossiers.Select(doc => new DocumentDossierDto
             {
                 Id = doc.Id,
