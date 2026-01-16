@@ -24,4 +24,6 @@ public class DemandeDto
     public CategorieEquipementDto? CategorieEquipement { get; set; }
     public MotifRejetDto? MotifRejet { get; set; }
     public PropositionDto? Proposition { get; set; }
+
+    public List<DocumentDossierDto> Documents { get; set; } = new();
 }

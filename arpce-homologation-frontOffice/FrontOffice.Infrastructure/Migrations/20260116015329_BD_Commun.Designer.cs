@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FrontOffice.Infrastructure.Migrations
 {
     [DbContext(typeof(FrontOfficeDbContext))]
-    [Migration("20260114180632_BD_Commun")]
+    [Migration("20260116015329_BD_Commun")]
     partial class BD_Commun
     {
         /// <inheritdoc />
@@ -1079,28 +1079,28 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ceaa2cf1-dcf2-4315-93a5-c303c75c29b5"),
+                            Id = new Guid("f2a22603-5594-431f-ba2c-d6c8a35a83dd"),
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("9808246f-d7a4-44bf-9a15-e8a9f7b4670c"),
+                            Id = new Guid("b8ed2d86-dd08-44bc-b2da-07869057ff22"),
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("48ddb9fc-8d4d-4ba6-a0b6-313be3997b9f"),
+                            Id = new Guid("f28febec-d7ba-44c6-901a-6048ba725449"),
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("ccf427b1-01a5-4dc9-afe6-91d4247c75d2"),
+                            Id = new Guid("eff69862-f93c-4ad7-9e62-7da1ee55c500"),
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1

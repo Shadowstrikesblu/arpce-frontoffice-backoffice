@@ -16,12 +16,17 @@ public class CategorieEquipementConfiguration : IEntityTypeConfiguration<Categor
         builder.Property(c => c.TypeEquipement).HasMaxLength(50);
         builder.Property(c => c.TypeClient).HasMaxLength(50);
         builder.Property(c => c.FormuleHomologation).HasMaxLength(255);
+        builder.Property(c => c.QuantiteReference);
 
+        // Propriétés de type 'decimal?'
         builder.Property(c => c.FraisEtude).HasColumnType("money");
         builder.Property(c => c.FraisHomologation).HasColumnType("money");
         builder.Property(c => c.FraisControle).HasColumnType("money");
 
+        // Propriété de type 'byte?'
         builder.Property(c => c.FraisHomologationParLot).HasColumnType("tinyint");
+
+        // Propriété de type 'int?'
         builder.Property(c => c.FraisHomologationQuantiteParLot).HasColumnType("int");
 
         builder.Property(c => c.Remarques).HasMaxLength(512);
