@@ -204,3 +204,10 @@ FROM (
 INNER JOIN [statuts] AS [s] ON [t].[IdStatut] = [s].[Id]
 ORDER BY [t].[DateOuverture] DESC
 2026-01-16 04:48:34.103 +01:00 [INF] HTTP GET /api/dossiers responded 200 in 280.2195 ms
+2026-01-16 12:09:04.691 +01:00 [INF] Now listening on: https://localhost:7016
+2026-01-16 12:09:04.731 +01:00 [INF] Now listening on: http://localhost:5041
+2026-01-16 12:09:04.803 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-16 12:09:04.806 +01:00 [INF] Hosting environment: Development
+2026-01-16 12:09:04.808 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2026-01-16 12:09:16.567 +01:00 [INF] HTTP GET /index.html responded 200 in 84.0139 ms
+2026-01-16 12:09:16.943 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 78.8979 ms
