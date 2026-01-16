@@ -182,3 +182,21 @@ INSERT INTO [documentsDemandes] ([Id], [DateCreation], [DateModification], [Donn
 VALUES (@p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30);
 2026-01-16 03:07:35.112 +01:00 [INF] Équipement "eb0e4fd1-adda-4c9c-b46e-0b35704765cb" et sa fiche technique ajoutés au dossier "8873f2cf-5cae-4779-bfbf-9e3369736f2e"
 2026-01-16 03:07:35.122 +01:00 [INF] HTTP POST /api/dossiers/8873F2CF-5CAE-4779-BFBF-9E3369736F2E/equipements responded 200 in 259.9559 ms
+2026-01-16 07:22:51.948 +00:00 [FTL] L'application FrontOffice s'est arrÃªtÃ©e de maniÃ¨re inattendue sur le VPS.
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in C:\Users\Admin2\Downloads\Sites\BackEnd\arpce-homologation-frontOffice\FrontOffice.Api\Program.cs:line 152
+2026-01-16 07:23:11.129 +00:00 [FTL] L'application FrontOffice s'est arrÃªtÃ©e de maniÃ¨re inattendue sur le VPS.
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in C:\Users\Admin2\Downloads\Sites\BackEnd\arpce-homologation-frontOffice\FrontOffice.Api\Program.cs:line 152

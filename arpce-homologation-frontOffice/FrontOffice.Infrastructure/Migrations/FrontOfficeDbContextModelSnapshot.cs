@@ -1076,44 +1076,28 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-<<<<<<< HEAD
-                            Id = new Guid("ccd086ae-8151-4619-a1f4-dbf483a7a94a"),
-=======
-                            Id = new Guid("f2a22603-5594-431f-ba2c-d6c8a35a83dd"),
->>>>>>> ca87ec4ca4efd14b292889e9df7b2e63b8e6a11a
+                            Id = new Guid("06c88ccf-0386-40e1-84be-d215bc9b3797"),
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-<<<<<<< HEAD
-                            Id = new Guid("38174303-dc7a-43b8-b920-82e2597c8b8b"),
-=======
-                            Id = new Guid("b8ed2d86-dd08-44bc-b2da-07869057ff22"),
->>>>>>> ca87ec4ca4efd14b292889e9df7b2e63b8e6a11a
+                            Id = new Guid("f5604100-39f2-43e9-a339-f2ce728cb280"),
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-<<<<<<< HEAD
-                            Id = new Guid("07f30d11-b338-4fee-8af3-7ddb986db6bd"),
-=======
-                            Id = new Guid("f28febec-d7ba-44c6-901a-6048ba725449"),
->>>>>>> ca87ec4ca4efd14b292889e9df7b2e63b8e6a11a
+                            Id = new Guid("54cba56b-2a4f-4dcd-a43d-c1c1a574d2d1"),
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-<<<<<<< HEAD
-                            Id = new Guid("b78440ae-70d5-4179-bcde-afb66b2622ee"),
-=======
-                            Id = new Guid("eff69862-f93c-4ad7-9e62-7da1ee55c500"),
->>>>>>> ca87ec4ca4efd14b292889e9df7b2e63b8e6a11a
+                            Id = new Guid("ba52ffe5-a298-47e4-9c1d-7a3a3096d31e"),
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1
