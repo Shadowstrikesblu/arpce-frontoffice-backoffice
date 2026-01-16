@@ -1,11 +1,8 @@
 ﻿using FrontOffice.Application.Common.Interfaces;
+using FrontOffice.Domain.Enums; 
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging; 
-using System;
-using System.IO; 
-using System.Threading;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace FrontOffice.Application.Features.Dossiers.Commands.UploadPreuvePaiement;
 
@@ -36,6 +33,7 @@ public class UploadPreuvePaiementCommandHandler : IRequestHandler<UploadPreuvePa
             throw new UnauthorizedAccessException("Utilisateur non authentifié.");
         }
 
+        using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         try
         {
             // Vérifie que le dossier appartient bien à l'utilisateur
@@ -48,7 +46,13 @@ public class UploadPreuvePaiementCommandHandler : IRequestHandler<UploadPreuvePa
             // Valide le fichier
             var file = request.PreuvePaiement;
             if (file == null || file.Length == 0) throw new InvalidOperationException("Le fichier de preuve de paiement est manquant.");
-            // Vous pouvez ajouter d'autres validations (taille, extension...) ici
+
+            // Validation de la taille (ex: 5 Mo)
+            const long maxFileSize = 5 * 1024 * 1024;
+            if (file.Length > maxFileSize) throw new InvalidOperationException("La taille du fichier ne doit pas dépasser 5 Mo.");
+
+            var allowedExtensions = new[] { ".pdf", ".jpg", ".jpeg", ".png" };
+            if (!allowedExtensions.Contains(Path.GetExtension(file.FileName).ToLowerInvariant())) throw new InvalidOperationException("Format de fichier non supporté (PDF, JPG, PNG autorisés).");
 
             // Utilise le service de stockage pour importer la preuve
             await _fileStorageProvider.ImportDocumentDossierAsync(
@@ -58,20 +62,27 @@ public class UploadPreuvePaiementCommandHandler : IRequestHandler<UploadPreuvePa
                 dossierId: dossier.Id
             );
 
-            // Optionnel : Changer le statut du dossier à "En attente de validation de paiement"
-            // var statutValidationPaiement = await _context.Statuts.FirstOrDefaultAsync(s => s.Code == "PaiementEnValidation", cancellationToken);
-            // if (statutValidationPaiement != null)
-            // {
-            //     dossier.IdStatut = statutValidationPaiement.Id;
-            //     await _context.SaveChangesAsync(cancellationToken);
-            // }
+            var statutCibleCode = StatutDossierEnum.PaiementBanque.ToString();
+            var nouveauStatut = await _context.Statuts.FirstOrDefaultAsync(s => s.Code == statutCibleCode, cancellationToken);
 
-            _logger.LogInformation("Preuve de paiement uploadée pour le dossier {DossierId} par l'utilisateur {UserId}", dossier.Id, userId);
+            if (nouveauStatut == null)
+            {
+                _logger.LogError("Le statut '{StatutCode}' est introuvable. Impossible de mettre à jour le statut du dossier.", statutCibleCode);
+                throw new Exception($"Configuration système manquante : le statut '{statutCibleCode}' est introuvable.");
+            }
+
+            dossier.IdStatut = nouveauStatut.Id;
+
+            await _context.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+
+            _logger.LogInformation("Preuve de paiement uploadée et statut du dossier {DossierId} mis à jour à '{StatutCode}'.", dossier.Id, statutCibleCode);
 
             return true;
         }
         catch (Exception ex)
         {
+            await transaction.RollbackAsync(cancellationToken);
             _logger.LogError(ex, "Échec de l'upload de la preuve de paiement pour le dossier {DossierId}", request.DossierId);
             throw;
         }
