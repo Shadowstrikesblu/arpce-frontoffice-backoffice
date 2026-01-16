@@ -1,5 +1,4 @@
-﻿// FrontOffice.Application/Features/Documents/Queries/DownloadDocument/DownloadDocumentQueryHandler.cs
-using FrontOffice.Application.Common.Interfaces;
+﻿using FrontOffice.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 namespace FrontOffice.Application.Features.Documents.Queries.DownloadDocument;
