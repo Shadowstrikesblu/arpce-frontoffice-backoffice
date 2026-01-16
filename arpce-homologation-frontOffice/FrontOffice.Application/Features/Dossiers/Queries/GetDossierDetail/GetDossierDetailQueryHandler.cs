@@ -1,6 +1,7 @@
 ﻿using FrontOffice.Application.Common.DTOs;
 using FrontOffice.Application.Common.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -13,11 +14,16 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _currentUserService;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public GetDossierDetailQueryHandler(IApplicationDbContext context, ICurrentUserService currentUserService)
+    public GetDossierDetailQueryHandler(
+        IApplicationDbContext context, 
+        ICurrentUserService currentUserService,
+        IHttpContextAccessor httpContextAccessor)
     {
         _context = context;
         _currentUserService = currentUserService;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task<DossierDetailVm> Handle(GetDossierDetailQuery request, CancellationToken cancellationToken)
@@ -36,6 +42,7 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
             .Include(d => d.Commentaires)
             .Include(d => d.Devis)
             .Include(d => d.DocumentsDossiers)
+            .Include(d => d.Demandes).ThenInclude(dem => dem.DocumentsDemandes)
             .Include(d => d.Demandes).ThenInclude(dem => dem.Attestations)
             .Include(d => d.Demandes).ThenInclude(dem => dem.CategorieEquipement)
             .Include(d => d.Demandes).ThenInclude(dem => dem.MotifRejet)
@@ -46,6 +53,9 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
         {
             throw new Exception($"Le dossier avec l'ID '{request.DossierId}' est introuvable ou vous n'y avez pas accès.");
         }
+
+        var requestContext = _httpContextAccessor.HttpContext!.Request;
+        var baseUrl = $"{requestContext.Scheme}://{requestContext.Host}";
 
         return new DossierDetailVm
         {
@@ -95,7 +105,7 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                     FraisHomologation = dem.CategorieEquipement.FraisHomologation,
                     FraisControle = dem.CategorieEquipement.FraisControle
                 } : null,
-
+                
                 MotifRejet = dem.MotifRejet != null ? new MotifRejetDto
                 {
                     Id = dem.MotifRejet.Id,
@@ -109,7 +119,16 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                     Id = dem.Proposition.Id,
                     Code = dem.Proposition.Code,
                     Libelle = dem.Proposition.Libelle
-                } : null
+                } : null,
+
+                Documents = dem.DocumentsDemandes.Select(doc => new DocumentDossierDto
+                {
+                    Id = doc.Id,
+                    Nom = doc.Nom,
+                    Extension = doc.Extension,
+                    Type = null,
+                    FilePath = $"/api/documents/demande/{doc.Id}/download"
+                }).ToList()
             }).ToList(),
 
             Devis = dossier.Devis.Select(dev => new DevisDto
@@ -136,7 +155,7 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                 Nom = doc.Nom,
                 Type = doc.Type,
                 Extension = doc.Extension,
-                FilePath = doc.FilePath
+                FilePath = $"/api/documents/dossier/{doc.Id}/download"
             }).ToList(),
 
             Attestations = dossier.Demandes.SelectMany(dem => dem.Attestations)
@@ -144,7 +163,9 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                 {
                     Id = att.Id,
                     DateDelivrance = att.DateDelivrance,
-                    DateExpiration = att.DateExpiration
+                    DateExpiration = att.DateExpiration,
+                    Extension = att.Extension,
+                    FilePath = $"/api/documents/certificat/{att.Id}/download"
                 }).ToList()
         };
     }

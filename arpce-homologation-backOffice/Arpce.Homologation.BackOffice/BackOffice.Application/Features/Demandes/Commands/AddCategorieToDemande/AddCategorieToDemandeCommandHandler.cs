@@ -2,22 +2,24 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Demandes.Commands.AddCategorieToDemande;
 
 /// <summary>
 /// Gère la logique de la commande pour assigner une catégorie à une demande.
+/// **Logique métier ajoutée :** Met à jour automatiquement le PrixUnitaire de l'équipement
+/// en se basant sur les frais de la catégorie assignée.
 /// </summary>
 public class AddCategorieToDemandeCommandHandler : IRequestHandler<AddCategorieToDemandeCommand, bool>
 {
     private readonly IApplicationDbContext _context;
     private readonly ILogger<AddCategorieToDemandeCommandHandler> _logger;
-    private readonly ICurrentUserService _currentUserService; 
+    private readonly ICurrentUserService _currentUserService;
     private readonly IAuditService _auditService;
 
-    /// <summary>
-    /// Initialise une nouvelle instance du handler.
-    /// </summary>
     public AddCategorieToDemandeCommandHandler(
         IApplicationDbContext context,
         ILogger<AddCategorieToDemandeCommandHandler> logger,
@@ -30,44 +32,48 @@ public class AddCategorieToDemandeCommandHandler : IRequestHandler<AddCategorieT
         _auditService = auditService;
     }
 
-    /// <summary>
-    /// Exécute la logique d'assignation de la catégorie.
-    /// </summary>
-    /// <exception cref="Exception">Levée si la demande ou la catégorie est introuvable.</exception>
     public async Task<bool> Handle(AddCategorieToDemandeCommand request, CancellationToken cancellationToken)
     {
-        // Récupére l'entité Demande (équipement) à mettre à jour.
-        var demande = await _context.Demandes.FindAsync(request.DemandeId);
-
+        // Récupére la demande (équipement)
+        var demande = await _context.Demandes.FindAsync(new object[] { request.DemandeId }, cancellationToken);
         if (demande == null)
         {
-            _logger.LogWarning("Tentative d'assignation de catégorie à une demande inexistante. DemandeId: {DemandeId}", request.DemandeId);
             throw new Exception($"La demande (équipement) avec l'ID '{request.DemandeId}' est introuvable.");
         }
 
-        // Vérifie que la catégorie à assigner existe bien.
-        var categorieExists = await _context.CategoriesEquipements.AnyAsync(c => c.Id == request.CategorieId, cancellationToken);
+        // Récupére la catégorie complète (avec ses frais)
+        var categorie = await _context.CategoriesEquipements
+            .AsNoTracking() 
+            .FirstOrDefaultAsync(c => c.Id == request.CategorieId, cancellationToken);
 
-        if (!categorieExists)
+        if (categorie == null)
         {
-            _logger.LogWarning("Tentative d'assignation d'une catégorie inexistante. CategorieId: {CategorieId}", request.CategorieId);
             throw new Exception($"La catégorie avec l'ID '{request.CategorieId}' est introuvable.");
         }
 
-        // Effectue la mise à jour.
+        // Calcule le prix total à partir des frais de la catégorie
+        // Le prix unitaire est la somme des frais d'étude, d'homologation et de contrôle.
+        decimal prixUnitaireCalcule = (categorie.FraisEtude ?? 0) +
+                                       (categorie.FraisHomologation ?? 0) +
+                                       (categorie.FraisControle ?? 0);
+
+        // Met à jour la demande
         demande.IdCategorie = request.CategorieId;
+        demande.PrixUnitaire = prixUnitaireCalcule; 
 
-        _logger.LogInformation("La catégorie {CategorieId} a été assignée à la demande {DemandeId} par l'utilisateur {UserId}.",
-            request.CategorieId, request.DemandeId, _currentUserService.UserId);
+        _logger.LogInformation(
+            "Catégorie {CategorieId} assignée à la demande {DemandeId}. Prix unitaire mis à jour à {Prix}",
+            request.CategorieId, request.DemandeId, prixUnitaireCalcule);
 
-        // Sauvegarde les changements.
+        // Sauvegarde les changements
         await _context.SaveChangesAsync(cancellationToken);
 
+        // Journalise l'action
         await _auditService.LogAsync(
-    page: "Instruction Équipement",
-    libelle: $"Assignation de la catégorie ID '{request.CategorieId}' à l'équipement ID '{request.DemandeId}'.",
-    eventTypeCode: "MODIFICATION",
-    dossierId: demande.IdDossier); 
+            page: "Instruction Équipement",
+            libelle: $"Assignation de la catégorie '{categorie.Code}' et mise à jour du prix à {prixUnitaireCalcule} pour l'équipement ID '{request.DemandeId}'.",
+            eventTypeCode: "MODIFICATION",
+            dossierId: demande.IdDossier);
 
         return true;
     }

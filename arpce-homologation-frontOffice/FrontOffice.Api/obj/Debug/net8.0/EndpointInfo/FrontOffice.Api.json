@@ -1522,6 +1522,14 @@
           "dateExpiration": {
             "type": "integer",
             "format": "int64"
+          },
+          "extension": {
+            "type": "string",
+            "nullable": true
+          },
+          "filePath": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1841,6 +1849,13 @@
           },
           "proposition": {
             "$ref": "#/components/schemas/PropositionDto"
+          },
+          "documents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentDossierDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
