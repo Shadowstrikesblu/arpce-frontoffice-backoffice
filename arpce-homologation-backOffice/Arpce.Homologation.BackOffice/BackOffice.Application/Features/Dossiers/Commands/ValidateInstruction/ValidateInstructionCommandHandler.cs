@@ -46,7 +46,6 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
         {
             // Récupére le dossier avec ses demandes et les catégories associées pour le calcul
             var dossier = await _context.Dossiers
-                .Include(d => d.Statut)
                 .Include(d => d.Demandes)
                     .ThenInclude(dem => dem.CategorieEquipement)
                 .FirstOrDefaultAsync(d => d.Id == request.DossierId, cancellationToken);
@@ -56,44 +55,47 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
                 throw new Exception($"Le dossier avec l'ID '{request.DossierId}' est introuvable.");
             }
 
-            // Vérifie si le statut permet cette action
-            if (dossier.Statut?.Code != StatutDossierEnum.Instruction.ToString())
-            {
-                throw new InvalidOperationException($"L'opération de validation n'est pas autorisée. Le dossier est actuellement au statut '{dossier.Statut?.Libelle}'.");
-            }
-
             _logger.LogInformation("Début de la création du devis pour le dossier {DossierId}", dossier.Id);
 
-            decimal totalFraisEtude = 0;
-            decimal totalFraisHomologation = 0;
-            decimal totalFraisControle = 0;
-
-            foreach (var demande in dossier.Demandes)
+            // Vérifie s'il existe déjà un devis non payé pour ce dossier
+            var existingDevis = await _context.Devis.FirstOrDefaultAsync(d => d.IdDossier == dossier.Id && d.PaiementOk != 1, cancellationToken);
+            if (existingDevis != null)
             {
-                if (demande.CategorieEquipement != null)
-                {
-                    totalFraisEtude += demande.CategorieEquipement.FraisEtude ?? 0;
-                    totalFraisHomologation += demande.CategorieEquipement.FraisHomologation ?? 0;
-                    totalFraisControle += demande.CategorieEquipement.FraisControle ?? 0;
-                }
-                else
-                {
-                    _logger.LogWarning("La demande {DemandeId} n'a pas de catégorie assignée. Ses frais ne seront pas inclus dans le devis.", demande.Id);
-                }
+                _logger.LogWarning("Un devis non payé existe déjà pour le dossier {DossierId}. La création d'un nouveau devis est annulée.", dossier.Id);
             }
-
-            var nouveauDevis = new Devis
+            else
             {
-                Id = Guid.NewGuid(),
-                IdDossier = dossier.Id,
-                Date = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
-                MontantEtude = totalFraisEtude,
-                MontantHomologation = totalFraisHomologation,
-                MontantControle = totalFraisControle,
-                PaiementOk = 0 
-            };
-            _context.Devis.Add(nouveauDevis);
-            _logger.LogInformation("Devis créé en mémoire pour le dossier {DossierId}.", dossier.Id);
+                decimal totalFraisEtude = 0;
+                decimal totalFraisHomologation = 0;
+                decimal totalFraisControle = 0;
+
+                foreach (var demande in dossier.Demandes)
+                {
+                    if (demande.CategorieEquipement != null)
+                    {
+                        totalFraisEtude += demande.CategorieEquipement.FraisEtude ?? 0;
+                        totalFraisHomologation += demande.CategorieEquipement.FraisHomologation ?? 0;
+                        totalFraisControle += demande.CategorieEquipement.FraisControle ?? 0;
+                    }
+                    else
+                    {
+                        _logger.LogWarning("La demande {DemandeId} n'a pas de catégorie. Ses frais ne seront pas inclus.", demande.Id);
+                    }
+                }
+
+                var nouveauDevis = new Devis
+                {
+                    Id = Guid.NewGuid(),
+                    IdDossier = dossier.Id,
+                    Date = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+                    MontantEtude = totalFraisEtude,
+                    MontantHomologation = totalFraisHomologation,
+                    MontantControle = totalFraisControle,
+                    PaiementOk = 0
+                };
+                _context.Devis.Add(nouveauDevis);
+                _logger.LogInformation("Devis créé en mémoire pour le dossier {DossierId}.", dossier.Id);
+            }
 
             // Met à jour le statut du dossier vers "InstructionApprouve"
             var statutCibleCode = StatutDossierEnum.InstructionApprouve.ToString();
@@ -105,7 +107,6 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
             dossier.IdStatut = nouveauStatut.Id;
             _logger.LogInformation("Le statut du dossier {DossierId} a été changé à '{NouveauStatut}'.", dossier.Id, nouveauStatut.Libelle);
 
-            // Ajoute un commentaire si fourni
             if (!string.IsNullOrWhiteSpace(request.Remarque))
             {
                 var agent = await _context.AdminUtilisateurs.FindAsync(agentId.Value);
@@ -122,18 +123,15 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
                 _context.Commentaires.Add(commentaire);
             }
 
-            // Sauvegarde toutes les modifications (Dossier, Devis, Commentaire)
             await _context.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
 
-            // Audit et Notification
             await _auditService.LogAsync(
                 page: "Validation Dossier",
                 libelle: $"Instruction du dossier '{dossier.Numero}' approuvée et devis généré.",
                 eventTypeCode: "VALIDATION",
                 dossierId: dossier.Id);
 
-            // Notification 
             await _notificationService.SendToGroupAsync(
                 profilCode: "DOSSIERS",
                 title: "Instruction Approuvée",
@@ -148,7 +146,7 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
         catch (Exception ex)
         {
             await transaction.RollbackAsync(cancellationToken);
-            _logger.LogError(ex, "Échec de la validation de l'instruction et de la création du devis pour le dossier {DossierId}", request.DossierId);
+            _logger.LogError(ex, "Échec de la validation de l'instruction pour le dossier {DossierId}", request.DossierId);
             throw;
         }
     }
