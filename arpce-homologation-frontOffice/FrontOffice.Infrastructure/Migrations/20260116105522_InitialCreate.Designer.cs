@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FrontOffice.Infrastructure.Migrations
 {
     [DbContext(typeof(FrontOfficeDbContext))]
-    [Migration("20260116072254_InitialCreate")]
+    [Migration("20260116105522_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -1079,28 +1079,28 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("06c88ccf-0386-40e1-84be-d215bc9b3797"),
+                            Id = new Guid("c3ab3254-6cc5-4c51-89f7-fc19fec20eb2"),
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("f5604100-39f2-43e9-a339-f2ce728cb280"),
+                            Id = new Guid("f143b310-7051-4563-ab4c-5b35a95287ce"),
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("54cba56b-2a4f-4dcd-a43d-c1c1a574d2d1"),
+                            Id = new Guid("b35f8648-8523-4b51-bee1-20b81705c045"),
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("ba52ffe5-a298-47e4-9c1d-7a3a3096d31e"),
+                            Id = new Guid("e77fa4b7-0e98-4565-93b9-8ae32e2893bf"),
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1

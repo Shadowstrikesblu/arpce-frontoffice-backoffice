@@ -204,3 +204,12 @@ FROM (
 INNER JOIN [statuts] AS [s] ON [t].[IdStatut] = [s].[Id]
 ORDER BY [t].[DateOuverture] DESC
 2026-01-16 04:48:34.103 +01:00 [INF] HTTP GET /api/dossiers responded 200 in 280.2195 ms
+2026-01-16 10:55:20.178 +00:00 [FTL] L'application FrontOffice s'est arrÃªtÃ©e de maniÃ¨re inattendue sur le VPS.
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in C:\Users\Admin2\Downloads\Sites\BackEnd\arpce-homologation-frontOffice\FrontOffice.Api\Program.cs:line 152
