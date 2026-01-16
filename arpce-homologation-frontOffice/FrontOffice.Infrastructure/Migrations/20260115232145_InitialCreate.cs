@@ -649,10 +649,10 @@ namespace FrontOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "DateCreation", "DateModification", "Libelle", "MobileBanking", "Remarques", "UtilisateurCreation", "UtilisateurModification" },
                 values: new object[,]
                 {
-                    { new Guid("27562cd5-c9d1-47fd-a548-6324e0c6b162"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
-                    { new Guid("b7b2b3d3-f4f7-4f85-a594-58cc1af61b3c"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
-                    { new Guid("bed0e8a6-e0a9-4477-bb6c-afebec549f86"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
-                    { new Guid("bfdeb721-4f63-4a8b-a68f-4f2e9e749661"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null }
+                    { new Guid("07f30d11-b338-4fee-8af3-7ddb986db6bd"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
+                    { new Guid("38174303-dc7a-43b8-b920-82e2597c8b8b"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
+                    { new Guid("b78440ae-70d5-4179-bcde-afb66b2622ee"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
+                    { new Guid("ccd086ae-8151-4619-a1f4-dbf483a7a94a"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null }
                 });
 
             migrationBuilder.InsertData(
