@@ -264,6 +264,7 @@ WHERE [c].[Email] = @__request_Email_0
 2026-01-19 03:10:58.044 +01:00 [INF] Application started. Press Ctrl+C to shut down.
 2026-01-19 03:10:58.097 +01:00 [INF] Hosting environment: Development
 2026-01-19 03:10:58.112 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+<<<<<<< HEAD
 2026-01-19 08:57:51.815 +00:00 [FTL] L'application FrontOffice s'est arrÃªtÃ©e de maniÃ¨re inattendue sur le VPS.
 Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
    at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
@@ -273,3 +274,218 @@ Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
    at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
    at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
    at Program.<Main>$(String[] args) in C:\Users\Admin2\Downloads\Sites\BackEnd\arpce-homologation-frontOffice\FrontOffice.Api\Program.cs:line 152
+=======
+2026-01-19 10:43:03.904 +01:00 [INF] Now listening on: https://localhost:7016
+2026-01-19 10:43:03.953 +01:00 [INF] Now listening on: http://localhost:5041
+2026-01-19 10:43:04.049 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-19 10:43:04.052 +01:00 [INF] Hosting environment: Development
+2026-01-19 10:43:04.055 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2026-01-19 10:43:07.668 +01:00 [INF] HTTP GET /index.html responded 200 in 172.7679 ms
+2026-01-19 10:43:08.248 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 115.4582 ms
+2026-01-19 10:43:39.466 +01:00 [INF] Executed DbCommand (160ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-01-19 10:43:40.432 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 8013.7780 ms
+2026-01-19 11:11:39.064 +01:00 [INF] HTTP GET /index.html responded 200 in 3.1846 ms
+2026-01-19 11:11:39.321 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 67.1965 ms
+2026-01-19 11:12:08.024 +01:00 [INF] Executed DbCommand (12ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-01-19 11:12:08.247 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 270.1337 ms
+2026-01-19 11:12:50.211 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@__request_Libelle_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [dossiers] AS [d]
+        WHERE [d].[Libelle] = @__request_Libelle_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-01-19 11:12:50.239 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Code], [s].[Libelle]
+FROM [statuts] AS [s]
+WHERE [s].[Code] = N'NouveauDossier'
+2026-01-19 11:12:50.588 +01:00 [INF] Executed DbCommand (22ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Int64), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?' (Size = 120), @p9='?' (Size = 30), @p10='?' (Size = 60), @p11='?' (Size = 60), @p12='?' (DbType = Guid), @p13='?' (DbType = Int64), @p14='?' (DbType = Int64), @p15='?' (Size = -1) (DbType = Binary), @p16='?' (Size = 12), @p17='?' (Size = 512), @p18='?' (DbType = Guid), @p19='?' (Size = 120), @p20='?' (Size = 1) (DbType = Byte), @p21='?' (Size = 60), @p22='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [dossiers] ([Id], [DateCreation], [DateModification], [DateOuverture], [IdAgentInstructeur], [IdClient], [IdModeReglement], [IdStatut], [Libelle], [Numero], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11);
+INSERT INTO [documentsDossiers] ([Id], [DateCreation], [DateModification], [Donnees], [Extension], [FilePath], [IdDossier], [Nom], [Type], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22);
+2026-01-19 11:12:50.620 +01:00 [INF] Dossier "1d9a785e-8c0d-42ca-a69d-10b1b1a53b96" et son document créés avec succès.
+2026-01-19 11:12:50.661 +01:00 [INF] HTTP POST /api/dossiers responded 201 in 755.0800 ms
+2026-01-19 11:13:37.857 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@__request_IdDossier_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [dossiers] AS [d]
+        WHERE [d].[Id] = @__request_IdDossier_0 AND [d].[IdClient] = @__userId_Value_1) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-01-19 11:13:38.021 +01:00 [INF] Executed DbCommand (15ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 60), @p2='?' (Size = 60), @p3='?' (DbType = Int64), @p4='?' (DbType = Int64), @p5='?' (Size = 512), @p6='?' (Size = 120), @p7='?' (Size = 120), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (DbType = Guid), @p11='?' (DbType = Guid), @p12='?' (Size = 120), @p13='?' (Size = 120), @p14='?' (Size = 12), @p15='?' (DbType = Currency), @p16='?' (DbType = Int32), @p17='?' (Precision = 5) (Scale = 2) (DbType = Decimal), @p18='?' (Size = 120), @p19='?' (Size = 60), @p20='?' (Size = 60), @p21='?' (DbType = Guid), @p22='?' (DbType = Int64), @p23='?' (DbType = Int64), @p24='?' (Size = -1) (DbType = Binary), @p25='?' (Size = 12), @p26='?' (Size = 512), @p27='?' (DbType = Guid), @p28='?' (Size = 120), @p29='?' (Size = 60), @p30='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [demandes] ([Id], [ContactEmail], [ContactNom], [DateCreation], [DateModification], [Description], [Equipement], [Fabricant], [IdCategorie], [IdDossier], [IdMotifRejet], [IdProposition], [Marque], [Modele], [NumeroDemande], [PrixUnitaire], [QuantiteEquipements], [Remise], [Type], [UtilisateurCreation], [UtilisateurModification])
+OUTPUT INSERTED.[EstHomologable]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20);
+INSERT INTO [documentsDemandes] ([Id], [DateCreation], [DateModification], [Donnees], [Extension], [FilePath], [IdDemande], [Nom], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30);
+2026-01-19 11:13:38.049 +01:00 [INF] Équipement "90cbdaea-37ee-4691-8ac1-fb51d580e75d" et sa fiche technique ajoutés au dossier "1d9a785e-8c0d-42ca-a69d-10b1b1a53b96"
+2026-01-19 11:13:38.058 +01:00 [INF] HTTP POST /api/dossiers/1d9a785e-8c0d-42ca-a69d-10b1b1a53b96/equipements responded 200 in 252.7300 ms
+2026-01-19 11:14:27.339 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__request_DossierId_0='?' (DbType = Guid), @__userId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+FROM [dossiers] AS [d]
+WHERE [d].[Id] = @__request_DossierId_0 AND [d].[IdClient] = @__userId_1
+2026-01-19 11:14:27.358 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__statutCibleCode_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Code], [s].[Libelle]
+FROM [statuts] AS [s]
+WHERE [s].[Code] = @__statutCibleCode_0
+2026-01-19 11:14:27.398 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Int64), @p2='?' (DbType = Int64), @p3='?' (Size = -1) (DbType = Binary), @p4='?' (Size = 12), @p5='?' (Size = 512), @p6='?' (DbType = Guid), @p7='?' (Size = 120), @p8='?' (Size = 1) (DbType = Byte), @p9='?' (Size = 60), @p10='?' (Size = 60), @p14='?' (DbType = Guid), @p11='?' (DbType = Int64), @p12='?' (DbType = Guid), @p13='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [documentsDossiers] ([Id], [DateCreation], [DateModification], [Donnees], [Extension], [FilePath], [IdDossier], [Nom], [Type], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10);
+UPDATE [dossiers] SET [DateModification] = @p11, [IdStatut] = @p12, [UtilisateurModification] = @p13
+OUTPUT 1
+WHERE [Id] = @p14;
+2026-01-19 11:14:27.408 +01:00 [INF] Preuve de paiement uploadée et statut du dossier "1d9a785e-8c0d-42ca-a69d-10b1b1a53b96" mis à jour à 'PaiementBanque'.
+2026-01-19 11:14:27.412 +01:00 [INF] HTTP POST /api/dossiers/1d9a785e-8c0d-42ca-a69d-10b1b1a53b96/preuve-paiement responded 200 in 116.0499 ms
+2026-01-19 11:15:25.355 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-01-19 11:15:25.427 +01:00 [INF] Executed DbCommand (55ms) [Parameters=[@__request_DossierId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdAgentInstructeur], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [t].[Id0], [t].[Code], [t].[Libelle0], [t].[Id1], [t].[Code0], [t].[DateCreation0], [t].[DateModification0], [t].[Libelle1], [t].[MobileBanking], [t].[Remarques], [t].[UtilisateurCreation0], [t].[UtilisateurModification0], [c].[Id], [c].[commentaire], [c].[DateCommentaire], [c].[DateCreation], [c].[DateModification], [c].[IdDossier], [c].[NomInstructeur], [c].[Proposition], [c].[UtilisateurCreation], [c].[UtilisateurModification], [d0].[Id], [d0].[Date], [d0].[DateCreation], [d0].[DateModification], [d0].[IdDemande], [d0].[IdDossier], [d0].[MontantControle], [d0].[MontantEtude], [d0].[MontantHomologation], [d0].[PaiementMobileId], [d0].[PaiementOk], [d0].[UtilisateurCreation], [d0].[UtilisateurModification], [d1].[Id], [d1].[DateCreation], [d1].[DateModification], [d1].[Donnees], [d1].[Extension], [d1].[FilePath], [d1].[IdDossier], [d1].[Nom], [d1].[Type], [d1].[UtilisateurCreation], [d1].[UtilisateurModification], [t0].[Id], [t0].[ContactEmail], [t0].[ContactNom], [t0].[DateCreation], [t0].[DateModification], [t0].[Description], [t0].[Equipement], [t0].[EstHomologable], [t0].[Fabricant], [t0].[IdCategorie], [t0].[IdDossier], [t0].[IdMotifRejet], [t0].[IdProposition], [t0].[Marque], [t0].[Modele], [t0].[NumeroDemande], [t0].[PrixUnitaire], [t0].[QuantiteEquipements], [t0].[Remise], [t0].[Type], [t0].[UtilisateurCreation], [t0].[UtilisateurModification], [t0].[Id0], [t0].[Id1], [t0].[Id2], [t0].[Id3], [t0].[DateCreation0], [t0].[DateModification0], [t0].[Donnees], [t0].[Extension], [t0].[FilePath], [t0].[IdDemande], [t0].[Nom], [t0].[UtilisateurCreation0], [t0].[UtilisateurModification0], [t0].[Id4], [t0].[DateCreation1], [t0].[DateDelivrance], [t0].[DateExpiration], [t0].[DateModification1], [t0].[Donnees0], [t0].[Extension0], [t0].[IdDemande0], [t0].[NumeroSequentiel], [t0].[UtilisateurCreation1], [t0].[UtilisateurModification1], [t0].[Code], [t0].[DateCreation2], [t0].[DateModification2], [t0].[FormuleHomologation], [t0].[FraisControle], [t0].[FraisEtude], [t0].[FraisHomologation], [t0].[FraisHomologationParLot], [t0].[FraisHomologationQuantiteParLot], [t0].[Libelle], [t0].[QuantiteReference], [t0].[Remarques], [t0].[TypeClient], [t0].[TypeEquipement], [t0].[UtilisateurCreation2], [t0].[UtilisateurModification2], [t0].[Code0], [t0].[DateCreation3], [t0].[DateModification3], [t0].[Libelle0], [t0].[Remarques0], [t0].[UtilisateurCreation3], [t0].[UtilisateurModification3], [t0].[Code1], [t0].[DateCreation4], [t0].[DateModification4], [t0].[Libelle1], [t0].[UtilisateurCreation4], [t0].[UtilisateurModification4], [t0].[Id5], [t0].[Date], [t0].[DateCreation5], [t0].[DateModification5], [t0].[IdDemande1], [t0].[IdDossier0], [t0].[MontantControle], [t0].[MontantEtude], [t0].[MontantHomologation], [t0].[PaiementMobileId], [t0].[PaiementOk], [t0].[UtilisateurCreation5], [t0].[UtilisateurModification5]
+FROM (
+    SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification], [s].[Id] AS [Id0], [s].[Code], [s].[Libelle] AS [Libelle0], [m].[Id] AS [Id1], [m].[Code] AS [Code0], [m].[DateCreation] AS [DateCreation0], [m].[DateModification] AS [DateModification0], [m].[Libelle] AS [Libelle1], [m].[MobileBanking], [m].[Remarques], [m].[UtilisateurCreation] AS [UtilisateurCreation0], [m].[UtilisateurModification] AS [UtilisateurModification0]
+    FROM [dossiers] AS [d]
+    INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+    LEFT JOIN [modesReglements] AS [m] ON [d].[IdModeReglement] = [m].[Id]
+    WHERE [d].[Id] = @__request_DossierId_0 AND [d].[IdClient] = @__userId_Value_1
+) AS [t]
+LEFT JOIN [commentaires] AS [c] ON [t].[Id] = [c].[IdDossier]
+LEFT JOIN [devis] AS [d0] ON [t].[Id] = [d0].[IdDossier]
+LEFT JOIN [documentsDossiers] AS [d1] ON [t].[Id] = [d1].[IdDossier]
+LEFT JOIN (
+    SELECT [d2].[Id], [d2].[ContactEmail], [d2].[ContactNom], [d2].[DateCreation], [d2].[DateModification], [d2].[Description], [d2].[Equipement], [d2].[EstHomologable], [d2].[Fabricant], [d2].[IdCategorie], [d2].[IdDossier], [d2].[IdMotifRejet], [d2].[IdProposition], [d2].[Marque], [d2].[Modele], [d2].[NumeroDemande], [d2].[PrixUnitaire], [d2].[QuantiteEquipements], [d2].[Remise], [d2].[Type], [d2].[UtilisateurCreation], [d2].[UtilisateurModification], [c0].[Id] AS [Id0], [m0].[Id] AS [Id1], [p].[Id] AS [Id2], [d3].[Id] AS [Id3], [d3].[DateCreation] AS [DateCreation0], [d3].[DateModification] AS [DateModification0], [d3].[Donnees], [d3].[Extension], [d3].[FilePath], [d3].[IdDemande], [d3].[Nom], [d3].[UtilisateurCreation] AS [UtilisateurCreation0], [d3].[UtilisateurModification] AS [UtilisateurModification0], [a].[Id] AS [Id4], [a].[DateCreation] AS [DateCreation1], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification] AS [DateModification1], [a].[Donnees] AS [Donnees0], [a].[Extension] AS [Extension0], [a].[IdDemande] AS [IdDemande0], [a].[NumeroSequentiel], [a].[UtilisateurCreation] AS [UtilisateurCreation1], [a].[UtilisateurModification] AS [UtilisateurModification1], [c0].[Code], [c0].[DateCreation] AS [DateCreation2], [c0].[DateModification] AS [DateModification2], [c0].[FormuleHomologation], [c0].[FraisControle], [c0].[FraisEtude], [c0].[FraisHomologation], [c0].[FraisHomologationParLot], [c0].[FraisHomologationQuantiteParLot], [c0].[Libelle], [c0].[QuantiteReference], [c0].[Remarques], [c0].[TypeClient], [c0].[TypeEquipement], [c0].[UtilisateurCreation] AS [UtilisateurCreation2], [c0].[UtilisateurModification] AS [UtilisateurModification2], [m0].[Code] AS [Code0], [m0].[DateCreation] AS [DateCreation3], [m0].[DateModification] AS [DateModification3], [m0].[Libelle] AS [Libelle0], [m0].[Remarques] AS [Remarques0], [m0].[UtilisateurCreation] AS [UtilisateurCreation3], [m0].[UtilisateurModification] AS [UtilisateurModification3], [p].[Code] AS [Code1], [p].[DateCreation] AS [DateCreation4], [p].[DateModification] AS [DateModification4], [p].[Libelle] AS [Libelle1], [p].[UtilisateurCreation] AS [UtilisateurCreation4], [p].[UtilisateurModification] AS [UtilisateurModification4], [d4].[Id] AS [Id5], [d4].[Date], [d4].[DateCreation] AS [DateCreation5], [d4].[DateModification] AS [DateModification5], [d4].[IdDemande] AS [IdDemande1], [d4].[IdDossier] AS [IdDossier0], [d4].[MontantControle], [d4].[MontantEtude], [d4].[MontantHomologation], [d4].[PaiementMobileId], [d4].[PaiementOk], [d4].[UtilisateurCreation] AS [UtilisateurCreation5], [d4].[UtilisateurModification] AS [UtilisateurModification5]
+    FROM [demandes] AS [d2]
+    LEFT JOIN [categoriesEquipements] AS [c0] ON [d2].[IdCategorie] = [c0].[Id]
+    LEFT JOIN [motifsRejets] AS [m0] ON [d2].[IdMotifRejet] = [m0].[Id]
+    LEFT JOIN [propositions] AS [p] ON [d2].[IdProposition] = [p].[Id]
+    LEFT JOIN [documentsDemandes] AS [d3] ON [d2].[Id] = [d3].[IdDemande]
+    LEFT JOIN [attestations] AS [a] ON [d2].[Id] = [a].[IdDemande]
+    LEFT JOIN [devis] AS [d4] ON [d2].[Id] = [d4].[IdDemande]
+) AS [t0] ON [t].[Id] = [t0].[IdDossier]
+ORDER BY [t].[Id], [t].[Id0], [t].[Id1], [c].[Id], [d0].[Id], [d1].[Id], [t0].[Id], [t0].[Id0], [t0].[Id1], [t0].[Id2], [t0].[Id3], [t0].[Id4]
+2026-01-19 11:15:25.530 +01:00 [INF] HTTP GET /api/dossiers/1d9a785e-8c0d-42ca-a69d-10b1b1a53b96 responded 200 in 410.8403 ms
+2026-01-19 12:22:34.695 +01:00 [INF] HTTP GET /api/documents/certificat/8FBE2FE1-183F-4C8A-953B-1E47DE5AF9D8/download responded 401 in 14.9687 ms
+2026-01-19 12:22:43.725 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-01-19 12:22:43.949 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 251.6587 ms
+2026-01-19 12:23:15.675 +01:00 [INF] Executed DbCommand (16ms) [Parameters=[@__request_AttestationId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation], [a].[UtilisateurModification], [d].[Id], [d].[ContactEmail], [d].[ContactNom], [d].[DateCreation], [d].[DateModification], [d].[Description], [d].[Equipement], [d].[EstHomologable], [d].[Fabricant], [d].[IdCategorie], [d].[IdDossier], [d].[IdMotifRejet], [d].[IdProposition], [d].[Marque], [d].[Modele], [d].[NumeroDemande], [d].[PrixUnitaire], [d].[QuantiteEquipements], [d].[Remise], [d].[Type], [d].[UtilisateurCreation], [d].[UtilisateurModification], [d0].[Id], [d0].[DateCreation], [d0].[DateModification], [d0].[DateOuverture], [d0].[IdAgentInstructeur], [d0].[IdClient], [d0].[IdModeReglement], [d0].[IdStatut], [d0].[Libelle], [d0].[Numero], [d0].[UtilisateurCreation], [d0].[UtilisateurModification]
+FROM [attestations] AS [a]
+INNER JOIN [demandes] AS [d] ON [a].[IdDemande] = [d].[Id]
+INNER JOIN [dossiers] AS [d0] ON [d].[IdDossier] = [d0].[Id]
+WHERE [a].[Id] = @__request_AttestationId_0 AND [d0].[IdClient] = @__userId_Value_1
+2026-01-19 12:23:15.749 +01:00 [INF] HTTP GET /api/documents/certificat/8FBE2FE1-183F-4C8A-953B-1E47DE5AF9D8/download responded 200 in 145.9199 ms
+2026-01-19 12:23:15.855 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__request_AttestationId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation], [a].[UtilisateurModification], [d].[Id], [d].[ContactEmail], [d].[ContactNom], [d].[DateCreation], [d].[DateModification], [d].[Description], [d].[Equipement], [d].[EstHomologable], [d].[Fabricant], [d].[IdCategorie], [d].[IdDossier], [d].[IdMotifRejet], [d].[IdProposition], [d].[Marque], [d].[Modele], [d].[NumeroDemande], [d].[PrixUnitaire], [d].[QuantiteEquipements], [d].[Remise], [d].[Type], [d].[UtilisateurCreation], [d].[UtilisateurModification], [d0].[Id], [d0].[DateCreation], [d0].[DateModification], [d0].[DateOuverture], [d0].[IdAgentInstructeur], [d0].[IdClient], [d0].[IdModeReglement], [d0].[IdStatut], [d0].[Libelle], [d0].[Numero], [d0].[UtilisateurCreation], [d0].[UtilisateurModification]
+FROM [attestations] AS [a]
+INNER JOIN [demandes] AS [d] ON [a].[IdDemande] = [d].[Id]
+INNER JOIN [dossiers] AS [d0] ON [d].[IdDossier] = [d0].[Id]
+WHERE [a].[Id] = @__request_AttestationId_0 AND [d0].[IdClient] = @__userId_Value_1
+2026-01-19 12:23:15.871 +01:00 [INF] HTTP GET /api/documents/certificat/8FBE2FE1-183F-4C8A-953B-1E47DE5AF9D8/download responded 200 in 20.8369 ms
+2026-01-19 13:34:54.781 +01:00 [INF] Executed DbCommand (12ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-01-19 13:34:55.183 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 436.7283 ms
+2026-01-19 13:35:52.471 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@__request_Libelle_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [dossiers] AS [d]
+        WHERE [d].[Libelle] = @__request_Libelle_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-01-19 13:35:52.487 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Code], [s].[Libelle]
+FROM [statuts] AS [s]
+WHERE [s].[Code] = N'NouveauDossier'
+2026-01-19 13:35:52.535 +01:00 [INF] Executed DbCommand (21ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Int64), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?' (Size = 120), @p9='?' (Size = 30), @p10='?' (Size = 60), @p11='?' (Size = 60), @p12='?' (DbType = Guid), @p13='?' (DbType = Int64), @p14='?' (DbType = Int64), @p15='?' (Size = -1) (DbType = Binary), @p16='?' (Size = 12), @p17='?' (Size = 512), @p18='?' (DbType = Guid), @p19='?' (Size = 120), @p20='?' (Size = 1) (DbType = Byte), @p21='?' (Size = 60), @p22='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [dossiers] ([Id], [DateCreation], [DateModification], [DateOuverture], [IdAgentInstructeur], [IdClient], [IdModeReglement], [IdStatut], [Libelle], [Numero], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11);
+INSERT INTO [documentsDossiers] ([Id], [DateCreation], [DateModification], [Donnees], [Extension], [FilePath], [IdDossier], [Nom], [Type], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22);
+2026-01-19 13:35:52.545 +01:00 [INF] Dossier "42eacdae-c5b0-455c-a3bf-3d154ac45576" et son document créés avec succès.
+2026-01-19 13:35:52.551 +01:00 [INF] HTTP POST /api/dossiers responded 201 in 127.8549 ms
+2026-01-19 13:37:32.858 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@__request_IdDossier_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [dossiers] AS [d]
+        WHERE [d].[Id] = @__request_IdDossier_0 AND [d].[IdClient] = @__userId_Value_1) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-01-19 13:37:32.887 +01:00 [INF] Executed DbCommand (21ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 60), @p2='?' (Size = 60), @p3='?' (DbType = Int64), @p4='?' (DbType = Int64), @p5='?' (Size = 512), @p6='?' (Size = 120), @p7='?' (Size = 120), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (DbType = Guid), @p11='?' (DbType = Guid), @p12='?' (Size = 120), @p13='?' (Size = 120), @p14='?' (Size = 12), @p15='?' (DbType = Currency), @p16='?' (DbType = Int32), @p17='?' (Precision = 5) (Scale = 2) (DbType = Decimal), @p18='?' (Size = 120), @p19='?' (Size = 60), @p20='?' (Size = 60), @p21='?' (DbType = Guid), @p22='?' (DbType = Int64), @p23='?' (DbType = Int64), @p24='?' (Size = -1) (DbType = Binary), @p25='?' (Size = 12), @p26='?' (Size = 512), @p27='?' (DbType = Guid), @p28='?' (Size = 120), @p29='?' (Size = 60), @p30='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [demandes] ([Id], [ContactEmail], [ContactNom], [DateCreation], [DateModification], [Description], [Equipement], [Fabricant], [IdCategorie], [IdDossier], [IdMotifRejet], [IdProposition], [Marque], [Modele], [NumeroDemande], [PrixUnitaire], [QuantiteEquipements], [Remise], [Type], [UtilisateurCreation], [UtilisateurModification])
+OUTPUT INSERTED.[EstHomologable]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20);
+INSERT INTO [documentsDemandes] ([Id], [DateCreation], [DateModification], [Donnees], [Extension], [FilePath], [IdDemande], [Nom], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30);
+2026-01-19 13:37:32.907 +01:00 [INF] Équipement "85863813-b004-444c-949f-9f6f7033dddf" et sa fiche technique ajoutés au dossier "42eacdae-c5b0-455c-a3bf-3d154ac45576"
+2026-01-19 13:37:32.911 +01:00 [INF] HTTP POST /api/dossiers/42eacdae-c5b0-455c-a3bf-3d154ac45576/equipements responded 200 in 132.0961 ms
+2026-01-19 13:40:33.201 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__statutCible_1='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] = @__statutCible_1
+2026-01-19 13:40:33.265 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-01-19 13:40:33.284 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__statutCible_1='?' (Size = 120), @__p_2='?' (DbType = Int32), @__p_3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdAgentInstructeur], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [t].[Id0], [t].[Code], [t].[Libelle0], [d0].[Id], [d0].[Date], [d0].[DateCreation], [d0].[DateModification], [d0].[IdDemande], [d0].[IdDossier], [d0].[MontantControle], [d0].[MontantEtude], [d0].[MontantHomologation], [d0].[PaiementMobileId], [d0].[PaiementOk], [d0].[UtilisateurCreation], [d0].[UtilisateurModification], [d1].[Id], [d1].[DateCreation], [d1].[DateModification], [d1].[Donnees], [d1].[Extension], [d1].[FilePath], [d1].[IdDossier], [d1].[Nom], [d1].[Type], [d1].[UtilisateurCreation], [d1].[UtilisateurModification]
+FROM (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification], [s].[Id] AS [Id0], [s].[Code], [s].[Libelle] AS [Libelle0]
+    FROM [dossiers] AS [d]
+    INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+    WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] = @__statutCible_1
+    ORDER BY [d].[DateOuverture] DESC
+    OFFSET @__p_2 ROWS FETCH NEXT @__p_3 ROWS ONLY
+) AS [t]
+LEFT JOIN [devis] AS [d0] ON [t].[Id] = [d0].[IdDossier]
+LEFT JOIN [documentsDossiers] AS [d1] ON [t].[Id] = [d1].[IdDossier]
+ORDER BY [t].[DateOuverture] DESC, [t].[Id], [t].[Id0], [d0].[Id]
+2026-01-19 13:40:33.300 +01:00 [INF] HTTP GET /api/dossiers/devis-non-valides responded 200 in 213.4801 ms
+2026-01-19 13:40:51.995 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@__request_DossierId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification], [s].[Id], [s].[Code], [s].[Libelle]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[Id] = @__request_DossierId_0 AND [d].[IdClient] = @__userId_Value_1
+2026-01-19 13:40:52.022 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Code], [s].[Libelle]
+FROM [statuts] AS [s]
+WHERE [s].[Code] = N'DevisValide'
+2026-01-19 13:40:52.035 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@p3='?' (DbType = Guid), @p0='?' (DbType = Int64), @p1='?' (DbType = Guid), @p2='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [dossiers] SET [DateModification] = @p0, [IdStatut] = @p1, [UtilisateurModification] = @p2
+OUTPUT 1
+WHERE [Id] = @p3;
+2026-01-19 13:40:52.042 +01:00 [INF] HTTP POST /api/dossiers/42EACDAE-C5B0-455C-A3BF-3D154AC45576/valider-devis responded 200 in 112.3468 ms
+2026-01-19 13:42:39.858 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@__request_DossierId_0='?' (DbType = Guid), @__userId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+FROM [dossiers] AS [d]
+WHERE [d].[Id] = @__request_DossierId_0 AND [d].[IdClient] = @__userId_1
+2026-01-19 13:42:39.896 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__statutCibleCode_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Code], [s].[Libelle]
+FROM [statuts] AS [s]
+WHERE [s].[Code] = @__statutCibleCode_0
+2026-01-19 13:42:39.911 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Int64), @p2='?' (DbType = Int64), @p3='?' (Size = -1) (DbType = Binary), @p4='?' (Size = 12), @p5='?' (Size = 512), @p6='?' (DbType = Guid), @p7='?' (Size = 120), @p8='?' (Size = 1) (DbType = Byte), @p9='?' (Size = 60), @p10='?' (Size = 60), @p14='?' (DbType = Guid), @p11='?' (DbType = Int64), @p12='?' (DbType = Guid), @p13='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [documentsDossiers] ([Id], [DateCreation], [DateModification], [Donnees], [Extension], [FilePath], [IdDossier], [Nom], [Type], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10);
+UPDATE [dossiers] SET [DateModification] = @p11, [IdStatut] = @p12, [UtilisateurModification] = @p13
+OUTPUT 1
+WHERE [Id] = @p14;
+2026-01-19 13:42:39.922 +01:00 [INF] Preuve de paiement uploadée et statut du dossier "42eacdae-c5b0-455c-a3bf-3d154ac45576" mis à jour à 'PaiementBanque'.
+2026-01-19 13:42:39.930 +01:00 [INF] HTTP POST /api/dossiers/42EACDAE-C5B0-455C-A3BF-3D154AC45576/preuve-paiement responded 200 in 91.5704 ms
+>>>>>>> 6dc0f685ac2d9dbcbcf51347b1292223fd465c2a

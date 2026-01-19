@@ -7,10 +7,6 @@ using Microsoft.Extensions.Logging;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BackOffice.Infrastructure.Services;
 
@@ -65,9 +61,7 @@ public class CertificateGeneratorService : ICertificateGeneratorService
 
             string formattedSeq = seqNumber.ToString("D4");
 
-            // --- CORRECTION DU FORMAT DU NUMÉRO ---
             string referenceNumber = $"N°/{formattedSeq}/ARPCE-DG/{currentYear}";
-            // ------------------------------------
 
             byte[] pdfBytes = demande.EstHomologable
                 ? GenerateCertificatePdf(dossier, demande, referenceNumber, logoBytes)
@@ -123,14 +117,11 @@ public class CertificateGeneratorService : ICertificateGeneratorService
 
                 page.Background().Row(row =>
                 {
-                    // --- CORRECTION DE LA MARGE ---
-                    row.ConstantItem(1, Unit.Centimetre); // Marge de 1cm
-                    // ------------------------------
+                    row.ConstantItem(1, Unit.Centimetre); 
                     DrawColorBar(row.ConstantItem(15, Unit.Millimetre));
                     row.RelativeItem();
                 });
 
-                // On ajuste le padding gauche du contenu pour qu'il soit bien aligné
                 page.Content().PaddingLeft(3f, Unit.Centimetre).PaddingRight(2, Unit.Centimetre).PaddingVertical(1.5f, Unit.Centimetre).Column(col =>
                 {
                     col.Item().Row(row =>
@@ -203,14 +194,11 @@ public class CertificateGeneratorService : ICertificateGeneratorService
 
                 page.Background().Row(row =>
                 {
-                    // --- CORRECTION DE LA MARGE ---
-                    row.ConstantItem(1, Unit.Centimetre); // Marge de 1cm
-                    // ------------------------------
+                    row.ConstantItem(1, Unit.Centimetre); 
                     DrawColorBar(row.ConstantItem(15, Unit.Millimetre));
                     row.RelativeItem();
                 });
 
-                // On ajuste le padding gauche du contenu
                 page.Content().PaddingLeft(3f, Unit.Centimetre).PaddingRight(2, Unit.Centimetre).PaddingVertical(1.5f, Unit.Centimetre).Column(col =>
                 {
                     col.Item().Row(row =>
