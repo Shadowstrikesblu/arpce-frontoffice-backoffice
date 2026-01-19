@@ -649,10 +649,10 @@ namespace FrontOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "DateCreation", "DateModification", "Libelle", "MobileBanking", "Remarques", "UtilisateurCreation", "UtilisateurModification" },
                 values: new object[,]
                 {
-                    { new Guid("b35f8648-8523-4b51-bee1-20b81705c045"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
-                    { new Guid("c3ab3254-6cc5-4c51-89f7-fc19fec20eb2"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
-                    { new Guid("e77fa4b7-0e98-4565-93b9-8ae32e2893bf"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
-                    { new Guid("f143b310-7051-4563-ab4c-5b35a95287ce"), "Cheque", null, null, "Chèque", (byte)0, null, null, null }
+                    { new Guid("ac627f18-bbd6-4374-82ca-95dce1905b47"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
+                    { new Guid("b34d7580-a2c2-477e-9d61-2ba40c33ca36"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
+                    { new Guid("c35c4927-cf35-4d83-abc3-31dfe037241f"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
+                    { new Guid("cbdbc515-6084-4f59-992c-800b47dbf0c3"), "Especes", null, null, "Espèces", (byte)0, null, null, null }
                 });
 
             migrationBuilder.InsertData(

@@ -25,6 +25,22 @@ builder.Host.UseSerilog((context, services, configuration) =>
         .WriteTo.Console());
 
 // ------------------------------------------------------
+// CORS
+// ------------------------------------------------------
+var corsPolicyName = "DefaultCorsPolicy";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: corsPolicyName, policy =>
+    {
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
+// ------------------------------------------------------
 // SERVICES
 // ------------------------------------------------------
 builder.Services.AddControllers();
@@ -153,7 +169,7 @@ if (enableSwagger)
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "BackOffice API v1");
-        options.RoutePrefix = string.Empty; // => /swagger
+        options.RoutePrefix = string.Empty; // => /
     });
 }
 
@@ -162,6 +178,10 @@ app.MapGet("/", () => Results.Ok("BackOffice API is running"));
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseRouting();
+
+// ✅ Active la policy CORS
 app.UseCors(corsPolicyName);
 
 app.UseAuthentication();

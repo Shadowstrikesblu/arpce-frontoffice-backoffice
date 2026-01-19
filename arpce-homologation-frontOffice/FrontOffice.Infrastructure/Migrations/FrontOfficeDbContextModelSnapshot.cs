@@ -1076,28 +1076,28 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c3ab3254-6cc5-4c51-89f7-fc19fec20eb2"),
+                            Id = new Guid("c35c4927-cf35-4d83-abc3-31dfe037241f"),
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("f143b310-7051-4563-ab4c-5b35a95287ce"),
+                            Id = new Guid("ac627f18-bbd6-4374-82ca-95dce1905b47"),
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("b35f8648-8523-4b51-bee1-20b81705c045"),
+                            Id = new Guid("cbdbc515-6084-4f59-992c-800b47dbf0c3"),
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("e77fa4b7-0e98-4565-93b9-8ae32e2893bf"),
+                            Id = new Guid("b34d7580-a2c2-477e-9d61-2ba40c33ca36"),
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1
