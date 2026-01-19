@@ -259,3 +259,8 @@ WHERE [c].[Email] = @__request_Email_0
 2026-01-19 03:09:25.247 +01:00 [INF] HTTP GET /api/documents/Devis/C5143F92-5D19-4639-86FE-2AF689358398/download responded 404 in 87.0392 ms
 2026-01-19 03:09:29.767 +01:00 [INF] HTTP GET /api/documents/devis/C5143F92-5D19-4639-86FE-2AF689358398/download responded 404 in 59.4360 ms
 2026-01-19 03:10:39.577 +01:00 [INF] Application is shutting down...
+2026-01-19 03:10:57.777 +01:00 [INF] Now listening on: https://localhost:7016
+2026-01-19 03:10:57.863 +01:00 [INF] Now listening on: http://localhost:5041
+2026-01-19 03:10:58.044 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-19 03:10:58.097 +01:00 [INF] Hosting environment: Development
+2026-01-19 03:10:58.112 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api

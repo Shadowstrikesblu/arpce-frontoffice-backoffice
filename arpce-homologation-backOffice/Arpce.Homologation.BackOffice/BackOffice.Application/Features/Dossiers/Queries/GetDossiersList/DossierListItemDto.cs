@@ -30,6 +30,6 @@ public class DossierListItemDto
     /// </summary>
     public List<DocumentDossierDto> Documents { get; set; } = new();
     public List<AttestationDto> Attestations { get; set; } = new();
-
+    public List<DevisDto> Devis { get; set; } = new();
     public List<DemandeDto> Demandes { get; set; } = new List<DemandeDto>();
 }

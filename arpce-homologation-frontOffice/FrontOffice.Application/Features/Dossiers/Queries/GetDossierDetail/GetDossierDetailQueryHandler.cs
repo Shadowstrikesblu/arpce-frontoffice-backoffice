@@ -47,6 +47,7 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
             .Include(d => d.Demandes).ThenInclude(dem => dem.CategorieEquipement)
             .Include(d => d.Demandes).ThenInclude(dem => dem.MotifRejet)
             .Include(d => d.Demandes).ThenInclude(dem => dem.Proposition)
+            .Include(d => d.Demandes).ThenInclude(dem => dem.Devis)
             .FirstOrDefaultAsync(cancellationToken);
 
         if (dossier == null)

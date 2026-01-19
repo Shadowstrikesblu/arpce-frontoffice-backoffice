@@ -77,6 +77,7 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
             .Include(d => d.DocumentsDossiers)
             .Include(d => d.Demandes).ThenInclude(dem => dem.DocumentsDemandes)
             .Include(d => d.Demandes).ThenInclude(dem => dem.Attestations)
+            .Include(d => d.Demandes).ThenInclude(dem => dem.Devis)
             .ToListAsync(cancellationToken);
 
         var requestContext = _httpContextAccessor.HttpContext!.Request;
@@ -122,7 +123,9 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
                 DateDelivrance = att.DateDelivrance,
                 DateExpiration = att.DateExpiration,
                 FilePath = $"/api/documents/attestation/{att.Id}"
-            }).ToList()
+            }).ToList(),
+
+            Devis = dossier.Devis.Select(dev => new DevisDto { Id = dev.Id, FilePath = $"/api/devis/{dev.Id}/download" }).ToList(),
         }).ToList();
 
         var viewModel = new DossiersListVm

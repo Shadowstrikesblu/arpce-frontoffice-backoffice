@@ -149,7 +149,8 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                 MontantEtude = dev.MontantEtude,
                 MontantHomologation = dev.MontantHomologation,
                 MontantControle = dev.MontantControle,
-                PaiementOk = dev.PaiementOk
+                PaiementOk = dev.PaiementOk,
+                FilePath = $"/api/devis/{dev.Id}/download"
             }).ToList(),
 
             Commentaires = dossier.Commentaires.Select(com => new CommentaireDto
