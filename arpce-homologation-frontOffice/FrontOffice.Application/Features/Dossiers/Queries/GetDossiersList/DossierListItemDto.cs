@@ -1,4 +1,5 @@
-﻿using FrontOffice.Application.Common.DTOs; 
+﻿using FrontOffice.Application.Common.DTOs;
+using FrontOffice.Domain.Entities;
 using System;
 
 namespace FrontOffice.Application.Features.Dossiers.Queries.GetDossiersList;
@@ -32,5 +33,13 @@ public class DossierListItemDto
     /// L'objet Statut associé au dossier.
     /// </summary>
     public StatutDto? Statut { get; set; }
-    public List<DocumentDossierDto> Documents { get; set; } = new List<DocumentDossierDto>();
+    /// <summary>
+    /// La liste des documents attachés à ce dossier.
+    /// </summary>
+    public List<DocumentDossierDto> Documents { get; set; } = new();
+
+    /// <summary>
+    /// La liste des devis associés à ce dossier.
+    /// </summary>
+    public List<DevisDto> Devis { get; set; } = new();
 }

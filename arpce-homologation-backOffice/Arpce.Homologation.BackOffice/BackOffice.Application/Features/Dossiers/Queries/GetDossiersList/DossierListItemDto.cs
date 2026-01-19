@@ -1,4 +1,5 @@
 ﻿using BackOffice.Application.Common.DTOs;
+using BackOffice.Domain.Entities;
 using System;
 using System.Collections.Generic;
 
@@ -28,5 +29,7 @@ public class DossierListItemDto
     /// La liste des équipements (demandes) contenus dans ce dossier.
     /// </summary>
     public List<DocumentDossierDto> Documents { get; set; } = new();
+    public List<AttestationDto> Attestations { get; set; } = new();
+
     public List<DemandeDto> Demandes { get; set; } = new List<DemandeDto>();
 }

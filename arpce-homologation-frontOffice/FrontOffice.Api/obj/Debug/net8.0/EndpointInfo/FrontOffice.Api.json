@@ -1915,6 +1915,10 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "filePath": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2102,6 +2106,13 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/DocumentDossierDto"
+            },
+            "nullable": true
+          },
+          "devis": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DevisDto"
             },
             "nullable": true
           }
