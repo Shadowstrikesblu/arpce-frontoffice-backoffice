@@ -48,4 +48,5 @@ public class DossierDetailVm
     /// La liste des attestations générées pour les équipements de ce dossier.
     /// </summary>
     public List<AttestationDto> Attestations { get; set; } = new List<AttestationDto>();
+
 }

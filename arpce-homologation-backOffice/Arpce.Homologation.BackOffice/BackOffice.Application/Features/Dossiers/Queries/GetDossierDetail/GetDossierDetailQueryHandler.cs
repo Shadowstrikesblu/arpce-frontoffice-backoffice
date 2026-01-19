@@ -1,13 +1,8 @@
 ﻿using BackOffice.Application.Common.DTOs;
-using BackOffice.Application.Common.DTOs.Documents;
 using BackOffice.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Dossiers.Queries.GetDossierDetail;
 
@@ -33,8 +28,6 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
     /// </summary>
     public async Task<DossierDetailVm> Handle(GetDossierDetailQuery request, CancellationToken cancellationToken)
     {
-        // Construire la requête pour charger le dossier et TOUTES ses relations imbriquées.
-        // On utilise AsNoTracking() pour une meilleure performance en lecture seule.
         var dossier = await _context.Dossiers
             .AsNoTracking()
             .Where(d => d.Id == request.DossierId)
@@ -56,7 +49,6 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                 .ThenInclude(dem => dem.Proposition)
             .FirstOrDefaultAsync(cancellationToken);
 
-        // Vérifie si le dossier a été trouvé.
         if (dossier == null)
         {
             throw new Exception($"Le dossier avec l'ID '{request.DossierId}' est introuvable.");
@@ -65,7 +57,6 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
         var requestContext = _httpContextAccessor.HttpContext!.Request;
         var baseUrl = $"{requestContext.Scheme}://{requestContext.Host}";
 
-        // Mappe l'entité Dossier et ses relations vers le ViewModel de détail.
         var dossierVm = new DossierDetailVm
         {
             Id = dossier.Id,
@@ -93,7 +84,6 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                 Libelle = dossier.ModeReglement.Libelle
             } : null,
 
-            // Mapping complet des Demandes (Équipements)
             Demandes = dossier.Demandes.Select(dem => new DemandeDto
             {
                 Id = dem.Id,
@@ -150,7 +140,6 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                     Type = null,
                     FilePath = $"/api/demandes/demande/{doc.Id}/download"
                 }).ToList()
-
             }).ToList(),
 
             Devis = dossier.Devis.Select(dev => new DevisDto
@@ -160,7 +149,8 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                 MontantEtude = dev.MontantEtude,
                 MontantHomologation = dev.MontantHomologation,
                 MontantControle = dev.MontantControle,
-                PaiementOk = dev.PaiementOk
+                PaiementOk = dev.PaiementOk,
+                FilePath = $"/api/devis/{dev.Id}/download"
             }).ToList(),
 
             Commentaires = dossier.Commentaires.Select(com => new CommentaireDto
@@ -180,13 +170,13 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                 FilePath = $"/api/demandes/dossier/{doc.Id}/download"
             }).ToList(),
 
-            Attestations = dossier.Demandes.SelectMany(dem => dem.Attestations)
-                .Select(att => new AttestationDto
-                {
-                    Id = att.Id,
-                    DateDelivrance = att.DateDelivrance,
-                    DateExpiration = att.DateExpiration
-                }).ToList()
+            Attestations = dossier.Demandes.SelectMany(dem => dem.Attestations).Select(att => new AttestationDto
+            {
+                Id = att.Id,
+                DateDelivrance = att.DateDelivrance,
+                DateExpiration = att.DateExpiration,
+                FilePath = $"/api/documents/attestation/{att.Id}"
+            }).ToList()
         };
 
         return dossierVm;

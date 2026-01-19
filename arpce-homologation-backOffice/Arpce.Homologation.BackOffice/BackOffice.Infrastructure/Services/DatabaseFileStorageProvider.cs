@@ -50,7 +50,7 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
             DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
 
-        // Ajoute l'entité au contexte, mais NE PAS sauvegarder.
+        // Ajoute l'entité au contexte
         _context.DocumentsDossiers.Add(document);
 
         return document;

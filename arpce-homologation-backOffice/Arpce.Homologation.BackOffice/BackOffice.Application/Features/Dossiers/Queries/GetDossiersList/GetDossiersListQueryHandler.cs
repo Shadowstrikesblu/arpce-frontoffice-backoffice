@@ -6,11 +6,6 @@ using BackOffice.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Dossiers.Queries.GetDossiersList;
 
@@ -79,9 +74,10 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
             .Take(request.Parameters.TaillePage)
             .Include(d => d.Client)
             .Include(d => d.Statut)
-            .Include(d => d.DocumentsDossiers) 
-            .Include(d => d.Demandes)
-                .ThenInclude(dem => dem.DocumentsDemandes) 
+            .Include(d => d.DocumentsDossiers)
+            .Include(d => d.Demandes).ThenInclude(dem => dem.DocumentsDemandes)
+            .Include(d => d.Demandes).ThenInclude(dem => dem.Attestations)
+            .Include(d => d.Demandes).ThenInclude(dem => dem.Devis)
             .ToListAsync(cancellationToken);
 
         var requestContext = _httpContextAccessor.HttpContext!.Request;
@@ -93,17 +89,9 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
             DateOuverture = dossier.DateOuverture.FromUnixTimeMilliseconds(),
             Numero = dossier.Numero,
             Libelle = dossier.Libelle,
-            Client = dossier.Client != null ? new ClientDto
-            {
-                Id = dossier.Client.Id,
-                RaisonSociale = dossier.Client.RaisonSociale
-            } : null,
-            Statut = dossier.Statut != null ? new StatutDto
-            {
-                Id = dossier.Statut.Id,
-                Code = dossier.Statut.Code,
-                Libelle = dossier.Statut.Libelle
-            } : null,
+            Client = dossier.Client != null ? new ClientDto { Id = dossier.Client.Id, RaisonSociale = dossier.Client.RaisonSociale } : null,
+            Statut = dossier.Statut != null ? new StatutDto { Id = dossier.Statut.Id, Code = dossier.Statut.Code, Libelle = dossier.Statut.Libelle } : null,
+
             Demandes = dossier.Demandes.Select(demande => new DemandeDto
             {
                 Id = demande.Id,
@@ -127,7 +115,17 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
                 Type = doc.Type,
                 Extension = doc.Extension,
                 FilePath = $"/api/demandes/dossier/{doc.Id}/download"
-            }).ToList()
+            }).ToList(),
+
+            Attestations = dossier.Demandes.SelectMany(dem => dem.Attestations).Select(att => new AttestationDto
+            {
+                Id = att.Id,
+                DateDelivrance = att.DateDelivrance,
+                DateExpiration = att.DateExpiration,
+                FilePath = $"/api/documents/attestation/{att.Id}"
+            }).ToList(),
+
+            Devis = dossier.Devis.Select(dev => new DevisDto { Id = dev.Id, FilePath = $"/api/devis/{dev.Id}/download" }).ToList(),
         }).ToList();
 
         var viewModel = new DossiersListVm

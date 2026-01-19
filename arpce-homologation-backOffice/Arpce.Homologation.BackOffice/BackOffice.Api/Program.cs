@@ -54,22 +54,9 @@ builder.Services.AddScoped<IAuditService, AuditService>();
 builder.Services.AddScoped<IFileStorageProvider, DatabaseFileStorageProvider>();
 builder.Services.AddTransient<INotificationService, SignalRNotificationService>();
 builder.Services.AddTransient<ICertificateGeneratorService, CertificateGeneratorService>();
+builder.Services.AddTransient<IDevisGeneratorService, DevisGeneratorService>();
 
-// CORS
-const string corsPolicyName = "AllowWebApp";
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(corsPolicyName, policy =>
-    {
-        policy
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials()
-            .SetIsOriginAllowed(_ => true);
-    });
-});
-
-// Authentication JWT
+// Configuration de l'Authentification JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {

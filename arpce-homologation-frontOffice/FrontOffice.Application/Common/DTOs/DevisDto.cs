@@ -10,4 +10,5 @@ public class DevisDto
     public decimal? MontantHomologation { get; set; }
     public decimal? MontantControle { get; set; }
     public byte? PaiementOk { get; set; }
+    public string? FilePath { get; set; }
 }
