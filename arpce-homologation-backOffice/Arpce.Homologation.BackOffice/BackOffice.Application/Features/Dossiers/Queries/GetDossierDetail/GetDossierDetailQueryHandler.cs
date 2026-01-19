@@ -175,7 +175,7 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                 Id = att.Id,
                 DateDelivrance = att.DateDelivrance,
                 DateExpiration = att.DateExpiration,
-                FilePath = $"/api/documents/attestation/{att.Id}"
+                FilePath = $"/api/documents/attestation/{att.Id}/download"
             }).ToList()
         };
 

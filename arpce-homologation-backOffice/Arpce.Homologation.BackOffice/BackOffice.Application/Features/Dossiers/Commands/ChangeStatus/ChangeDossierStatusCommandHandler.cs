@@ -42,7 +42,7 @@ public class ChangeDossierStatusCommandHandler : IRequestHandler<ChangeDossierSt
         using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         try
         {
-            var dossier = await _context.Dossiers.FindAsync(new object[] { request.DossierId }, cancellationToken);
+            var dossier = await _context.Dossiers.FirstOrDefaultAsync(d => d.Id == request.DossierId, cancellationToken);
             if (dossier == null) throw new Exception("Dossier introuvable.");
 
             var nouveauStatut = await _context.Statuts.FirstOrDefaultAsync(s => s.Code == request.CodeStatut, cancellationToken);
