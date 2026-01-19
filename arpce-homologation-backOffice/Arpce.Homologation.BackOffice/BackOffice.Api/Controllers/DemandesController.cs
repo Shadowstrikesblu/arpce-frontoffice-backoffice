@@ -58,10 +58,13 @@ public class DemandesController : ControllerBase
     /// <param name="command"></param>
     /// <returns></returns>
     [HttpPost("{demandeId:guid}/certificat")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
-    public async Task<IActionResult> UploadCertificat(Guid demandeId, [FromForm] UploadCertificatCommand command)
+    public async Task<IActionResult> UploadCertificat(
+        [FromRoute] Guid demandeId,
+        [FromForm] UploadCertificatCommand command)
     {
-        command.DemandeId = demandeId;
+        // On assigne manuellement l'ID de la route à la commande
+        command.IdDemande = demandeId;
+
         var result = await _mediator.Send(command);
         return Ok(new { ok = result });
     }
