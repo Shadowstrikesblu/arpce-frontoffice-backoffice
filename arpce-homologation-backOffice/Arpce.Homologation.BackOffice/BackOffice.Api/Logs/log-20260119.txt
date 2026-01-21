@@ -1457,3 +1457,51 @@ SET NOCOUNT ON;
 UPDATE [AdminUtilisateurs] SET [DerniereConnexion] = @p0
 OUTPUT 1
 WHERE [Id] = @p1;
+2026-01-19 16:09:26.328 +01:00 [INF] Now listening on: https://localhost:7238
+2026-01-19 16:09:26.385 +01:00 [INF] Now listening on: http://localhost:5126
+2026-01-19 16:09:26.521 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-19 16:09:26.524 +01:00 [INF] Hosting environment: Development
+2026-01-19 16:09:26.527 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api
+2026-01-19 16:10:24.345 +01:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-01-19 16:10:28.044 +01:00 [INF] Executed DbCommand (74ms) [Parameters=[@__request_Compte_0='?' (Size = 100)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AdminProfilsId], [a].[ChangementMotPasse], [a].[Compte], [a].[DateCreation], [a].[DateModification], [a].[DerniereConnexion], [a].[Desactive], [a].[IdProfil], [a].[IdUtilisateurType], [a].[MotPasse], [a].[Nom], [a].[Prenoms], [a].[Remarques], [a].[UtilisateurCreation], [a].[UtilisateurModification], [a0].[Id], [a0].[Code], [a0].[DateCreation], [a0].[DateModification], [a0].[Libelle], [a0].[Remarques], [a0].[UtilisateurCreation], [a0].[UtilisateurModification]
+FROM [AdminUtilisateurs] AS [a]
+LEFT JOIN [adminProfils] AS [a0] ON [a].[IdProfil] = [a0].[Id]
+WHERE [a].[Compte] = @__request_Compte_0
+2026-01-19 16:10:28.998 +01:00 [INF] Executed DbCommand (20ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [AdminUtilisateurs] SET [DerniereConnexion] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+2026-01-19 16:11:26.797 +01:00 [INF] Executed DbCommand (9ms) [Parameters=[@__request_IdDemande_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[ContactEmail], [d].[ContactNom], [d].[DateCreation], [d].[DateModification], [d].[Description], [d].[Equipement], [d].[EstHomologable], [d].[Fabricant], [d].[IdCategorie], [d].[IdDossier], [d].[IdMotifRejet], [d].[IdProposition], [d].[Marque], [d].[Modele], [d].[NumeroDemande], [d].[PrixUnitaire], [d].[QuantiteEquipements], [d].[Remise], [d].[Type], [d].[UtilisateurCreation], [d].[UtilisateurModification], [d0].[Id], [d0].[DateCreation], [d0].[DateModification], [d0].[DateOuverture], [d0].[IdAgentInstructeur], [d0].[IdClient], [d0].[IdModeReglement], [d0].[IdStatut], [d0].[Libelle], [d0].[Numero], [d0].[UtilisateurCreation], [d0].[UtilisateurModification]
+FROM [demandes] AS [d]
+INNER JOIN [dossiers] AS [d0] ON [d].[IdDossier] = [d0].[Id]
+WHERE [d].[Id] = @__request_IdDemande_0
+2026-01-19 16:11:26.960 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__demande_Id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation], [a].[UtilisateurModification]
+FROM [attestations] AS [a]
+WHERE [a].[IdDemande] = @__demande_Id_0
+2026-01-19 16:11:27.023 +01:00 [INF] Attestation existante "933624b2-4f8b-49d1-9f05-93c0078b735e" mise à jour pour la demande "eb0e4fd1-adda-4c9c-b46e-0b35704765cb"
+2026-01-19 16:11:27.044 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Code], [s].[Libelle]
+FROM [statuts] AS [s]
+WHERE [s].[Code] = N'DossierSigner'
+2026-01-19 16:11:27.183 +01:00 [INF] Executed DbCommand (21ms) [Parameters=[@p10='?' (DbType = Guid), @p0='?' (DbType = Int64), @p1='?' (DbType = Int64), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (Size = -1) (DbType = Binary), @p5='?' (Size = 12), @p6='?' (DbType = Guid), @p7='?' (DbType = Int32), @p8='?' (Size = 4000), @p9='?' (Size = 4000), @p13='?' (DbType = Guid), @p11='?' (DbType = Int64), @p12='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [attestations] SET [DateCreation] = @p0, [DateDelivrance] = @p1, [DateExpiration] = @p2, [DateModification] = @p3, [Donnees] = @p4, [Extension] = @p5, [IdDemande] = @p6, [NumeroSequentiel] = @p7, [UtilisateurCreation] = @p8, [UtilisateurModification] = @p9
+OUTPUT 1
+WHERE [Id] = @p10;
+UPDATE [dossiers] SET [DateModification] = @p11, [IdStatut] = @p12
+OUTPUT 1
+WHERE [Id] = @p13;
+2026-01-19 16:11:27.220 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__eventTypeCode_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[Code], [a].[Libelle]
+FROM [adminEvenementsTypes] AS [a]
+WHERE [a].[Code] = @__eventTypeCode_0
+2026-01-19 16:11:27.309 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Int64), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (Size = 100), @p5='?' (DbType = Boolean), @p6='?' (DbType = Boolean), @p7='?' (Size = 1000), @p8='?' (Size = 100), @p9='?' (Size = 500), @p10='?' (Size = 200), @p11='?' (Size = 50), @p12='?' (DbType = Guid), @p13='?' (Size = 4000), @p14='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [notifications] ([Id], [DateCreation], [DateEnvoi], [DateModification], [EntityId], [IsBroadcast], [IsRead], [Message], [ProfilCode], [TargetUrl], [Title], [Type], [UserId], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14);

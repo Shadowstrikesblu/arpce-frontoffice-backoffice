@@ -9,11 +9,16 @@ public class CreateCategorieCommandHandler : IRequestHandler<CreateCategorieComm
 {
     private readonly IApplicationDbContext _context;
     private readonly IAuditService _auditService;
+    private readonly INotificationService _notificationService;
 
-    public CreateCategorieCommandHandler(IApplicationDbContext context, IAuditService auditService)
+    public CreateCategorieCommandHandler(
+        IApplicationDbContext context,
+        IAuditService auditService,
+        INotificationService notificationService)
     {
         _context = context;
         _auditService = auditService;
+        _notificationService = notificationService;
     }
 
     public async Task<CategorieEquipementDto> Handle(CreateCategorieCommand request, CancellationToken cancellationToken)
@@ -37,9 +42,16 @@ public class CreateCategorieCommandHandler : IRequestHandler<CreateCategorieComm
         await _context.SaveChangesAsync(cancellationToken);
 
         await _auditService.LogAsync(
-    page: "Gestion des Catégories",
-    libelle: $"Création de la catégorie '{request.Code}' - {request.Libelle}.",
-    eventTypeCode: "CREATION");
+            page: "Gestion des Catégories",
+            libelle: $"Création de la catégorie '{request.Code}' - {request.Libelle}.",
+            eventTypeCode: "CREATION");
+
+        await _notificationService.SendToGroupAsync(
+            profilCode: "ADMIN", 
+            title: "Nouvelle Catégorie",
+            message: $"La catégorie d'équipement '{entity.Libelle}' a été créée.",
+            type: "E"
+        );
 
         return new CategorieEquipementDto
         {

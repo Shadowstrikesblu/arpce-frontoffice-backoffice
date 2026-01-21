@@ -3,9 +3,6 @@ using BackOffice.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Dossiers.Commands.ChangeStatus;
 
@@ -74,7 +71,7 @@ public class ChangeDossierStatusCommandHandler : IRequestHandler<ChangeDossierSt
                 }
                 else
                 {
-                    _logger.LogWarning("Impossible de générer PDF : aucun devis trouvé pour dossier {DossierId}", request.DossierId);
+                    _logger.LogWarning("Impossible de générer le PDF : aucun devis trouvé pour le dossier {DossierId}", request.DossierId);
                 }
             }
 
@@ -83,32 +80,39 @@ public class ChangeDossierStatusCommandHandler : IRequestHandler<ChangeDossierSt
                 await _certificateGenerator.GenerateAttestationsForDossierAsync(dossier.Id);
             }
 
-            string targetGroup = "DOSSIERS";
+            string targetGroup = "DRSCE"; 
             string notifType = "V";
             string title = "Changement de Statut";
             string message = $"Le statut du dossier {dossier.Numero} est maintenant : {nouveauStatut.Libelle}";
             bool shouldNotify = true;
+            string? secondaryTargetGroup = null;
+            string? secondaryNotifType = null;
 
             switch (request.CodeStatut)
             {
-                case "Instruction": title = "Début Instruction"; message = $"Le dossier {dossier.Numero} est en cours d'instruction."; break;
-                case "ApprobationInstruction": targetGroup = "DOSSIERS"; notifType = "T"; title = "Approbation Requise"; message = $"Le dossier {dossier.Numero} attend votre approbation."; break;
-                case "InstructionApprouve": title = "Instruction Approuvée"; message = $"L'instruction pour {dossier.Numero} est approuvée."; break;
-                case "Echantillon": title = "Échantillon Requis"; break;
-                case "DevisCreer": title = "Devis Créé"; message = $"Le devis pour {dossier.Numero} est prêt."; break;
-                case "DevisValideSC": targetGroup = "DEVIS"; notifType = "E"; title = "Devis Validé (Chef Service)"; break;
-                case "DevisValideTr": targetGroup = "DEVIS"; notifType = "V"; title = "Devis Validé (Trésorerie)"; break;
-                case "DevisEmit": title = "Devis Émis au Client"; break;
-                case "PaiementRejete": title = "Paiement Rejeté"; break;
-                case "DossierPayer": targetGroup = "PAIEMENTS"; notifType = "E"; title = "Paiement Confirmé"; message = $"Paiement confirmé pour {dossier.Numero}."; break;
-                case "DossierSignature": targetGroup = "CERTIFICATS"; notifType = "V"; title = "Attestation en Signature"; break;
-                case "DossierSigner": targetGroup = "CERTIFICATS"; notifType = "E"; title = "Attestation Signée"; break;
+                case "Instruction": targetGroup = "DRSCE"; notifType = "E"; title = "Début Instruction"; message = $"Le dossier {dossier.Numero} est en cours d'instruction."; break;
+                case "ApprobationInstruction": targetGroup = "DRSCE"; notifType = "T"; title = "Approbation Requise"; message = $"Le dossier {dossier.Numero} attend votre approbation."; break;
+                case "InstructionApprouve": targetGroup = "DAFC"; notifType = "V"; title = "Instruction Approuvée"; message = $"L'instruction pour {dossier.Numero} est approuvée. Prêt pour la facturation."; secondaryTargetGroup = "DRSCE"; secondaryNotifType = "V"; break;
+                case "Echantillon": targetGroup = "DRSCE"; notifType = "V"; title = "Échantillon Requis"; break;
+                case "DevisCreer": targetGroup = "DAFC"; notifType = "V"; title = "Devis Créé"; message = $"Le devis pour le dossier {dossier.Numero} est prêt à être validé."; break;
+                case "DevisValideSC": targetGroup = "DAFC"; notifType = "E"; title = "Devis Validé (CS)"; break;
+                case "DevisValideTr": targetGroup = "DAFC"; notifType = "V"; title = "Devis Validé (Trésorerie)"; break;
+                case "DevisEmit": targetGroup = "DAFC"; notifType = "V"; title = "Devis Émis au Client"; break;
+                case "PaiementRejete": targetGroup = "DAFC"; notifType = "V"; title = "Paiement Rejeté"; break;
+                case "PaiementBanque": targetGroup = "DAFC"; notifType = "E"; title = "Paiement par Banque"; message = $"Une preuve de paiement a été soumise pour le dossier {dossier.Numero}."; break;
+                case "DossierPayer": targetGroup = "DRSCE"; notifType = "E"; title = "Paiement Confirmé"; message = $"Paiement confirmé pour {dossier.Numero}."; secondaryTargetGroup = "DAFC"; secondaryNotifType = "V"; break;
+                case "DossierSignature": targetGroup = "DAJI"; notifType = "V"; title = "Attestation en Signature"; break;
+                case "DossierSigner": targetGroup = "DRSCE"; notifType = "E"; title = "Attestation Signée"; secondaryTargetGroup = "DAJI"; secondaryNotifType = "V"; break;
                 default: shouldNotify = false; break;
             }
 
             if (shouldNotify)
             {
                 await _notificationService.SendToGroupAsync(profilCode: targetGroup, title: title, message: message, type: notifType, targetUrl: $"/dossiers/{dossier.Id}", entityId: dossier.Id.ToString());
+                if (secondaryTargetGroup != null)
+                {
+                    await _notificationService.SendToGroupAsync(profilCode: secondaryTargetGroup, title: title, message: message, type: secondaryNotifType, targetUrl: $"/dossiers/{dossier.Id}", entityId: dossier.Id.ToString());
+                }
             }
 
             await _auditService.LogAsync("Gestion des Dossiers", $"Statut du dossier '{dossier.Numero}' changé vers '{nouveauStatut.Libelle}'.", "MODIFICATION", dossier.Id);

@@ -2,10 +2,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Dossiers.Commands.UploadFacture;
 
@@ -43,24 +39,15 @@ public class UploadFactureCommandHandler : IRequestHandler<UploadFactureCommand,
             if (file == null || file.Length == 0) throw new InvalidOperationException("Fichier manquant.");
             if (Path.GetExtension(file.FileName).ToLowerInvariant() != ".pdf") throw new InvalidOperationException("PDF requis.");
 
-            // Uploade le fichier
             await _fileStorageProvider.ImportDocumentDossierAsync(
                 file: file,
                 nom: $"Facture_{dossier.Numero}",
-                type: 2, 
+                type: 2,
                 dossierId: dossier.Id
             );
 
-            // Met à jour le statut du dossier
             var codeStatut = "EnPaiement";
             var nouveauStatut = await _context.Statuts.FirstOrDefaultAsync(s => s.Code == codeStatut, cancellationToken);
-
-            if (nouveauStatut == null)
-            {
-                // Fallback si "EnPaiement" n'existe pas, on cherche "DevisPaiement"
-                _logger.LogWarning("Statut '{CodeStatut}' introuvable, tentative avec 'DevisPaiement'.", codeStatut);
-                nouveauStatut = await _context.Statuts.FirstOrDefaultAsync(s => s.Code == "DevisPaiement", cancellationToken);
-            }
 
             if (nouveauStatut != null)
             {
@@ -68,18 +55,16 @@ public class UploadFactureCommandHandler : IRequestHandler<UploadFactureCommand,
             }
             else
             {
-                // Si aucun statut n'est trouvé, on log une erreur mais on ne bloque pas l'upload
-                _logger.LogError("Aucun statut de mise en attente de paiement ('EnPaiement' ou 'DevisPaiement') n'a été trouvé.");
+                _logger.LogError("Statut 'EnPaiement' introuvable. Le statut du dossier n'a pas été mis à jour.");
             }
 
             await _context.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
 
-            // Journalise et Notifier
             await _auditService.LogAsync("Gestion des Dossiers", $"Facture téléversée pour '{dossier.Numero}'.", "UPLOAD", dossier.Id);
 
             await _notificationService.SendToGroupAsync(
-                profilCode: "DOSSIERS",
+                profilCode: "DAFC",
                 title: "Facture Émise",
                 message: $"La facture pour le dossier {dossier.Numero} est disponible. En attente de paiement.",
                 type: "V",

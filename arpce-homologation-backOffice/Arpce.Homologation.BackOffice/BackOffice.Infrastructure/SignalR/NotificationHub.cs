@@ -2,13 +2,9 @@
 using Microsoft.AspNetCore.SignalR;
 using System.Security.Claims;
 
+
 namespace BackOffice.Infrastructure.SignalR;
 
-/// <summary>
-/// Hub SignalR sécurisé.
-/// Modifié pour respecter la demande Front : "Broadcast avec filtrage côté client".
-/// On ne gère plus les groupes de profils ici.
-/// </summary>
 [Authorize]
 public class NotificationHub : Hub
 {
@@ -16,14 +12,18 @@ public class NotificationHub : Hub
     {
         var user = Context.User;
 
-        if (user != null && user.Identity != null && user.Identity.IsAuthenticated)
+        if (user?.Identity?.IsAuthenticated == true)
         {
-            var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value ??
-                         user.FindFirst("sub")?.Value; 
-
+            var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (!string.IsNullOrEmpty(userId))
             {
                 await Groups.AddToGroupAsync(Context.ConnectionId, userId);
+            }
+
+            var groupName = user.FindFirst("group")?.Value;
+            if (!string.IsNullOrEmpty(groupName))
+            {
+                await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
             }
         }
 

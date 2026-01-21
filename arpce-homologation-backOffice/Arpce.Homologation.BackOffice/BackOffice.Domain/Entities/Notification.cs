@@ -13,15 +13,15 @@ public class Notification : AuditableEntity
     // Contenu
     public string Title { get; set; } = string.Empty;
     public string Message { get; set; } = string.Empty;
-    public string Type { get; set; } = "Info"; // Info, Success, Warning, Error
+    public string Type { get; set; } = "Info"; 
 
     // Navigation / Action
     public string? TargetUrl { get; set; }
-    public string? EntityId { get; set; } // ID de l'objet concerné (ex: DossierId)
+    public string? EntityId { get; set; } 
 
     // Ciblage
-    public Guid? UserId { get; set; } // Si null et ProfilCode null, vérifier IsBroadcast
-    public string? ProfilCode { get; set; } // Si rempli, notif pour tout le groupe
+    public Guid? UserId { get; set; } 
+    public string? ProfilCode { get; set; } 
 
     /// <summary>
     /// Indique si c'est une notification envoyée à tout le monde.
