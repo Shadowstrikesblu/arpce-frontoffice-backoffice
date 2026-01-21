@@ -6,72 +6,73 @@ using Microsoft.Extensions.Logging;
 
 namespace FrontOffice.Application.Features.Paiements.Commands.HandleMomoWebhook;
 
-public class HandleMomoWebhookCommand : IRequest
-{
-    public MomoWebhookPayload Payload { get; set; }
-
-    public HandleMomoWebhookCommand(MomoWebhookPayload payload) => Payload = payload;
-}
-
 public class HandleMomoWebhookCommandHandler : IRequestHandler<HandleMomoWebhookCommand>
 {
     private readonly IApplicationDbContext _context;
     private readonly ILogger<HandleMomoWebhookCommandHandler> _logger;
+    private readonly INotificationService _notificationService; 
 
-    public HandleMomoWebhookCommandHandler(IApplicationDbContext context, ILogger<HandleMomoWebhookCommandHandler> logger)
+    public HandleMomoWebhookCommandHandler(
+        IApplicationDbContext context,
+        ILogger<HandleMomoWebhookCommandHandler> logger,
+        INotificationService notificationService) 
     {
         _context = context;
         _logger = logger;
+        _notificationService = notificationService;
     }
 
     public async Task Handle(HandleMomoWebhookCommand request, CancellationToken cancellationToken)
     {
         var payload = request.Payload;
-        _logger.LogInformation("Webhook MTN reçu pour ExternalId {ExternalId} avec statut {Status}", payload.ExternalId, payload.Status);
+        _logger.LogInformation("Webhook reçu pour ExternalId {Id} avec statut {Status}", payload.ExternalId, payload.Status);
 
         if (!Guid.TryParse(payload.ExternalId, out var devisId))
         {
-            _logger.LogWarning("ID externe du webhook MTN invalide : {ExternalId}", payload.ExternalId);
-            return; // On ignore la requête
+            _logger.LogWarning("ID externe du webhook invalide : {Id}", payload.ExternalId);
+            return;
         }
 
-        // On charge le devis et ses parents (Demande -> Dossier) pour mettre à jour les statuts
         var devis = await _context.Devis
-            .Include(d => d.Demande)
-                .ThenInclude(dem => dem.Dossier)
+            .Include(d => d.Dossier)
             .FirstOrDefaultAsync(d => d.Id == devisId, cancellationToken);
 
         if (devis == null)
         {
-            _logger.LogWarning("Devis avec ID {DevisId} non trouvé suite à la notification webhook.", devisId);
+            _logger.LogWarning("Devis {Id} non trouvé via webhook.", devisId);
             return;
         }
 
         if (payload.Status == "SUCCESSFUL")
         {
-            // Paiement réussi
-            devis.PaiementOk = 1; // 1 = Payé
-
-            // Met à jour le statut du dossier à "Paiement Effectué"
+            devis.PaiementOk = 1;
             var statutPaye = await _context.Statuts.FirstOrDefaultAsync(s => s.Code == StatutDossierEnum.DossierPayer.ToString(), cancellationToken);
-            if (statutPaye != null)
-            {
-                devis.Demande.Dossier.IdStatut = statutPaye.Id;
-            }
+            if (statutPaye != null) devis.Dossier.IdStatut = statutPaye.Id;
 
-            _logger.LogInformation("Paiement MTN validé pour le devis {DevisId}, dossier {DossierId}", devisId, devis.Demande.Dossier.Id);
+            _logger.LogInformation("Paiement validé pour le devis {Id}", devisId);
+
+            await _notificationService.SendToGroupAsync(
+                groupName: "DAFC",
+                title: "Paiement Réussi",
+                message: $"Le paiement pour le dossier {devis.Dossier.Numero} a été effectué avec succès.",
+                type: "Success",
+                targetUrl: $"/dossiers/{devis.Dossier.Id}"
+            );
         }
-        else 
+        else
         {
-            // Paiement échoué
-            // Met à jour le statut du dossier à "Paiement Rejeté"
             var statutRejete = await _context.Statuts.FirstOrDefaultAsync(s => s.Code == StatutDossierEnum.PaiementRejete.ToString(), cancellationToken);
-            if (statutRejete != null)
-            {
-                devis.Demande.Dossier.IdStatut = statutRejete.Id;
-            }
+            if (statutRejete != null) devis.Dossier.IdStatut = statutRejete.Id;
 
-            _logger.LogWarning("Paiement MTN échoué pour le devis {DevisId}", devisId);
+            _logger.LogWarning("Paiement échoué pour le devis {Id}", devisId);
+
+            await _notificationService.SendToGroupAsync(
+                groupName: "DAFC",
+                title: "Paiement Échoué",
+                message: $"Le paiement pour le dossier {devis.Dossier.Numero} a échoué.",
+                type: "Error",
+                targetUrl: $"/dossiers/{devis.Dossier.Id}"
+            );
         }
 
         await _context.SaveChangesAsync(cancellationToken);

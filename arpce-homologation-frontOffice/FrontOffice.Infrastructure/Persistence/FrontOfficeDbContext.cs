@@ -47,6 +47,10 @@ public class FrontOfficeDbContext : DbContext, IApplicationDbContext
     public DbSet<Proposition> Propositions { get; set; }
     public DbSet<Statut> Statuts { get; set; }
 
+    public DbSet<Notification> Notifications { get; set; }
+
+
+
 
     /// <summary>
     /// Méthode pour gérer automatiquement les champs d'audit.

@@ -4,6 +4,7 @@ using FrontOffice.Application.Common.Interfaces;
 using FrontOffice.Infrastructure.Persistence;
 using FrontOffice.Infrastructure.Security;
 using FrontOffice.Infrastructure.Services;
+using FrontOffice.Infrastructure.SignalR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -38,6 +39,8 @@ try
     builder.Services.AddHttpClient<ICaptchaValidator, GoogleCaptchaValidator>();
     builder.Services.AddHttpClient<MtnPaymentService>();
     builder.Services.AddHttpClient<AirtelPaymentService>();
+    builder.Services.AddSignalR();
+    builder.Services.AddTransient<INotificationService, SignalRNotificationService>();
 
     // Enregistre tous les IPaymentService dans le conteneur
     builder.Services.AddTransient<IPaymentService, MtnPaymentService>();
@@ -54,15 +57,18 @@ try
 
 
     // Politique CORS
+    // Attention : Pour SignalR avec Authentification, AllowAnyOrigin() n'est pas permis.
+    // On utilisera WithOrigins(...) et AllowCredentials().
     var corsPolicyName = "AllowWebApp";
     builder.Services.AddCors(options =>
     {
         options.AddPolicy(name: corsPolicyName,
                           policy =>
                           {
-                              policy.AllowAnyOrigin()
+                              policy.AllowAnyMethod()
                                     .AllowAnyHeader()
-                                    .AllowAnyMethod();
+                                    .AllowCredentials()
+                                    .SetIsOriginAllowed(origin => true); // Autorise toutes les origines tout en permettant AllowCredentials
                           });
     });
 
@@ -118,19 +124,37 @@ try
 
     // Configuration de l'Authentification JWT
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(options =>
-        {
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
-                ValidAudience = builder.Configuration["JwtSettings:Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
-            };
-        });
+     .AddJwtBearer(options =>
+     {
+         options.TokenValidationParameters = new TokenValidationParameters
+         {
+             ValidateIssuer = true,
+             ValidateAudience = true,
+             ValidateLifetime = true,
+             ValidateIssuerSigningKey = true,
+             ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+             ValidAudience = builder.Configuration["JwtSettings:Audience"],
+             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
+         };
+
+         // --- Configuration spécifique pour SignalR ---
+         options.Events = new JwtBearerEvents
+         {
+             OnMessageReceived = context =>
+             {
+                 var accessToken = context.Request.Query["access_token"];
+
+                 // Si la requête a un token ET qu'elle cible le Hub SignalR
+                 var path = context.HttpContext.Request.Path;
+                 if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs/notifications"))
+                 {
+                     // On injecte le token manuellement dans le contexte pour que l'authentification fonctionne
+                     context.Token = accessToken;
+                 }
+                 return Task.CompletedTask;
+             }
+         };
+     });
 
     // Injection des services personnalisés
     builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
@@ -171,6 +195,8 @@ try
     app.UseAuthorization();
 
     app.MapControllers();
+
+    app.MapHub<NotificationHub>("/hubs/notifications");
 
     app.Run();
 }
