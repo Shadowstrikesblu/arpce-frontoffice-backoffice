@@ -29,5 +29,6 @@ public class Client : AuditableEntity
     public string? VerificationCode { get; set; }
     public long? VerificationTokenExpiry { get; set; }
 
+
     public virtual ICollection<Dossier> Dossiers { get; set; } = new List<Dossier>();
 }

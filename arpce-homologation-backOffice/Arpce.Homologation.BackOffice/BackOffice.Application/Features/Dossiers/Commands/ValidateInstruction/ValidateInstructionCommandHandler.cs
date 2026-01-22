@@ -40,7 +40,6 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
         using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         try
         {
-            // Récupére le dossier avec ses demandes et les catégories associées pour le calcul
             var dossier = await _context.Dossiers
                 .Include(d => d.Demandes)
                     .ThenInclude(dem => dem.CategorieEquipement)
@@ -53,7 +52,6 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
 
             _logger.LogInformation("Début de la création du devis pour le dossier {DossierId}", dossier.Id);
 
-            // Vérifie s'il existe déjà un devis non payé pour ce dossier
             var existingDevis = await _context.Devis.FirstOrDefaultAsync(d => d.IdDossier == dossier.Id && d.PaiementOk != 1, cancellationToken);
             if (existingDevis != null)
             {
@@ -93,7 +91,6 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
                 _logger.LogInformation("Devis créé en mémoire pour le dossier {DossierId}.", dossier.Id);
             }
 
-            // Met à jour le statut du dossier vers "InstructionApprouve"
             var statutCibleCode = StatutDossierEnum.InstructionApprouve.ToString();
             var nouveauStatut = await _context.Statuts.FirstOrDefaultAsync(s => s.Code == statutCibleCode, cancellationToken);
             if (nouveauStatut == null)
@@ -107,16 +104,7 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
             {
                 var agent = await _context.AdminUtilisateurs.FindAsync(agentId.Value);
                 var nomAgent = agent != null ? $"{agent.Prenoms} {agent.Nom}" : "Agent Inconnu";
-
-                var commentaire = new Commentaire
-                {
-                    Id = Guid.NewGuid(),
-                    IdDossier = dossier.Id,
-                    DateCommentaire = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
-                    CommentaireTexte = request.Remarque,
-                    NomInstructeur = nomAgent
-                };
-                _context.Commentaires.Add(commentaire);
+                _context.Commentaires.Add(new Commentaire { Id = Guid.NewGuid(), IdDossier = dossier.Id, DateCommentaire = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(), CommentaireTexte = request.Remarque, NomInstructeur = nomAgent });
             }
 
             await _context.SaveChangesAsync(cancellationToken);
@@ -128,13 +116,26 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
                 eventTypeCode: "VALIDATION",
                 dossierId: dossier.Id);
 
+            var message = $"L'instruction pour le dossier {dossier.Numero} a été approuvée. Prêt pour facturation.";
+            var targetUrl = $"/dossiers/{dossier.Id}";
+            var entityId = dossier.Id.ToString();
+
             await _notificationService.SendToGroupAsync(
-                profilCode: "DOSSIERS",
+                profilCode: "DRSCE",
                 title: "Instruction Approuvée",
-                message: $"L'instruction pour le dossier {dossier.Numero} a été approuvée. Le devis est prêt.",
+                message: message,
                 type: "V",
-                targetUrl: $"/dossiers/{dossier.Id}",
-                entityId: dossier.Id.ToString()
+                targetUrl: targetUrl,
+                entityId: entityId
+            );
+
+            await _notificationService.SendToGroupAsync(
+                profilCode: "DAFC",
+                title: "Instruction Approuvée",
+                message: message,
+                type: "V",
+                targetUrl: targetUrl,
+                entityId: entityId
             );
 
             return true;

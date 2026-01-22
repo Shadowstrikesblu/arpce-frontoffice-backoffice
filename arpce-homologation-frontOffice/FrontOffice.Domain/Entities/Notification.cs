@@ -1,10 +1,10 @@
-﻿using BackOffice.Domain.Common;
+﻿using FrontOffice.Domain.Common;
+using System;
 
-namespace BackOffice.Domain.Entities;
+namespace FrontOffice.Domain.Entities;
 
 /// <summary>
-/// Représente une notification envoyée à un utilisateur ou un groupe.
-/// Stockée en base pour l'historique.
+/// Représente une notification
 /// </summary>
 public class Notification : AuditableEntity
 {
@@ -13,15 +13,15 @@ public class Notification : AuditableEntity
     // Contenu
     public string Title { get; set; } = string.Empty;
     public string Message { get; set; } = string.Empty;
-    public string Type { get; set; } = "Info"; 
+    public string Type { get; set; } = "Info";
 
     // Navigation / Action
     public string? TargetUrl { get; set; }
-    public string? EntityId { get; set; } 
+    public string? EntityId { get; set; }
 
     // Ciblage
-    public Guid? UserId { get; set; } 
-    public string? ProfilCode { get; set; } 
+    public Guid? UserId { get; set; }
+    public string? ProfilCode { get; set; }
 
     /// <summary>
     /// Indique si c'est une notification envoyée à tout le monde.

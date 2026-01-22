@@ -7,34 +7,33 @@ public class DeleteDossierCommandHandler : IRequestHandler<DeleteDossierCommand,
 {
     private readonly IApplicationDbContext _context;
     private readonly IAuditService _auditService;
+    private readonly INotificationService _notificationService;
 
-    public DeleteDossierCommandHandler(IApplicationDbContext context, IAuditService auditService)
+    public DeleteDossierCommandHandler(IApplicationDbContext context, IAuditService auditService, INotificationService notificationService)
     {
         _context = context;
         _auditService = auditService;
+        _notificationService = notificationService;
     }
 
     public async Task<bool> Handle(DeleteDossierCommand request, CancellationToken cancellationToken)
     {
         var dossier = await _context.Dossiers.FindAsync(new object[] { request.Id }, cancellationToken);
+        if (dossier == null) throw new Exception("Dossier introuvable.");
 
-        if (dossier == null)
-        {
-            throw new Exception($"Le dossier avec l'ID '{request.Id}' est introuvable.");
-        }
+        string numero = dossier.Numero;
 
-        // Suppression physique du dossier.
-        // EF Core gérera la suppression en cascade des enfants (Demandes, etc.) 
-        // grâce à .OnDelete(DeleteBehavior.Cascade) configuré dans DossierConfiguration.
         _context.Dossiers.Remove(dossier);
-
         await _context.SaveChangesAsync(cancellationToken);
 
-        await _auditService.LogAsync(
-    page: "Gestion des Dossiers",
-    libelle: $"Le dossier '{dossier.Numero}' (ID: {dossier.Id}) a été supprimé.",
-    eventTypeCode: "SUPPRESSION",
-    dossierId: dossier.Id);
+        await _auditService.LogAsync("Gestion des Dossiers", $"Le dossier '{numero}' a été supprimé.", "SUPPRESSION", request.Id);
+
+        await _notificationService.SendToGroupAsync(
+            profilCode: "ADMIN",
+            title: "Dossier Supprimé",
+            message: $"Le dossier {numero} a été supprimé du système.",
+            type: "E"
+        );
 
         return true;
     }

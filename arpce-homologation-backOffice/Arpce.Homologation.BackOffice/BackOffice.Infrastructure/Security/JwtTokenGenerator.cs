@@ -1,17 +1,14 @@
 ﻿using BackOffice.Application.Common.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
 namespace BackOffice.Infrastructure.Security;
 
-/// <summary>
-/// Implémentation du service IJwtTokenGenerator.
-/// Génère des tokens JWT en utilisant les paramètres (secret, issuer, audience)
-/// définis dans la configuration de l'application (appsettings.json).
-/// </summary>
 public class JwtTokenGenerator : IJwtTokenGenerator
 {
     private readonly IConfiguration _configuration;
@@ -21,12 +18,8 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         _configuration = configuration;
     }
 
-    /// <summary>
-    /// Génère un token JWT avec les claims essentiels de l'utilisateur.
-    /// </summary>
-    public string GenerateToken(Guid userId, string userAccount, string? profilCode = null)
+    public string GenerateToken(Guid userId, string userAccount, string? profilCode = null, string? groupName = null)
     {
-        // Création de la liste des "claims"
         var claims = new List<Claim>
         {
             new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
@@ -34,31 +27,28 @@ public class JwtTokenGenerator : IJwtTokenGenerator
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
-        // Ajout du ProfilCode s'il est fourni (Indispensable pour les groupes SignalR)
         if (!string.IsNullOrEmpty(profilCode))
         {
             claims.Add(new Claim("ProfilCode", profilCode));
         }
 
-        // Récupération de la clé secrète depuis la configuration et encodage en bytes.
+        if (!string.IsNullOrEmpty(groupName))
+        {
+            claims.Add(new Claim("group", groupName));
+        }
+
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:Secret"]));
-
-        // Création des crédentials de signature avec l'algorithme HMAC SHA256.
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        var expires = DateTime.UtcNow.AddHours(1); 
 
-        // Définition de la date d'expiration du token 
-        var expires = DateTime.UtcNow.AddHours(1);
-
-        // Création de l'objet token avec tous ses paramètres.
         var token = new JwtSecurityToken(
             issuer: _configuration["JwtSettings:Issuer"],
             audience: _configuration["JwtSettings:Audience"],
-            claims: claims, 
+            claims: claims,
             expires: expires,
             signingCredentials: creds
         );
 
-        // Sérialisation du token en une chaîne de caractères compacte (le token final).
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }

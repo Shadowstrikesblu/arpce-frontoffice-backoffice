@@ -14,5 +14,5 @@ public interface IJwtTokenGenerator
     /// <param name="userAccount">Le nom de compte (login) de l'utilisateur.</param>
     /// <param name="profilCode">Le code du profil de l'utilisateur (Optionnel, nécessaire pour SignalR).</param>
     /// <returns>Une chaîne de caractères représentant le token JWT.</returns>
-    string GenerateToken(Guid userId, string userAccount, string? profilCode = null);
+    string GenerateToken(Guid userId, string userAccount, string? profilCode = null, string? groupName = null);
 }

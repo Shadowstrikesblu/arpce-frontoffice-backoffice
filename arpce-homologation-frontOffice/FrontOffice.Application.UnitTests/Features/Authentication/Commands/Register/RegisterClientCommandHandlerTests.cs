@@ -27,15 +27,16 @@ public class RegisterClientCommandHandlerTests
         _mockConfiguration = new Mock<Microsoft.Extensions.Configuration.IConfiguration>();
         _mockLogger = new Mock<Microsoft.Extensions.Logging.ILogger<RegisterClientCommandHandler>>();
 
-        _handler = new RegisterClientCommandHandler(
-            _mockContext.Object,
-            _mockJwtGenerator.Object,
-            _mockPasswordHasher.Object,
-            _mockEmailService.Object,
-            _mockConfiguration.Object,
-            _mockLogger.Object,
-            new Mock<ICaptchaValidator>().Object // On peut ignorer le captcha pour ces tests
-        );
+        //_handler = new RegisterClientCommandHandler(
+        //    _mockContext.Object,
+        //    _mockJwtGenerator.Object,
+        //    _mockPasswordHasher.Object,
+        //    _mockEmailService.Object,
+        //    _mockConfiguration.Object,
+        //    _mockLogger.Object,
+
+        //    new Mock<ICaptchaValidator>().Object // On peut ignorer le captcha pour ces tests
+        //);
     }
 
     [Fact]

@@ -40,34 +40,46 @@ public class LoginLdapQueryHandler : IRequestHandler<LoginLdapQuery, Authenticat
             throw new UnauthorizedAccessException($"Le profil '{profileCode}' reçu de l'AD n'existe pas dans l'application.");
         }
 
-        // Gére l'utilisateur local (Link)
+        // Gère l'utilisateur local (Link)
         var adminUser = await _context.AdminUtilisateurs
             .FirstOrDefaultAsync(u => u.Compte == request.Username, cancellationToken);
 
         if (adminUser == null)
         {
+            // Si l'utilisateur n'existe pas localement, on le crée.
+            var defaultUserType = await _context.AdminUtilisateurTypes.FirstOrDefaultAsync(cancellationToken);
+            if (defaultUserType == null)
+            {
+                throw new InvalidOperationException("Aucun type d'utilisateur par défaut n'est configuré dans la base.");
+            }
+
             adminUser = new AdminUtilisateur
             {
                 Id = Guid.NewGuid(),
                 Compte = request.Username,
-                Nom = request.Username,
+                Nom = request.Username, 
                 IdProfil = profil.Id,
+                IdUtilisateurType = defaultUserType.Id,
                 DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
                 Desactive = false,
-                ChangementMotPasse = false
+                ChangementMotPasse = false 
             };
             _context.AdminUtilisateurs.Add(adminUser);
         }
         else
         {
-            adminUser.IdProfil = profil.Id; 
+            // Mise à jour du profil à chaque connexion pour refléter les changements de l'AD
+            adminUser.IdProfil = profil.Id;
             adminUser.DerniereConnexion = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         }
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        // Génére token en passant le profileCode obtenu du LDAP
-        var token = _jwtTokenGenerator.GenerateToken(adminUser.Id, adminUser.Compte, profileCode);
+        // On utilise le code du profil (venu du LDAP) comme nom de groupe pour SignalR
+        string groupName = profileCode;
+
+        // Génère le token JWT en incluant le profilCode et le groupName
+        var token = _jwtTokenGenerator.GenerateToken(adminUser.Id, adminUser.Compte, profileCode, groupName);
 
         return new AuthenticationResult
         {

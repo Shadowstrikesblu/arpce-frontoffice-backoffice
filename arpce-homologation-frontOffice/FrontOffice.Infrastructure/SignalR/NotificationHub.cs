@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using System;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
-
-namespace BackOffice.Infrastructure.SignalR;
+namespace FrontOffice.Infrastructure.SignalR;
 
 [Authorize]
 public class NotificationHub : Hub
@@ -11,7 +12,6 @@ public class NotificationHub : Hub
     public override async Task OnConnectedAsync()
     {
         var user = Context.User;
-
         if (user?.Identity?.IsAuthenticated == true)
         {
             var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -19,14 +19,7 @@ public class NotificationHub : Hub
             {
                 await Groups.AddToGroupAsync(Context.ConnectionId, userId);
             }
-
-            var groupName = user.FindFirst("group")?.Value;
-            if (!string.IsNullOrEmpty(groupName))
-            {
-                await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-            }
         }
-
         await base.OnConnectedAsync();
     }
 

@@ -1,6 +1,6 @@
 ﻿using BackOffice.Application.Common.Interfaces;
 using MediatR;
-using Microsoft.EntityFrameworkCore; 
+using Microsoft.EntityFrameworkCore;
 
 namespace BackOffice.Application.Features.Categories.Commands.UpdateCategorie;
 
@@ -8,11 +8,16 @@ public class UpdateCategorieCommandHandler : IRequestHandler<UpdateCategorieComm
 {
     private readonly IApplicationDbContext _context;
     private readonly IAuditService _auditService;
+    private readonly INotificationService _notificationService;
 
-    public UpdateCategorieCommandHandler(IApplicationDbContext context, IAuditService auditService)
+    public UpdateCategorieCommandHandler(
+        IApplicationDbContext context,
+        IAuditService auditService,
+        INotificationService notificationService)
     {
         _context = context;
         _auditService = auditService;
+        _notificationService = notificationService;
     }
 
     public async Task<bool> Handle(UpdateCategorieCommand request, CancellationToken cancellationToken)
@@ -39,9 +44,16 @@ public class UpdateCategorieCommandHandler : IRequestHandler<UpdateCategorieComm
         await _context.SaveChangesAsync(cancellationToken);
 
         await _auditService.LogAsync(
-    page: "Gestion des Catégories",
-    libelle: $"Modification de la catégorie '{entity.Code}' (ID: {entity.Id}).",
-    eventTypeCode: "MODIFICATION");
+            page: "Gestion des Catégories",
+            libelle: $"Modification de la catégorie '{entity.Code}' (ID: {entity.Id}).",
+            eventTypeCode: "MODIFICATION");
+
+        await _notificationService.SendToGroupAsync(
+            profilCode: "ADMIN", 
+            title: "Catégorie Mise à Jour",
+            message: $"La catégorie d'équipement '{entity.Libelle}' a été modifiée.",
+            type: "E"
+        );
 
         return true;
     }

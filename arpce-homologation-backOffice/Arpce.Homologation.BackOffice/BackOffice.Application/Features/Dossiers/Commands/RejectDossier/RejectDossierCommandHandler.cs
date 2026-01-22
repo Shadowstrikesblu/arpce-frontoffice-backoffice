@@ -79,13 +79,13 @@ public class RejectDossierCommandHandler : IRequestHandler<RejectDossierCommand,
         await _auditService.LogAsync("Instruction Dossier", $"Dossier {dossier.Numero} rejeté.", "REJET", dossier.Id);
 
         await _notificationService.SendToGroupAsync(
-            profilCode: "DOSSIERS",
-            title: "Dossier Rejeté",
-            message: $"Le dossier {dossier.Numero} a été refusé. Motif : {motif.Libelle}",
-            type: "E",
-            targetUrl: $"/dossiers/{dossier.Id}",
-            entityId: dossier.Id.ToString()
-        );
+             profilCode: "DRSCE",
+             title: "Dossier Rejeté",
+             message: $"Le dossier {dossier.Numero} a été refusé.",
+             type: "E",
+             targetUrl: $"/dossiers/{dossier.Id}",
+             entityId: dossier.Id.ToString()
+         );
 
         return true;
     }

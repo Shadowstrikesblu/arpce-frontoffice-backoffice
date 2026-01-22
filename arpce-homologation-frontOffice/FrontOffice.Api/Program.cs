@@ -4,6 +4,7 @@ using FrontOffice.Application.Common.Interfaces;
 using FrontOffice.Infrastructure.Persistence;
 using FrontOffice.Infrastructure.Security;
 using FrontOffice.Infrastructure.Services;
+using FrontOffice.Infrastructure.SignalR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -39,31 +40,36 @@ try
     builder.Services.AddHttpClient<ICaptchaValidator, GoogleCaptchaValidator>();
     builder.Services.AddHttpClient<MtnPaymentService>();
     builder.Services.AddHttpClient<AirtelPaymentService>();
+    builder.Services.AddSignalR();
+    builder.Services.AddTransient<INotificationService, SignalRNotificationService>();
 
     // Enregistre tous les IPaymentService dans le conteneur
     builder.Services.AddTransient<IPaymentService, MtnPaymentService>();
     builder.Services.AddTransient<IPaymentService, AirtelPaymentService>();
 
-    // Crée une "factory" simple pour les récupérer par leur code
+    // Crï¿½e une "factory" simple pour les rï¿½cupï¿½rer par leur code
     builder.Services.AddTransient<Func<string, IPaymentService>>(serviceProvider => providerCode =>
     {
         var services = serviceProvider.GetServices<IPaymentService>();
         return services.FirstOrDefault(s => s.ProviderCode.Equals(providerCode, StringComparison.OrdinalIgnoreCase))
-            ?? throw new InvalidOperationException($"Service de paiement '{providerCode}' non supporté.");
+            ?? throw new InvalidOperationException($"Service de paiement '{providerCode}' non supportï¿½.");
     });
 
 
 
-    // Politique CORS (Ouverte pour le Sandbox)
+    // Politique CORS
+    // Attention : Pour SignalR avec Authentification, AllowAnyOrigin() n'est pas permis.
+    // On utilisera WithOrigins(...) et AllowCredentials().
     var corsPolicyName = "AllowWebApp";
     builder.Services.AddCors(options =>
     {
         options.AddPolicy(name: corsPolicyName,
                           policy =>
                           {
-                              policy.AllowAnyOrigin()
+                              policy.AllowAnyMethod()
                                     .AllowAnyHeader()
-                                    .AllowAnyMethod();
+                                    .AllowCredentials()
+                                    .SetIsOriginAllowed(origin => true); // Autorise toutes les origines tout en permettant AllowCredentials
                           });
     });
 
@@ -113,34 +119,37 @@ try
 
     // --- Configuration Authentification JWT Robuste ---
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(options =>
-        {
-            var jwtSecret = builder.Configuration["JwtSettings:Secret"];
-            var jwtIssuer = builder.Configuration["JwtSettings:Issuer"];
-            var jwtAudience = builder.Configuration["JwtSettings:Audience"];
+     .AddJwtBearer(options =>
+     {
+         options.TokenValidationParameters = new TokenValidationParameters
+         {
+             ValidateIssuer = true,
+             ValidateAudience = true,
+             ValidateLifetime = true,
+             ValidateIssuerSigningKey = true,
+             ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+             ValidAudience = builder.Configuration["JwtSettings:Audience"],
+             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
+         };
 
-            // Logs pour aider l'infra Ã  dÃ©boguer (sans afficher le secret en clair)
-            Log.Information("FrontOffice - Config JWT - Secret: {SecretStatus}, Issuer: {Issuer}, Audience: {Audience}",
-                !string.IsNullOrWhiteSpace(jwtSecret) ? "PRESENT (Long: " + jwtSecret.Length + ")" : "MANQUANT",
-                jwtIssuer,
-                jwtAudience);
+         // --- Configuration spï¿½cifique pour SignalR ---
+         options.Events = new JwtBearerEvents
+         {
+             OnMessageReceived = context =>
+             {
+                 var accessToken = context.Request.Query["access_token"];
 
-            if (string.IsNullOrWhiteSpace(jwtSecret))
-            {
-                throw new ArgumentNullException("JwtSettings:Secret", "Le secret JWT est manquant dans la configuration.");
-            }
-
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = jwtIssuer,
-                ValidAudience = jwtAudience,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
-            };
-        });
+                 // Si la requï¿½te a un token ET qu'elle cible le Hub SignalR
+                 var path = context.HttpContext.Request.Path;
+                 if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs/notifications"))
+                 {
+                     // On injecte le token manuellement dans le contexte pour que l'authentification fonctionne
+                     context.Token = accessToken;
+                 }
+                 return Task.CompletedTask;
+             }
+         };
+     });
 
     // Injection des services personnalisÃ©s
     builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
@@ -198,6 +207,8 @@ try
     app.UseAuthentication();
     app.UseAuthorization();
     app.MapControllers();
+
+    app.MapHub<NotificationHub>("/hubs/notifications");
 
     app.Run();
 }

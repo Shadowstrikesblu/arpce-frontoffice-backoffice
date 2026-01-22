@@ -31,7 +31,7 @@ public interface IApplicationDbContext
     DbSet<MotifRejet> MotifsRejets { get; }
     DbSet<Proposition> Propositions { get; }
     DbSet<Statut> Statuts { get; }
-
+    DbSet<Notification> Notifications { get; }
     DatabaseFacade Database { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
