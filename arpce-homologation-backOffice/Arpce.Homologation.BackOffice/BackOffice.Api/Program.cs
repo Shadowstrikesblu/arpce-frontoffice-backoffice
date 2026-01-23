@@ -25,27 +25,46 @@ builder.Host.UseSerilog((context, services, configuration) =>
         .WriteTo.Console());
 
 // ------------------------------------------------------
-// CORS
-// ------------------------------------------------------
-var corsPolicyName = "DefaultCorsPolicy";
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: corsPolicyName, policy =>
-    {
-        policy
-            .AllowAnyOrigin()
-            .AllowAnyHeader()
-            .AllowAnyMethod();
-    });
-});
-
-// ------------------------------------------------------
 // SERVICES
 // ------------------------------------------------------
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
 builder.Services.AddHttpContextAccessor();
+
+// ------------------------------------------------------
+// SWAGGER (needed for UseSwagger/UseSwaggerUI)
+// ------------------------------------------------------
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "BackOffice API", Version = "v1" });
+
+    // JWT auth support in Swagger UI
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter: Bearer {your JWT token}"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 
 // DbContext
 builder.Services.AddDbContext<BackOfficeDbContext>(options =>
@@ -72,7 +91,9 @@ builder.Services.AddTransient<INotificationService, SignalRNotificationService>(
 builder.Services.AddTransient<ICertificateGeneratorService, CertificateGeneratorService>();
 builder.Services.AddTransient<IDevisGeneratorService, DevisGeneratorService>();
 
-// Configuration de l'Authentification JWT
+// ------------------------------------------------------
+// AUTH (JWT) + SignalR support
+// ------------------------------------------------------
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -87,8 +108,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
             ValidAudience = builder.Configuration["JwtSettings:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(secret))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret))
         };
 
         // SignalR JWT support
@@ -110,21 +130,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-
-// Politique CORS
-// Attention : Pour SignalR avec Authentification, AllowAnyOrigin() n'est pas permis.
-// On utilisera WithOrigins(...) et AllowCredentials().
+// ------------------------------------------------------
+// CORS (SignalR + Auth requires AllowCredentials, so no AllowAnyOrigin)
+// ------------------------------------------------------
 var corsPolicyName = "AllowWebApp";
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: corsPolicyName,
-                      policy =>
-                      {
-                          policy.AllowAnyMethod()
-                                .AllowAnyHeader()
-                                .AllowCredentials() 
-                                .SetIsOriginAllowed(origin => true); // Autorise toutes les origines tout en permettant AllowCredentials
-                      });
+    options.AddPolicy(name: corsPolicyName, policy =>
+    {
+        policy.AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials()
+              .SetIsOriginAllowed(_ => true); // allow all origins with credentials
+        // Recommended for prod:
+        // .WithOrigins("https://your-frontend-domain.com")
+    });
 });
 
 // ------------------------------------------------------
@@ -138,7 +159,7 @@ var app = builder.Build();
 app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseSerilogRequestLogging();
 
-// ✅ Swagger enabled in Production via config
+// Swagger enabled in Production via config
 bool enableSwagger =
     app.Environment.IsDevelopment() ||
     app.Configuration.GetValue<bool>("EnableSwaggerUI");
@@ -161,7 +182,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// ✅ Active la policy CORS
+// CORS must be between UseRouting and UseAuthentication/UseAuthorization
 app.UseCors(corsPolicyName);
 
 app.UseAuthentication();
