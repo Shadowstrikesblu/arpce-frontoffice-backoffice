@@ -51,24 +51,7 @@ public class DemandesController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Pour uploader le certificat signé
-    /// </summary>
-    /// <param name="demandeId"></param>
-    /// <param name="command"></param>
-    /// <returns></returns>
-    [HttpPost("{demandeId:guid}/certificat")]
-    public async Task<IActionResult> UploadCertificat(
-        [FromRoute] Guid demandeId,
-        [FromForm] UploadCertificatCommand command)
-    {
-        // On assigne manuellement l'ID de la route à la commande
-        command.IdDemande = demandeId;
-
-        var result = await _mediator.Send(command);
-        return Ok(new { ok = result });
-    }
-
+   
     /// <summary>
     /// Pour télé charger le document
     /// </summary>

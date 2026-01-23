@@ -127,7 +127,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 // Politique CORS
 // Attention : Pour SignalR avec Authentification, AllowAnyOrigin() n'est pas permis.
-// Il faut utiliser WithOrigins(...) et AllowCredentials().
+// On utilisera WithOrigins(...) et AllowCredentials().
 var corsPolicyName = "AllowWebApp";
 builder.Services.AddCors(options =>
 {
