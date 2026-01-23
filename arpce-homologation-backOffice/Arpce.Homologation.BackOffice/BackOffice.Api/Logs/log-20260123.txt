@@ -1,0 +1,183 @@
+2026-01-23 10:29:46.618 +01:00 [INF] Now listening on: https://localhost:7238
+2026-01-23 10:29:46.719 +01:00 [INF] Now listening on: http://localhost:5126
+2026-01-23 10:29:46.878 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-23 10:29:46.890 +01:00 [INF] Hosting environment: Development
+2026-01-23 10:29:46.922 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api
+2026-01-23 11:07:01.672 +01:00 [INF] Now listening on: https://localhost:7238
+2026-01-23 11:07:01.707 +01:00 [INF] Now listening on: http://localhost:5126
+2026-01-23 11:07:01.791 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-23 11:07:01.795 +01:00 [INF] Hosting environment: Development
+2026-01-23 11:07:01.798 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api
+2026-01-23 11:47:20.013 +01:00 [INF] Now listening on: https://localhost:7238
+2026-01-23 11:47:20.167 +01:00 [INF] Now listening on: http://localhost:5126
+2026-01-23 11:47:20.493 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-23 11:47:20.551 +01:00 [INF] Hosting environment: Development
+2026-01-23 11:47:20.571 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api
+2026-01-23 11:47:51.614 +01:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-01-23 11:48:07.366 +01:00 [INF] Executed DbCommand (402ms) [Parameters=[@__request_Compte_0='?' (Size = 100)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AdminProfilsId], [a].[ChangementMotPasse], [a].[Compte], [a].[DateCreation], [a].[DateModification], [a].[DerniereConnexion], [a].[Desactive], [a].[IdProfil], [a].[IdUtilisateurType], [a].[MotPasse], [a].[Nom], [a].[Prenoms], [a].[Remarques], [a].[UtilisateurCreation], [a].[UtilisateurModification], [a0].[Id], [a0].[Code], [a0].[DateCreation], [a0].[DateModification], [a0].[Libelle], [a0].[Remarques], [a0].[UtilisateurCreation], [a0].[UtilisateurModification]
+FROM [AdminUtilisateurs] AS [a]
+LEFT JOIN [adminProfils] AS [a0] ON [a].[IdProfil] = [a0].[Id]
+WHERE [a].[Compte] = @__request_Compte_0
+2026-01-23 11:48:08.626 +01:00 [INF] Executed DbCommand (32ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [AdminUtilisateurs] SET [DerniereConnexion] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+2026-01-23 11:59:30.348 +01:00 [INF] Now listening on: https://localhost:7238
+2026-01-23 11:59:30.517 +01:00 [INF] Now listening on: http://localhost:5126
+2026-01-23 11:59:31.004 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-23 11:59:31.015 +01:00 [INF] Hosting environment: Development
+2026-01-23 11:59:31.024 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api
+2026-01-23 11:59:38.284 +01:00 [ERR] Une exception non gérée a été interceptée.
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Failed to generate Operation for action - BackOffice.Api.Controllers.DemandesController.UploadCertificat (BackOffice.Api). See inner exception
+ ---> Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Error reading parameter(s) for action BackOffice.Api.Controllers.DemandesController.UploadCertificat (BackOffice.Api) as [FromForm] attribute used with IFormFile. Please refer to https://github.com/domaindrivendev/Swashbuckle.AspNetCore/tree/master/docs/configure-and-customize-swaggergen.md#handle-forms-and-file-uploads for more information
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateParametersAsync(ApiDescription apiDescription, SchemaRepository schemaRepository, Func`3 parameterGenerator)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateParametersAsync(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperationAsync(OpenApiDocument document, ApiDescription apiDescription, SchemaRepository schemaRepository, Func`3 parametersGenerator, Func`3 bodyGenerator, Func`3 applyFilters)
+   --- End of inner exception stack trace ---
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperationAsync(OpenApiDocument document, ApiDescription apiDescription, SchemaRepository schemaRepository, Func`3 parametersGenerator, Func`3 bodyGenerator, Func`3 applyFilters)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperationAsync(OpenApiDocument document, ApiDescription apiDescription, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperationsAsync(OpenApiDocument document, IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePathsAsync(OpenApiDocument document, IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository, Func`4 operationsGenerator)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePathsAsync(OpenApiDocument document, IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerAsync(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at BackOffice.Api.Middleware.ErrorHandlingMiddleware.Invoke(HttpContext context) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\Middleware\ErrorHandlingMiddleware.cs:line 21
+2026-01-23 12:03:18.862 +01:00 [INF] Now listening on: https://localhost:7238
+2026-01-23 12:03:19.094 +01:00 [INF] Now listening on: http://localhost:5126
+2026-01-23 12:03:19.539 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-23 12:03:19.544 +01:00 [INF] Hosting environment: Development
+2026-01-23 12:03:19.598 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api
+2026-01-23 12:03:25.771 +01:00 [ERR] Une exception non gérée a été interceptée.
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Failed to generate Operation for action - BackOffice.Api.Controllers.DemandesController.UploadCertificat (BackOffice.Api). See inner exception
+ ---> Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Error reading parameter(s) for action BackOffice.Api.Controllers.DemandesController.UploadCertificat (BackOffice.Api) as [FromForm] attribute used with IFormFile. Please refer to https://github.com/domaindrivendev/Swashbuckle.AspNetCore/tree/master/docs/configure-and-customize-swaggergen.md#handle-forms-and-file-uploads for more information
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateParametersAsync(ApiDescription apiDescription, SchemaRepository schemaRepository, Func`3 parameterGenerator)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateParametersAsync(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperationAsync(OpenApiDocument document, ApiDescription apiDescription, SchemaRepository schemaRepository, Func`3 parametersGenerator, Func`3 bodyGenerator, Func`3 applyFilters)
+   --- End of inner exception stack trace ---
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperationAsync(OpenApiDocument document, ApiDescription apiDescription, SchemaRepository schemaRepository, Func`3 parametersGenerator, Func`3 bodyGenerator, Func`3 applyFilters)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperationAsync(OpenApiDocument document, ApiDescription apiDescription, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperationsAsync(OpenApiDocument document, IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePathsAsync(OpenApiDocument document, IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository, Func`4 operationsGenerator)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePathsAsync(OpenApiDocument document, IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerAsync(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at BackOffice.Api.Middleware.ErrorHandlingMiddleware.Invoke(HttpContext context) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\Middleware\ErrorHandlingMiddleware.cs:line 21
+2026-01-23 12:13:09.892 +01:00 [INF] Now listening on: https://localhost:7238
+2026-01-23 12:13:10.003 +01:00 [INF] Now listening on: http://localhost:5126
+2026-01-23 12:13:10.263 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-23 12:13:10.270 +01:00 [INF] Hosting environment: Development
+2026-01-23 12:13:10.274 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api
+2026-01-23 12:13:15.796 +01:00 [ERR] Une exception non gérée a été interceptée.
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Failed to generate Operation for action - BackOffice.Api.Controllers.DemandesController.UploadCertificat (BackOffice.Api). See inner exception
+ ---> Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Error reading parameter(s) for action BackOffice.Api.Controllers.DemandesController.UploadCertificat (BackOffice.Api) as [FromForm] attribute used with IFormFile. Please refer to https://github.com/domaindrivendev/Swashbuckle.AspNetCore/tree/master/docs/configure-and-customize-swaggergen.md#handle-forms-and-file-uploads for more information
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateParametersAsync(ApiDescription apiDescription, SchemaRepository schemaRepository, Func`3 parameterGenerator)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateParametersAsync(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperationAsync(OpenApiDocument document, ApiDescription apiDescription, SchemaRepository schemaRepository, Func`3 parametersGenerator, Func`3 bodyGenerator, Func`3 applyFilters)
+   --- End of inner exception stack trace ---
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperationAsync(OpenApiDocument document, ApiDescription apiDescription, SchemaRepository schemaRepository, Func`3 parametersGenerator, Func`3 bodyGenerator, Func`3 applyFilters)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperationAsync(OpenApiDocument document, ApiDescription apiDescription, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperationsAsync(OpenApiDocument document, IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePathsAsync(OpenApiDocument document, IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository, Func`4 operationsGenerator)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePathsAsync(OpenApiDocument document, IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerAsync(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at BackOffice.Api.Middleware.ErrorHandlingMiddleware.Invoke(HttpContext context) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\Middleware\ErrorHandlingMiddleware.cs:line 21
+2026-01-23 12:14:05.798 +01:00 [INF] Now listening on: https://localhost:7238
+2026-01-23 12:14:05.935 +01:00 [INF] Now listening on: http://localhost:5126
+2026-01-23 12:14:06.240 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-23 12:14:06.249 +01:00 [INF] Hosting environment: Development
+2026-01-23 12:14:06.256 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api
+2026-01-23 12:14:11.781 +01:00 [ERR] Une exception non gérée a été interceptée.
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Failed to generate Operation for action - BackOffice.Api.Controllers.DemandesController.UploadCertificat (BackOffice.Api). See inner exception
+ ---> Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Error reading parameter(s) for action BackOffice.Api.Controllers.DemandesController.UploadCertificat (BackOffice.Api) as [FromForm] attribute used with IFormFile. Please refer to https://github.com/domaindrivendev/Swashbuckle.AspNetCore/tree/master/docs/configure-and-customize-swaggergen.md#handle-forms-and-file-uploads for more information
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateParametersAsync(ApiDescription apiDescription, SchemaRepository schemaRepository, Func`3 parameterGenerator)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateParametersAsync(ApiDescription apiDescription, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperationAsync(OpenApiDocument document, ApiDescription apiDescription, SchemaRepository schemaRepository, Func`3 parametersGenerator, Func`3 bodyGenerator, Func`3 applyFilters)
+   --- End of inner exception stack trace ---
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperationAsync(OpenApiDocument document, ApiDescription apiDescription, SchemaRepository schemaRepository, Func`3 parametersGenerator, Func`3 bodyGenerator, Func`3 applyFilters)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperationAsync(OpenApiDocument document, ApiDescription apiDescription, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperationsAsync(OpenApiDocument document, IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePathsAsync(OpenApiDocument document, IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository, Func`4 operationsGenerator)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePathsAsync(OpenApiDocument document, IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerAsync(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at BackOffice.Api.Middleware.ErrorHandlingMiddleware.Invoke(HttpContext context) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\Middleware\ErrorHandlingMiddleware.cs:line 21
+2026-01-23 12:38:24.929 +01:00 [INF] Now listening on: https://localhost:7238
+2026-01-23 12:38:25.124 +01:00 [INF] Now listening on: http://localhost:5126
+2026-01-23 12:38:25.679 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-23 12:38:25.692 +01:00 [INF] Hosting environment: Development
+2026-01-23 12:38:25.697 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api
+2026-01-23 12:40:21.703 +01:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-01-23 12:40:31.717 +01:00 [INF] Executed DbCommand (138ms) [Parameters=[@__request_Compte_0='?' (Size = 100)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AdminProfilsId], [a].[ChangementMotPasse], [a].[Compte], [a].[DateCreation], [a].[DateModification], [a].[DerniereConnexion], [a].[Desactive], [a].[IdProfil], [a].[IdUtilisateurType], [a].[MotPasse], [a].[Nom], [a].[Prenoms], [a].[Remarques], [a].[UtilisateurCreation], [a].[UtilisateurModification], [a0].[Id], [a0].[Code], [a0].[DateCreation], [a0].[DateModification], [a0].[Libelle], [a0].[Remarques], [a0].[UtilisateurCreation], [a0].[UtilisateurModification]
+FROM [AdminUtilisateurs] AS [a]
+LEFT JOIN [adminProfils] AS [a0] ON [a].[IdProfil] = [a0].[Id]
+WHERE [a].[Compte] = @__request_Compte_0
+2026-01-23 12:40:32.605 +01:00 [INF] Executed DbCommand (11ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [AdminUtilisateurs] SET [DerniereConnexion] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+2026-01-23 12:42:31.915 +01:00 [INF] Executed DbCommand (49ms) [Parameters=[@__request_AttestationId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation], [a].[UtilisateurModification], [d].[Id], [d].[ContactEmail], [d].[ContactNom], [d].[DateCreation], [d].[DateModification], [d].[Description], [d].[Equipement], [d].[EstHomologable], [d].[Fabricant], [d].[IdCategorie], [d].[IdDossier], [d].[IdMotifRejet], [d].[IdProposition], [d].[Marque], [d].[Modele], [d].[NumeroDemande], [d].[PrixUnitaire], [d].[QuantiteEquipements], [d].[Remise], [d].[Type], [d].[UtilisateurCreation], [d].[UtilisateurModification], [d0].[Id], [d0].[DateCreation], [d0].[DateModification], [d0].[DateOuverture], [d0].[IdAgentInstructeur], [d0].[IdClient], [d0].[IdModeReglement], [d0].[IdStatut], [d0].[Libelle], [d0].[Numero], [d0].[UtilisateurCreation], [d0].[UtilisateurModification]
+FROM [attestations] AS [a]
+INNER JOIN [demandes] AS [d] ON [a].[IdDemande] = [d].[Id]
+INNER JOIN [dossiers] AS [d0] ON [d].[IdDossier] = [d0].[Id]
+WHERE [a].[Id] = @__request_AttestationId_0
+2026-01-23 12:42:32.999 +01:00 [INF] Executed DbCommand (64ms) [Parameters=[@p10='?' (DbType = Guid), @p0='?' (DbType = Int64), @p1='?' (DbType = Int64), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (Size = -1) (DbType = Binary), @p5='?' (Size = 12), @p6='?' (DbType = Guid), @p7='?' (DbType = Int32), @p8='?' (Size = 4000), @p9='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [attestations] SET [DateCreation] = @p0, [DateDelivrance] = @p1, [DateExpiration] = @p2, [DateModification] = @p3, [Donnees] = @p4, [Extension] = @p5, [IdDemande] = @p6, [NumeroSequentiel] = @p7, [UtilisateurCreation] = @p8, [UtilisateurModification] = @p9
+OUTPUT 1
+WHERE [Id] = @p10;
+2026-01-23 12:42:33.034 +01:00 [INF] Attestation "8fbe2fe1-183f-4c8a-953b-1e47de5af9d8" mise à jour avec le contenu du fichier.
+2026-01-23 12:42:33.131 +01:00 [INF] Executed DbCommand (10ms) [Parameters=[@__dossier_Id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id]
+FROM [demandes] AS [d]
+WHERE [d].[IdDossier] = @__dossier_Id_0
+2026-01-23 12:42:33.564 +01:00 [INF] Executed DbCommand (47ms) [Parameters=[@__allDemandeIdsInDossier_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [attestations] AS [a]
+WHERE [a].[IdDemande] IN (
+    SELECT [a0].[value]
+    FROM OPENJSON(@__allDemandeIdsInDossier_0) WITH ([value] uniqueidentifier '$') AS [a0]
+) AND CAST(DATALENGTH([a].[Donnees]) AS int) > 1
+2026-01-23 12:42:33.597 +01:00 [INF] Toutes les 1 attestations du dossier "1d9a785e-8c0d-42ca-a69d-10b1b1a53b96" sont complètes. Changement de statut.
+2026-01-23 12:42:33.655 +01:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Code], [s].[Libelle]
+FROM [statuts] AS [s]
+WHERE [s].[Code] = N'DossierSigner'
+2026-01-23 12:42:33.819 +01:00 [INF] Executed DbCommand (34ms) [Parameters=[@p11='?' (DbType = Guid), @p0='?' (DbType = Int64), @p1='?' (DbType = Int64), @p2='?' (DbType = Int64), @p3='?' (DbType = Guid), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?' (Size = 120), @p8='?' (Size = 30), @p9='?' (Size = 60), @p10='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [dossiers] SET [DateCreation] = @p0, [DateModification] = @p1, [DateOuverture] = @p2, [IdAgentInstructeur] = @p3, [IdClient] = @p4, [IdModeReglement] = @p5, [IdStatut] = @p6, [Libelle] = @p7, [Numero] = @p8, [UtilisateurCreation] = @p9, [UtilisateurModification] = @p10
+OUTPUT 1
+WHERE [Id] = @p11;
+2026-01-23 12:42:33.938 +01:00 [INF] Executed DbCommand (14ms) [Parameters=[@__eventTypeCode_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[Code], [a].[Libelle]
+FROM [adminEvenementsTypes] AS [a]
+WHERE [a].[Code] = @__eventTypeCode_0
+2026-01-23 12:42:34.240 +01:00 [INF] Executed DbCommand (22ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Int64), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (Size = 100), @p5='?' (DbType = Boolean), @p6='?' (DbType = Boolean), @p7='?' (Size = 1000), @p8='?' (Size = 100), @p9='?' (Size = 500), @p10='?' (Size = 200), @p11='?' (Size = 50), @p12='?' (DbType = Guid), @p13='?' (Size = 4000), @p14='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [notifications] ([Id], [DateCreation], [DateEnvoi], [DateModification], [EntityId], [IsBroadcast], [IsRead], [Message], [ProfilCode], [TargetUrl], [Title], [Type], [UserId], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2026-01-23 12:42:34.284 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Int64), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (Size = 100), @p5='?' (DbType = Boolean), @p6='?' (DbType = Boolean), @p7='?' (Size = 1000), @p8='?' (Size = 100), @p9='?' (Size = 500), @p10='?' (Size = 200), @p11='?' (Size = 50), @p12='?' (DbType = Guid), @p13='?' (Size = 4000), @p14='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [notifications] ([Id], [DateCreation], [DateEnvoi], [DateModification], [EntityId], [IsBroadcast], [IsRead], [Message], [ProfilCode], [TargetUrl], [Title], [Type], [UserId], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2026-01-23 12:43:30.280 +01:00 [INF] Executed DbCommand (12ms) [Parameters=[@__request_AttestationId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation], [a].[UtilisateurModification], [d].[Id], [d].[ContactEmail], [d].[ContactNom], [d].[DateCreation], [d].[DateModification], [d].[Description], [d].[Equipement], [d].[EstHomologable], [d].[Fabricant], [d].[IdCategorie], [d].[IdDossier], [d].[IdMotifRejet], [d].[IdProposition], [d].[Marque], [d].[Modele], [d].[NumeroDemande], [d].[PrixUnitaire], [d].[QuantiteEquipements], [d].[Remise], [d].[Type], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+FROM [attestations] AS [a]
+INNER JOIN [demandes] AS [d] ON [a].[IdDemande] = [d].[Id]
+WHERE [a].[Id] = @__request_AttestationId_0
+2026-01-23 12:43:35.425 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@__request_AttestationId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation], [a].[UtilisateurModification], [d].[Id], [d].[ContactEmail], [d].[ContactNom], [d].[DateCreation], [d].[DateModification], [d].[Description], [d].[Equipement], [d].[EstHomologable], [d].[Fabricant], [d].[IdCategorie], [d].[IdDossier], [d].[IdMotifRejet], [d].[IdProposition], [d].[Marque], [d].[Modele], [d].[NumeroDemande], [d].[PrixUnitaire], [d].[QuantiteEquipements], [d].[Remise], [d].[Type], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+FROM [attestations] AS [a]
+INNER JOIN [demandes] AS [d] ON [a].[IdDemande] = [d].[Id]
+WHERE [a].[Id] = @__request_AttestationId_0

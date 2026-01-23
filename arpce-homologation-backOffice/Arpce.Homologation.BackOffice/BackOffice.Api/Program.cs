@@ -110,41 +110,21 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// Swagger
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
+
+// Politique CORS
+// Attention : Pour SignalR avec Authentification, AllowAnyOrigin() n'est pas permis.
+// On utilisera WithOrigins(...) et AllowCredentials().
+var corsPolicyName = "AllowWebApp";
+builder.Services.AddCors(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Title = "ARPCE Homologation - BackOffice API",
-        Version = "v1"
-    });
-
-    options.CustomSchemaIds(t => t.FullName);
-
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer",
-        In = ParameterLocation.Header,
-        Description = "Bearer {your JWT token}"
-    });
-
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            Array.Empty<string>()
-        }
-    });
+    options.AddPolicy(name: corsPolicyName,
+                      policy =>
+                      {
+                          policy.AllowAnyMethod()
+                                .AllowAnyHeader()
+                                .AllowCredentials() 
+                                .SetIsOriginAllowed(origin => true); // Autorise toutes les origines tout en permettant AllowCredentials
+                      });
 });
 
 // ------------------------------------------------------
