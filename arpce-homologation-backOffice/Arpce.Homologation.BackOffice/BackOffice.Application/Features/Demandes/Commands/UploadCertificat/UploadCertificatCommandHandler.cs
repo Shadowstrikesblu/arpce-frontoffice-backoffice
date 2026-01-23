@@ -30,65 +30,62 @@ public class UploadCertificatCommandHandler : IRequestHandler<UploadCertificatCo
 
         try
         {
-            // Récupération de l'attestation avec la demande et le dossier
-            var attestationToUpdate = await _context.Attestations
+            // Récupération de l'attestation avec sa demande et son dossier
+            var attestation = await _context.Attestations
                 .Include(a => a.Demande)
                     .ThenInclude(d => d.Dossier)
                 .FirstOrDefaultAsync(a => a.Id == request.AttestationId, cancellationToken);
 
-            if (attestationToUpdate == null)
+            if (attestation == null)
             {
                 _logger.LogWarning("Attestation {AttestationId} introuvable.", request.AttestationId);
                 return false;
             }
 
-            var dossier = attestationToUpdate.Demande.Dossier;
+            var dossier = attestation.Demande.Dossier;
 
             // Validation du fichier
-            var file = request.CertificatFile;
-            if (file == null || file.Length == 0)
+            if (request.CertificatFile == null || request.CertificatFile.Length == 0)
             {
-                _logger.LogWarning("Fichier certificat manquant pour l'attestation {AttestationId}.", request.AttestationId);
+                _logger.LogWarning("Fichier manquant pour l'attestation {AttestationId}.", request.AttestationId);
                 return false;
             }
 
-            // Lecture du fichier
+            // Lecture du fichier en mémoire
             byte[] fileData;
             using (var memoryStream = new MemoryStream())
             {
-                await file.CopyToAsync(memoryStream, cancellationToken);
+                await request.CertificatFile.CopyToAsync(memoryStream, cancellationToken);
                 fileData = memoryStream.ToArray();
             }
 
             // Mise à jour de l'attestation
-            attestationToUpdate.Donnees = fileData;
-            attestationToUpdate.Extension = Path.GetExtension(file.FileName)?.TrimStart('.').ToLowerInvariant() ?? "pdf";
-            attestationToUpdate.DateDelivrance = new DateTimeOffset(request.DateDelivrance).ToUnixTimeMilliseconds();
-            attestationToUpdate.DateExpiration = new DateTimeOffset(request.DateExpiration).ToUnixTimeMilliseconds();
+            attestation.Donnees = fileData;
+            attestation.Extension = Path.GetExtension(request.CertificatFile.FileName)?.TrimStart('.').ToLowerInvariant() ?? "pdf";
+            attestation.DateDelivrance = new DateTimeOffset(request.DateDelivrance).ToUnixTimeMilliseconds();
+            attestation.DateExpiration = new DateTimeOffset(request.DateExpiration).ToUnixTimeMilliseconds();
 
-            _context.Attestations.Update(attestationToUpdate);
+            _context.Attestations.Update(attestation);
             await _context.SaveChangesAsync(cancellationToken);
 
-            _logger.LogInformation(
-                "Attestation {AttestationId} mise à jour avec succès.",
-                request.AttestationId
-            );
+            _logger.LogInformation("Attestation {AttestationId} uploadée avec succès.", request.AttestationId);
 
-            // Récupération de TOUTES les attestations liées au dossier
-            var attestationsDuDossier = await _context.Attestations
-                .Where(a => a.Demande.IdDossier == dossier.Id)
-                .ToListAsync(cancellationToken);
+            // Comptage EXACT selon la règle métier
+            var totalDemandesDuDossier = await _context.Demandes
+                .CountAsync(d => d.IdDossier == dossier.Id, cancellationToken);
 
-            var totalAttestations = attestationsDuDossier.Count;
-            var completedAttestations = attestationsDuDossier
-                .Count(a => a.Donnees != null && a.Donnees.Length > 0);
+            var attestationsUploadees = await _context.Attestations
+                .CountAsync(a =>
+                    a.Demande.IdDossier == dossier.Id &&
+                    a.Donnees != null &&
+                    a.Donnees.Length > 0,
+                    cancellationToken);
 
             // Changement de statut UNIQUEMENT si toutes les attestations sont uploadées
-            if (completedAttestations == totalAttestations && totalAttestations > 0)
+            if (totalDemandesDuDossier > 0 && attestationsUploadees == totalDemandesDuDossier)
             {
                 _logger.LogInformation(
-                    "Toutes les {Total} attestations du dossier {DossierId} sont uploadées. Mise à jour du statut.",
-                    totalAttestations,
+                    "Toutes les attestations du dossier {DossierId} sont uploadées. Mise à jour du statut.",
                     dossier.Id
                 );
 
@@ -104,9 +101,9 @@ public class UploadCertificatCommandHandler : IRequestHandler<UploadCertificatCo
             else
             {
                 _logger.LogInformation(
-                    "{Completed}/{Total} attestations complétées pour le dossier {DossierId}. Statut inchangé.",
-                    completedAttestations,
-                    totalAttestations,
+                    "Attestations uploadées : {Uploadees}/{Total} pour le dossier {DossierId}.",
+                    attestationsUploadees,
+                    totalDemandesDuDossier,
                     dossier.Id
                 );
             }
@@ -118,14 +115,13 @@ public class UploadCertificatCommandHandler : IRequestHandler<UploadCertificatCo
             // Audit
             await _auditService.LogAsync(
                 "Gestion Attestations",
-                $"Certificat uploadé pour l'équipement '{attestationToUpdate.Demande.Equipement}'.",
+                $"Certificat uploadé pour la demande '{attestation.Demande.Equipement}'.",
                 "UPLOAD",
                 dossier.Id
             );
 
             // Notifications
-            var message =
-                $"Le certificat pour l'équipement '{attestationToUpdate.Demande.Equipement}' du dossier {dossier.Numero} est disponible.";
+            var message = $"Le certificat pour l'équipement '{attestation.Demande.Equipement}' du dossier {dossier.Numero} est disponible.";
 
             await _notificationService.SendToGroupAsync(
                 "DRSCE",
@@ -150,11 +146,7 @@ public class UploadCertificatCommandHandler : IRequestHandler<UploadCertificatCo
         catch (Exception ex)
         {
             await transaction.RollbackAsync(cancellationToken);
-            _logger.LogError(
-                ex,
-                "Erreur lors de l'upload du certificat pour l'attestation {AttestationId}.",
-                request.AttestationId
-            );
+            _logger.LogError(ex, "Erreur lors de l'upload du certificat pour l'attestation {AttestationId}.", request.AttestationId);
             return false;
         }
     }
