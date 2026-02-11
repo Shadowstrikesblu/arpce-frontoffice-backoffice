@@ -1076,28 +1076,28 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("77a243c7-d7f7-4c38-8192-842db0c55976"),
+                            Id = new Guid("c35c4927-cf35-4d83-abc3-31dfe037241f"),
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("1e854dc8-5d6a-4ea6-9f7f-e3178efbc25b"),
+                            Id = new Guid("ac627f18-bbd6-4374-82ca-95dce1905b47"),
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("21dabd7f-9707-4efa-8642-de8afe452736"),
+                            Id = new Guid("cbdbc515-6084-4f59-992c-800b47dbf0c3"),
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("e888cc78-6695-40d9-acb6-50de119214d7"),
+                            Id = new Guid("b34d7580-a2c2-477e-9d61-2ba40c33ca36"),
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1
@@ -1141,76 +1141,6 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("motifsRejets", (string)null);
-                });
-
-            modelBuilder.Entity("FrontOffice.Domain.Entities.Notification", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<long?>("DateCreation")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("DateEnvoi")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("DateModification")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("EntityId")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<bool>("IsBroadcast")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("ProfilCode")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("TargetUrl")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UtilisateurCreation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UtilisateurModification")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DateEnvoi");
-
-                    b.HasIndex("IsBroadcast");
-
-                    b.HasIndex("ProfilCode");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("notifications", (string)null);
                 });
 
             modelBuilder.Entity("FrontOffice.Domain.Entities.Proposition", b =>
