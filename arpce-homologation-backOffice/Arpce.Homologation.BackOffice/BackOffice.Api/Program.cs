@@ -14,21 +14,28 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// --- Configuration des Services ---
+// ------------------------------------------------------
+// SERILOG
+// ------------------------------------------------------
+builder.Host.UseSerilog((context, services, configuration) =>
+    configuration
+        .ReadFrom.Configuration(context.Configuration)
+        .ReadFrom.Services(services)
+        .Enrich.FromLogContext()
+        .WriteTo.Console());
 
-builder.Host.UseSerilog((context, services, configuration) => configuration
-    .ReadFrom.Configuration(context.Configuration)
-    .ReadFrom.Services(services)
-    .Enrich.FromLogContext()
-    .WriteTo.Console());
-
+// ------------------------------------------------------
+// SERVICES
+// ------------------------------------------------------
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
-builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddHttpContextAccessor();
 
+// Swagger
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "BackOffice API", Version = "v1" });
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "BackOffice API", Version = "v1" });
 
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -40,18 +47,23 @@ builder.Services.AddSwaggerGen(options =>
         Description = "Enter: Bearer {your JWT token}"
     });
 
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
             new OpenApiSecurityScheme
             {
-                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
             },
             Array.Empty<string>()
         }
     });
 });
 
+// DbContext
 builder.Services.AddDbContext<BackOfficeDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -60,9 +72,11 @@ builder.Services.AddDbContext<BackOfficeDbContext>(options =>
 builder.Services.AddScoped<IApplicationDbContext>(sp =>
     sp.GetRequiredService<BackOfficeDbContext>());
 
+// MediatR
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(AssemblyReference).Assembly));
 
+// Security & infrastructure
 builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
@@ -74,6 +88,9 @@ builder.Services.AddTransient<INotificationService, SignalRNotificationService>(
 builder.Services.AddTransient<ICertificateGeneratorService, CertificateGeneratorService>();
 builder.Services.AddTransient<IDevisGeneratorService, DevisGeneratorService>();
 
+// ------------------------------------------------------
+// AUTH (JWT) + SignalR support
+// ------------------------------------------------------
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -91,6 +108,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret))
         };
 
+        // SignalR JWT support via query string
         options.Events = new JwtBearerEvents
         {
             OnMessageReceived = context =>
@@ -109,18 +127,21 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-var corsPolicyName = "AllowWebApp";
+builder.Services.AddAuthorization();
 
+// ------------------------------------------------------
+// CORS
+// ------------------------------------------------------
+var corsPolicyName = "AllowWebApp";
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: corsPolicyName,
-                      policy =>
-                      {
-                          policy.AllowAnyMethod()
-                                .AllowAnyHeader()
-                                .AllowCredentials()
-                                .SetIsOriginAllowed(origin => true);
-                      });
+    options.AddPolicy(corsPolicyName, policy =>
+    {
+        policy.AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials()
+              .SetIsOriginAllowed(_ => true);
+    });
 });
 
 // ------------------------------------------------------
@@ -128,23 +149,26 @@ builder.Services.AddCors(options =>
 // ------------------------------------------------------
 var app = builder.Build();
 
-// --- Configuration du Pipeline HTTP ---
-
+// ------------------------------------------------------
+// PIPELINE
+// ------------------------------------------------------
 app.UseMiddleware<ErrorHandlingMiddleware>();
+app.UseSerilogRequestLogging();
 
-// MODIFICATION : Swagger activ� m�me en Production pour vos tests
+// Swagger (you can keep always on if you want)
 app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "BackOffice API V1");
-    options.RoutePrefix = string.Empty; // Swagger � la racine
+    options.RoutePrefix = "swagger";
     options.InjectStylesheet("/css/swagger-custom.css");
 });
 
-// app.UseHttpsRedirection(); 
+app.UseRouting();
 
+// Serve index.html from wwwroot if present (SPA / static site)
+app.UseDefaultFiles();  // looks for index.html by default
 app.UseStaticFiles();
-app.UseRouting(); 
 
 app.UseCors(corsPolicyName);
 
@@ -153,5 +177,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapHub<NotificationHub>("/hubs/notifications");
+
+// Optional: if you want "/" to load index.html (SPA), DO NOT MapGet("/").
+// Use index.html in wwwroot. If you want a health endpoint:
+app.MapGet("/health", () => Results.Ok("OK"));
 
 app.Run();
