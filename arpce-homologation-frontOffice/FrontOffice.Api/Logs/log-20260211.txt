@@ -1,0 +1,103 @@
+2026-02-11 10:37:38.421 +01:00 [INF] Now listening on: https://localhost:7016
+2026-02-11 10:37:38.462 +01:00 [INF] Now listening on: http://localhost:5041
+2026-02-11 10:37:38.543 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-11 10:37:38.546 +01:00 [INF] Hosting environment: Development
+2026-02-11 10:37:38.548 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2026-02-11 10:37:48.095 +01:00 [INF] HTTP GET /index.html responded 200 in 90.5713 ms
+2026-02-11 10:37:48.472 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 127.1526 ms
+2026-02-11 10:48:04.860 +01:00 [INF] Now listening on: https://localhost:7016
+2026-02-11 10:48:04.905 +01:00 [INF] Now listening on: http://localhost:5041
+2026-02-11 10:48:05.005 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-11 10:48:05.010 +01:00 [INF] Hosting environment: Development
+2026-02-11 10:48:05.013 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2026-02-11 10:48:38.194 +01:00 [INF] HTTP GET /index.html responded 200 in 156.9079 ms
+2026-02-11 10:48:38.591 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 103.2838 ms
+2026-02-11 10:50:04.842 +01:00 [INF] Executed DbCommand (86ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-02-11 10:50:04.983 +01:00 [INF] Demande de renvoi de code OTP pour le client orichekaya2+@gmail.com
+2026-02-11 10:50:05.127 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@p3='?' (DbType = Guid), @p0='?' (DbType = Int64), @p1='?' (Size = 6), @p2='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [clients] SET [DateModification] = @p0, [VerificationCode] = @p1, [VerificationTokenExpiry] = @p2
+OUTPUT 1
+WHERE [Id] = @p3;
+2026-02-11 10:50:05.276 +01:00 [INF] Connexion au serveur SMTP smtp.sendgrid.net sur le port 587 avec l'option "StartTls"...
+2026-02-11 10:50:07.026 +01:00 [INF] Authentification avec l'utilisateur 'apikey'...
+2026-02-11 10:50:07.462 +01:00 [ERR] Échec de l'envoi de l'email à orichekaya2+@gmail.com. Erreur : The SMTP server has unexpectedly disconnected: Authentication failed: The provided authorization grant is invalid, expired, or revoked
+MailKit.Net.Smtp.SmtpProtocolException: The SMTP server has unexpectedly disconnected: Authentication failed: The provided authorization grant is invalid, expired, or revoked
+   at MailKit.Net.Smtp.SmtpStream.ReadAheadAsync(CancellationToken cancellationToken)
+   at MailKit.Net.Smtp.SmtpStream.ReadResponseAsync(CancellationToken cancellationToken)
+   at MailKit.Net.Smtp.SmtpStream.SendCommandAsync(String command, CancellationToken cancellationToken)
+   at MailKit.Net.Smtp.SmtpClient.SendCommandInternalAsync(String command, CancellationToken cancellationToken)
+   at MailKit.Net.Smtp.SmtpClient.AuthenticateAsync(Encoding encoding, ICredentials credentials, CancellationToken cancellationToken)
+   at FrontOffice.Infrastructure.Services.EmailService.SendEmailAsync(String toEmail, String subject, String body) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Infrastructure\Services\EmailService.cs:line 71
+2026-02-11 10:50:07.729 +01:00 [ERR] HTTP POST /api/auth/register responded 500 in 6178.6322 ms
+System.InvalidOperationException: Le service d'envoi d'emails a rencontré une erreur.
+ ---> MailKit.Net.Smtp.SmtpProtocolException: The SMTP server has unexpectedly disconnected: Authentication failed: The provided authorization grant is invalid, expired, or revoked
+   at MailKit.Net.Smtp.SmtpStream.ReadAheadAsync(CancellationToken cancellationToken)
+   at MailKit.Net.Smtp.SmtpStream.ReadResponseAsync(CancellationToken cancellationToken)
+   at MailKit.Net.Smtp.SmtpStream.SendCommandAsync(String command, CancellationToken cancellationToken)
+   at MailKit.Net.Smtp.SmtpClient.SendCommandInternalAsync(String command, CancellationToken cancellationToken)
+   at MailKit.Net.Smtp.SmtpClient.AuthenticateAsync(Encoding encoding, ICredentials credentials, CancellationToken cancellationToken)
+   at FrontOffice.Infrastructure.Services.EmailService.SendEmailAsync(String toEmail, String subject, String body) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Infrastructure\Services\EmailService.cs:line 71
+   --- End of inner exception stack trace ---
+   at FrontOffice.Infrastructure.Services.EmailService.SendEmailAsync(String toEmail, String subject, String body) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Infrastructure\Services\EmailService.cs:line 82
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.SendVerificationEmailAsync(String email, String code) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 166
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.ResendVerificationAsync(Client client, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 142
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.Handle(RegisterClientCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 65
+   at FrontOffice.Api.Controllers.AuthenticationController.Register(RegisterClientCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 31
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-02-11 10:53:46.201 +01:00 [INF] Now listening on: https://localhost:7016
+2026-02-11 10:53:46.235 +01:00 [INF] Now listening on: http://localhost:5041
+2026-02-11 10:53:46.314 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-11 10:53:46.316 +01:00 [INF] Hosting environment: Development
+2026-02-11 10:53:46.319 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2026-02-11 10:53:54.065 +01:00 [INF] Executed DbCommand (74ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-02-11 10:53:54.490 +01:00 [INF] Demande de renvoi de code OTP pour le client orichekaya2+@gmail.com
+2026-02-11 10:53:54.646 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@p3='?' (DbType = Guid), @p0='?' (DbType = Int64), @p1='?' (Size = 6), @p2='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [clients] SET [DateModification] = @p0, [VerificationCode] = @p1, [VerificationTokenExpiry] = @p2
+OUTPUT 1
+WHERE [Id] = @p3;
+2026-02-11 10:53:54.742 +01:00 [INF] HTTP POST /api/auth/register responded 200 in 3654.4453 ms
+2026-02-11 10:54:47.809 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-02-11 10:54:48.368 +01:00 [ERR] HTTP POST /api/auth/login responded 500 in 652.8529 ms
+System.UnauthorizedAccessException: Votre adresse e-mail n'a pas encore été vérifiée. Veuillez utiliser le code reçu lors de l'inscription.
+   at FrontOffice.Application.Features.Authentication.Queries.Login.LoginClientQueryHandler.Handle(LoginClientQuery request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Queries\Login\LoginClientQueryHandler.cs:line 52
+   at FrontOffice.Api.Controllers.AuthenticationController.Login(LoginClientQuery query) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 39
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
