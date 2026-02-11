@@ -1,0 +1,670 @@
+2026-01-14 19:06:27.818 +01:00 [FTL] Application terminated unexpectedly
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Program.cs:line 144
+2026-01-14 19:08:44.167 +01:00 [INF] Now listening on: https://localhost:7016
+2026-01-14 19:08:44.216 +01:00 [INF] Now listening on: http://localhost:5041
+2026-01-14 19:08:44.306 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-14 19:08:44.312 +01:00 [INF] Hosting environment: Development
+2026-01-14 19:08:44.315 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2026-01-14 19:08:58.083 +01:00 [INF] HTTP GET /index.html responded 200 in 103.5388 ms
+2026-01-14 19:08:58.171 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 304 in 50.5907 ms
+2026-01-14 19:08:58.571 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 137.2649 ms
+2026-01-14 19:11:56.558 +01:00 [INF] Executed DbCommand (148ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-01-14 19:11:57.396 +01:00 [INF] Executed DbCommand (14ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 255), @p2='?' (Size = 60), @p3='?' (Size = 1) (DbType = Byte), @p4='?' (Size = 30), @p5='?' (Size = 60), @p6='?' (Size = 60), @p7='?' (Size = 30), @p8='?' (DbType = Int64), @p9='?' (DbType = Int64), @p10='?' (Size = 1) (DbType = Byte), @p11='?' (Size = 120), @p12='?' (Size = 255), @p13='?' (Size = 100), @p14='?' (Size = 120), @p15='?' (Size = 60), @p16='?' (Size = 512), @p17='?' (Size = 20), @p18='?' (Size = 60), @p19='?' (Size = 60), @p20='?' (Size = 6), @p21='?' (DbType = Int64), @p22='?' (Size = 100)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [clients] ([Id], [Adresse], [Bp], [ChangementMotPasse], [Code], [ContactFonction], [ContactNom], [ContactTelephone], [DateCreation], [DateModification], [Desactive], [Email], [MotPasse], [Pays], [RaisonSociale], [RegistreCommerce], [Remarques], [TypeClient], [UtilisateurCreation], [UtilisateurModification], [VerificationCode], [VerificationTokenExpiry], [Ville])
+OUTPUT INSERTED.[IsVerified], INSERTED.[NiveauValidation]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22);
+2026-01-14 19:11:57.870 +01:00 [INF] Connexion au serveur SMTP smtp.sendgrid.net sur le port 587 avec l'option "StartTls"...
+2026-01-14 19:12:06.359 +01:00 [INF] Authentification avec l'utilisateur 'apikey'...
+2026-01-14 19:12:06.871 +01:00 [INF] Envoi de l'email à 'orichekaya2@gmail.com'...
+2026-01-14 19:12:08.234 +01:00 [INF] Email envoyé avec succès.
+2026-01-14 19:12:08.238 +01:00 [INF] Connexion au serveur SMTP smtp.sendgrid.net sur le port 587 avec l'option "StartTls"...
+2026-01-14 19:12:10.915 +01:00 [INF] Authentification avec l'utilisateur 'apikey'...
+2026-01-14 19:12:11.194 +01:00 [INF] Envoi de l'email à 'orichekaya@gmail.com'...
+2026-01-14 19:12:12.322 +01:00 [INF] Email envoyé avec succès.
+2026-01-14 19:12:12.337 +01:00 [INF] HTTP POST /api/auth/register responded 200 in 21015.2146 ms
+2026-01-14 19:12:59.170 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@__get_Item_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Id] = @__get_Item_0
+2026-01-14 19:12:59.192 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@p6='?' (DbType = Guid), @p0='?' (DbType = Int64), @p1='?' (DbType = Boolean), @p2='?' (DbType = Int32), @p3='?' (Size = 60), @p4='?' (Size = 6), @p5='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [clients] SET [DateModification] = @p0, [IsVerified] = @p1, [NiveauValidation] = @p2, [UtilisateurModification] = @p3, [VerificationCode] = @p4, [VerificationTokenExpiry] = @p5
+OUTPUT 1
+WHERE [Id] = @p6;
+2026-01-14 19:12:59.202 +01:00 [INF] HTTP POST /api/auth/confirm-account responded 200 in 213.0386 ms
+2026-01-14 19:13:10.105 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Id] = @__userId_Value_0
+2026-01-14 19:13:10.233 +01:00 [ERR] HTTP POST /api/auth/connect-by-token responded 500 in 247.5637 ms
+FrontOffice.Application.Common.Exceptions.AccountPendingValidationException: Votre compte est en attente de validation par l'administration (Niveau 2 requis).
+   at FrontOffice.Application.Features.Authentication.Queries.ConnectByToken.ConnectByTokenQueryHandler.Handle(ConnectByTokenQuery request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Queries\ConnectByToken\ConnectByTokenQueryHandler.cs:line 38
+   at FrontOffice.Api.Controllers.AuthenticationController.ConnectByToken() in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 67
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-01-14 19:15:51.853 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Id] = @__userId_Value_0
+2026-01-14 19:15:51.872 +01:00 [INF] HTTP POST /api/auth/connect-by-token responded 200 in 51.8850 ms
+2026-01-14 19:16:36.053 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-01-14 19:16:36.351 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 343.0460 ms
+2026-01-14 19:17:41.843 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__request_Libelle_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [dossiers] AS [d]
+        WHERE [d].[Libelle] = @__request_Libelle_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-01-14 19:17:41.871 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Code], [s].[Libelle]
+FROM [statuts] AS [s]
+WHERE [s].[Code] = N'NouveauDossier'
+2026-01-14 19:17:42.107 +01:00 [INF] Executed DbCommand (18ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Int64), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?' (Size = 120), @p9='?' (Size = 30), @p10='?' (Size = 60), @p11='?' (Size = 60), @p12='?' (DbType = Guid), @p13='?' (DbType = Int64), @p14='?' (DbType = Int64), @p15='?' (Size = -1) (DbType = Binary), @p16='?' (Size = 12), @p17='?' (Size = 512), @p18='?' (DbType = Guid), @p19='?' (Size = 120), @p20='?' (Size = 1) (DbType = Byte), @p21='?' (Size = 60), @p22='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [dossiers] ([Id], [DateCreation], [DateModification], [DateOuverture], [IdAgentInstructeur], [IdClient], [IdModeReglement], [IdStatut], [Libelle], [Numero], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11);
+INSERT INTO [documentsDossiers] ([Id], [DateCreation], [DateModification], [Donnees], [Extension], [FilePath], [IdDossier], [Nom], [Type], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22);
+2026-01-14 19:17:42.126 +01:00 [INF] Dossier "7a6d7df4-8141-4f56-a72e-59e57a51ae73" et son document créés avec succès.
+2026-01-14 19:17:42.156 +01:00 [INF] HTTP POST /api/dossiers responded 201 in 440.5201 ms
+2026-01-14 19:26:49.705 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+WHERE [d].[IdClient] = @__userId_Value_0
+2026-01-14 19:26:49.796 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdAgentInstructeur], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [s].[Id], [s].[Code], [s].[Libelle]
+FROM (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[IdClient] = @__userId_Value_0
+    ORDER BY [d].[DateOuverture] DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [t]
+INNER JOIN [statuts] AS [s] ON [t].[IdStatut] = [s].[Id]
+ORDER BY [t].[DateOuverture] DESC
+2026-01-14 19:26:49.822 +01:00 [INF] HTTP GET /api/dossiers responded 200 in 200.8562 ms
+2026-01-14 19:27:11.933 +01:00 [INF] Executed DbCommand (33ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__statutPaiementCode_1='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[Numero] AS [NumeroDossier], (
+    SELECT COALESCE(SUM([d5].[MontantEtude] + COALESCE([d5].[MontantHomologation], 0.0) + COALESCE([d5].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d4]
+    INNER JOIN [devis] AS [d5] ON [d4].[Id] = [d5].[IdDemande]
+    WHERE [d].[Id] = [d4].[IdDossier] AND ([d5].[PaiementOk] <> CAST(1 AS tinyint) OR [d5].[PaiementOk] IS NULL)) AS [Montant], (
+    SELECT TOP(1) [d7].[Date]
+    FROM [demandes] AS [d6]
+    INNER JOIN [devis] AS [d7] ON [d6].[Id] = [d7].[IdDemande]
+    WHERE [d].[Id] = [d6].[IdDossier] AND ([d7].[PaiementOk] <> CAST(1 AS tinyint) OR [d7].[PaiementOk] IS NULL)
+    ORDER BY [d7].[Date] DESC) AS [DateEcheance]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] = @__statutPaiementCode_1 AND (
+    SELECT COALESCE(SUM([d1].[MontantEtude] + COALESCE([d1].[MontantHomologation], 0.0) + COALESCE([d1].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d0]
+    INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+    WHERE [d].[Id] = [d0].[IdDossier] AND ([d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL)) > 0.0 AND (
+    SELECT TOP(1) CAST(1 AS bit)
+    FROM [demandes] AS [d2]
+    INNER JOIN [devis] AS [d3] ON [d2].[Id] = [d3].[IdDemande]
+    WHERE [d].[Id] = [d2].[IdDossier] AND ([d3].[PaiementOk] <> CAST(1 AS tinyint) OR [d3].[PaiementOk] IS NULL)
+    ORDER BY [d3].[Date] DESC) = CAST(1 AS bit)
+2026-01-14 19:27:11.947 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 141.9281 ms
+2026-01-14 19:27:59.854 +01:00 [INF] Executed DbCommand (18ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__statutPaiementCode_1='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[Numero] AS [NumeroDossier], (
+    SELECT COALESCE(SUM([d5].[MontantEtude] + COALESCE([d5].[MontantHomologation], 0.0) + COALESCE([d5].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d4]
+    INNER JOIN [devis] AS [d5] ON [d4].[Id] = [d5].[IdDemande]
+    WHERE [d].[Id] = [d4].[IdDossier] AND ([d5].[PaiementOk] <> CAST(1 AS tinyint) OR [d5].[PaiementOk] IS NULL)) AS [Montant], (
+    SELECT TOP(1) [d7].[Date]
+    FROM [demandes] AS [d6]
+    INNER JOIN [devis] AS [d7] ON [d6].[Id] = [d7].[IdDemande]
+    WHERE [d].[Id] = [d6].[IdDossier] AND ([d7].[PaiementOk] <> CAST(1 AS tinyint) OR [d7].[PaiementOk] IS NULL)
+    ORDER BY [d7].[Date] DESC) AS [DateEcheance]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] = @__statutPaiementCode_1 AND (
+    SELECT COALESCE(SUM([d1].[MontantEtude] + COALESCE([d1].[MontantHomologation], 0.0) + COALESCE([d1].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d0]
+    INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+    WHERE [d].[Id] = [d0].[IdDossier] AND ([d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL)) > 0.0 AND (
+    SELECT TOP(1) CAST(1 AS bit)
+    FROM [demandes] AS [d2]
+    INNER JOIN [devis] AS [d3] ON [d2].[Id] = [d3].[IdDemande]
+    WHERE [d].[Id] = [d2].[IdDossier] AND ([d3].[PaiementOk] <> CAST(1 AS tinyint) OR [d3].[PaiementOk] IS NULL)
+    ORDER BY [d3].[Date] DESC) = CAST(1 AS bit)
+2026-01-14 19:27:59.863 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 43.9033 ms
+2026-01-14 19:28:06.853 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__statutPaiementCode_1='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[Numero] AS [NumeroDossier], (
+    SELECT COALESCE(SUM([d5].[MontantEtude] + COALESCE([d5].[MontantHomologation], 0.0) + COALESCE([d5].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d4]
+    INNER JOIN [devis] AS [d5] ON [d4].[Id] = [d5].[IdDemande]
+    WHERE [d].[Id] = [d4].[IdDossier] AND ([d5].[PaiementOk] <> CAST(1 AS tinyint) OR [d5].[PaiementOk] IS NULL)) AS [Montant], (
+    SELECT TOP(1) [d7].[Date]
+    FROM [demandes] AS [d6]
+    INNER JOIN [devis] AS [d7] ON [d6].[Id] = [d7].[IdDemande]
+    WHERE [d].[Id] = [d6].[IdDossier] AND ([d7].[PaiementOk] <> CAST(1 AS tinyint) OR [d7].[PaiementOk] IS NULL)
+    ORDER BY [d7].[Date] DESC) AS [DateEcheance]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] = @__statutPaiementCode_1 AND (
+    SELECT COALESCE(SUM([d1].[MontantEtude] + COALESCE([d1].[MontantHomologation], 0.0) + COALESCE([d1].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d0]
+    INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+    WHERE [d].[Id] = [d0].[IdDossier] AND ([d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL)) > 0.0 AND (
+    SELECT TOP(1) CAST(1 AS bit)
+    FROM [demandes] AS [d2]
+    INNER JOIN [devis] AS [d3] ON [d2].[Id] = [d3].[IdDemande]
+    WHERE [d].[Id] = [d2].[IdDossier] AND ([d3].[PaiementOk] <> CAST(1 AS tinyint) OR [d3].[PaiementOk] IS NULL)
+    ORDER BY [d3].[Date] DESC) = CAST(1 AS bit)
+2026-01-14 19:28:06.865 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 18.8327 ms
+2026-01-14 19:28:18.378 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+WHERE [d].[IdClient] = @__userId_Value_0
+2026-01-14 19:28:18.391 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdAgentInstructeur], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [s].[Id], [s].[Code], [s].[Libelle]
+FROM (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[IdClient] = @__userId_Value_0
+    ORDER BY [d].[DateOuverture] DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [t]
+INNER JOIN [statuts] AS [s] ON [t].[IdStatut] = [s].[Id]
+ORDER BY [t].[DateOuverture] DESC
+2026-01-14 19:28:18.400 +01:00 [INF] HTTP GET /api/dossiers responded 200 in 27.2817 ms
+2026-01-14 19:28:27.466 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__statutPaiementCode_1='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[Numero] AS [NumeroDossier], (
+    SELECT COALESCE(SUM([d5].[MontantEtude] + COALESCE([d5].[MontantHomologation], 0.0) + COALESCE([d5].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d4]
+    INNER JOIN [devis] AS [d5] ON [d4].[Id] = [d5].[IdDemande]
+    WHERE [d].[Id] = [d4].[IdDossier] AND ([d5].[PaiementOk] <> CAST(1 AS tinyint) OR [d5].[PaiementOk] IS NULL)) AS [Montant], (
+    SELECT TOP(1) [d7].[Date]
+    FROM [demandes] AS [d6]
+    INNER JOIN [devis] AS [d7] ON [d6].[Id] = [d7].[IdDemande]
+    WHERE [d].[Id] = [d6].[IdDossier] AND ([d7].[PaiementOk] <> CAST(1 AS tinyint) OR [d7].[PaiementOk] IS NULL)
+    ORDER BY [d7].[Date] DESC) AS [DateEcheance]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] = @__statutPaiementCode_1 AND (
+    SELECT COALESCE(SUM([d1].[MontantEtude] + COALESCE([d1].[MontantHomologation], 0.0) + COALESCE([d1].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d0]
+    INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+    WHERE [d].[Id] = [d0].[IdDossier] AND ([d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL)) > 0.0 AND (
+    SELECT TOP(1) CAST(1 AS bit)
+    FROM [demandes] AS [d2]
+    INNER JOIN [devis] AS [d3] ON [d2].[Id] = [d3].[IdDemande]
+    WHERE [d].[Id] = [d2].[IdDossier] AND ([d3].[PaiementOk] <> CAST(1 AS tinyint) OR [d3].[PaiementOk] IS NULL)
+    ORDER BY [d3].[Date] DESC) = CAST(1 AS bit)
+2026-01-14 19:28:27.476 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 14.1140 ms
+2026-01-14 19:59:07.538 +01:00 [INF] Executed DbCommand (32ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__statutPaiementCode_1='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[Numero] AS [NumeroDossier], (
+    SELECT COALESCE(SUM([d5].[MontantEtude] + COALESCE([d5].[MontantHomologation], 0.0) + COALESCE([d5].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d4]
+    INNER JOIN [devis] AS [d5] ON [d4].[Id] = [d5].[IdDemande]
+    WHERE [d].[Id] = [d4].[IdDossier] AND ([d5].[PaiementOk] <> CAST(1 AS tinyint) OR [d5].[PaiementOk] IS NULL)) AS [Montant], (
+    SELECT TOP(1) [d7].[Date]
+    FROM [demandes] AS [d6]
+    INNER JOIN [devis] AS [d7] ON [d6].[Id] = [d7].[IdDemande]
+    WHERE [d].[Id] = [d6].[IdDossier] AND ([d7].[PaiementOk] <> CAST(1 AS tinyint) OR [d7].[PaiementOk] IS NULL)
+    ORDER BY [d7].[Date] DESC) AS [DateEcheance]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] = @__statutPaiementCode_1 AND (
+    SELECT COALESCE(SUM([d1].[MontantEtude] + COALESCE([d1].[MontantHomologation], 0.0) + COALESCE([d1].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d0]
+    INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+    WHERE [d].[Id] = [d0].[IdDossier] AND ([d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL)) > 0.0 AND (
+    SELECT TOP(1) CAST(1 AS bit)
+    FROM [demandes] AS [d2]
+    INNER JOIN [devis] AS [d3] ON [d2].[Id] = [d3].[IdDemande]
+    WHERE [d].[Id] = [d2].[IdDossier] AND ([d3].[PaiementOk] <> CAST(1 AS tinyint) OR [d3].[PaiementOk] IS NULL)
+    ORDER BY [d3].[Date] DESC) = CAST(1 AS bit)
+2026-01-14 19:59:07.546 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 72.8271 ms
+2026-01-14 19:59:32.267 +01:00 [INF] Now listening on: https://localhost:7016
+2026-01-14 19:59:32.295 +01:00 [INF] Now listening on: http://localhost:5041
+2026-01-14 19:59:32.358 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-14 19:59:32.361 +01:00 [INF] Hosting environment: Development
+2026-01-14 19:59:32.363 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2026-01-14 19:59:44.145 +01:00 [INF] Executed DbCommand (100ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__statutPaiementCodes_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[Numero] AS [NumeroDossier], (
+    SELECT COALESCE(SUM([d5].[MontantEtude] + COALESCE([d5].[MontantHomologation], 0.0) + COALESCE([d5].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d4]
+    INNER JOIN [devis] AS [d5] ON [d4].[Id] = [d5].[IdDemande]
+    WHERE [d].[Id] = [d4].[IdDossier] AND ([d5].[PaiementOk] <> CAST(1 AS tinyint) OR [d5].[PaiementOk] IS NULL)) AS [Montant], (
+    SELECT TOP(1) [d7].[Date]
+    FROM [demandes] AS [d6]
+    INNER JOIN [devis] AS [d7] ON [d6].[Id] = [d7].[IdDemande]
+    WHERE [d].[Id] = [d6].[IdDossier] AND ([d7].[PaiementOk] <> CAST(1 AS tinyint) OR [d7].[PaiementOk] IS NULL)
+    ORDER BY [d7].[Date] DESC) AS [DateEcheance]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] IN (
+    SELECT [s0].[value]
+    FROM OPENJSON(@__statutPaiementCodes_1) WITH ([value] nvarchar(120) '$') AS [s0]
+) AND (
+    SELECT COALESCE(SUM([d1].[MontantEtude] + COALESCE([d1].[MontantHomologation], 0.0) + COALESCE([d1].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d0]
+    INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+    WHERE [d].[Id] = [d0].[IdDossier] AND ([d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL)) > 0.0 AND (
+    SELECT TOP(1) CAST(1 AS bit)
+    FROM [demandes] AS [d2]
+    INNER JOIN [devis] AS [d3] ON [d2].[Id] = [d3].[IdDemande]
+    WHERE [d].[Id] = [d2].[IdDossier] AND ([d3].[PaiementOk] <> CAST(1 AS tinyint) OR [d3].[PaiementOk] IS NULL)
+    ORDER BY [d3].[Date] DESC) = CAST(1 AS bit)
+2026-01-14 19:59:44.213 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 2683.9291 ms
+2026-01-14 19:59:52.744 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__statutPaiementCodes_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[Numero] AS [NumeroDossier], (
+    SELECT COALESCE(SUM([d5].[MontantEtude] + COALESCE([d5].[MontantHomologation], 0.0) + COALESCE([d5].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d4]
+    INNER JOIN [devis] AS [d5] ON [d4].[Id] = [d5].[IdDemande]
+    WHERE [d].[Id] = [d4].[IdDossier] AND ([d5].[PaiementOk] <> CAST(1 AS tinyint) OR [d5].[PaiementOk] IS NULL)) AS [Montant], (
+    SELECT TOP(1) [d7].[Date]
+    FROM [demandes] AS [d6]
+    INNER JOIN [devis] AS [d7] ON [d6].[Id] = [d7].[IdDemande]
+    WHERE [d].[Id] = [d6].[IdDossier] AND ([d7].[PaiementOk] <> CAST(1 AS tinyint) OR [d7].[PaiementOk] IS NULL)
+    ORDER BY [d7].[Date] DESC) AS [DateEcheance]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] IN (
+    SELECT [s0].[value]
+    FROM OPENJSON(@__statutPaiementCodes_1) WITH ([value] nvarchar(120) '$') AS [s0]
+) AND (
+    SELECT COALESCE(SUM([d1].[MontantEtude] + COALESCE([d1].[MontantHomologation], 0.0) + COALESCE([d1].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d0]
+    INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+    WHERE [d].[Id] = [d0].[IdDossier] AND ([d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL)) > 0.0 AND (
+    SELECT TOP(1) CAST(1 AS bit)
+    FROM [demandes] AS [d2]
+    INNER JOIN [devis] AS [d3] ON [d2].[Id] = [d3].[IdDemande]
+    WHERE [d].[Id] = [d2].[IdDossier] AND ([d3].[PaiementOk] <> CAST(1 AS tinyint) OR [d3].[PaiementOk] IS NULL)
+    ORDER BY [d3].[Date] DESC) = CAST(1 AS bit)
+2026-01-14 19:59:52.752 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 52.2427 ms
+2026-01-14 19:59:53.994 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__statutPaiementCodes_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[Numero] AS [NumeroDossier], (
+    SELECT COALESCE(SUM([d5].[MontantEtude] + COALESCE([d5].[MontantHomologation], 0.0) + COALESCE([d5].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d4]
+    INNER JOIN [devis] AS [d5] ON [d4].[Id] = [d5].[IdDemande]
+    WHERE [d].[Id] = [d4].[IdDossier] AND ([d5].[PaiementOk] <> CAST(1 AS tinyint) OR [d5].[PaiementOk] IS NULL)) AS [Montant], (
+    SELECT TOP(1) [d7].[Date]
+    FROM [demandes] AS [d6]
+    INNER JOIN [devis] AS [d7] ON [d6].[Id] = [d7].[IdDemande]
+    WHERE [d].[Id] = [d6].[IdDossier] AND ([d7].[PaiementOk] <> CAST(1 AS tinyint) OR [d7].[PaiementOk] IS NULL)
+    ORDER BY [d7].[Date] DESC) AS [DateEcheance]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] IN (
+    SELECT [s0].[value]
+    FROM OPENJSON(@__statutPaiementCodes_1) WITH ([value] nvarchar(120) '$') AS [s0]
+) AND (
+    SELECT COALESCE(SUM([d1].[MontantEtude] + COALESCE([d1].[MontantHomologation], 0.0) + COALESCE([d1].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d0]
+    INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+    WHERE [d].[Id] = [d0].[IdDossier] AND ([d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL)) > 0.0 AND (
+    SELECT TOP(1) CAST(1 AS bit)
+    FROM [demandes] AS [d2]
+    INNER JOIN [devis] AS [d3] ON [d2].[Id] = [d3].[IdDemande]
+    WHERE [d].[Id] = [d2].[IdDossier] AND ([d3].[PaiementOk] <> CAST(1 AS tinyint) OR [d3].[PaiementOk] IS NULL)
+    ORDER BY [d3].[Date] DESC) = CAST(1 AS bit)
+2026-01-14 19:59:54.000 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 105.0135 ms
+2026-01-14 19:59:55.206 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__statutPaiementCodes_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[Numero] AS [NumeroDossier], (
+    SELECT COALESCE(SUM([d5].[MontantEtude] + COALESCE([d5].[MontantHomologation], 0.0) + COALESCE([d5].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d4]
+    INNER JOIN [devis] AS [d5] ON [d4].[Id] = [d5].[IdDemande]
+    WHERE [d].[Id] = [d4].[IdDossier] AND ([d5].[PaiementOk] <> CAST(1 AS tinyint) OR [d5].[PaiementOk] IS NULL)) AS [Montant], (
+    SELECT TOP(1) [d7].[Date]
+    FROM [demandes] AS [d6]
+    INNER JOIN [devis] AS [d7] ON [d6].[Id] = [d7].[IdDemande]
+    WHERE [d].[Id] = [d6].[IdDossier] AND ([d7].[PaiementOk] <> CAST(1 AS tinyint) OR [d7].[PaiementOk] IS NULL)
+    ORDER BY [d7].[Date] DESC) AS [DateEcheance]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] IN (
+    SELECT [s0].[value]
+    FROM OPENJSON(@__statutPaiementCodes_1) WITH ([value] nvarchar(120) '$') AS [s0]
+) AND (
+    SELECT COALESCE(SUM([d1].[MontantEtude] + COALESCE([d1].[MontantHomologation], 0.0) + COALESCE([d1].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d0]
+    INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+    WHERE [d].[Id] = [d0].[IdDossier] AND ([d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL)) > 0.0 AND (
+    SELECT TOP(1) CAST(1 AS bit)
+    FROM [demandes] AS [d2]
+    INNER JOIN [devis] AS [d3] ON [d2].[Id] = [d3].[IdDemande]
+    WHERE [d].[Id] = [d2].[IdDossier] AND ([d3].[PaiementOk] <> CAST(1 AS tinyint) OR [d3].[PaiementOk] IS NULL)
+    ORDER BY [d3].[Date] DESC) = CAST(1 AS bit)
+2026-01-14 19:59:55.238 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 36.3242 ms
+2026-01-14 20:00:11.259 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+WHERE [d].[IdClient] = @__userId_Value_0
+2026-01-14 20:00:11.338 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdAgentInstructeur], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [s].[Id], [s].[Code], [s].[Libelle]
+FROM (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[IdClient] = @__userId_Value_0
+    ORDER BY [d].[DateOuverture] DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [t]
+INNER JOIN [statuts] AS [s] ON [t].[IdStatut] = [s].[Id]
+ORDER BY [t].[DateOuverture] DESC
+2026-01-14 20:00:11.447 +01:00 [INF] HTTP GET /api/dossiers responded 200 in 260.9649 ms
+2026-01-14 20:00:20.237 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__statutPaiementCodes_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[Numero] AS [NumeroDossier], (
+    SELECT COALESCE(SUM([d5].[MontantEtude] + COALESCE([d5].[MontantHomologation], 0.0) + COALESCE([d5].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d4]
+    INNER JOIN [devis] AS [d5] ON [d4].[Id] = [d5].[IdDemande]
+    WHERE [d].[Id] = [d4].[IdDossier] AND ([d5].[PaiementOk] <> CAST(1 AS tinyint) OR [d5].[PaiementOk] IS NULL)) AS [Montant], (
+    SELECT TOP(1) [d7].[Date]
+    FROM [demandes] AS [d6]
+    INNER JOIN [devis] AS [d7] ON [d6].[Id] = [d7].[IdDemande]
+    WHERE [d].[Id] = [d6].[IdDossier] AND ([d7].[PaiementOk] <> CAST(1 AS tinyint) OR [d7].[PaiementOk] IS NULL)
+    ORDER BY [d7].[Date] DESC) AS [DateEcheance]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] IN (
+    SELECT [s0].[value]
+    FROM OPENJSON(@__statutPaiementCodes_1) WITH ([value] nvarchar(120) '$') AS [s0]
+) AND (
+    SELECT COALESCE(SUM([d1].[MontantEtude] + COALESCE([d1].[MontantHomologation], 0.0) + COALESCE([d1].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d0]
+    INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+    WHERE [d].[Id] = [d0].[IdDossier] AND ([d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL)) > 0.0 AND (
+    SELECT TOP(1) CAST(1 AS bit)
+    FROM [demandes] AS [d2]
+    INNER JOIN [devis] AS [d3] ON [d2].[Id] = [d3].[IdDemande]
+    WHERE [d].[Id] = [d2].[IdDossier] AND ([d3].[PaiementOk] <> CAST(1 AS tinyint) OR [d3].[PaiementOk] IS NULL)
+    ORDER BY [d3].[Date] DESC) = CAST(1 AS bit)
+2026-01-14 20:00:20.245 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 12.9839 ms
+2026-01-14 20:00:21.067 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__statutPaiementCodes_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[Numero] AS [NumeroDossier], (
+    SELECT COALESCE(SUM([d5].[MontantEtude] + COALESCE([d5].[MontantHomologation], 0.0) + COALESCE([d5].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d4]
+    INNER JOIN [devis] AS [d5] ON [d4].[Id] = [d5].[IdDemande]
+    WHERE [d].[Id] = [d4].[IdDossier] AND ([d5].[PaiementOk] <> CAST(1 AS tinyint) OR [d5].[PaiementOk] IS NULL)) AS [Montant], (
+    SELECT TOP(1) [d7].[Date]
+    FROM [demandes] AS [d6]
+    INNER JOIN [devis] AS [d7] ON [d6].[Id] = [d7].[IdDemande]
+    WHERE [d].[Id] = [d6].[IdDossier] AND ([d7].[PaiementOk] <> CAST(1 AS tinyint) OR [d7].[PaiementOk] IS NULL)
+    ORDER BY [d7].[Date] DESC) AS [DateEcheance]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] IN (
+    SELECT [s0].[value]
+    FROM OPENJSON(@__statutPaiementCodes_1) WITH ([value] nvarchar(120) '$') AS [s0]
+) AND (
+    SELECT COALESCE(SUM([d1].[MontantEtude] + COALESCE([d1].[MontantHomologation], 0.0) + COALESCE([d1].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d0]
+    INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+    WHERE [d].[Id] = [d0].[IdDossier] AND ([d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL)) > 0.0 AND (
+    SELECT TOP(1) CAST(1 AS bit)
+    FROM [demandes] AS [d2]
+    INNER JOIN [devis] AS [d3] ON [d2].[Id] = [d3].[IdDemande]
+    WHERE [d].[Id] = [d2].[IdDossier] AND ([d3].[PaiementOk] <> CAST(1 AS tinyint) OR [d3].[PaiementOk] IS NULL)
+    ORDER BY [d3].[Date] DESC) = CAST(1 AS bit)
+2026-01-14 20:00:21.102 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 40.3868 ms
+2026-01-14 20:00:21.832 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__statutPaiementCodes_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[Numero] AS [NumeroDossier], (
+    SELECT COALESCE(SUM([d5].[MontantEtude] + COALESCE([d5].[MontantHomologation], 0.0) + COALESCE([d5].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d4]
+    INNER JOIN [devis] AS [d5] ON [d4].[Id] = [d5].[IdDemande]
+    WHERE [d].[Id] = [d4].[IdDossier] AND ([d5].[PaiementOk] <> CAST(1 AS tinyint) OR [d5].[PaiementOk] IS NULL)) AS [Montant], (
+    SELECT TOP(1) [d7].[Date]
+    FROM [demandes] AS [d6]
+    INNER JOIN [devis] AS [d7] ON [d6].[Id] = [d7].[IdDemande]
+    WHERE [d].[Id] = [d6].[IdDossier] AND ([d7].[PaiementOk] <> CAST(1 AS tinyint) OR [d7].[PaiementOk] IS NULL)
+    ORDER BY [d7].[Date] DESC) AS [DateEcheance]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] IN (
+    SELECT [s0].[value]
+    FROM OPENJSON(@__statutPaiementCodes_1) WITH ([value] nvarchar(120) '$') AS [s0]
+) AND (
+    SELECT COALESCE(SUM([d1].[MontantEtude] + COALESCE([d1].[MontantHomologation], 0.0) + COALESCE([d1].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d0]
+    INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+    WHERE [d].[Id] = [d0].[IdDossier] AND ([d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL)) > 0.0 AND (
+    SELECT TOP(1) CAST(1 AS bit)
+    FROM [demandes] AS [d2]
+    INNER JOIN [devis] AS [d3] ON [d2].[Id] = [d3].[IdDemande]
+    WHERE [d].[Id] = [d2].[IdDossier] AND ([d3].[PaiementOk] <> CAST(1 AS tinyint) OR [d3].[PaiementOk] IS NULL)
+    ORDER BY [d3].[Date] DESC) = CAST(1 AS bit)
+2026-01-14 20:00:21.839 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 11.7723 ms
+2026-01-14 20:00:22.501 +01:00 [INF] Executed DbCommand (17ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__statutPaiementCodes_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[Numero] AS [NumeroDossier], (
+    SELECT COALESCE(SUM([d5].[MontantEtude] + COALESCE([d5].[MontantHomologation], 0.0) + COALESCE([d5].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d4]
+    INNER JOIN [devis] AS [d5] ON [d4].[Id] = [d5].[IdDemande]
+    WHERE [d].[Id] = [d4].[IdDossier] AND ([d5].[PaiementOk] <> CAST(1 AS tinyint) OR [d5].[PaiementOk] IS NULL)) AS [Montant], (
+    SELECT TOP(1) [d7].[Date]
+    FROM [demandes] AS [d6]
+    INNER JOIN [devis] AS [d7] ON [d6].[Id] = [d7].[IdDemande]
+    WHERE [d].[Id] = [d6].[IdDossier] AND ([d7].[PaiementOk] <> CAST(1 AS tinyint) OR [d7].[PaiementOk] IS NULL)
+    ORDER BY [d7].[Date] DESC) AS [DateEcheance]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] IN (
+    SELECT [s0].[value]
+    FROM OPENJSON(@__statutPaiementCodes_1) WITH ([value] nvarchar(120) '$') AS [s0]
+) AND (
+    SELECT COALESCE(SUM([d1].[MontantEtude] + COALESCE([d1].[MontantHomologation], 0.0) + COALESCE([d1].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d0]
+    INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+    WHERE [d].[Id] = [d0].[IdDossier] AND ([d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL)) > 0.0 AND (
+    SELECT TOP(1) CAST(1 AS bit)
+    FROM [demandes] AS [d2]
+    INNER JOIN [devis] AS [d3] ON [d2].[Id] = [d3].[IdDemande]
+    WHERE [d].[Id] = [d2].[IdDossier] AND ([d3].[PaiementOk] <> CAST(1 AS tinyint) OR [d3].[PaiementOk] IS NULL)
+    ORDER BY [d3].[Date] DESC) = CAST(1 AS bit)
+2026-01-14 20:00:22.512 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 30.9395 ms
+2026-01-14 20:00:23.246 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__statutPaiementCodes_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[Numero] AS [NumeroDossier], (
+    SELECT COALESCE(SUM([d5].[MontantEtude] + COALESCE([d5].[MontantHomologation], 0.0) + COALESCE([d5].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d4]
+    INNER JOIN [devis] AS [d5] ON [d4].[Id] = [d5].[IdDemande]
+    WHERE [d].[Id] = [d4].[IdDossier] AND ([d5].[PaiementOk] <> CAST(1 AS tinyint) OR [d5].[PaiementOk] IS NULL)) AS [Montant], (
+    SELECT TOP(1) [d7].[Date]
+    FROM [demandes] AS [d6]
+    INNER JOIN [devis] AS [d7] ON [d6].[Id] = [d7].[IdDemande]
+    WHERE [d].[Id] = [d6].[IdDossier] AND ([d7].[PaiementOk] <> CAST(1 AS tinyint) OR [d7].[PaiementOk] IS NULL)
+    ORDER BY [d7].[Date] DESC) AS [DateEcheance]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] IN (
+    SELECT [s0].[value]
+    FROM OPENJSON(@__statutPaiementCodes_1) WITH ([value] nvarchar(120) '$') AS [s0]
+) AND (
+    SELECT COALESCE(SUM([d1].[MontantEtude] + COALESCE([d1].[MontantHomologation], 0.0) + COALESCE([d1].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d0]
+    INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+    WHERE [d].[Id] = [d0].[IdDossier] AND ([d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL)) > 0.0 AND (
+    SELECT TOP(1) CAST(1 AS bit)
+    FROM [demandes] AS [d2]
+    INNER JOIN [devis] AS [d3] ON [d2].[Id] = [d3].[IdDemande]
+    WHERE [d].[Id] = [d2].[IdDossier] AND ([d3].[PaiementOk] <> CAST(1 AS tinyint) OR [d3].[PaiementOk] IS NULL)
+    ORDER BY [d3].[Date] DESC) = CAST(1 AS bit)
+2026-01-14 20:00:23.258 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 19.2480 ms
+2026-01-14 20:00:26.585 +01:00 [INF] HTTP GET /index.html responded 200 in 110.9489 ms
+2026-01-14 20:00:26.971 +01:00 [INF] HTTP GET /favicon-32x32.png responded 200 in 17.9395 ms
+2026-01-14 20:00:27.023 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 69.9084 ms
+2026-01-14 20:00:50.318 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-01-14 20:00:50.866 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 586.3681 ms
+2026-01-14 20:01:25.325 +01:00 [INF] Executed DbCommand (22ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__statutPaiementCodes_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[Numero] AS [NumeroDossier], (
+    SELECT COALESCE(SUM([d5].[MontantEtude] + COALESCE([d5].[MontantHomologation], 0.0) + COALESCE([d5].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d4]
+    INNER JOIN [devis] AS [d5] ON [d4].[Id] = [d5].[IdDemande]
+    WHERE [d].[Id] = [d4].[IdDossier] AND ([d5].[PaiementOk] <> CAST(1 AS tinyint) OR [d5].[PaiementOk] IS NULL)) AS [Montant], (
+    SELECT TOP(1) [d7].[Date]
+    FROM [demandes] AS [d6]
+    INNER JOIN [devis] AS [d7] ON [d6].[Id] = [d7].[IdDemande]
+    WHERE [d].[Id] = [d6].[IdDossier] AND ([d7].[PaiementOk] <> CAST(1 AS tinyint) OR [d7].[PaiementOk] IS NULL)
+    ORDER BY [d7].[Date] DESC) AS [DateEcheance]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] IN (
+    SELECT [s0].[value]
+    FROM OPENJSON(@__statutPaiementCodes_1) WITH ([value] nvarchar(120) '$') AS [s0]
+) AND (
+    SELECT COALESCE(SUM([d1].[MontantEtude] + COALESCE([d1].[MontantHomologation], 0.0) + COALESCE([d1].[MontantControle], 0.0)), 0.0)
+    FROM [demandes] AS [d0]
+    INNER JOIN [devis] AS [d1] ON [d0].[Id] = [d1].[IdDemande]
+    WHERE [d].[Id] = [d0].[IdDossier] AND ([d1].[PaiementOk] <> CAST(1 AS tinyint) OR [d1].[PaiementOk] IS NULL)) > 0.0 AND (
+    SELECT TOP(1) CAST(1 AS bit)
+    FROM [demandes] AS [d2]
+    INNER JOIN [devis] AS [d3] ON [d2].[Id] = [d3].[IdDemande]
+    WHERE [d].[Id] = [d2].[IdDossier] AND ([d3].[PaiementOk] <> CAST(1 AS tinyint) OR [d3].[PaiementOk] IS NULL)
+    ORDER BY [d3].[Date] DESC) = CAST(1 AS bit)
+2026-01-14 20:01:25.332 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 56.6709 ms
+2026-01-14 20:08:58.546 +01:00 [INF] Now listening on: https://localhost:7016
+2026-01-14 20:08:58.575 +01:00 [INF] Now listening on: http://localhost:5041
+2026-01-14 20:08:58.627 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-14 20:08:58.631 +01:00 [INF] Hosting environment: Development
+2026-01-14 20:08:58.635 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2026-01-14 20:09:05.627 +01:00 [INF] Executed DbCommand (97ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__statutPaiementCode_1='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[Numero] AS [NumeroDossier], (
+    SELECT COALESCE(SUM([d2].[MontantEtude] + COALESCE([d2].[MontantHomologation], 0.0) + COALESCE([d2].[MontantControle], 0.0)), 0.0)
+    FROM [devis] AS [d2]
+    WHERE [d].[Id] = [d2].[IdDossier] AND ([d2].[PaiementOk] IS NULL OR [d2].[PaiementOk] = CAST(0 AS tinyint))) AS [Montant], (
+    SELECT TOP(1) [d3].[Date]
+    FROM [devis] AS [d3]
+    WHERE [d].[Id] = [d3].[IdDossier] AND ([d3].[PaiementOk] IS NULL OR [d3].[PaiementOk] = CAST(0 AS tinyint))
+    ORDER BY [d3].[Date] DESC) AS [DateEcheance]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] = @__statutPaiementCode_1 AND (
+    SELECT COALESCE(SUM([d0].[MontantEtude] + COALESCE([d0].[MontantHomologation], 0.0) + COALESCE([d0].[MontantControle], 0.0)), 0.0)
+    FROM [devis] AS [d0]
+    WHERE [d].[Id] = [d0].[IdDossier] AND ([d0].[PaiementOk] IS NULL OR [d0].[PaiementOk] = CAST(0 AS tinyint))) > 0.0 AND (
+    SELECT TOP(1) CAST(1 AS bit)
+    FROM [devis] AS [d1]
+    WHERE [d].[Id] = [d1].[IdDossier] AND ([d1].[PaiementOk] IS NULL OR [d1].[PaiementOk] = CAST(0 AS tinyint))
+    ORDER BY [d1].[Date] DESC) = CAST(1 AS bit)
+2026-01-14 20:09:05.712 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 3599.1284 ms
+2026-01-14 20:23:01.117 +01:00 [INF] Now listening on: https://localhost:7016
+2026-01-14 20:23:01.165 +01:00 [INF] Now listening on: http://localhost:5041
+2026-01-14 20:23:01.249 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-14 20:23:01.253 +01:00 [INF] Hosting environment: Development
+2026-01-14 20:23:01.255 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2026-01-14 20:23:03.936 +01:00 [INF] HTTP GET /index.html responded 200 in 118.7708 ms
+2026-01-14 20:23:04.633 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 161.9639 ms
+2026-01-14 20:23:30.272 +01:00 [INF] Executed DbCommand (63ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-01-14 20:23:30.978 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 3458.6999 ms
+2026-01-14 20:24:32.238 +01:00 [INF] Executed DbCommand (11ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification], [s].[Id], [d0].[Id], [d0].[Date], [d0].[DateCreation], [d0].[DateModification], [d0].[IdDemande], [d0].[IdDossier], [d0].[MontantControle], [d0].[MontantEtude], [d0].[MontantHomologation], [d0].[PaiementMobileId], [d0].[PaiementOk], [d0].[UtilisateurCreation], [d0].[UtilisateurModification]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+LEFT JOIN [devis] AS [d0] ON [d].[Id] = [d0].[IdDossier]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] = N'EnPaiement'
+ORDER BY [d].[Id], [s].[Id]
+2026-01-14 20:24:32.274 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 348.4062 ms
+2026-01-14 20:45:28.161 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__request_IdDossier_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+FROM [dossiers] AS [d]
+WHERE [d].[Id] = @__request_IdDossier_0 AND [d].[IdClient] = @__userId_Value_1
+2026-01-14 20:45:28.539 +01:00 [INF] Executed DbCommand (16ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 60), @p2='?' (Size = 60), @p3='?' (DbType = Int64), @p4='?' (DbType = Int64), @p5='?' (Size = 512), @p6='?' (Size = 120), @p7='?' (Size = 120), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (DbType = Guid), @p11='?' (DbType = Guid), @p12='?' (Size = 120), @p13='?' (Size = 120), @p14='?' (Size = 12), @p15='?' (DbType = Currency), @p16='?' (DbType = Int32), @p17='?' (Precision = 5) (Scale = 2) (DbType = Decimal), @p18='?' (Size = 120), @p19='?' (Size = 60), @p20='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [demandes] ([Id], [ContactEmail], [ContactNom], [DateCreation], [DateModification], [Description], [Equipement], [Fabricant], [IdCategorie], [IdDossier], [IdMotifRejet], [IdProposition], [Marque], [Modele], [NumeroDemande], [PrixUnitaire], [QuantiteEquipements], [Remise], [Type], [UtilisateurCreation], [UtilisateurModification])
+OUTPUT INSERTED.[EstHomologable]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20);
+2026-01-14 20:45:28.619 +01:00 [INF] HTTP POST /api/dossiers/7A6D7DF4-8141-4F56-A72E-59E57A51AE73/equipements responded 200 in 741.4947 ms
+2026-01-14 20:46:28.098 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification], [s].[Id], [d0].[Id], [d0].[Date], [d0].[DateCreation], [d0].[DateModification], [d0].[IdDemande], [d0].[IdDossier], [d0].[MontantControle], [d0].[MontantEtude], [d0].[MontantHomologation], [d0].[PaiementMobileId], [d0].[PaiementOk], [d0].[UtilisateurCreation], [d0].[UtilisateurModification]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+LEFT JOIN [devis] AS [d0] ON [d].[Id] = [d0].[IdDossier]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] = N'EnPaiement'
+ORDER BY [d].[Id], [s].[Id]
+2026-01-14 20:46:28.110 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 46.8265 ms
+2026-01-14 20:46:37.659 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+WHERE [d].[IdClient] = @__userId_Value_0
+2026-01-14 20:46:37.691 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdAgentInstructeur], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [s].[Id], [s].[Code], [s].[Libelle]
+FROM (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[IdClient] = @__userId_Value_0
+    ORDER BY [d].[DateOuverture] DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [t]
+INNER JOIN [statuts] AS [s] ON [t].[IdStatut] = [s].[Id]
+ORDER BY [t].[DateOuverture] DESC
+2026-01-14 20:46:37.736 +01:00 [INF] HTTP GET /api/dossiers responded 200 in 131.5863 ms
+2026-01-14 20:47:26.768 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+WHERE [d].[IdClient] = @__userId_Value_0
+2026-01-14 20:47:26.774 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdAgentInstructeur], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [s].[Id], [s].[Code], [s].[Libelle]
+FROM (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[IdClient] = @__userId_Value_0
+    ORDER BY [d].[DateOuverture] DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [t]
+INNER JOIN [statuts] AS [s] ON [t].[IdStatut] = [s].[Id]
+ORDER BY [t].[DateOuverture] DESC
+2026-01-14 20:47:26.781 +01:00 [INF] HTTP GET /api/dossiers responded 200 in 40.7791 ms
+2026-01-14 20:47:27.036 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+WHERE [d].[IdClient] = @__userId_Value_0
+2026-01-14 20:47:27.048 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdAgentInstructeur], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [s].[Id], [s].[Code], [s].[Libelle]
+FROM (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[IdClient] = @__userId_Value_0
+    ORDER BY [d].[DateOuverture] DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [t]
+INNER JOIN [statuts] AS [s] ON [t].[IdStatut] = [s].[Id]
+ORDER BY [t].[DateOuverture] DESC
+2026-01-14 20:47:27.055 +01:00 [INF] HTTP GET /api/dossiers responded 200 in 23.4717 ms
+2026-01-14 20:47:35.499 +01:00 [INF] Executed DbCommand (22ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification], [s].[Id], [d0].[Id], [d0].[Date], [d0].[DateCreation], [d0].[DateModification], [d0].[IdDemande], [d0].[IdDossier], [d0].[MontantControle], [d0].[MontantEtude], [d0].[MontantHomologation], [d0].[PaiementMobileId], [d0].[PaiementOk], [d0].[UtilisateurCreation], [d0].[UtilisateurModification]
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+LEFT JOIN [devis] AS [d0] ON [d].[Id] = [d0].[IdDossier]
+WHERE [d].[IdClient] = @__userId_Value_0 AND [s].[Code] = N'EnPaiement'
+ORDER BY [d].[Id], [s].[Id]
+2026-01-14 20:47:35.511 +01:00 [INF] HTTP GET /api/dossiers/paiements-en-attente responded 200 in 35.5072 ms
