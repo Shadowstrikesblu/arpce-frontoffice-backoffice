@@ -1,0 +1,343 @@
+2026-01-15 16:16:03.357 +01:00 [INF] Now listening on: https://localhost:7016
+2026-01-15 16:16:03.437 +01:00 [INF] Now listening on: http://localhost:5041
+2026-01-15 16:16:03.684 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-15 16:16:03.794 +01:00 [INF] Hosting environment: Development
+2026-01-15 16:16:03.832 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2026-01-15 16:16:18.877 +01:00 [INF] HTTP GET /index.html responded 200 in 96.5802 ms
+2026-01-15 16:16:19.203 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 76.1285 ms
+2026-01-15 16:16:55.637 +01:00 [INF] Executed DbCommand (178ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-01-15 16:16:56.453 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 7833.7692 ms
+2026-01-15 16:20:05.153 +01:00 [INF] Executed DbCommand (33ms) [Parameters=[@__request_Libelle_0='?' (Size = 120), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [dossiers] AS [d]
+        WHERE [d].[Libelle] = @__request_Libelle_0 AND [d].[IdClient] = @__userId_Value_1) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-01-15 16:20:05.182 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Code], [s].[Libelle]
+FROM [statuts] AS [s]
+WHERE [s].[Code] = N'NouveauDossier'
+2026-01-15 16:20:05.539 +01:00 [INF] Executed DbCommand (26ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Int64), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?' (Size = 120), @p9='?' (Size = 30), @p10='?' (Size = 60), @p11='?' (Size = 60), @p12='?' (DbType = Guid), @p13='?' (Size = 60), @p14='?' (Size = 60), @p15='?' (DbType = Int64), @p16='?' (DbType = Int64), @p17='?' (Size = 512), @p18='?' (Size = 120), @p19='?' (Size = 120), @p20='?' (DbType = Guid), @p21='?' (DbType = Guid), @p22='?' (DbType = Guid), @p23='?' (DbType = Guid), @p24='?' (Size = 120), @p25='?' (Size = 120), @p26='?' (Size = 12), @p27='?' (DbType = Currency), @p28='?' (DbType = Int32), @p29='?' (Precision = 5) (Scale = 2) (DbType = Decimal), @p30='?' (Size = 120), @p31='?' (Size = 60), @p32='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [dossiers] ([Id], [DateCreation], [DateModification], [DateOuverture], [IdAgentInstructeur], [IdClient], [IdModeReglement], [IdStatut], [Libelle], [Numero], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11);
+INSERT INTO [demandes] ([Id], [ContactEmail], [ContactNom], [DateCreation], [DateModification], [Description], [Equipement], [Fabricant], [IdCategorie], [IdDossier], [IdMotifRejet], [IdProposition], [Marque], [Modele], [NumeroDemande], [PrixUnitaire], [QuantiteEquipements], [Remise], [Type], [UtilisateurCreation], [UtilisateurModification])
+OUTPUT INSERTED.[EstHomologable]
+VALUES (@p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32);
+2026-01-15 16:20:05.702 +01:00 [INF] Executed DbCommand (18ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Int64), @p2='?' (DbType = Int64), @p3='?' (Size = 8000) (DbType = Binary), @p4='?' (Size = 12), @p5='?' (Size = 512), @p6='?' (DbType = Guid), @p7='?' (Size = 120), @p8='?' (Size = 60), @p9='?' (Size = 60), @p10='?' (DbType = Guid), @p11='?' (DbType = Int64), @p12='?' (DbType = Int64), @p13='?' (Size = -1) (DbType = Binary), @p14='?' (Size = 12), @p15='?' (Size = 512), @p16='?' (DbType = Guid), @p17='?' (Size = 120), @p18='?' (Size = 1) (DbType = Byte), @p19='?' (Size = 60), @p20='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [documentsDemandes] ([Id], [DateCreation], [DateModification], [Donnees], [Extension], [FilePath], [IdDemande], [Nom], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+INSERT INTO [documentsDossiers] ([Id], [DateCreation], [DateModification], [Donnees], [Extension], [FilePath], [IdDossier], [Nom], [Type], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20);
+2026-01-15 16:20:05.730 +01:00 [INF] Dossier "c9346fb9-dbc0-4c40-86d6-9e65c0ccf61e" créé avec succès.
+2026-01-15 16:20:05.786 +01:00 [INF] HTTP POST /api/dossiers responded 201 in 833.5528 ms
+2026-01-15 16:37:44.262 +01:00 [INF] Now listening on: https://localhost:7016
+2026-01-15 16:37:44.302 +01:00 [INF] Now listening on: http://localhost:5041
+2026-01-15 16:37:44.366 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-15 16:37:44.371 +01:00 [INF] Hosting environment: Development
+2026-01-15 16:37:44.375 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2026-01-15 16:37:47.371 +01:00 [INF] HTTP GET /index.html responded 200 in 115.0361 ms
+2026-01-15 16:37:47.724 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 120.3239 ms
+2026-01-15 16:38:14.720 +01:00 [INF] Executed DbCommand (62ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-01-15 16:38:15.435 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 3205.7475 ms
+2026-01-15 16:39:24.629 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@__request_Libelle_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [dossiers] AS [d]
+        WHERE [d].[Libelle] = @__request_Libelle_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-01-15 16:39:24.650 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Code], [s].[Libelle]
+FROM [statuts] AS [s]
+WHERE [s].[Code] = N'NouveauDossier'
+2026-01-15 16:39:24.966 +01:00 [INF] Executed DbCommand (16ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Int64), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?' (Size = 120), @p9='?' (Size = 30), @p10='?' (Size = 60), @p11='?' (Size = 60), @p12='?' (DbType = Guid), @p13='?' (DbType = Int64), @p14='?' (DbType = Int64), @p15='?' (Size = -1) (DbType = Binary), @p16='?' (Size = 12), @p17='?' (Size = 512), @p18='?' (DbType = Guid), @p19='?' (Size = 120), @p20='?' (Size = 1) (DbType = Byte), @p21='?' (Size = 60), @p22='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [dossiers] ([Id], [DateCreation], [DateModification], [DateOuverture], [IdAgentInstructeur], [IdClient], [IdModeReglement], [IdStatut], [Libelle], [Numero], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11);
+INSERT INTO [documentsDossiers] ([Id], [DateCreation], [DateModification], [Donnees], [Extension], [FilePath], [IdDossier], [Nom], [Type], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22);
+2026-01-15 16:39:24.997 +01:00 [INF] Dossier "7b5d880a-ee89-44ca-91b1-e24bc9a9d552" et son document créés avec succès.
+2026-01-15 16:39:25.044 +01:00 [INF] HTTP POST /api/dossiers responded 201 in 583.7028 ms
+2026-01-15 17:09:25.277 +01:00 [INF] HTTP GET /index.html responded 200 in 5.9168 ms
+2026-01-15 17:09:25.550 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 89.2242 ms
+2026-01-15 17:14:38.062 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-01-15 17:14:38.485 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 525.2088 ms
+2026-01-15 18:01:12.409 +01:00 [INF] HTTP GET /index.html responded 200 in 4.6736 ms
+2026-01-15 18:01:14.276 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 53.7039 ms
+2026-01-15 18:01:37.556 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-01-15 18:01:37.754 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 221.8218 ms
+2026-01-15 18:02:12.682 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+WHERE [d].[IdClient] = @__userId_Value_0
+2026-01-15 18:02:12.775 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdAgentInstructeur], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [s].[Id], [s].[Code], [s].[Libelle]
+FROM (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[IdClient] = @__userId_Value_0
+    ORDER BY [d].[DateOuverture] DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [t]
+INNER JOIN [statuts] AS [s] ON [t].[IdStatut] = [s].[Id]
+ORDER BY [t].[DateOuverture] DESC
+2026-01-15 18:02:12.804 +01:00 [INF] HTTP GET /api/dossiers responded 200 in 228.2336 ms
+2026-01-15 18:06:14.992 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-01-15 18:06:15.042 +01:00 [ERR] Failed executing DbCommand (17ms) [Parameters=[@__request_DossierId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdAgentInstructeur], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [t].[Id0], [t].[Code], [t].[Libelle0], [t].[Id1], [t].[Code0], [t].[DateCreation0], [t].[DateModification0], [t].[Libelle1], [t].[MobileBanking], [t].[Remarques], [t].[UtilisateurCreation0], [t].[UtilisateurModification0], [c].[Id], [c].[commentaire], [c].[DateCommentaire], [c].[DateCreation], [c].[DateModification], [c].[IdDossier], [c].[NomInstructeur], [c].[Proposition], [c].[UtilisateurCreation], [c].[UtilisateurModification], [d0].[Id], [d0].[Date], [d0].[DateCreation], [d0].[DateModification], [d0].[IdDemande], [d0].[IdDossier], [d0].[MontantControle], [d0].[MontantEtude], [d0].[MontantHomologation], [d0].[PaiementMobileId], [d0].[PaiementOk], [d0].[UtilisateurCreation], [d0].[UtilisateurModification], [d1].[Id], [d1].[DateCreation], [d1].[DateModification], [d1].[Donnees], [d1].[Extension], [d1].[FilePath], [d1].[IdDossier], [d1].[Nom], [d1].[Type], [d1].[UtilisateurCreation], [d1].[UtilisateurModification], [t0].[Id], [t0].[ContactEmail], [t0].[ContactNom], [t0].[DateCreation], [t0].[DateModification], [t0].[Description], [t0].[Equipement], [t0].[EstHomologable], [t0].[Fabricant], [t0].[IdCategorie], [t0].[IdDossier], [t0].[IdMotifRejet], [t0].[IdProposition], [t0].[Marque], [t0].[Modele], [t0].[NumeroDemande], [t0].[PrixUnitaire], [t0].[QuantiteEquipements], [t0].[Remise], [t0].[Type], [t0].[UtilisateurCreation], [t0].[UtilisateurModification], [t0].[Id0], [t0].[Id1], [t0].[Id2], [t0].[Id3], [t0].[DateCreation0], [t0].[DateDelivrance], [t0].[DateExpiration], [t0].[DateModification0], [t0].[Donnees], [t0].[Extension], [t0].[IdDemande], [t0].[NumeroSequentiel], [t0].[UtilisateurCreation0], [t0].[UtilisateurModification0], [t0].[Code], [t0].[DateCreation1], [t0].[DateModification1], [t0].[FormuleHomologation], [t0].[FraisControle], [t0].[FraisEtude], [t0].[FraisHomologation], [t0].[FraisHomologationParLot], [t0].[FraisHomologationQuantiteParLot], [t0].[Libelle], [t0].[QuantiteReference], [t0].[Remarques], [t0].[TypeClient], [t0].[TypeEquipement], [t0].[UtilisateurCreation1], [t0].[UtilisateurModification1], [t0].[Code0], [t0].[DateCreation2], [t0].[DateModification2], [t0].[Libelle0], [t0].[Remarques0], [t0].[UtilisateurCreation2], [t0].[UtilisateurModification2], [t0].[Code1], [t0].[DateCreation3], [t0].[DateModification3], [t0].[Libelle1], [t0].[UtilisateurCreation3], [t0].[UtilisateurModification3]
+FROM (
+    SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification], [s].[Id] AS [Id0], [s].[Code], [s].[Libelle] AS [Libelle0], [m].[Id] AS [Id1], [m].[Code] AS [Code0], [m].[DateCreation] AS [DateCreation0], [m].[DateModification] AS [DateModification0], [m].[Libelle] AS [Libelle1], [m].[MobileBanking], [m].[Remarques], [m].[UtilisateurCreation] AS [UtilisateurCreation0], [m].[UtilisateurModification] AS [UtilisateurModification0]
+    FROM [dossiers] AS [d]
+    INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+    LEFT JOIN [modesReglements] AS [m] ON [d].[IdModeReglement] = [m].[Id]
+    WHERE [d].[Id] = @__request_DossierId_0 AND [d].[IdClient] = @__userId_Value_1
+) AS [t]
+LEFT JOIN [commentaires] AS [c] ON [t].[Id] = [c].[IdDossier]
+LEFT JOIN [devis] AS [d0] ON [t].[Id] = [d0].[IdDossier]
+LEFT JOIN [documentsDossiers] AS [d1] ON [t].[Id] = [d1].[IdDossier]
+LEFT JOIN (
+    SELECT [d2].[Id], [d2].[ContactEmail], [d2].[ContactNom], [d2].[DateCreation], [d2].[DateModification], [d2].[Description], [d2].[Equipement], [d2].[EstHomologable], [d2].[Fabricant], [d2].[IdCategorie], [d2].[IdDossier], [d2].[IdMotifRejet], [d2].[IdProposition], [d2].[Marque], [d2].[Modele], [d2].[NumeroDemande], [d2].[PrixUnitaire], [d2].[QuantiteEquipements], [d2].[Remise], [d2].[Type], [d2].[UtilisateurCreation], [d2].[UtilisateurModification], [c0].[Id] AS [Id0], [m0].[Id] AS [Id1], [p].[Id] AS [Id2], [a].[Id] AS [Id3], [a].[DateCreation] AS [DateCreation0], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification] AS [DateModification0], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation] AS [UtilisateurCreation0], [a].[UtilisateurModification] AS [UtilisateurModification0], [c0].[Code], [c0].[DateCreation] AS [DateCreation1], [c0].[DateModification] AS [DateModification1], [c0].[FormuleHomologation], [c0].[FraisControle], [c0].[FraisEtude], [c0].[FraisHomologation], [c0].[FraisHomologationParLot], [c0].[FraisHomologationQuantiteParLot], [c0].[Libelle], [c0].[QuantiteReference], [c0].[Remarques], [c0].[TypeClient], [c0].[TypeEquipement], [c0].[UtilisateurCreation] AS [UtilisateurCreation1], [c0].[UtilisateurModification] AS [UtilisateurModification1], [m0].[Code] AS [Code0], [m0].[DateCreation] AS [DateCreation2], [m0].[DateModification] AS [DateModification2], [m0].[Libelle] AS [Libelle0], [m0].[Remarques] AS [Remarques0], [m0].[UtilisateurCreation] AS [UtilisateurCreation2], [m0].[UtilisateurModification] AS [UtilisateurModification2], [p].[Code] AS [Code1], [p].[DateCreation] AS [DateCreation3], [p].[DateModification] AS [DateModification3], [p].[Libelle] AS [Libelle1], [p].[UtilisateurCreation] AS [UtilisateurCreation3], [p].[UtilisateurModification] AS [UtilisateurModification3]
+    FROM [demandes] AS [d2]
+    LEFT JOIN [categoriesEquipements] AS [c0] ON [d2].[IdCategorie] = [c0].[Id]
+    LEFT JOIN [motifsRejets] AS [m0] ON [d2].[IdMotifRejet] = [m0].[Id]
+    LEFT JOIN [propositions] AS [p] ON [d2].[IdProposition] = [p].[Id]
+    LEFT JOIN [attestations] AS [a] ON [d2].[Id] = [a].[IdDemande]
+) AS [t0] ON [t].[Id] = [t0].[IdDossier]
+ORDER BY [t].[Id], [t].[Id0], [t].[Id1], [c].[Id], [d0].[Id], [d1].[Id], [t0].[Id], [t0].[Id0], [t0].[Id1], [t0].[Id2]
+2026-01-15 18:06:15.069 +01:00 [ERR] An exception occurred while iterating over the results of a query for context type 'FrontOffice.Infrastructure.Persistence.FrontOfficeDbContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Nom de colonne non valide : 'FraisControle'.
+Nom de colonne non valide : 'FraisEtude'.
+Nom de colonne non valide : 'FraisHomologation'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:9d32e99e-43d6-4075-a0c1-038c84c48447
+Error Number:207,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Nom de colonne non valide : 'FraisControle'.
+Nom de colonne non valide : 'FraisEtude'.
+Nom de colonne non valide : 'FraisHomologation'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:9d32e99e-43d6-4075-a0c1-038c84c48447
+Error Number:207,State:1,Class:16
+2026-01-15 18:06:15.248 +01:00 [ERR] HTTP GET /api/dossiers/7b5d880a-ee89-44ca-91b1-e24bc9a9d552 responded 500 in 395.5842 ms
+Microsoft.Data.SqlClient.SqlException (0x80131904): Nom de colonne non valide : 'FraisControle'.
+Nom de colonne non valide : 'FraisEtude'.
+Nom de colonne non valide : 'FraisHomologation'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at FrontOffice.Application.Features.Dossiers.Queries.GetDossierDetail.GetDossierDetailQueryHandler.Handle(GetDossierDetailQuery request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Dossiers\Queries\GetDossierDetail\GetDossierDetailQueryHandler.cs:line 39
+   at FrontOffice.Api.Controllers.DossiersController.GetDossierDetail(Guid dossierId) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\DossiersController.cs:line 120
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+ClientConnectionId:9d32e99e-43d6-4075-a0c1-038c84c48447
+Error Number:207,State:1,Class:16
+2026-01-15 18:06:15.471 +01:00 [ERR] Une exception non gérée a été interceptée par le middleware.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Nom de colonne non valide : 'FraisControle'.
+Nom de colonne non valide : 'FraisEtude'.
+Nom de colonne non valide : 'FraisHomologation'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at FrontOffice.Application.Features.Dossiers.Queries.GetDossierDetail.GetDossierDetailQueryHandler.Handle(GetDossierDetailQuery request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Dossiers\Queries\GetDossierDetail\GetDossierDetailQueryHandler.cs:line 39
+   at FrontOffice.Api.Controllers.DossiersController.GetDossierDetail(Guid dossierId) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\DossiersController.cs:line 120
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at FrontOffice.Api.Middleware.ErrorHandlingMiddleware.Invoke(HttpContext context) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Middleware\ErrorHandlingMiddleware.cs:line 30
+ClientConnectionId:9d32e99e-43d6-4075-a0c1-038c84c48447
+Error Number:207,State:1,Class:16
+2026-01-15 18:45:04.310 +01:00 [INF] Now listening on: https://localhost:7016
+2026-01-15 18:45:04.337 +01:00 [INF] Now listening on: http://localhost:5041
+2026-01-15 18:45:04.414 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-15 18:45:04.416 +01:00 [INF] Hosting environment: Development
+2026-01-15 18:45:04.418 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2026-01-15 18:45:16.587 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-01-15 18:45:17.165 +01:00 [INF] Executed DbCommand (132ms) [Parameters=[@__request_DossierId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdAgentInstructeur], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [t].[Id0], [t].[Code], [t].[Libelle0], [t].[Id1], [t].[Code0], [t].[DateCreation0], [t].[DateModification0], [t].[Libelle1], [t].[MobileBanking], [t].[Remarques], [t].[UtilisateurCreation0], [t].[UtilisateurModification0], [c].[Id], [c].[commentaire], [c].[DateCommentaire], [c].[DateCreation], [c].[DateModification], [c].[IdDossier], [c].[NomInstructeur], [c].[Proposition], [c].[UtilisateurCreation], [c].[UtilisateurModification], [d0].[Id], [d0].[Date], [d0].[DateCreation], [d0].[DateModification], [d0].[IdDemande], [d0].[IdDossier], [d0].[MontantControle], [d0].[MontantEtude], [d0].[MontantHomologation], [d0].[PaiementMobileId], [d0].[PaiementOk], [d0].[UtilisateurCreation], [d0].[UtilisateurModification], [d1].[Id], [d1].[DateCreation], [d1].[DateModification], [d1].[Donnees], [d1].[Extension], [d1].[FilePath], [d1].[IdDossier], [d1].[Nom], [d1].[Type], [d1].[UtilisateurCreation], [d1].[UtilisateurModification], [t0].[Id], [t0].[ContactEmail], [t0].[ContactNom], [t0].[DateCreation], [t0].[DateModification], [t0].[Description], [t0].[Equipement], [t0].[EstHomologable], [t0].[Fabricant], [t0].[IdCategorie], [t0].[IdDossier], [t0].[IdMotifRejet], [t0].[IdProposition], [t0].[Marque], [t0].[Modele], [t0].[NumeroDemande], [t0].[PrixUnitaire], [t0].[QuantiteEquipements], [t0].[Remise], [t0].[Type], [t0].[UtilisateurCreation], [t0].[UtilisateurModification], [t0].[Id0], [t0].[Id1], [t0].[Id2], [t0].[Id3], [t0].[DateCreation0], [t0].[DateDelivrance], [t0].[DateExpiration], [t0].[DateModification0], [t0].[Donnees], [t0].[Extension], [t0].[IdDemande], [t0].[NumeroSequentiel], [t0].[UtilisateurCreation0], [t0].[UtilisateurModification0], [t0].[Code], [t0].[DateCreation1], [t0].[DateModification1], [t0].[FormuleHomologation], [t0].[FraisControle], [t0].[FraisEtude], [t0].[FraisHomologation], [t0].[FraisHomologationParLot], [t0].[FraisHomologationQuantiteParLot], [t0].[Libelle], [t0].[QuantiteReference], [t0].[Remarques], [t0].[TypeClient], [t0].[TypeEquipement], [t0].[UtilisateurCreation1], [t0].[UtilisateurModification1], [t0].[Code0], [t0].[DateCreation2], [t0].[DateModification2], [t0].[Libelle0], [t0].[Remarques0], [t0].[UtilisateurCreation2], [t0].[UtilisateurModification2], [t0].[Code1], [t0].[DateCreation3], [t0].[DateModification3], [t0].[Libelle1], [t0].[UtilisateurCreation3], [t0].[UtilisateurModification3]
+FROM (
+    SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification], [s].[Id] AS [Id0], [s].[Code], [s].[Libelle] AS [Libelle0], [m].[Id] AS [Id1], [m].[Code] AS [Code0], [m].[DateCreation] AS [DateCreation0], [m].[DateModification] AS [DateModification0], [m].[Libelle] AS [Libelle1], [m].[MobileBanking], [m].[Remarques], [m].[UtilisateurCreation] AS [UtilisateurCreation0], [m].[UtilisateurModification] AS [UtilisateurModification0]
+    FROM [dossiers] AS [d]
+    INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+    LEFT JOIN [modesReglements] AS [m] ON [d].[IdModeReglement] = [m].[Id]
+    WHERE [d].[Id] = @__request_DossierId_0 AND [d].[IdClient] = @__userId_Value_1
+) AS [t]
+LEFT JOIN [commentaires] AS [c] ON [t].[Id] = [c].[IdDossier]
+LEFT JOIN [devis] AS [d0] ON [t].[Id] = [d0].[IdDossier]
+LEFT JOIN [documentsDossiers] AS [d1] ON [t].[Id] = [d1].[IdDossier]
+LEFT JOIN (
+    SELECT [d2].[Id], [d2].[ContactEmail], [d2].[ContactNom], [d2].[DateCreation], [d2].[DateModification], [d2].[Description], [d2].[Equipement], [d2].[EstHomologable], [d2].[Fabricant], [d2].[IdCategorie], [d2].[IdDossier], [d2].[IdMotifRejet], [d2].[IdProposition], [d2].[Marque], [d2].[Modele], [d2].[NumeroDemande], [d2].[PrixUnitaire], [d2].[QuantiteEquipements], [d2].[Remise], [d2].[Type], [d2].[UtilisateurCreation], [d2].[UtilisateurModification], [c0].[Id] AS [Id0], [m0].[Id] AS [Id1], [p].[Id] AS [Id2], [a].[Id] AS [Id3], [a].[DateCreation] AS [DateCreation0], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification] AS [DateModification0], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation] AS [UtilisateurCreation0], [a].[UtilisateurModification] AS [UtilisateurModification0], [c0].[Code], [c0].[DateCreation] AS [DateCreation1], [c0].[DateModification] AS [DateModification1], [c0].[FormuleHomologation], [c0].[FraisControle], [c0].[FraisEtude], [c0].[FraisHomologation], [c0].[FraisHomologationParLot], [c0].[FraisHomologationQuantiteParLot], [c0].[Libelle], [c0].[QuantiteReference], [c0].[Remarques], [c0].[TypeClient], [c0].[TypeEquipement], [c0].[UtilisateurCreation] AS [UtilisateurCreation1], [c0].[UtilisateurModification] AS [UtilisateurModification1], [m0].[Code] AS [Code0], [m0].[DateCreation] AS [DateCreation2], [m0].[DateModification] AS [DateModification2], [m0].[Libelle] AS [Libelle0], [m0].[Remarques] AS [Remarques0], [m0].[UtilisateurCreation] AS [UtilisateurCreation2], [m0].[UtilisateurModification] AS [UtilisateurModification2], [p].[Code] AS [Code1], [p].[DateCreation] AS [DateCreation3], [p].[DateModification] AS [DateModification3], [p].[Libelle] AS [Libelle1], [p].[UtilisateurCreation] AS [UtilisateurCreation3], [p].[UtilisateurModification] AS [UtilisateurModification3]
+    FROM [demandes] AS [d2]
+    LEFT JOIN [categoriesEquipements] AS [c0] ON [d2].[IdCategorie] = [c0].[Id]
+    LEFT JOIN [motifsRejets] AS [m0] ON [d2].[IdMotifRejet] = [m0].[Id]
+    LEFT JOIN [propositions] AS [p] ON [d2].[IdProposition] = [p].[Id]
+    LEFT JOIN [attestations] AS [a] ON [d2].[Id] = [a].[IdDemande]
+) AS [t0] ON [t].[Id] = [t0].[IdDossier]
+ORDER BY [t].[Id], [t].[Id0], [t].[Id1], [c].[Id], [d0].[Id], [d1].[Id], [t0].[Id], [t0].[Id0], [t0].[Id1], [t0].[Id2]
+2026-01-15 18:45:17.324 +01:00 [INF] HTTP GET /api/dossiers/7b5d880a-ee89-44ca-91b1-e24bc9a9d552 responded 200 in 3891.6216 ms
+2026-01-15 19:08:32.433 +01:00 [INF] Now listening on: https://localhost:7016
+2026-01-15 19:08:32.562 +01:00 [INF] Now listening on: http://localhost:5041
+2026-01-15 19:08:32.818 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-15 19:08:32.822 +01:00 [INF] Hosting environment: Development
+2026-01-15 19:08:32.830 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2026-01-15 19:09:05.468 +01:00 [INF] Executed DbCommand (150ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-01-15 19:09:06.143 +01:00 [INF] Executed DbCommand (17ms) [Parameters=[@p4='?' (DbType = Guid), @p0='?' (DbType = Int64), @p1='?' (Size = 60), @p2='?' (Size = 6), @p3='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [clients] SET [DateModification] = @p0, [UtilisateurModification] = @p1, [VerificationCode] = @p2, [VerificationTokenExpiry] = @p3
+OUTPUT 1
+WHERE [Id] = @p4;
+2026-01-15 19:09:07.006 +01:00 [INF] Connexion au serveur SMTP smtp.sendgrid.net sur le port 587 avec l'option "StartTls"...
+2026-01-15 19:09:11.219 +01:00 [INF] Authentification avec l'utilisateur 'apikey'...
+2026-01-15 19:09:11.621 +01:00 [INF] Envoi de l'email à 'orichekaya2@gmail.com'...
+2026-01-15 19:09:13.927 +01:00 [INF] Email envoyé avec succès.
+2026-01-15 19:09:14.052 +01:00 [INF] HTTP POST /api/auth/forgot-password responded 200 in 14302.7562 ms
+2026-01-15 19:17:50.094 +01:00 [INF] Now listening on: https://localhost:7016
+2026-01-15 19:17:50.165 +01:00 [INF] Now listening on: http://localhost:5041
+2026-01-15 19:17:50.319 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-15 19:17:50.328 +01:00 [INF] Hosting environment: Development
+2026-01-15 19:17:50.333 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2026-01-15 19:18:45.721 +01:00 [INF] Executed DbCommand (195ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-01-15 19:18:46.606 +01:00 [INF] Executed DbCommand (21ms) [Parameters=[@p3='?' (DbType = Guid), @p0='?' (DbType = Int64), @p1='?' (Size = 6), @p2='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [clients] SET [DateModification] = @p0, [VerificationCode] = @p1, [VerificationTokenExpiry] = @p2
+OUTPUT 1
+WHERE [Id] = @p3;
+2026-01-15 19:18:46.875 +01:00 [INF] Connexion au serveur SMTP smtp.sendgrid.net sur le port 587 avec l'option "StartTls"...
+2026-01-15 19:18:50.794 +01:00 [INF] Authentification avec l'utilisateur 'apikey'...
+2026-01-15 19:18:51.727 +01:00 [INF] Envoi de l'email à 'orichekaya2@gmail.com'...
+2026-01-15 19:19:02.993 +01:00 [INF] Email envoyé avec succès.
+2026-01-15 19:19:03.087 +01:00 [INF] HTTP POST /api/auth/forgot-password responded 200 in 24266.6613 ms
+2026-01-15 19:21:36.903 +01:00 [INF] Executed DbCommand (24ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-01-15 19:21:37.814 +01:00 [INF] Executed DbCommand (13ms) [Parameters=[@p5='?' (DbType = Guid), @p0='?' (DbType = Int64), @p1='?' (Size = 255), @p2='?' (Size = 60), @p3='?' (Size = 6), @p4='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [clients] SET [DateModification] = @p0, [MotPasse] = @p1, [UtilisateurModification] = @p2, [VerificationCode] = @p3, [VerificationTokenExpiry] = @p4
+OUTPUT 1
+WHERE [Id] = @p5;
+2026-01-15 19:21:37.841 +01:00 [INF] HTTP POST /api/auth/reset-password responded 200 in 1080.5133 ms
+2026-01-15 23:42:43.117 +01:00 [INF] HTTP GET /api/dossiers responded 401 in 29.3023 ms
+2026-01-15 23:43:03.169 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-01-15 23:43:03.360 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 318.8949 ms
+2026-01-15 23:43:40.064 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+WHERE [d].[IdClient] = @__userId_Value_0
+2026-01-15 23:43:40.152 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@__userId_Value_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateModification], [t].[DateOuverture], [t].[IdAgentInstructeur], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[UtilisateurCreation], [t].[UtilisateurModification], [s].[Id], [s].[Code], [s].[Libelle]
+FROM (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[IdClient] = @__userId_Value_0
+    ORDER BY [d].[DateOuverture] DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [t]
+INNER JOIN [statuts] AS [s] ON [t].[IdStatut] = [s].[Id]
+ORDER BY [t].[DateOuverture] DESC
+2026-01-15 23:43:40.245 +01:00 [INF] HTTP GET /api/dossiers responded 200 in 291.0524 ms
+2026-01-15 23:44:21.616 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__request_IdDossier_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+FROM [dossiers] AS [d]
+WHERE [d].[Id] = @__request_IdDossier_0 AND [d].[IdClient] = @__userId_Value_1
+2026-01-15 23:44:21.762 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 60), @p2='?' (Size = 60), @p3='?' (DbType = Int64), @p4='?' (DbType = Int64), @p5='?' (Size = 512), @p6='?' (Size = 120), @p7='?' (Size = 120), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (DbType = Guid), @p11='?' (DbType = Guid), @p12='?' (Size = 120), @p13='?' (Size = 120), @p14='?' (Size = 12), @p15='?' (DbType = Currency), @p16='?' (DbType = Int32), @p17='?' (Precision = 5) (Scale = 2) (DbType = Decimal), @p18='?' (Size = 120), @p19='?' (Size = 60), @p20='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [demandes] ([Id], [ContactEmail], [ContactNom], [DateCreation], [DateModification], [Description], [Equipement], [Fabricant], [IdCategorie], [IdDossier], [IdMotifRejet], [IdProposition], [Marque], [Modele], [NumeroDemande], [PrixUnitaire], [QuantiteEquipements], [Remise], [Type], [UtilisateurCreation], [UtilisateurModification])
+OUTPUT INSERTED.[EstHomologable]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20);
+2026-01-15 23:44:21.806 +01:00 [INF] HTTP POST /api/dossiers/7b5d880a-ee89-44ca-91b1-e24bc9a9d552/equipements responded 200 in 249.6092 ms
