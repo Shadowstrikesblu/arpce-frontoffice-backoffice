@@ -181,6 +181,7 @@ SELECT TOP(1) [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpir
 FROM [attestations] AS [a]
 INNER JOIN [demandes] AS [d] ON [a].[IdDemande] = [d].[Id]
 WHERE [a].[Id] = @__request_AttestationId_0
+<<<<<<< HEAD
 2026-01-23 13:27:05.069 +01:00 [INF] Now listening on: https://localhost:7238
 2026-01-23 13:27:05.130 +01:00 [INF] Now listening on: http://localhost:5126
 2026-01-23 13:27:05.308 +01:00 [INF] Application started. Press Ctrl+C to shut down.
@@ -427,3 +428,5 @@ LEFT JOIN (
     LEFT JOIN [attestations] AS [a] ON [d2].[Id] = [a].[IdDemande]
 ) AS [s1] ON [s0].[Id] = [s1].[IdDossier]
 ORDER BY [s0].[Id], [s0].[Id0], [s0].[Id1], [s0].[Id2], [c0].[Id], [d0].[Id], [d1].[Id], [s1].[Id], [s1].[Id0], [s1].[Id1], [s1].[Id2], [s1].[Id3]
+=======
+>>>>>>> parent of d98bfeb (Merge branch 'feature/arpce' of https://github.com/Congo-Digital-Services/arpce-homologation-backends-cds)

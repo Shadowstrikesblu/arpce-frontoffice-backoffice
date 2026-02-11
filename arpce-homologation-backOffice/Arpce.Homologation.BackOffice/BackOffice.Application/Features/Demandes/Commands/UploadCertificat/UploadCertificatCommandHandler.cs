@@ -36,12 +36,13 @@ public class UploadCertificatCommandHandler : IRequestHandler<UploadCertificatCo
 
         try
         {
-            var attestation = await _context.Attestations
+            // Récupération de l'attestation avec la demande et le dossier
+            var attestationToUpdate = await _context.Attestations
                 .Include(a => a.Demande)
                     .ThenInclude(d => d.Dossier)
                 .FirstOrDefaultAsync(a => a.Id == request.AttestationId, cancellationToken);
 
-            if (attestation == null)
+            if (attestationToUpdate == null)
             {
                 throw new Exception($"Attestation '{request.AttestationId}' introuvable.");
             }
@@ -68,61 +69,120 @@ public class UploadCertificatCommandHandler : IRequestHandler<UploadCertificatCo
                 _logger.LogInformation("Réutilisation du visa immuable existant : {Visa}", attestation.VisaReference);
             }
 
-            var visaFinal = attestation.VisaReference;
-            var dossier = attestation.Demande.Dossier;
+            var dossier = attestationToUpdate.Demande.Dossier;
+
+            // Validation du fichier
+            var file = request.CertificatFile;
+            if (file == null || file.Length == 0)
+            {
+                _logger.LogWarning("Fichier certificat manquant pour l'attestation {AttestationId}.", request.AttestationId);
+                return false;
+            }
 
             // Lecture du fichier
-            if (request.CertificatFile == null || request.CertificatFile.Length == 0)
-                throw new InvalidOperationException("Fichier PDF obligatoire.");
-
             byte[] fileData;
             using (var memoryStream = new MemoryStream())
             {
-                await request.CertificatFile.CopyToAsync(memoryStream, cancellationToken);
+                await file.CopyToAsync(memoryStream, cancellationToken);
                 fileData = memoryStream.ToArray();
             }
 
             // Mise à jour de l'attestation
-            attestation.Donnees = fileData;
-            attestation.Extension = Path.GetExtension(request.CertificatFile.FileName)?.TrimStart('.').ToLowerInvariant() ?? "pdf";
-            attestation.DateDelivrance = new DateTimeOffset(request.DateDelivrance).ToUnixTimeMilliseconds();
-            attestation.DateExpiration = new DateTimeOffset(request.DateExpiration).ToUnixTimeMilliseconds();
+            attestationToUpdate.Donnees = fileData;
+            attestationToUpdate.Extension = Path.GetExtension(file.FileName)?.TrimStart('.').ToLowerInvariant() ?? "pdf";
+            attestationToUpdate.DateDelivrance = new DateTimeOffset(request.DateDelivrance).ToUnixTimeMilliseconds();
+            attestationToUpdate.DateExpiration = new DateTimeOffset(request.DateExpiration).ToUnixTimeMilliseconds();
 
-            _context.Attestations.Update(attestation);
+            _context.Attestations.Update(attestationToUpdate);
             await _context.SaveChangesAsync(cancellationToken);
 
-            // Vérification complétude dossier
-            var demandeIds = await _context.Demandes
-                .Where(d => d.IdDossier == dossier.Id)
-                .Select(d => d.Id)
+            _logger.LogInformation(
+                "Attestation {AttestationId} mise à jour avec succès.",
+                request.AttestationId
+            );
+
+            // Récupération de TOUTES les attestations liées au dossier
+            var attestationsDuDossier = await _context.Attestations
+                .Where(a => a.Demande.IdDossier == dossier.Id)
                 .ToListAsync(cancellationToken);
 
-            var completes = await _context.Attestations
-                .CountAsync(a => demandeIds.Contains(a.IdDemande) && a.Donnees != null && a.Donnees.Length > 0, cancellationToken);
+            var totalAttestations = attestationsDuDossier.Count;
+            var completedAttestations = attestationsDuDossier
+                .Count(a => a.Donnees != null && a.Donnees.Length > 0);
 
-            if (demandeIds.Count > 0 && completes == demandeIds.Count)
+            // Changement de statut UNIQUEMENT si toutes les attestations sont uploadées
+            if (completedAttestations == totalAttestations && totalAttestations > 0)
             {
-                var statut = await _context.Statuts.FirstOrDefaultAsync(s => s.Code == "DossierSigner", cancellationToken);
-                if (statut != null) dossier.IdStatut = statut.Id;
+                _logger.LogInformation(
+                    "Toutes les {Total} attestations du dossier {DossierId} sont uploadées. Mise à jour du statut.",
+                    totalAttestations,
+                    dossier.Id
+                );
+
+                var statutSigne = await _context.Statuts
+                    .FirstOrDefaultAsync(s => s.Code == "DossierSigner", cancellationToken);
+
+                if (statutSigne != null && dossier.IdStatut != statutSigne.Id)
+                {
+                    dossier.IdStatut = statutSigne.Id;
+                    _context.Dossiers.Update(dossier);
+                }
+            }
+            else
+            {
+                _logger.LogInformation(
+                    "{Completed}/{Total} attestations complétées pour le dossier {DossierId}. Statut inchangé.",
+                    completedAttestations,
+                    totalAttestations,
+                    dossier.Id
+                );
             }
 
+            // Sauvegarde finale
             await _context.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
 
-            // Audit et Notifications
-            await _auditService.LogAsync("Signature", $"Visa généré : {visaFinal}", "SIGNATURE", dossier.Id);
+            // Audit
+            await _auditService.LogAsync(
+                "Gestion Attestations",
+                $"Certificat uploadé pour l'équipement '{attestationToUpdate.Demande.Equipement}'.",
+                "UPLOAD",
+                dossier.Id
+            );
 
-            var msg = $"Attestation signée (Visa: {visaFinal}) pour {attestation.Demande.Equipement}.";
-            await _notificationService.SendToGroupAsync("DRSCE", "Signature", msg, "E", $"/dossiers/{dossier.Id}", dossier.Id.ToString());
-            await _notificationService.SendToGroupAsync("DAJI", "Signature", msg, "V", $"/dossiers/{dossier.Id}", dossier.Id.ToString());
+            // Notifications
+            var message =
+                $"Le certificat pour l'équipement '{attestationToUpdate.Demande.Equipement}' du dossier {dossier.Numero} est disponible.";
+
+            await _notificationService.SendToGroupAsync(
+                "DRSCE",
+                "Certificat Signé",
+                message,
+                "E",
+                $"/dossiers/{dossier.Id}",
+                dossier.Id.ToString()
+            );
+
+            await _notificationService.SendToGroupAsync(
+                "DAJI",
+                "Certificat Signé",
+                message,
+                "V",
+                $"/dossiers/{dossier.Id}",
+                dossier.Id.ToString()
+            );
 
             return true;
         }
         catch (Exception ex)
         {
             await transaction.RollbackAsync(cancellationToken);
-            _logger.LogError(ex, "Erreur signature automatique");
-            throw;
+            _logger.LogError(
+                ex,
+                "Erreur lors de l'upload du certificat pour l'attestation {AttestationId}.",
+                request.AttestationId
+            );
+            return false;
         }
     }
 }
