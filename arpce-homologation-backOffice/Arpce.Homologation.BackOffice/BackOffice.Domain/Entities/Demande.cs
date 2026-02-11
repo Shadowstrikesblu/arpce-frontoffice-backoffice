@@ -16,6 +16,9 @@ public class Demande : AuditableEntity
     public int? QuantiteEquipements { get; set; }
     public string? ContactNom { get; set; }
     public string? ContactEmail { get; set; }
+    public Guid? IdStatut { get; set; }
+    public virtual Statut? Statut { get; set; }
+
 
     // Champs de facturation
     public decimal? PrixUnitaire { get; set; }

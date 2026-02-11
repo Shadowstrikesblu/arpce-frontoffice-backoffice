@@ -169,8 +169,11 @@ if (enableSwagger)
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "BackOffice API v1");
-        options.RoutePrefix = string.Empty; // => /
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "BackOffice API V1");
+        options.RoutePrefix = "swagger";
+
+        // INJECTION DU CSS PERSONNALIS�
+        options.InjectStylesheet("/css/swagger-custom.css");
     });
 }
 

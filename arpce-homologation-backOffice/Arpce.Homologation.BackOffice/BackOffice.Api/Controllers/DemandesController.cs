@@ -1,4 +1,6 @@
 ﻿using BackOffice.Application.Features.Demandes.Commands.AddCategorieToDemande;
+using BackOffice.Application.Features.Demandes.Commands.ChangeStatus;
+using BackOffice.Application.Features.Demandes.Commands.RejectEquipement;
 using BackOffice.Application.Features.Demandes.Commands.UpdateEquipement;
 using BackOffice.Application.Features.Demandes.Commands.UploadCertificat;
 using BackOffice.Application.Features.Demandes.Queries.DownloadDocument;
@@ -83,6 +85,40 @@ public class DemandesController : ControllerBase
     public async Task<IActionResult> UpdateEquipement(Guid equipementId, [FromBody] UpdateEquipementCommand command)
     {
         command.EquipementId = equipementId;
+        var result = await _mediator.Send(command);
+        return Ok(new { ok = result });
+    }
+
+    /// <summary>
+    /// Refuse un équipement spécifique 
+    /// </summary>
+    /// <param name="equipement">L'identifiant unique de l'équipement à rejeter.</param>
+    /// <param name="command">Les informations sur le motif du rejet.</param>
+    [HttpPatch("{equipement:guid}/rejeter")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> RejectEquipement(Guid equipement, [FromBody] RejectEquipementCommand command)
+    {
+        command.EquipementId = equipement;
+
+        try
+        {
+            var result = await _mediator.Send(command);
+            return Ok(new { ok = result });
+        }
+        catch (Exception ex)
+        {
+            return NotFound(new { title = "Erreur", detail = ex.Message, status = 404 });
+        }
+    }
+
+    /// <summary>
+    /// Change le statut d'un équipement spécifique 
+    /// </summary>
+    [HttpPatch("{equipement:guid}/changer-statut")]
+    public async Task<IActionResult> ChangeEquipementStatus(Guid equipement, [FromBody] ChangeEquipementStatusCommand command)
+    {
+        command.EquipementId = equipement;
         var result = await _mediator.Send(command);
         return Ok(new { ok = result });
     }
