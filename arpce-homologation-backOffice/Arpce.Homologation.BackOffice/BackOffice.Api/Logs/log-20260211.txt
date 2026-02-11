@@ -9682,3 +9682,205 @@ Microsoft.Data.SqlClient.SqlException (0x80131904): Nom de colonne non valide :
    at BackOffice.Api.Middleware.ErrorHandlingMiddleware.Invoke(HttpContext context) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\Middleware\ErrorHandlingMiddleware.cs:line 21
 ClientConnectionId:85b84aef-82de-4b6b-81d3-10018adf58d1
 Error Number:207,State:1,Class:16
+2026-02-11 16:26:23.227 +01:00 [INF] Now listening on: https://localhost:7238
+2026-02-11 16:26:23.270 +01:00 [INF] Now listening on: http://localhost:5126
+2026-02-11 16:26:23.407 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-11 16:26:23.422 +01:00 [INF] Hosting environment: Development
+2026-02-11 16:26:23.426 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api
+2026-02-11 16:26:58.735 +01:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-02-11 16:27:01.983 +01:00 [INF] Executed DbCommand (59ms) [Parameters=[@__request_Compte_0='?' (Size = 100)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AdminProfilsId], [a].[ChangementMotPasse], [a].[Compte], [a].[DateCreation], [a].[DateModification], [a].[DerniereConnexion], [a].[Desactive], [a].[IdProfil], [a].[IdUtilisateurType], [a].[MotPasse], [a].[Nom], [a].[Prenoms], [a].[Remarques], [a].[UtilisateurCreation], [a].[UtilisateurModification], [a0].[Id], [a0].[Code], [a0].[DateCreation], [a0].[DateModification], [a0].[Libelle], [a0].[Remarques], [a0].[UtilisateurCreation], [a0].[UtilisateurModification]
+FROM [AdminUtilisateurs] AS [a]
+LEFT JOIN [adminProfils] AS [a0] ON [a].[IdProfil] = [a0].[Id]
+WHERE [a].[Compte] = @__request_Compte_0
+2026-02-11 16:27:02.781 +01:00 [INF] Executed DbCommand (9ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [AdminUtilisateurs] SET [DerniereConnexion] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+2026-02-11 16:28:00.908 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+2026-02-11 16:28:01.013 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-02-11 16:28:01.103 +01:00 [ERR] Failed executing DbCommand (13ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d0].[Id], [d0].[DateCreation], [d0].[DateModification], [d0].[DateOuverture], [d0].[IdAgentInstructeur], [d0].[IdClient], [d0].[IdModeReglement], [d0].[IdStatut], [d0].[Libelle], [d0].[Numero], [d0].[UtilisateurCreation], [d0].[UtilisateurModification], [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville], [s].[Id], [s].[Code], [s].[Libelle], [d1].[Id], [d1].[DateCreation], [d1].[DateModification], [d1].[Donnees], [d1].[Extension], [d1].[FilePath], [d1].[IdDossier], [d1].[Nom], [d1].[Type], [d1].[UtilisateurCreation], [d1].[UtilisateurModification], [s0].[Id], [s0].[ContactEmail], [s0].[ContactNom], [s0].[DateCreation], [s0].[DateModification], [s0].[Description], [s0].[Equipement], [s0].[EstHomologable], [s0].[Fabricant], [s0].[IdCategorie], [s0].[IdDossier], [s0].[IdMotifRejet], [s0].[IdProposition], [s0].[IdStatut], [s0].[Marque], [s0].[Modele], [s0].[NumeroDemande], [s0].[PrixUnitaire], [s0].[QuantiteEquipements], [s0].[Remise], [s0].[StatutId], [s0].[Type], [s0].[UtilisateurCreation], [s0].[UtilisateurModification], [s0].[Id0], [s0].[DateCreation0], [s0].[DateModification0], [s0].[Donnees], [s0].[Extension], [s0].[FilePath], [s0].[IdDemande], [s0].[Nom], [s0].[UtilisateurCreation0], [s0].[UtilisateurModification0], [s0].[Id1], [s0].[DateCreation1], [s0].[DateDelivrance], [s0].[DateExpiration], [s0].[DateModification1], [s0].[Donnees0], [s0].[Extension0], [s0].[IdDemande0], [s0].[NumeroSequentiel], [s0].[UtilisateurCreation1], [s0].[UtilisateurModification1], [s0].[VisaReference], [s0].[Id2], [s0].[Date], [s0].[DateCreation2], [s0].[DateModification2], [s0].[IdDemande1], [s0].[IdDossier0], [s0].[MontantControle], [s0].[MontantEtude], [s0].[MontantHomologation], [s0].[PaiementMobileId], [s0].[PaiementOk], [s0].[UtilisateurCreation2], [s0].[UtilisateurModification2]
+FROM (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    ORDER BY [d].[DateCreation] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [d0]
+INNER JOIN [clients] AS [c] ON [d0].[IdClient] = [c].[Id]
+INNER JOIN [statuts] AS [s] ON [d0].[IdStatut] = [s].[Id]
+LEFT JOIN [documentsDossiers] AS [d1] ON [d0].[Id] = [d1].[IdDossier]
+LEFT JOIN (
+    SELECT [d2].[Id], [d2].[ContactEmail], [d2].[ContactNom], [d2].[DateCreation], [d2].[DateModification], [d2].[Description], [d2].[Equipement], [d2].[EstHomologable], [d2].[Fabricant], [d2].[IdCategorie], [d2].[IdDossier], [d2].[IdMotifRejet], [d2].[IdProposition], [d2].[IdStatut], [d2].[Marque], [d2].[Modele], [d2].[NumeroDemande], [d2].[PrixUnitaire], [d2].[QuantiteEquipements], [d2].[Remise], [d2].[StatutId], [d2].[Type], [d2].[UtilisateurCreation], [d2].[UtilisateurModification], [d3].[Id] AS [Id0], [d3].[DateCreation] AS [DateCreation0], [d3].[DateModification] AS [DateModification0], [d3].[Donnees], [d3].[Extension], [d3].[FilePath], [d3].[IdDemande], [d3].[Nom], [d3].[UtilisateurCreation] AS [UtilisateurCreation0], [d3].[UtilisateurModification] AS [UtilisateurModification0], [a].[Id] AS [Id1], [a].[DateCreation] AS [DateCreation1], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification] AS [DateModification1], [a].[Donnees] AS [Donnees0], [a].[Extension] AS [Extension0], [a].[IdDemande] AS [IdDemande0], [a].[NumeroSequentiel], [a].[UtilisateurCreation] AS [UtilisateurCreation1], [a].[UtilisateurModification] AS [UtilisateurModification1], [a].[VisaReference], [d4].[Id] AS [Id2], [d4].[Date], [d4].[DateCreation] AS [DateCreation2], [d4].[DateModification] AS [DateModification2], [d4].[IdDemande] AS [IdDemande1], [d4].[IdDossier] AS [IdDossier0], [d4].[MontantControle], [d4].[MontantEtude], [d4].[MontantHomologation], [d4].[PaiementMobileId], [d4].[PaiementOk], [d4].[UtilisateurCreation] AS [UtilisateurCreation2], [d4].[UtilisateurModification] AS [UtilisateurModification2]
+    FROM [demandes] AS [d2]
+    LEFT JOIN [documentsDemandes] AS [d3] ON [d2].[Id] = [d3].[IdDemande]
+    LEFT JOIN [attestations] AS [a] ON [d2].[Id] = [a].[IdDemande]
+    LEFT JOIN [devis] AS [d4] ON [d2].[Id] = [d4].[IdDemande]
+) AS [s0] ON [d0].[Id] = [s0].[IdDossier]
+ORDER BY [d0].[DateCreation] DESC, [d0].[Id], [c].[Id], [s].[Id], [d1].[Id], [s0].[Id], [s0].[Id0], [s0].[Id1]
+2026-02-11 16:28:01.138 +01:00 [ERR] An exception occurred while iterating over the results of a query for context type 'BackOffice.Infrastructure.Persistence.BackOfficeDbContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Nom de colonne non valide : 'VisaReference'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:4b15b48f-e415-497d-87ae-f8bd55bd2566
+Error Number:207,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Nom de colonne non valide : 'VisaReference'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:4b15b48f-e415-497d-87ae-f8bd55bd2566
+Error Number:207,State:1,Class:16
+2026-02-11 16:28:01.387 +01:00 [ERR] Une exception non gérée a été interceptée.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Nom de colonne non valide : 'VisaReference'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at BackOffice.Application.Features.Dossiers.Queries.GetDossiersList.GetDossiersListQueryHandler.Handle(GetDossiersListQuery request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Application\Features\Dossiers\Queries\GetDossiersList\GetDossiersListQueryHandler.cs:line 101
+   at BackOffice.Api.Controllers.DossiersController.GetDossiersList(GetDossiersQueryParameters parameters) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\Controllers\DossiersController.cs:line 66
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at BackOffice.Api.Middleware.ErrorHandlingMiddleware.Invoke(HttpContext context) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\Middleware\ErrorHandlingMiddleware.cs:line 21
+ClientConnectionId:4b15b48f-e415-497d-87ae-f8bd55bd2566
+Error Number:207,State:1,Class:16
+2026-02-11 16:30:18.962 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+2026-02-11 16:30:19.017 +01:00 [INF] Executed DbCommand (46ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d0].[Id], [d0].[DateCreation], [d0].[DateModification], [d0].[DateOuverture], [d0].[IdAgentInstructeur], [d0].[IdClient], [d0].[IdModeReglement], [d0].[IdStatut], [d0].[Libelle], [d0].[Numero], [d0].[UtilisateurCreation], [d0].[UtilisateurModification], [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville], [s].[Id], [s].[Code], [s].[Libelle], [d1].[Id], [d1].[DateCreation], [d1].[DateModification], [d1].[Donnees], [d1].[Extension], [d1].[FilePath], [d1].[IdDossier], [d1].[Nom], [d1].[Type], [d1].[UtilisateurCreation], [d1].[UtilisateurModification], [s0].[Id], [s0].[ContactEmail], [s0].[ContactNom], [s0].[DateCreation], [s0].[DateModification], [s0].[Description], [s0].[Equipement], [s0].[EstHomologable], [s0].[Fabricant], [s0].[IdCategorie], [s0].[IdDossier], [s0].[IdMotifRejet], [s0].[IdProposition], [s0].[IdStatut], [s0].[Marque], [s0].[Modele], [s0].[NumeroDemande], [s0].[PrixUnitaire], [s0].[QuantiteEquipements], [s0].[Remise], [s0].[StatutId], [s0].[Type], [s0].[UtilisateurCreation], [s0].[UtilisateurModification], [s0].[Id0], [s0].[DateCreation0], [s0].[DateModification0], [s0].[Donnees], [s0].[Extension], [s0].[FilePath], [s0].[IdDemande], [s0].[Nom], [s0].[UtilisateurCreation0], [s0].[UtilisateurModification0], [s0].[Id1], [s0].[DateCreation1], [s0].[DateDelivrance], [s0].[DateExpiration], [s0].[DateModification1], [s0].[Donnees0], [s0].[Extension0], [s0].[IdDemande0], [s0].[NumeroSequentiel], [s0].[UtilisateurCreation1], [s0].[UtilisateurModification1], [s0].[VisaReference], [s0].[Id2], [s0].[Date], [s0].[DateCreation2], [s0].[DateModification2], [s0].[IdDemande1], [s0].[IdDossier0], [s0].[MontantControle], [s0].[MontantEtude], [s0].[MontantHomologation], [s0].[PaiementMobileId], [s0].[PaiementOk], [s0].[UtilisateurCreation2], [s0].[UtilisateurModification2]
+FROM (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    ORDER BY [d].[DateCreation] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [d0]
+INNER JOIN [clients] AS [c] ON [d0].[IdClient] = [c].[Id]
+INNER JOIN [statuts] AS [s] ON [d0].[IdStatut] = [s].[Id]
+LEFT JOIN [documentsDossiers] AS [d1] ON [d0].[Id] = [d1].[IdDossier]
+LEFT JOIN (
+    SELECT [d2].[Id], [d2].[ContactEmail], [d2].[ContactNom], [d2].[DateCreation], [d2].[DateModification], [d2].[Description], [d2].[Equipement], [d2].[EstHomologable], [d2].[Fabricant], [d2].[IdCategorie], [d2].[IdDossier], [d2].[IdMotifRejet], [d2].[IdProposition], [d2].[IdStatut], [d2].[Marque], [d2].[Modele], [d2].[NumeroDemande], [d2].[PrixUnitaire], [d2].[QuantiteEquipements], [d2].[Remise], [d2].[StatutId], [d2].[Type], [d2].[UtilisateurCreation], [d2].[UtilisateurModification], [d3].[Id] AS [Id0], [d3].[DateCreation] AS [DateCreation0], [d3].[DateModification] AS [DateModification0], [d3].[Donnees], [d3].[Extension], [d3].[FilePath], [d3].[IdDemande], [d3].[Nom], [d3].[UtilisateurCreation] AS [UtilisateurCreation0], [d3].[UtilisateurModification] AS [UtilisateurModification0], [a].[Id] AS [Id1], [a].[DateCreation] AS [DateCreation1], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification] AS [DateModification1], [a].[Donnees] AS [Donnees0], [a].[Extension] AS [Extension0], [a].[IdDemande] AS [IdDemande0], [a].[NumeroSequentiel], [a].[UtilisateurCreation] AS [UtilisateurCreation1], [a].[UtilisateurModification] AS [UtilisateurModification1], [a].[VisaReference], [d4].[Id] AS [Id2], [d4].[Date], [d4].[DateCreation] AS [DateCreation2], [d4].[DateModification] AS [DateModification2], [d4].[IdDemande] AS [IdDemande1], [d4].[IdDossier] AS [IdDossier0], [d4].[MontantControle], [d4].[MontantEtude], [d4].[MontantHomologation], [d4].[PaiementMobileId], [d4].[PaiementOk], [d4].[UtilisateurCreation] AS [UtilisateurCreation2], [d4].[UtilisateurModification] AS [UtilisateurModification2]
+    FROM [demandes] AS [d2]
+    LEFT JOIN [documentsDemandes] AS [d3] ON [d2].[Id] = [d3].[IdDemande]
+    LEFT JOIN [attestations] AS [a] ON [d2].[Id] = [a].[IdDemande]
+    LEFT JOIN [devis] AS [d4] ON [d2].[Id] = [d4].[IdDemande]
+) AS [s0] ON [d0].[Id] = [s0].[IdDossier]
+ORDER BY [d0].[DateCreation] DESC, [d0].[Id], [c].[Id], [s].[Id], [d1].[Id], [s0].[Id], [s0].[Id0], [s0].[Id1]
+2026-02-11 16:33:46.744 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@__debutMs_0='?' (DbType = Int64), @__finMs_1='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+WHERE [d].[DateCreation] >= @__debutMs_0 AND [d].[DateCreation] <= @__finMs_1
+2026-02-11 16:33:46.769 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-02-11 16:33:46.878 +01:00 [INF] Executed DbCommand (41ms) [Parameters=[@__debutMs_0='?' (DbType = Int64), @__finMs_1='?' (DbType = Int64), @__p_2='?' (DbType = Int32), @__p_3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d0].[Id], [d0].[DateCreation], [d0].[DateModification], [d0].[DateOuverture], [d0].[IdAgentInstructeur], [d0].[IdClient], [d0].[IdModeReglement], [d0].[IdStatut], [d0].[Libelle], [d0].[Numero], [d0].[UtilisateurCreation], [d0].[UtilisateurModification], [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville], [s].[Id], [s].[Code], [s].[Libelle], [d1].[Id], [d1].[DateCreation], [d1].[DateModification], [d1].[Donnees], [d1].[Extension], [d1].[FilePath], [d1].[IdDossier], [d1].[Nom], [d1].[Type], [d1].[UtilisateurCreation], [d1].[UtilisateurModification], [s0].[Id], [s0].[ContactEmail], [s0].[ContactNom], [s0].[DateCreation], [s0].[DateModification], [s0].[Description], [s0].[Equipement], [s0].[EstHomologable], [s0].[Fabricant], [s0].[IdCategorie], [s0].[IdDossier], [s0].[IdMotifRejet], [s0].[IdProposition], [s0].[IdStatut], [s0].[Marque], [s0].[Modele], [s0].[NumeroDemande], [s0].[PrixUnitaire], [s0].[QuantiteEquipements], [s0].[Remise], [s0].[StatutId], [s0].[Type], [s0].[UtilisateurCreation], [s0].[UtilisateurModification], [s0].[Id0], [s0].[DateCreation0], [s0].[DateModification0], [s0].[Donnees], [s0].[Extension], [s0].[FilePath], [s0].[IdDemande], [s0].[Nom], [s0].[UtilisateurCreation0], [s0].[UtilisateurModification0], [s0].[Id1], [s0].[DateCreation1], [s0].[DateDelivrance], [s0].[DateExpiration], [s0].[DateModification1], [s0].[Donnees0], [s0].[Extension0], [s0].[IdDemande0], [s0].[NumeroSequentiel], [s0].[UtilisateurCreation1], [s0].[UtilisateurModification1], [s0].[VisaReference], [s0].[Id2], [s0].[Date], [s0].[DateCreation2], [s0].[DateModification2], [s0].[IdDemande1], [s0].[IdDossier0], [s0].[MontantControle], [s0].[MontantEtude], [s0].[MontantHomologation], [s0].[PaiementMobileId], [s0].[PaiementOk], [s0].[UtilisateurCreation2], [s0].[UtilisateurModification2]
+FROM (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[DateCreation] >= @__debutMs_0 AND [d].[DateCreation] <= @__finMs_1
+    ORDER BY [d].[DateCreation] DESC
+    OFFSET @__p_2 ROWS FETCH NEXT @__p_3 ROWS ONLY
+) AS [d0]
+INNER JOIN [clients] AS [c] ON [d0].[IdClient] = [c].[Id]
+INNER JOIN [statuts] AS [s] ON [d0].[IdStatut] = [s].[Id]
+LEFT JOIN [documentsDossiers] AS [d1] ON [d0].[Id] = [d1].[IdDossier]
+LEFT JOIN (
+    SELECT [d2].[Id], [d2].[ContactEmail], [d2].[ContactNom], [d2].[DateCreation], [d2].[DateModification], [d2].[Description], [d2].[Equipement], [d2].[EstHomologable], [d2].[Fabricant], [d2].[IdCategorie], [d2].[IdDossier], [d2].[IdMotifRejet], [d2].[IdProposition], [d2].[IdStatut], [d2].[Marque], [d2].[Modele], [d2].[NumeroDemande], [d2].[PrixUnitaire], [d2].[QuantiteEquipements], [d2].[Remise], [d2].[StatutId], [d2].[Type], [d2].[UtilisateurCreation], [d2].[UtilisateurModification], [d3].[Id] AS [Id0], [d3].[DateCreation] AS [DateCreation0], [d3].[DateModification] AS [DateModification0], [d3].[Donnees], [d3].[Extension], [d3].[FilePath], [d3].[IdDemande], [d3].[Nom], [d3].[UtilisateurCreation] AS [UtilisateurCreation0], [d3].[UtilisateurModification] AS [UtilisateurModification0], [a].[Id] AS [Id1], [a].[DateCreation] AS [DateCreation1], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification] AS [DateModification1], [a].[Donnees] AS [Donnees0], [a].[Extension] AS [Extension0], [a].[IdDemande] AS [IdDemande0], [a].[NumeroSequentiel], [a].[UtilisateurCreation] AS [UtilisateurCreation1], [a].[UtilisateurModification] AS [UtilisateurModification1], [a].[VisaReference], [d4].[Id] AS [Id2], [d4].[Date], [d4].[DateCreation] AS [DateCreation2], [d4].[DateModification] AS [DateModification2], [d4].[IdDemande] AS [IdDemande1], [d4].[IdDossier] AS [IdDossier0], [d4].[MontantControle], [d4].[MontantEtude], [d4].[MontantHomologation], [d4].[PaiementMobileId], [d4].[PaiementOk], [d4].[UtilisateurCreation] AS [UtilisateurCreation2], [d4].[UtilisateurModification] AS [UtilisateurModification2]
+    FROM [demandes] AS [d2]
+    LEFT JOIN [documentsDemandes] AS [d3] ON [d2].[Id] = [d3].[IdDemande]
+    LEFT JOIN [attestations] AS [a] ON [d2].[Id] = [a].[IdDemande]
+    LEFT JOIN [devis] AS [d4] ON [d2].[Id] = [d4].[IdDemande]
+) AS [s0] ON [d0].[Id] = [s0].[IdDossier]
+ORDER BY [d0].[DateCreation] DESC, [d0].[Id], [c].[Id], [s].[Id], [d1].[Id], [s0].[Id], [s0].[Id0], [s0].[Id1]
+2026-02-11 16:36:01.973 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__debutMs_0='?' (DbType = Int64), @__finMs_1='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+WHERE [d].[DateCreation] >= @__debutMs_0 AND [d].[DateCreation] <= @__finMs_1
+2026-02-11 16:36:02.026 +01:00 [INF] Executed DbCommand (46ms) [Parameters=[@__debutMs_0='?' (DbType = Int64), @__finMs_1='?' (DbType = Int64), @__p_2='?' (DbType = Int32), @__p_3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [d0].[Id], [d0].[DateCreation], [d0].[DateModification], [d0].[DateOuverture], [d0].[IdAgentInstructeur], [d0].[IdClient], [d0].[IdModeReglement], [d0].[IdStatut], [d0].[Libelle], [d0].[Numero], [d0].[UtilisateurCreation], [d0].[UtilisateurModification], [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville], [s].[Id], [s].[Code], [s].[Libelle], [d1].[Id], [d1].[DateCreation], [d1].[DateModification], [d1].[Donnees], [d1].[Extension], [d1].[FilePath], [d1].[IdDossier], [d1].[Nom], [d1].[Type], [d1].[UtilisateurCreation], [d1].[UtilisateurModification], [s0].[Id], [s0].[ContactEmail], [s0].[ContactNom], [s0].[DateCreation], [s0].[DateModification], [s0].[Description], [s0].[Equipement], [s0].[EstHomologable], [s0].[Fabricant], [s0].[IdCategorie], [s0].[IdDossier], [s0].[IdMotifRejet], [s0].[IdProposition], [s0].[IdStatut], [s0].[Marque], [s0].[Modele], [s0].[NumeroDemande], [s0].[PrixUnitaire], [s0].[QuantiteEquipements], [s0].[Remise], [s0].[StatutId], [s0].[Type], [s0].[UtilisateurCreation], [s0].[UtilisateurModification], [s0].[Id0], [s0].[DateCreation0], [s0].[DateModification0], [s0].[Donnees], [s0].[Extension], [s0].[FilePath], [s0].[IdDemande], [s0].[Nom], [s0].[UtilisateurCreation0], [s0].[UtilisateurModification0], [s0].[Id1], [s0].[DateCreation1], [s0].[DateDelivrance], [s0].[DateExpiration], [s0].[DateModification1], [s0].[Donnees0], [s0].[Extension0], [s0].[IdDemande0], [s0].[NumeroSequentiel], [s0].[UtilisateurCreation1], [s0].[UtilisateurModification1], [s0].[VisaReference], [s0].[Id2], [s0].[Date], [s0].[DateCreation2], [s0].[DateModification2], [s0].[IdDemande1], [s0].[IdDossier0], [s0].[MontantControle], [s0].[MontantEtude], [s0].[MontantHomologation], [s0].[PaiementMobileId], [s0].[PaiementOk], [s0].[UtilisateurCreation2], [s0].[UtilisateurModification2]
+FROM (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification]
+    FROM [dossiers] AS [d]
+    WHERE [d].[DateCreation] >= @__debutMs_0 AND [d].[DateCreation] <= @__finMs_1
+    ORDER BY [d].[DateCreation] DESC
+    OFFSET @__p_2 ROWS FETCH NEXT @__p_3 ROWS ONLY
+) AS [d0]
+INNER JOIN [clients] AS [c] ON [d0].[IdClient] = [c].[Id]
+INNER JOIN [statuts] AS [s] ON [d0].[IdStatut] = [s].[Id]
+LEFT JOIN [documentsDossiers] AS [d1] ON [d0].[Id] = [d1].[IdDossier]
+LEFT JOIN (
+    SELECT [d2].[Id], [d2].[ContactEmail], [d2].[ContactNom], [d2].[DateCreation], [d2].[DateModification], [d2].[Description], [d2].[Equipement], [d2].[EstHomologable], [d2].[Fabricant], [d2].[IdCategorie], [d2].[IdDossier], [d2].[IdMotifRejet], [d2].[IdProposition], [d2].[IdStatut], [d2].[Marque], [d2].[Modele], [d2].[NumeroDemande], [d2].[PrixUnitaire], [d2].[QuantiteEquipements], [d2].[Remise], [d2].[StatutId], [d2].[Type], [d2].[UtilisateurCreation], [d2].[UtilisateurModification], [d3].[Id] AS [Id0], [d3].[DateCreation] AS [DateCreation0], [d3].[DateModification] AS [DateModification0], [d3].[Donnees], [d3].[Extension], [d3].[FilePath], [d3].[IdDemande], [d3].[Nom], [d3].[UtilisateurCreation] AS [UtilisateurCreation0], [d3].[UtilisateurModification] AS [UtilisateurModification0], [a].[Id] AS [Id1], [a].[DateCreation] AS [DateCreation1], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification] AS [DateModification1], [a].[Donnees] AS [Donnees0], [a].[Extension] AS [Extension0], [a].[IdDemande] AS [IdDemande0], [a].[NumeroSequentiel], [a].[UtilisateurCreation] AS [UtilisateurCreation1], [a].[UtilisateurModification] AS [UtilisateurModification1], [a].[VisaReference], [d4].[Id] AS [Id2], [d4].[Date], [d4].[DateCreation] AS [DateCreation2], [d4].[DateModification] AS [DateModification2], [d4].[IdDemande] AS [IdDemande1], [d4].[IdDossier] AS [IdDossier0], [d4].[MontantControle], [d4].[MontantEtude], [d4].[MontantHomologation], [d4].[PaiementMobileId], [d4].[PaiementOk], [d4].[UtilisateurCreation] AS [UtilisateurCreation2], [d4].[UtilisateurModification] AS [UtilisateurModification2]
+    FROM [demandes] AS [d2]
+    LEFT JOIN [documentsDemandes] AS [d3] ON [d2].[Id] = [d3].[IdDemande]
+    LEFT JOIN [attestations] AS [a] ON [d2].[Id] = [a].[IdDemande]
+    LEFT JOIN [devis] AS [d4] ON [d2].[Id] = [d4].[IdDemande]
+) AS [s0] ON [d0].[Id] = [s0].[IdDossier]
+ORDER BY [d0].[DateCreation] DESC, [d0].[Id], [c].[Id], [s].[Id], [d1].[Id], [s0].[Id], [s0].[Id0], [s0].[Id1]
+2026-02-11 16:41:11.658 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@__statusTerm_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+WHERE [s].[Code] = @__statusTerm_0
+2026-02-11 16:41:11.678 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-02-11 16:41:11.782 +01:00 [INF] Executed DbCommand (47ms) [Parameters=[@__statusTerm_0='?' (Size = 120), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s0].[Id], [s0].[DateCreation], [s0].[DateModification], [s0].[DateOuverture], [s0].[IdAgentInstructeur], [s0].[IdClient], [s0].[IdModeReglement], [s0].[IdStatut], [s0].[Libelle], [s0].[Numero], [s0].[UtilisateurCreation], [s0].[UtilisateurModification], [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville], [s0].[Id0], [s0].[Code], [s0].[Libelle0], [d0].[Id], [d0].[DateCreation], [d0].[DateModification], [d0].[Donnees], [d0].[Extension], [d0].[FilePath], [d0].[IdDossier], [d0].[Nom], [d0].[Type], [d0].[UtilisateurCreation], [d0].[UtilisateurModification], [s1].[Id], [s1].[ContactEmail], [s1].[ContactNom], [s1].[DateCreation], [s1].[DateModification], [s1].[Description], [s1].[Equipement], [s1].[EstHomologable], [s1].[Fabricant], [s1].[IdCategorie], [s1].[IdDossier], [s1].[IdMotifRejet], [s1].[IdProposition], [s1].[IdStatut], [s1].[Marque], [s1].[Modele], [s1].[NumeroDemande], [s1].[PrixUnitaire], [s1].[QuantiteEquipements], [s1].[Remise], [s1].[StatutId], [s1].[Type], [s1].[UtilisateurCreation], [s1].[UtilisateurModification], [s1].[Id0], [s1].[DateCreation0], [s1].[DateModification0], [s1].[Donnees], [s1].[Extension], [s1].[FilePath], [s1].[IdDemande], [s1].[Nom], [s1].[UtilisateurCreation0], [s1].[UtilisateurModification0], [s1].[Id1], [s1].[DateCreation1], [s1].[DateDelivrance], [s1].[DateExpiration], [s1].[DateModification1], [s1].[Donnees0], [s1].[Extension0], [s1].[IdDemande0], [s1].[NumeroSequentiel], [s1].[UtilisateurCreation1], [s1].[UtilisateurModification1], [s1].[VisaReference], [s1].[Id2], [s1].[Date], [s1].[DateCreation2], [s1].[DateModification2], [s1].[IdDemande1], [s1].[IdDossier0], [s1].[MontantControle], [s1].[MontantEtude], [s1].[MontantHomologation], [s1].[PaiementMobileId], [s1].[PaiementOk], [s1].[UtilisateurCreation2], [s1].[UtilisateurModification2]
+FROM (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[UtilisateurCreation], [d].[UtilisateurModification], [s].[Id] AS [Id0], [s].[Code], [s].[Libelle] AS [Libelle0]
+    FROM [dossiers] AS [d]
+    INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+    WHERE [s].[Code] = @__statusTerm_0
+    ORDER BY [d].[DateCreation] DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [s0]
+INNER JOIN [clients] AS [c] ON [s0].[IdClient] = [c].[Id]
+LEFT JOIN [documentsDossiers] AS [d0] ON [s0].[Id] = [d0].[IdDossier]
+LEFT JOIN (
+    SELECT [d1].[Id], [d1].[ContactEmail], [d1].[ContactNom], [d1].[DateCreation], [d1].[DateModification], [d1].[Description], [d1].[Equipement], [d1].[EstHomologable], [d1].[Fabricant], [d1].[IdCategorie], [d1].[IdDossier], [d1].[IdMotifRejet], [d1].[IdProposition], [d1].[IdStatut], [d1].[Marque], [d1].[Modele], [d1].[NumeroDemande], [d1].[PrixUnitaire], [d1].[QuantiteEquipements], [d1].[Remise], [d1].[StatutId], [d1].[Type], [d1].[UtilisateurCreation], [d1].[UtilisateurModification], [d2].[Id] AS [Id0], [d2].[DateCreation] AS [DateCreation0], [d2].[DateModification] AS [DateModification0], [d2].[Donnees], [d2].[Extension], [d2].[FilePath], [d2].[IdDemande], [d2].[Nom], [d2].[UtilisateurCreation] AS [UtilisateurCreation0], [d2].[UtilisateurModification] AS [UtilisateurModification0], [a].[Id] AS [Id1], [a].[DateCreation] AS [DateCreation1], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification] AS [DateModification1], [a].[Donnees] AS [Donnees0], [a].[Extension] AS [Extension0], [a].[IdDemande] AS [IdDemande0], [a].[NumeroSequentiel], [a].[UtilisateurCreation] AS [UtilisateurCreation1], [a].[UtilisateurModification] AS [UtilisateurModification1], [a].[VisaReference], [d3].[Id] AS [Id2], [d3].[Date], [d3].[DateCreation] AS [DateCreation2], [d3].[DateModification] AS [DateModification2], [d3].[IdDemande] AS [IdDemande1], [d3].[IdDossier] AS [IdDossier0], [d3].[MontantControle], [d3].[MontantEtude], [d3].[MontantHomologation], [d3].[PaiementMobileId], [d3].[PaiementOk], [d3].[UtilisateurCreation] AS [UtilisateurCreation2], [d3].[UtilisateurModification] AS [UtilisateurModification2]
+    FROM [demandes] AS [d1]
+    LEFT JOIN [documentsDemandes] AS [d2] ON [d1].[Id] = [d2].[IdDemande]
+    LEFT JOIN [attestations] AS [a] ON [d1].[Id] = [a].[IdDemande]
+    LEFT JOIN [devis] AS [d3] ON [d1].[Id] = [d3].[IdDemande]
+) AS [s1] ON [s0].[Id] = [s1].[IdDossier]
+ORDER BY [s0].[DateCreation] DESC, [s0].[Id], [s0].[Id0], [c].[Id], [d0].[Id], [s1].[Id], [s1].[Id0], [s1].[Id1]
