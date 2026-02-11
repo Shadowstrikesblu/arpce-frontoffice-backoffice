@@ -14,29 +14,33 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ------------------------------------------------------
-// SERILOG
-// ------------------------------------------------------
-builder.Host.UseSerilog((context, services, configuration) =>
-    configuration
-        .ReadFrom.Configuration(context.Configuration)
-        .ReadFrom.Services(services)
-        .Enrich.FromLogContext()
-        .WriteTo.Console());
+// --- Configuration des Services ---
 
-// ------------------------------------------------------
-// SERVICES
-// ------------------------------------------------------
+// Logique de Serilog
+builder.Host.UseSerilog((context, services, configuration) => configuration
+    .ReadFrom.Configuration(context.Configuration)
+    .ReadFrom.Services(services)
+    .Enrich.FromLogContext()
+    .WriteTo.Console());
+
+// Ajoute les contr�leurs
 builder.Services.AddControllers();
-builder.Services.AddSignalR();
-builder.Services.AddHttpContextAccessor();
 
-// Swagger
+// Ajout du Service SignalR (N�cessaire pour les notifications temps r�el)
+builder.Services.AddSignalR();
+
+// Configuration Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "BackOffice API", Version = "v1" });
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "ARPCE Homologation - BackOffice API",
+        Version = "v1",
+        Description = "API pour la gestion des demandes d'homologation interne de ARPCE."
+    });
 
+    // Configuration pour la s�curit� JWT dans Swagger
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -63,7 +67,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// DbContext
+// Configuration de la base de donn�es
 builder.Services.AddDbContext<BackOfficeDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -72,11 +76,11 @@ builder.Services.AddDbContext<BackOfficeDbContext>(options =>
 builder.Services.AddScoped<IApplicationDbContext>(sp =>
     sp.GetRequiredService<BackOfficeDbContext>());
 
-// MediatR
+// Ajouter MediatR
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(AssemblyReference).Assembly));
 
-// Security & infrastructure
+// Ajoute les services pour la s�curit� et l'utilisateur courant
 builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
@@ -88,9 +92,7 @@ builder.Services.AddTransient<INotificationService, SignalRNotificationService>(
 builder.Services.AddTransient<ICertificateGeneratorService, CertificateGeneratorService>();
 builder.Services.AddTransient<IDevisGeneratorService, DevisGeneratorService>();
 
-// ------------------------------------------------------
-// AUTH (JWT) + SignalR support
-// ------------------------------------------------------
+// Configuration de l'Authentification JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -108,17 +110,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret))
         };
 
-        // SignalR JWT support via query string
+        // --- Configuration sp�cifique pour SignalR ---
         options.Events = new JwtBearerEvents
         {
             OnMessageReceived = context =>
             {
                 var accessToken = context.Request.Query["access_token"];
+
+                // Si la requ�te a un token ET qu'elle cible le Hub SignalR
                 var path = context.HttpContext.Request.Path;
 
                 if (!string.IsNullOrEmpty(accessToken) &&
                     path.StartsWithSegments("/hubs/notifications"))
                 {
+                    // On injecte le token manuellement dans le contexte pour que l'authentification fonctionne
                     context.Token = accessToken;
                 }
 
@@ -127,21 +132,21 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddAuthorization();
 
-// ------------------------------------------------------
-// CORS
-// ------------------------------------------------------
+// Politique CORS
+// Attention : Pour SignalR avec Authentification, AllowAnyOrigin() n'est pas permis.
+// On utilisera WithOrigins(...) et AllowCredentials().
 var corsPolicyName = "AllowWebApp";
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(corsPolicyName, policy =>
-    {
-        policy.AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials()
-              .SetIsOriginAllowed(_ => true);
-    });
+    options.AddPolicy(name: corsPolicyName,
+                      policy =>
+                      {
+                          policy.AllowAnyMethod()
+                                .AllowAnyHeader()
+                                .AllowCredentials() 
+                                .SetIsOriginAllowed(origin => true); // Autorise toutes les origines tout en permettant AllowCredentials
+                      });
 });
 
 // ------------------------------------------------------
@@ -149,33 +154,39 @@ builder.Services.AddCors(options =>
 // ------------------------------------------------------
 var app = builder.Build();
 
-// ------------------------------------------------------
-// PIPELINE
-// ------------------------------------------------------
+// --- Configuration du Pipeline HTTP ---
+
+// Utiliser le middleware de gestion d'erreurs
 app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseSerilogRequestLogging();
 
-// Swagger (you can keep always on if you want)
-app.UseSwagger();
-app.UseSwaggerUI(options =>
+if (app.Environment.IsDevelopment())
 {
-    options.SwaggerEndpoint("/swagger/v1/swagger.json", "BackOffice API V1");
-    options.RoutePrefix = "swagger";
-    options.InjectStylesheet("/css/swagger-custom.css");
-});
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "BackOffice API V1");
+        options.RoutePrefix = string.Empty; // Swagger � la racine
 
-app.UseRouting();
+        // INJECTION DU CSS PERSONNALIS�
+        options.InjectStylesheet("/css/swagger-custom.css");
+    });
+}
 
-// Serve index.html from wwwroot if present (SPA / static site)
-app.UseDefaultFiles();  // looks for index.html by default
+app.UseHttpsRedirection();
+
+// Permet de servir les fichiers statiques (comme le fichier CSS dans wwwroot)
 app.UseStaticFiles();
 
 app.UseCors(corsPolicyName);
 
+// Activer l'authentification et l'autorisation
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Mapping du Hub SignalR � l'URL "/hubs/notifications"
 app.MapHub<NotificationHub>("/hubs/notifications");
 
 // Optional: if you want "/" to load index.html (SPA), DO NOT MapGet("/").
