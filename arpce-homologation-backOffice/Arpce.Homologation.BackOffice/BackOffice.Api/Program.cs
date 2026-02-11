@@ -14,33 +14,23 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ------------------------------------------------------
-// SERILOG
-// ------------------------------------------------------
-builder.Host.UseSerilog((context, services, configuration) =>
-    configuration
-        .ReadFrom.Configuration(context.Configuration)
-        .ReadFrom.Services(services)
-        .Enrich.FromLogContext()
-        .WriteTo.Console());
+// --- Configuration des Services ---
 
-// ------------------------------------------------------
-// SERVICES
-// ------------------------------------------------------
+builder.Host.UseSerilog((context, services, configuration) => configuration
+    .ReadFrom.Configuration(context.Configuration)
+    .ReadFrom.Services(services)
+    .Enrich.FromLogContext()
+    .WriteTo.Console());
+
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
-builder.Services.AddHttpContextAccessor();
-
-// ------------------------------------------------------
-// SWAGGER (needed for UseSwagger/UseSwaggerUI)
-// ------------------------------------------------------
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
+
+builder.Services.AddSwaggerGen(options =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "BackOffice API", Version = "v1" });
 
-    // JWT auth support in Swagger UI
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
         Type = SecuritySchemeType.Http,
@@ -55,18 +45,13 @@ builder.Services.AddSwaggerGen(c =>
         {
             new OpenApiSecurityScheme
             {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
+                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
             },
             Array.Empty<string>()
         }
     });
 });
 
-// DbContext
 builder.Services.AddDbContext<BackOfficeDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -75,11 +60,9 @@ builder.Services.AddDbContext<BackOfficeDbContext>(options =>
 builder.Services.AddScoped<IApplicationDbContext>(sp =>
     sp.GetRequiredService<BackOfficeDbContext>());
 
-// MediatR
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(AssemblyReference).Assembly));
 
-// Security & infrastructure
 builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
@@ -91,9 +74,6 @@ builder.Services.AddTransient<INotificationService, SignalRNotificationService>(
 builder.Services.AddTransient<ICertificateGeneratorService, CertificateGeneratorService>();
 builder.Services.AddTransient<IDevisGeneratorService, DevisGeneratorService>();
 
-// ------------------------------------------------------
-// AUTH (JWT) + SignalR support
-// ------------------------------------------------------
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -111,7 +91,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret))
         };
 
-        // SignalR JWT support
         options.Events = new JwtBearerEvents
         {
             OnMessageReceived = context =>
@@ -130,22 +109,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// ------------------------------------------------------
-// CORS (SignalR + Auth requires AllowCredentials, so no AllowAnyOrigin)
-// ------------------------------------------------------
 var corsPolicyName = "AllowWebApp";
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: corsPolicyName, policy =>
-    {
-        policy.AllowAnyMethod()
-              .AllowAnyHeader()
-              .AllowCredentials()
-              .SetIsOriginAllowed(_ => true); // allow all origins with credentials
-        // Recommended for prod:
-        // .WithOrigins("https://your-frontend-domain.com")
-    });
+    options.AddPolicy(name: corsPolicyName,
+                      policy =>
+                      {
+                          policy.AllowAnyMethod()
+                                .AllowAnyHeader()
+                                .AllowCredentials()
+                                .SetIsOriginAllowed(origin => true);
+                      });
 });
 
 // ------------------------------------------------------
@@ -153,39 +128,24 @@ builder.Services.AddCors(options =>
 // ------------------------------------------------------
 var app = builder.Build();
 
-// ------------------------------------------------------
-// PIPELINE
-// ------------------------------------------------------
+// --- Configuration du Pipeline HTTP ---
+
 app.UseMiddleware<ErrorHandlingMiddleware>();
-app.UseSerilogRequestLogging();
 
-// Swagger enabled in Production via config
-bool enableSwagger =
-    app.Environment.IsDevelopment() ||
-    app.Configuration.GetValue<bool>("EnableSwaggerUI");
-
-if (enableSwagger)
+// MODIFICATION : Swagger activ� m�me en Production pour vos tests
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "BackOffice API V1");
-        options.RoutePrefix = "swagger";
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "BackOffice API V1");
+    options.RoutePrefix = string.Empty; // Swagger � la racine
+    options.InjectStylesheet("/css/swagger-custom.css");
+});
 
-        // INJECTION DU CSS PERSONNALIS�
-        options.InjectStylesheet("/css/swagger-custom.css");
-    });
-}
+// app.UseHttpsRedirection(); 
 
-// Optional root endpoint (avoids 404 on /)
-app.MapGet("/", () => Results.Ok("BackOffice API is running"));
-
-app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseRouting(); 
 
-app.UseRouting();
-
-// CORS must be between UseRouting and UseAuthentication/UseAuthorization
 app.UseCors(corsPolicyName);
 
 app.UseAuthentication();
