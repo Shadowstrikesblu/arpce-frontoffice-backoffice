@@ -47,10 +47,10 @@ public class LoginClientQueryHandler : IRequestHandler<LoginClientQuery, Authent
         // Vérifie le Niveau de Validation (Workflow d'inscription)
 
         // Niveau 0 : Inscrit mais OTP non validé
-        //if (client.NiveauValidation == 0)
-        //{
-        //    throw new UnauthorizedAccessException("Votre adresse e-mail n'a pas encore été vérifiée. Veuillez utiliser le code reçu lors de l'inscription.");
-        //}
+        if (client.NiveauValidation == 0)
+        {
+            throw new UnauthorizedAccessException("Votre adresse e-mail n'a pas encore été vérifiée. Veuillez utiliser le code reçu lors de l'inscription.");
+        }
 
         // Niveau 1 : OTP validé mais en attente validation ARPCE
         // L'utilisateur doit attendre que l'admin passe le niveau à 2.

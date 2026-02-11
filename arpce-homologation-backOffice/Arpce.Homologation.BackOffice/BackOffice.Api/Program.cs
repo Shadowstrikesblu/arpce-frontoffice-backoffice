@@ -154,7 +154,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "BackOffice API V1");
-        options.RoutePrefix = string.Empty; // Swagger à la racine
+        options.RoutePrefix = "swagger";
 
         // INJECTION DU CSS PERSONNALISÉ
         options.InjectStylesheet("/css/swagger-custom.css");

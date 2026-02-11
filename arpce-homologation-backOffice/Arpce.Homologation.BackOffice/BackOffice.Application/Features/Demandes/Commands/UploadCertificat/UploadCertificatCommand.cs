@@ -15,4 +15,10 @@ public class UploadCertificatCommand : IRequest<bool>
     public DateTime DateDelivrance { get; set; }
 
     public DateTime DateExpiration { get; set; }
+
+    /// <summary>
+    /// Référence de visa obligatoire 
+    /// </summary>
+    public string VisaReference { get; set; } = default!;
+
 }

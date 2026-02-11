@@ -10,5 +10,7 @@ public class GetDossiersQueryParameters
     public string? Recherche { get; set; }
     public string? Status { get; set; } 
     public string? TrierPar { get; set; } 
-    public string? Ordre { get; set; } 
+    public string? Ordre { get; set; }
+    public DateTime? DateDebut { get; set; }
+    public DateTime? DateFin { get; set; }
 }

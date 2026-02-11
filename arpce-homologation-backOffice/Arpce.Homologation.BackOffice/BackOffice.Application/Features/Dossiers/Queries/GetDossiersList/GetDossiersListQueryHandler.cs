@@ -5,6 +5,11 @@ using BackOffice.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Dossiers.Queries.GetDossiersList;
 
@@ -28,6 +33,7 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
     {
         IQueryable<Dossier> query = _context.Dossiers.AsNoTracking();
 
+        // Filtrage par recherche texte
         if (!string.IsNullOrWhiteSpace(request.Parameters.Recherche))
         {
             var searchTerm = request.Parameters.Recherche.Trim().ToLower();
@@ -38,12 +44,29 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
             );
         }
 
-        if (!string.IsNullOrWhiteSpace(request.Parameters.Status))
+        // Filtrage par statut en All
+        if (!string.IsNullOrWhiteSpace(request.Parameters.Status) && request.Parameters.Status.ToLower() != "all")
         {
             var statusTerm = request.Parameters.Status.Trim();
             query = query.Where(d => d.Statut.Code == statusTerm);
         }
 
+        // Filtrage par plage de dates 
+        if (request.Parameters.DateDebut.HasValue)
+        {
+            // Conversion DateTime en millisecondes Unix
+            long debutMs = new DateTimeOffset(request.Parameters.DateDebut.Value.Date).ToUnixTimeMilliseconds();
+            query = query.Where(d => d.DateCreation >= debutMs);
+        }
+
+        if (request.Parameters.DateFin.HasValue)
+        {
+            // Fin de journée pour inclure tout le jour sélectionné
+            long finMs = new DateTimeOffset(request.Parameters.DateFin.Value.Date.AddDays(1).AddTicks(-1)).ToUnixTimeMilliseconds();
+            query = query.Where(d => d.DateCreation <= finMs);
+        }
+
+        // Tri
         bool isDescending = request.Parameters.Ordre?.ToLower() == "desc";
 
         switch (request.Parameters.TrierPar?.ToLower())
@@ -65,9 +88,16 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
         var totalCount = await query.CountAsync(cancellationToken);
         if (totalCount == 0)
         {
-            return new DossiersListVm { Page = request.Parameters.Page, TotalPage = 0, PageTaille = request.Parameters.TaillePage, Dossiers = new() };
+            return new DossiersListVm
+            {
+                Page = request.Parameters.Page,
+                TotalPage = 0,
+                PageTaille = request.Parameters.TaillePage,
+                Dossiers = new List<DossierListItemDto>()
+            };
         }
 
+        // Pagination et inclusions
         var dossiersPaged = await query
             .Skip((request.Parameters.Page - 1) * request.Parameters.TaillePage)
             .Take(request.Parameters.TaillePage)
@@ -80,12 +110,13 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
             .ToListAsync(cancellationToken);
 
         var requestContext = _httpContextAccessor.HttpContext!.Request;
-        var baseUrl = $"{requestContext.Scheme}://{requestContext.Host}";
 
+        // Mapping vers DTO
         var dossierDtos = dossiersPaged.Select(dossier => new DossierListItemDto
         {
             Id = dossier.Id,
             DateOuverture = dossier.DateOuverture.FromUnixTimeMilliseconds(),
+            DateModification = dossier.DateModification?.FromUnixTimeMilliseconds(),
             Numero = dossier.Numero,
             Libelle = dossier.Libelle,
             Client = dossier.Client != null ? new ClientDto { Id = dossier.Client.Id, RaisonSociale = dossier.Client.RaisonSociale } : null,

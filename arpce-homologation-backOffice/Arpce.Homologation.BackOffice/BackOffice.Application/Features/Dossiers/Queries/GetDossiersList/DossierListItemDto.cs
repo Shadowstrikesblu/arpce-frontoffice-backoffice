@@ -28,6 +28,7 @@ public class DossierListItemDto
     /// <summary>
     /// La liste des équipements (demandes) contenus dans ce dossier.
     /// </summary>
+    public DateTime? DateModification { get; set; }
     public List<DocumentDossierDto> Documents { get; set; } = new();
     public List<AttestationDto> Attestations { get; set; } = new();
     public List<DevisDto> Devis { get; set; } = new();

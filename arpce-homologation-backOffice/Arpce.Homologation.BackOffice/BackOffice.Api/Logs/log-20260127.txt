@@ -1,0 +1,5 @@
+2026-01-27 10:39:26.133 +01:00 [INF] Now listening on: https://localhost:7238
+2026-01-27 10:39:26.218 +01:00 [INF] Now listening on: http://localhost:5126
+2026-01-27 10:39:26.448 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-27 10:39:26.455 +01:00 [INF] Hosting environment: Development
+2026-01-27 10:39:26.459 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api

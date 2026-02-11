@@ -108,8 +108,8 @@ public class RegisterClientCommandHandler : IRequestHandler<RegisterClientComman
 
         var verificationToken = _jwtTokenGenerator.GenerateToken(newClient.Id, newClient.Email);
 
-        //await SendVerificationEmailAsync(newClient.Email, verificationCode);
-        //await SendNotificationToArpceAsync(newClient);
+        await SendVerificationEmailAsync(newClient.Email, verificationCode);
+        await SendNotificationToArpceAsync(newClient);
 
         await _notificationService.SendToGroupAsync(
             groupName: "ADMIN",
@@ -139,7 +139,7 @@ public class RegisterClientCommandHandler : IRequestHandler<RegisterClientComman
         await _context.SaveChangesAsync(cancellationToken);
 
         var verificationToken = _jwtTokenGenerator.GenerateToken(client.Id, client.Email!);
-        //await SendVerificationEmailAsync(client.Email!, client.VerificationCode);
+        await SendVerificationEmailAsync(client.Email!, client.VerificationCode);
 
         return new AuthenticationResult
         {
