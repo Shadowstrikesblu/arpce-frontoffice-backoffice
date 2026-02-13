@@ -2,6 +2,9 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Demandes.Commands.AddCategorieToDemande;
 
@@ -29,34 +32,62 @@ public class AddCategorieToDemandeCommandHandler : IRequestHandler<AddCategorieT
 
     public async Task<bool> Handle(AddCategorieToDemandeCommand request, CancellationToken cancellationToken)
     {
+        // Recherche de l'équipement (Demande)
         var demande = await _context.Demandes
             .Include(d => d.Dossier)
             .FirstOrDefaultAsync(d => d.Id == request.DemandeId, cancellationToken);
 
-        if (demande == null) throw new Exception($"Demande introuvable.");
+        if (demande == null) throw new Exception($"Demande (Équipement) introuvable.");
 
-        var categorie = await _context.CategoriesEquipements.AsNoTracking()
-            .FirstOrDefaultAsync(c => c.Id == request.CategorieId, cancellationToken);
-        if (categorie == null) throw new Exception($"Catégorie introuvable.");
+        string actionLibelle;
 
-        decimal prixUnitaireCalcule = (categorie.FraisEtude ?? 0) + (categorie.FraisHomologation ?? 0) + (categorie.FraisControle ?? 0);
+        // CAS : DISSOCIATION (Si CategorieId est null)
+        if (!request.CategorieId.HasValue)
+        {
+            _logger.LogInformation("Dissociation de la catégorie pour l'équipement {DemandeId}", request.DemandeId);
 
-        demande.IdCategorie = request.CategorieId;
-        demande.PrixUnitaire = prixUnitaireCalcule;
+            demande.IdCategorie = null;
+            demande.PrixUnitaire = 0; 
 
+            actionLibelle = $"Dissociation de la catégorie pour l'équipement '{demande.Equipement}'.";
+        }
+        // CAS : ASSOCIATION (Si CategorieId est fourni)
+        else
+        {
+            var categorie = await _context.CategoriesEquipements.AsNoTracking()
+                .FirstOrDefaultAsync(c => c.Id == request.CategorieId.Value, cancellationToken);
+
+            if (categorie == null) throw new Exception($"Catégorie sélectionnée introuvable.");
+
+            // Calcul du prix basé sur les frais de la nouvelle catégorie
+            decimal prixUnitaireCalcule = (categorie.FraisEtude ?? 0) +
+                                           (categorie.FraisHomologation ?? 0) +
+                                           (categorie.FraisControle ?? 0);
+
+            demande.IdCategorie = request.CategorieId.Value;
+            demande.PrixUnitaire = prixUnitaireCalcule;
+
+            actionLibelle = $"Assignation de la catégorie '{categorie.Code}' à l'équipement '{demande.Equipement}' (Prix mis à jour : {prixUnitaireCalcule}).";
+        }
+
+        // Sauvegarde des changements
         await _context.SaveChangesAsync(cancellationToken);
 
+        // Audit
         await _auditService.LogAsync(
             page: "Instruction Équipement",
-            libelle: $"Assignation de la catégorie '{categorie.Code}' à l'équipement ID '{request.DemandeId}'.",
+            libelle: actionLibelle,
             eventTypeCode: "MODIFICATION",
             dossierId: demande.IdDossier);
 
+        // Notification SignalR (Direction Technique)
         await _notificationService.SendToGroupAsync(
             profilCode: "DRSCE",
             title: "Mise à Jour Équipement",
-            message: $"L'équipement '{demande.Equipement}' du dossier {demande.Dossier.Numero} a été catégorisé.",
-            type: "V"
+            message: actionLibelle,
+            type: "V",
+            targetUrl: $"/dossiers/{demande.IdDossier}",
+            entityId: demande.IdDossier.ToString()
         );
 
         return true;

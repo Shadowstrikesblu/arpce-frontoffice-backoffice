@@ -3,6 +3,11 @@ using FrontOffice.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace FrontOffice.Application.Features.Demandes.Commands.AddEquipementToDossier;
 
@@ -43,21 +48,7 @@ public class AddEquipementToDossierCommandHandler : IRequestHandler<AddEquipemen
                     .AsNoTracking()
                     .FirstOrDefaultAsync(d => d.Id == request.IdDossier && d.IdClient == userId.Value, cancellationToken);
 
-                if (dossier == null)
-                {
-                    throw new UnauthorizedAccessException("Le dossier spécifié est introuvable ou vous n'y avez pas accès.");
-                }
-
-                var ficheTechniqueFile = request.TypeURL_FicheTechnique;
-                const long maxFileSize = 3 * 1024 * 1024;
-                var allowedExtensions = new[] { ".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png" };
-
-                if (ficheTechniqueFile == null || ficheTechniqueFile.Length == 0)
-                    throw new InvalidOperationException("La fiche technique est obligatoire.");
-                if (ficheTechniqueFile.Length > maxFileSize)
-                    throw new InvalidOperationException("La taille du fichier ne doit pas dépasser 3 Mo.");
-                if (!allowedExtensions.Contains(Path.GetExtension(ficheTechniqueFile.FileName).ToLowerInvariant()))
-                    throw new InvalidOperationException("Format de fichier non supporté.");
+                if (dossier == null) throw new UnauthorizedAccessException("Dossier introuvable.");
 
                 var nouvelleDemande = new Demande
                 {
@@ -67,15 +58,19 @@ public class AddEquipementToDossierCommandHandler : IRequestHandler<AddEquipemen
                     Modele = request.Modele,
                     Marque = request.Marque,
                     Fabricant = request.Fabricant,
+
+                    Type = request.Type,
+
                     Description = request.Description,
                     QuantiteEquipements = request.QuantiteEquipements,
-                    ContactNom = request.ContactNom,
-                    ContactEmail = request.ContactEmail
+                    DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+                    UtilisateurCreation = userId.Value.ToString()
                 };
+
                 _context.Demandes.Add(nouvelleDemande);
 
                 await _fileStorageProvider.ImportDocumentDemandeAsync(
-                    file: ficheTechniqueFile,
+                    file: request.TypeURL_FicheTechnique,
                     nom: $"FicheTechnique_{request.Equipement}_{request.Modele}",
                     demandeId: nouvelleDemande.Id
                 );
@@ -83,20 +78,19 @@ public class AddEquipementToDossierCommandHandler : IRequestHandler<AddEquipemen
                 await _context.SaveChangesAsync(cancellationToken);
                 await transaction.CommitAsync(cancellationToken);
 
-                _logger.LogInformation("Équipement {EquipementId} ajouté au dossier {DossierId}", nouvelleDemande.Id, request.IdDossier);
-
                 await _notificationService.SendToGroupAsync(
                     groupName: "DRSCE",
                     title: "Nouvel Équipement Ajouté",
-                    message: $"Un nouvel équipement ('{nouvelleDemande.Equipement}') a été ajouté au dossier {dossier.Numero}.",
+                    message: $"L'équipement '{nouvelleDemande.Equipement}' (Type: {nouvelleDemande.Type}) a été ajouté au dossier {dossier.Numero}.",
                     type: "Info",
-                    targetUrl: $"/dossiers/{dossier.Id}"
+                    targetUrl: $"/dossiers/{dossier.Id}",
+                    entityId: dossier.Id.ToString()
                 );
             }
             catch (Exception ex)
             {
                 await transaction.RollbackAsync(cancellationToken);
-                _logger.LogError(ex, "Échec de l'ajout de l'équipement au dossier {DossierId}", request.IdDossier);
+                _logger.LogError(ex, "Échec de l'ajout de l'équipement");
                 throw;
             }
         });

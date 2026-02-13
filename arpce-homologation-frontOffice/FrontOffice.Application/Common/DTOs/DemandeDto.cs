@@ -14,7 +14,7 @@ public class DemandeDto
     public int? QuantiteEquipements { get; set; }
     public string? ContactNom { get; set; }
     public string? ContactEmail { get; set; }
-
+ public StatutDto? Statut { get; set; }
     // Champs de facturation et statut
     public decimal? PrixUnitaire { get; set; }
     public decimal? Remise { get; set; }

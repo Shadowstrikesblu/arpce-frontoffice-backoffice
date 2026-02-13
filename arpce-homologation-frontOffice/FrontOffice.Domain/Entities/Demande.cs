@@ -1,4 +1,5 @@
 ﻿using FrontOffice.Domain.Common;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FrontOffice.Domain.Entities;
 
@@ -18,6 +19,9 @@ public class Demande : AuditableEntity
     public int? QuantiteEquipements { get; set; }
     public string? ContactNom { get; set; }
     public string? ContactEmail { get; set; }
+
+    [ForeignKey("IdStatut")]
+    public virtual Statut? Statut { get; set; }
 
     // Champs de facturation
     public decimal? PrixUnitaire { get; set; }

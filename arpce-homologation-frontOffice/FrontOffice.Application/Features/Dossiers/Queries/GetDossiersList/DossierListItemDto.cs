@@ -1,45 +1,18 @@
 ﻿using FrontOffice.Application.Common.DTOs;
-using FrontOffice.Domain.Entities;
 using System;
+using System.Collections.Generic;
 
 namespace FrontOffice.Application.Features.Dossiers.Queries.GetDossiersList;
 
-/// <summary>
-/// Représente un seul dossier dans la liste paginée des dossiers.
-/// </summary>
 public class DossierListItemDto
 {
-    /// <summary>
-    /// L'identifiant unique du dossier.
-    /// </summary>
     public Guid Id { get; set; }
-
-    /// <summary>
-    /// La date de création du dossier.
-    /// </summary>
     public long DateOuverture { get; set; }
-
-    /// <summary>
-    /// Le numéro unique du dossier.
-    /// </summary>
     public string Numero { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Le libellé ou nom du dossier.
-    /// </summary>
     public string Libelle { get; set; } = string.Empty;
-
-    /// <summary>
-    /// L'objet Statut associé au dossier.
-    /// </summary>
     public StatutDto? Statut { get; set; }
-    /// <summary>
-    /// La liste des documents attachés à ce dossier.
-    /// </summary>
     public List<DocumentDossierDto> Documents { get; set; } = new();
-
-    /// <summary>
-    /// La liste des devis associés à ce dossier.
-    /// </summary>
     public List<DevisDto> Devis { get; set; } = new();
+    public List<AttestationDto> Attestations { get; set; } = new();
+    public List<DemandeDto> Demandes { get; set; } = new();
 }

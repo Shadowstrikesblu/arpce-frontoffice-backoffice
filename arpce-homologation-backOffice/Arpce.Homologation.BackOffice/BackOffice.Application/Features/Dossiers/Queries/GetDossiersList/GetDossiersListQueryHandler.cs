@@ -16,16 +16,11 @@ namespace BackOffice.Application.Features.Dossiers.Queries.GetDossiersList;
 public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery, DossiersListVm>
 {
     private readonly IApplicationDbContext _context;
-    private readonly ICurrentUserService _currentUserService;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public GetDossiersListQueryHandler(
-        IApplicationDbContext context,
-        ICurrentUserService currentUserService,
-        IHttpContextAccessor httpContextAccessor)
+    public GetDossiersListQueryHandler(IApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
     {
         _context = context;
-        _currentUserService = currentUserService;
         _httpContextAccessor = httpContextAccessor;
     }
 
@@ -33,85 +28,35 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
     {
         IQueryable<Dossier> query = _context.Dossiers.AsNoTracking();
 
-        // Filtrage par recherche texte
-        if (!string.IsNullOrWhiteSpace(request.Parameters.Recherche))
-        {
-            var searchTerm = request.Parameters.Recherche.Trim().ToLower();
-            query = query.Where(d =>
-                d.Numero.ToLower().Contains(searchTerm) ||
-                d.Libelle.ToLower().Contains(searchTerm) ||
-                (d.Client != null && d.Client.RaisonSociale.ToLower().Contains(searchTerm))
-            );
-        }
-
-        // Filtrage par statut en All
         if (!string.IsNullOrWhiteSpace(request.Parameters.Status) && request.Parameters.Status.ToLower() != "all")
-        {
-            var statusTerm = request.Parameters.Status.Trim();
-            query = query.Where(d => d.Statut.Code == statusTerm);
-        }
+            query = query.Where(d => d.Statut.Code == request.Parameters.Status);
 
-        // Filtrage par plage de dates 
         if (request.Parameters.DateDebut.HasValue)
-        {
-            // Conversion DateTime en millisecondes Unix
-            long debutMs = new DateTimeOffset(request.Parameters.DateDebut.Value.Date).ToUnixTimeMilliseconds();
-            query = query.Where(d => d.DateCreation >= debutMs);
-        }
+            query = query.Where(d => d.DateCreation >= new DateTimeOffset(request.Parameters.DateDebut.Value).ToUnixTimeMilliseconds());
 
         if (request.Parameters.DateFin.HasValue)
-        {
-            // Fin de journée pour inclure tout le jour sélectionné
-            long finMs = new DateTimeOffset(request.Parameters.DateFin.Value.Date.AddDays(1).AddTicks(-1)).ToUnixTimeMilliseconds();
-            query = query.Where(d => d.DateCreation <= finMs);
-        }
+            query = query.Where(d => d.DateCreation <= new DateTimeOffset(request.Parameters.DateFin.Value.AddDays(1)).ToUnixTimeMilliseconds());
 
-        // Tri
-        bool isDescending = request.Parameters.Ordre?.ToLower() == "desc";
-
-        switch (request.Parameters.TrierPar?.ToLower())
+        if (!string.IsNullOrWhiteSpace(request.Parameters.Recherche))
         {
-            case "date_creation":
-                query = isDescending ? query.OrderByDescending(d => d.DateCreation) : query.OrderBy(d => d.DateCreation);
-                break;
-            case "date-update":
-                query = isDescending ? query.OrderByDescending(d => d.DateModification) : query.OrderBy(d => d.DateModification);
-                break;
-            case "libelle":
-                query = isDescending ? query.OrderByDescending(d => d.Libelle) : query.OrderBy(d => d.Libelle);
-                break;
-            default:
-                query = query.OrderByDescending(d => d.DateCreation);
-                break;
+            var search = request.Parameters.Recherche.ToLower();
+            query = query.Where(d => d.Numero.ToLower().Contains(search) || d.Libelle.ToLower().Contains(search));
         }
 
         var totalCount = await query.CountAsync(cancellationToken);
-        if (totalCount == 0)
-        {
-            return new DossiersListVm
-            {
-                Page = request.Parameters.Page,
-                TotalPage = 0,
-                PageTaille = request.Parameters.TaillePage,
-                Dossiers = new List<DossierListItemDto>()
-            };
-        }
 
-        // Pagination et inclusions
         var dossiersPaged = await query
+            .OrderByDescending(d => d.DateCreation)
             .Skip((request.Parameters.Page - 1) * request.Parameters.TaillePage)
             .Take(request.Parameters.TaillePage)
             .Include(d => d.Client)
             .Include(d => d.Statut)
-            .Include(d => d.DocumentsDossiers)
+            .Include(d => d.Demandes).ThenInclude(dem => dem.Statut)
+            .Include(d => d.Demandes).ThenInclude(dem => dem.CategorieEquipement)
             .Include(d => d.Demandes).ThenInclude(dem => dem.DocumentsDemandes)
-            .Include(d => d.Demandes).ThenInclude(dem => dem.Attestations)
-            .Include(d => d.Demandes).ThenInclude(dem => dem.Devis)
+            .Include(d => d.Demandes).ThenInclude(dem => dem.Attestations) 
             .ToListAsync(cancellationToken);
 
-        var requestContext = _httpContextAccessor.HttpContext!.Request;
-
-        // Mapping vers DTO
         var dossierDtos = dossiersPaged.Select(dossier => new DossierListItemDto
         {
             Id = dossier.Id,
@@ -122,29 +67,17 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
             Client = dossier.Client != null ? new ClientDto { Id = dossier.Client.Id, RaisonSociale = dossier.Client.RaisonSociale } : null,
             Statut = dossier.Statut != null ? new StatutDto { Id = dossier.Statut.Id, Code = dossier.Statut.Code, Libelle = dossier.Statut.Libelle } : null,
 
-            Demandes = dossier.Demandes.Select(demande => new DemandeDto
+            Demandes = dossier.Demandes.Select(dem => new DemandeDto
             {
-                Id = demande.Id,
-                Equipement = demande.Equipement,
-                Modele = demande.Modele,
-                Marque = demande.Marque,
-                Documents = demande.DocumentsDemandes.Select(doc => new DocumentDossierDto
-                {
-                    Id = doc.Id,
-                    Nom = doc.Nom,
-                    Extension = doc.Extension,
-                    Type = null,
-                    FilePath = $"/api/demandes/demande/{doc.Id}/download"
-                }).ToList()
-            }).ToList(),
-
-            Documents = dossier.DocumentsDossiers.Select(doc => new DocumentDossierDto
-            {
-                Id = doc.Id,
-                Nom = doc.Nom,
-                Type = doc.Type,
-                Extension = doc.Extension,
-                FilePath = $"/api/demandes/dossier/{doc.Id}/download"
+                Id = dem.Id,
+                IdDossier = dossier.Id,
+                Equipement = dem.Equipement,
+                Modele = dem.Modele,
+                Marque = dem.Marque,
+                Type = dem.Type,
+                Statut = dem.Statut != null ? new StatutDto { Id = dem.Statut.Id, Code = dem.Statut.Code, Libelle = dem.Statut.Libelle } : null,
+                CategorieEquipement = dem.CategorieEquipement != null ? new CategorieEquipementDto { Id = dem.CategorieEquipement.Id, Code = dem.CategorieEquipement.Code, Libelle = dem.CategorieEquipement.Libelle } : null,
+                Documents = dem.DocumentsDemandes.Select(doc => new DocumentDossierDto { Id = doc.Id, Nom = doc.Nom, FilePath = $"/api/demandes/demande/{doc.Id}/download" }).ToList()
             }).ToList(),
 
             Attestations = dossier.Demandes.SelectMany(dem => dem.Attestations).Select(att => new AttestationDto
@@ -152,20 +85,16 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
                 Id = att.Id,
                 DateDelivrance = att.DateDelivrance,
                 DateExpiration = att.DateExpiration,
-                FilePath = $"/api/documents/attestation/{att.Id}"
-            }).ToList(),
-
-            Devis = dossier.Devis.Select(dev => new DevisDto { Id = dev.Id, FilePath = $"/api/devis/{dev.Id}/download" }).ToList(),
+                FilePath = $"/api/documents/attestation/{att.Id}/download"
+            }).ToList()
         }).ToList();
 
-        var viewModel = new DossiersListVm
+        return new DossiersListVm
         {
             Dossiers = dossierDtos,
             Page = request.Parameters.Page,
             PageTaille = request.Parameters.TaillePage,
             TotalPage = (int)Math.Ceiling(totalCount / (double)request.Parameters.TaillePage)
         };
-
-        return viewModel;
     }
 }

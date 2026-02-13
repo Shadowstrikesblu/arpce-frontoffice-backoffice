@@ -16,7 +16,7 @@ public class StatutConfiguration : IEntityTypeConfiguration<Statut>
         builder.Property(s => s.Code).HasMaxLength(120).IsRequired();
         builder.Property(s => s.Libelle).HasMaxLength(120).IsRequired();
 
-        builder.HasData(
+               builder.HasData(
             new Statut { Id = new Guid("9F1C2F69-5D8E-4EC8-A6A1-0AA1E1C5A201"), Code = "NouveauDossier", Libelle = "Nouvelle demande" },
             new Statut { Id = new Guid("A7C55954-7B1C-4F43-9CC4-1F2AF3CCA202"), Code = "RefusDossier", Libelle = "Refus de la demande" },
             new Statut { Id = new Guid("3B9ED3A1-1E24-4D0C-8F13-7C55C9BAA203"), Code = "Instruction", Libelle = "En cours d'instruction" },
@@ -37,7 +37,10 @@ public class StatutConfiguration : IEntityTypeConfiguration<Statut>
             new Statut { Id = new Guid("33B7BD1D-5901-4AFE-BE70-D4C10E3FA215"), Code = "DossierPayer", Libelle = "Paiement effectué" },
             new Statut { Id = new Guid("AA11BB22-CC33-DD44-EE55-FF6600112233"), Code = "Certification", Libelle = "Certification initiée" },
             new Statut { Id = new Guid("0E9A8BB4-7989-4EB8-9F21-4F9B7FFCA216"), Code = "DossierSignature", Libelle = "Attestation en signature" },
-            new Statut { Id = new Guid("ED13C54B-5E63-4A0F-A0A7-332A7C27A217"), Code = "DossierSigner", Libelle = "Attestation signée" }
+            new Statut { Id = new Guid("ED13C54B-5E63-4A0F-A0A7-332A7C27A217"), Code = "DossierSigner", Libelle = "Attestation signée" },
+            new Statut { Id = new Guid("B2C3D4E5-F6A7-4B89-ACBD-2E3F4A5B6C7D"), Code = "Refus", Libelle = "Refusé" },
+new Statut { Id = new Guid("C3D4E5F6-0B1C-2D3E-AFBD-6E7F8A9B0C1D"), Code = "Signe", Libelle = "Signé" },
+new Statut { Id = new Guid("D4E5F6A7-B8C9-4D0E-AFBD-2E3F4A5B6C7D"), Code = "Accepte", Libelle = "Accepté" }
         );
     }
 }
