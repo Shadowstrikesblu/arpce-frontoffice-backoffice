@@ -17,5 +17,5 @@ public enum StatutDemandeEnum
     /// </summary>
     Signe = 3,
 
-    Accepte = 4
+        Accepte = 4
 }

@@ -4,6 +4,9 @@ using BackOffice.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Dossiers.Commands.ValidateInstruction;
 
@@ -41,7 +44,7 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
         try
         {
             var dossier = await _context.Dossiers
-                .Include(d => d.Demandes)
+                .Include(d => d.Demande) // Correction : Propriété unique
                     .ThenInclude(dem => dem.CategorieEquipement)
                 .FirstOrDefaultAsync(d => d.Id == request.DossierId, cancellationToken);
 
@@ -50,32 +53,12 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
                 throw new Exception($"Le dossier avec l'ID '{request.DossierId}' est introuvable.");
             }
 
-            _logger.LogInformation("Début de la création du devis pour le dossier {DossierId}", dossier.Id);
-
             var existingDevis = await _context.Devis.FirstOrDefaultAsync(d => d.IdDossier == dossier.Id && d.PaiementOk != 1, cancellationToken);
-            if (existingDevis != null)
+            if (existingDevis == null && dossier.Demande != null)
             {
-                _logger.LogWarning("Un devis non payé existe déjà pour le dossier {DossierId}. La création d'un nouveau devis est annulée.", dossier.Id);
-            }
-            else
-            {
-                decimal totalFraisEtude = 0;
-                decimal totalFraisHomologation = 0;
-                decimal totalFraisControle = 0;
-
-                foreach (var demande in dossier.Demandes)
-                {
-                    if (demande.CategorieEquipement != null)
-                    {
-                        totalFraisEtude += demande.CategorieEquipement.FraisEtude ?? 0;
-                        totalFraisHomologation += demande.CategorieEquipement.FraisHomologation ?? 0;
-                        totalFraisControle += demande.CategorieEquipement.FraisControle ?? 0;
-                    }
-                    else
-                    {
-                        _logger.LogWarning("La demande {DemandeId} n'a pas de catégorie. Ses frais ne seront pas inclus.", demande.Id);
-                    }
-                }
+                decimal totalFraisEtude = dossier.Demande.CategorieEquipement?.FraisEtude ?? 0;
+                decimal totalFraisHomologation = dossier.Demande.CategorieEquipement?.FraisHomologation ?? 0;
+                decimal totalFraisControle = dossier.Demande.CategorieEquipement?.FraisControle ?? 0;
 
                 var nouveauDevis = new Devis
                 {
@@ -88,17 +71,14 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
                     PaiementOk = 0
                 };
                 _context.Devis.Add(nouveauDevis);
-                _logger.LogInformation("Devis créé en mémoire pour le dossier {DossierId}.", dossier.Id);
             }
 
             var statutCibleCode = StatutDossierEnum.InstructionApprouve.ToString();
             var nouveauStatut = await _context.Statuts.FirstOrDefaultAsync(s => s.Code == statutCibleCode, cancellationToken);
-            if (nouveauStatut == null)
+            if (nouveauStatut != null)
             {
-                throw new Exception($"Configuration système manquante : le statut '{statutCibleCode}' est introuvable.");
+                dossier.IdStatut = nouveauStatut.Id;
             }
-            dossier.IdStatut = nouveauStatut.Id;
-            _logger.LogInformation("Le statut du dossier {DossierId} a été changé à '{NouveauStatut}'.", dossier.Id, nouveauStatut.Libelle);
 
             if (!string.IsNullOrWhiteSpace(request.Remarque))
             {
@@ -110,40 +90,13 @@ public class ValidateInstructionCommandHandler : IRequestHandler<ValidateInstruc
             await _context.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
 
-            await _auditService.LogAsync(
-                page: "Validation Dossier",
-                libelle: $"Instruction du dossier '{dossier.Numero}' approuvée et devis généré.",
-                eventTypeCode: "VALIDATION",
-                dossierId: dossier.Id);
-
-            var message = $"L'instruction pour le dossier {dossier.Numero} a été approuvée. Prêt pour facturation.";
-            var targetUrl = $"/dossiers/{dossier.Id}";
-            var entityId = dossier.Id.ToString();
-
-            await _notificationService.SendToGroupAsync(
-                profilCode: "DRSCE",
-                title: "Instruction Approuvée",
-                message: message,
-                type: "V",
-                targetUrl: targetUrl,
-                entityId: entityId
-            );
-
-            await _notificationService.SendToGroupAsync(
-                profilCode: "DAFC",
-                title: "Instruction Approuvée",
-                message: message,
-                type: "V",
-                targetUrl: targetUrl,
-                entityId: entityId
-            );
+            await _auditService.LogAsync("Validation Dossier", $"Dossier '{dossier.Numero}' validé.", "VALIDATION", dossier.Id);
 
             return true;
         }
         catch (Exception ex)
         {
             await transaction.RollbackAsync(cancellationToken);
-            _logger.LogError(ex, "Échec de la validation de l'instruction pour le dossier {DossierId}", request.DossierId);
             throw;
         }
     }

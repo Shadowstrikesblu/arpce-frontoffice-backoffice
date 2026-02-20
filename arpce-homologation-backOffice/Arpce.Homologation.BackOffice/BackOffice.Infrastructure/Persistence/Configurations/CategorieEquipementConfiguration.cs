@@ -36,5 +36,8 @@ public class CategorieEquipementConfiguration : IEntityTypeConfiguration<Categor
         builder.Property(c => c.DateCreation).HasColumnType("bigint");
         builder.Property(c => c.UtilisateurModification).HasMaxLength(60);
         builder.Property(c => c.DateModification).HasColumnType("bigint");
+
+        builder.Property(x => x.CoutUnitaire).HasPrecision(18, 2).HasDefaultValue(0);
+        builder.Property(x => x.TypeCalcul).HasMaxLength(20).HasDefaultValue("FORFAIT");
     }
 }

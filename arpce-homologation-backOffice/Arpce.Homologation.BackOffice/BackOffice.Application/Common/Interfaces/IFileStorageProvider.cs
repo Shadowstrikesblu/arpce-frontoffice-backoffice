@@ -19,4 +19,5 @@ public interface IFileStorageProvider
 
     Task<(byte[] content, string fileName, string contentType)> ExportDocumentDossierAsync(Guid documentId);
     Task<(byte[] content, string fileName, string contentType)> ExportDocumentDemandeAsync(Guid documentId);
+    Task<string> UploadSignatureAsync(IFormFile file);
 }

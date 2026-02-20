@@ -1,0 +1,47 @@
+2026-02-13 14:08:31.791 +01:00 [INF] Now listening on: https://localhost:7016
+2026-02-13 14:08:31.861 +01:00 [INF] Now listening on: http://localhost:5041
+2026-02-13 14:08:32.020 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-13 14:08:32.026 +01:00 [INF] Hosting environment: Development
+2026-02-13 14:08:32.034 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2026-02-13 14:09:09.837 +01:00 [INF] HTTP GET /index.html responded 200 in 253.3744 ms
+2026-02-13 14:09:10.425 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 110.8906 ms
+2026-02-13 14:17:29.969 +01:00 [INF] Executed DbCommand (279ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-02-13 14:17:31.178 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 14594.4736 ms
+2026-02-13 14:18:48.469 +01:00 [INF] Executed DbCommand (31ms) [Parameters=[@__request_AttestationId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation], [a].[UtilisateurModification], [d].[Id], [d].[ContactEmail], [d].[ContactNom], [d].[DateCreation], [d].[DateModification], [d].[Description], [d].[Equipement], [d].[EstHomologable], [d].[Fabricant], [d].[IdCategorie], [d].[IdDossier], [d].[IdMotifRejet], [d].[IdProposition], [d].[IdStatut], [d].[Marque], [d].[Modele], [d].[NumeroDemande], [d].[PrixUnitaire], [d].[QuantiteEquipements], [d].[Remise], [d].[Type], [d].[UtilisateurCreation], [d].[UtilisateurModification], [d0].[Id], [d0].[DateCreation], [d0].[DateModification], [d0].[DateOuverture], [d0].[IdAgentInstructeur], [d0].[IdClient], [d0].[IdModeReglement], [d0].[IdStatut], [d0].[Libelle], [d0].[Numero], [d0].[UtilisateurCreation], [d0].[UtilisateurModification]
+FROM [attestations] AS [a]
+INNER JOIN [demandes] AS [d] ON [a].[IdDemande] = [d].[Id]
+INNER JOIN [dossiers] AS [d0] ON [d].[IdDossier] = [d0].[Id]
+WHERE [a].[Id] = @__request_AttestationId_0 AND [d0].[IdClient] = @__userId_Value_1
+2026-02-13 14:18:48.759 +01:00 [INF] HTTP GET /api/documents/certificat/BBFE3AFD-80A9-47A7-A508-4F7918163418/download responded 404 in 714.8349 ms
+2026-02-13 14:19:12.030 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__request_AttestationId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation], [a].[UtilisateurModification], [d].[Id], [d].[ContactEmail], [d].[ContactNom], [d].[DateCreation], [d].[DateModification], [d].[Description], [d].[Equipement], [d].[EstHomologable], [d].[Fabricant], [d].[IdCategorie], [d].[IdDossier], [d].[IdMotifRejet], [d].[IdProposition], [d].[IdStatut], [d].[Marque], [d].[Modele], [d].[NumeroDemande], [d].[PrixUnitaire], [d].[QuantiteEquipements], [d].[Remise], [d].[Type], [d].[UtilisateurCreation], [d].[UtilisateurModification], [d0].[Id], [d0].[DateCreation], [d0].[DateModification], [d0].[DateOuverture], [d0].[IdAgentInstructeur], [d0].[IdClient], [d0].[IdModeReglement], [d0].[IdStatut], [d0].[Libelle], [d0].[Numero], [d0].[UtilisateurCreation], [d0].[UtilisateurModification]
+FROM [attestations] AS [a]
+INNER JOIN [demandes] AS [d] ON [a].[IdDemande] = [d].[Id]
+INNER JOIN [dossiers] AS [d0] ON [d].[IdDossier] = [d0].[Id]
+WHERE [a].[Id] = @__request_AttestationId_0 AND [d0].[IdClient] = @__userId_Value_1
+2026-02-13 14:19:12.163 +01:00 [INF] HTTP GET /api/documents/certificat/8566C85A-F2B8-4B85-AF8F-4627D69492C2/download responded 404 in 323.7604 ms
+2026-02-13 14:20:07.357 +01:00 [INF] Executed DbCommand (13ms) [Parameters=[@__request_AttestationId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation], [a].[UtilisateurModification], [d].[Id], [d].[ContactEmail], [d].[ContactNom], [d].[DateCreation], [d].[DateModification], [d].[Description], [d].[Equipement], [d].[EstHomologable], [d].[Fabricant], [d].[IdCategorie], [d].[IdDossier], [d].[IdMotifRejet], [d].[IdProposition], [d].[IdStatut], [d].[Marque], [d].[Modele], [d].[NumeroDemande], [d].[PrixUnitaire], [d].[QuantiteEquipements], [d].[Remise], [d].[Type], [d].[UtilisateurCreation], [d].[UtilisateurModification], [d0].[Id], [d0].[DateCreation], [d0].[DateModification], [d0].[DateOuverture], [d0].[IdAgentInstructeur], [d0].[IdClient], [d0].[IdModeReglement], [d0].[IdStatut], [d0].[Libelle], [d0].[Numero], [d0].[UtilisateurCreation], [d0].[UtilisateurModification]
+FROM [attestations] AS [a]
+INNER JOIN [demandes] AS [d] ON [a].[IdDemande] = [d].[Id]
+INNER JOIN [dossiers] AS [d0] ON [d].[IdDossier] = [d0].[Id]
+WHERE [a].[Id] = @__request_AttestationId_0 AND [d0].[IdClient] = @__userId_Value_1
+2026-02-13 14:20:07.449 +01:00 [INF] HTTP GET /api/documents/certificat/F6016D7E-EF09-4F59-8ACE-8A4E6FDE8A54/download responded 404 in 134.3363 ms
+2026-02-13 14:20:25.713 +01:00 [INF] Executed DbCommand (33ms) [Parameters=[@__request_AttestationId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation], [a].[UtilisateurModification], [d].[Id], [d].[ContactEmail], [d].[ContactNom], [d].[DateCreation], [d].[DateModification], [d].[Description], [d].[Equipement], [d].[EstHomologable], [d].[Fabricant], [d].[IdCategorie], [d].[IdDossier], [d].[IdMotifRejet], [d].[IdProposition], [d].[IdStatut], [d].[Marque], [d].[Modele], [d].[NumeroDemande], [d].[PrixUnitaire], [d].[QuantiteEquipements], [d].[Remise], [d].[Type], [d].[UtilisateurCreation], [d].[UtilisateurModification], [d0].[Id], [d0].[DateCreation], [d0].[DateModification], [d0].[DateOuverture], [d0].[IdAgentInstructeur], [d0].[IdClient], [d0].[IdModeReglement], [d0].[IdStatut], [d0].[Libelle], [d0].[Numero], [d0].[UtilisateurCreation], [d0].[UtilisateurModification]
+FROM [attestations] AS [a]
+INNER JOIN [demandes] AS [d] ON [a].[IdDemande] = [d].[Id]
+INNER JOIN [dossiers] AS [d0] ON [d].[IdDossier] = [d0].[Id]
+WHERE [a].[Id] = @__request_AttestationId_0 AND [d0].[IdClient] = @__userId_Value_1
+2026-02-13 14:20:25.856 +01:00 [INF] HTTP GET /api/documents/certificat/933624B2-4F8B-49D1-9F05-93C0078B735E/download responded 404 in 179.6898 ms
+2026-02-13 14:20:47.515 +01:00 [INF] Executed DbCommand (35ms) [Parameters=[@__request_AttestationId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[UtilisateurCreation], [a].[UtilisateurModification], [d].[Id], [d].[ContactEmail], [d].[ContactNom], [d].[DateCreation], [d].[DateModification], [d].[Description], [d].[Equipement], [d].[EstHomologable], [d].[Fabricant], [d].[IdCategorie], [d].[IdDossier], [d].[IdMotifRejet], [d].[IdProposition], [d].[IdStatut], [d].[Marque], [d].[Modele], [d].[NumeroDemande], [d].[PrixUnitaire], [d].[QuantiteEquipements], [d].[Remise], [d].[Type], [d].[UtilisateurCreation], [d].[UtilisateurModification], [d0].[Id], [d0].[DateCreation], [d0].[DateModification], [d0].[DateOuverture], [d0].[IdAgentInstructeur], [d0].[IdClient], [d0].[IdModeReglement], [d0].[IdStatut], [d0].[Libelle], [d0].[Numero], [d0].[UtilisateurCreation], [d0].[UtilisateurModification]
+FROM [attestations] AS [a]
+INNER JOIN [demandes] AS [d] ON [a].[IdDemande] = [d].[Id]
+INNER JOIN [dossiers] AS [d0] ON [d].[IdDossier] = [d0].[Id]
+WHERE [a].[Id] = @__request_AttestationId_0 AND [d0].[IdClient] = @__userId_Value_1
+2026-02-13 14:20:47.633 +01:00 [INF] HTTP GET /api/documents/certificat/B1A942AE-D22A-4BE2-A75E-958FA7E3C9BC/download responded 404 in 175.1338 ms

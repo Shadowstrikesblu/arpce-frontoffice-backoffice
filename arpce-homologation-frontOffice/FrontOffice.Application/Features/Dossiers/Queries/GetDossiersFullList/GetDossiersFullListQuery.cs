@@ -1,4 +1,4 @@
-﻿using FrontOffice.Application.Features.Dossiers.Queries.GetDossiersList; 
+using FrontOffice.Application.Features.Dossiers.Queries.GetDossiersList;
 using MediatR;
 
 namespace FrontOffice.Application.Features.Dossiers.Queries.GetDossiersFullList;

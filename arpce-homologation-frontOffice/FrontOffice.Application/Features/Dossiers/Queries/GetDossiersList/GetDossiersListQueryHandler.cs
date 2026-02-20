@@ -30,11 +30,10 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
             .AsNoTracking()
             .Where(d => d.IdClient == userId.Value)
             .Include(d => d.Statut)
-            .Include(d => d.Demandes).ThenInclude(dem => dem.Statut)
-            .Include(d => d.Demandes).ThenInclude(dem => dem.Attestations) // Inclusion des attestations
+            .Include(d => d.Demande).ThenInclude(dem => dem.Statut) 
+            .Include(d => d.Demande).ThenInclude(dem => dem.Attestations) 
             .AsQueryable();
 
-        // Filtre recherche
         if (!string.IsNullOrWhiteSpace(request.Parameters.Recherche))
         {
             var search = request.Parameters.Recherche.ToLower();
@@ -57,29 +56,32 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
             Libelle = dossier.Libelle,
             Statut = dossier.Statut != null ? new StatutDto { Id = dossier.Statut.Id, Code = dossier.Statut.Code, Libelle = dossier.Statut.Libelle } : null,
 
-            Demandes = dossier.Demandes.Select(dem => new DemandeDto
+            // On transforme l'unique demande en liste pour le DTO
+            Demandes = dossier.Demande != null ? new List<DemandeDto>
             {
-                Id = dem.Id,
-                Equipement = dem.Equipement,
-                Statut = dem.Statut != null ? new StatutDto
+                new DemandeDto
                 {
-                    Id = dem.Statut.Id,
-                    Code = dem.Statut.Code,
-                    Libelle = dem.Statut.Libelle
-                } : null
-            }).ToList(),
+                    Id = dossier.Demande.Id,
+                    Equipement = dossier.Demande.Equipement,
+                    Statut = dossier.Demande.Statut != null ? new StatutDto
+                    {
+                        Id = dossier.Demande.Statut.Id,
+                        Code = dossier.Demande.Statut.Code,
+                        Libelle = dossier.Demande.Statut.Libelle
+                    } : null
+                }
+            } : new List<DemandeDto>(),
 
             Devis = dossier.Devis?.Select(dev => new DevisDto { Id = dev.Id, PaiementOk = dev.PaiementOk }).ToList() ?? new(),
 
-            // Ajout du mapping des attestations (uniquement celles signées)
-            Attestations = dossier.Demandes.SelectMany(dem => dem.Attestations)
+            Attestations = dossier.Demande != null ? dossier.Demande.Attestations
                 .Where(att => att.Donnees != null && att.Donnees.Length > 0)
                 .Select(att => new AttestationDto
                 {
                     Id = att.Id,
                     DateDelivrance = att.DateDelivrance,
                     FilePath = $"/api/documents/certificat/{att.Id}/download"
-                }).ToList()
+                }).ToList() : new List<AttestationDto>()
         }).ToList();
 
         return new DossiersListVm

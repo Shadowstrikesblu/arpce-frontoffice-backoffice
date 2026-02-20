@@ -51,10 +51,10 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
             .Take(request.Parameters.TaillePage)
             .Include(d => d.Client)
             .Include(d => d.Statut)
-            .Include(d => d.Demandes).ThenInclude(dem => dem.Statut)
-            .Include(d => d.Demandes).ThenInclude(dem => dem.CategorieEquipement)
-            .Include(d => d.Demandes).ThenInclude(dem => dem.DocumentsDemandes)
-            .Include(d => d.Demandes).ThenInclude(dem => dem.Attestations) 
+            .Include(d => d.Demande).ThenInclude(dem => dem.Statut)
+            .Include(d => d.Demande).ThenInclude(dem => dem.CategorieEquipement)
+            .Include(d => d.Demande).ThenInclude(dem => dem.DocumentsDemandes)
+            .Include(d => d.Demande).ThenInclude(dem => dem.Attestations)
             .ToListAsync(cancellationToken);
 
         var dossierDtos = dossiersPaged.Select(dossier => new DossierListItemDto
@@ -67,26 +67,31 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
             Client = dossier.Client != null ? new ClientDto { Id = dossier.Client.Id, RaisonSociale = dossier.Client.RaisonSociale } : null,
             Statut = dossier.Statut != null ? new StatutDto { Id = dossier.Statut.Id, Code = dossier.Statut.Code, Libelle = dossier.Statut.Libelle } : null,
 
-            Demandes = dossier.Demandes.Select(dem => new DemandeDto
+            Demandes = dossier.Demande != null ? new List<DemandeDto>
             {
-                Id = dem.Id,
-                IdDossier = dossier.Id,
-                Equipement = dem.Equipement,
-                Modele = dem.Modele,
-                Marque = dem.Marque,
-                Type = dem.Type,
-                Statut = dem.Statut != null ? new StatutDto { Id = dem.Statut.Id, Code = dem.Statut.Code, Libelle = dem.Statut.Libelle } : null,
-                CategorieEquipement = dem.CategorieEquipement != null ? new CategorieEquipementDto { Id = dem.CategorieEquipement.Id, Code = dem.CategorieEquipement.Code, Libelle = dem.CategorieEquipement.Libelle } : null,
-                Documents = dem.DocumentsDemandes.Select(doc => new DocumentDossierDto { Id = doc.Id, Nom = doc.Nom, FilePath = $"/api/demandes/demande/{doc.Id}/download" }).ToList()
-            }).ToList(),
+                new DemandeDto
+                {
+                    Id = dossier.Demande.Id,
+                    IdDossier = dossier.Id,
+                    Equipement = dossier.Demande.Equipement,
+                    Modele = dossier.Demande.Modele,
+                    Marque = dossier.Demande.Marque,
+                    Type = dossier.Demande.Type,
+                    Statut = dossier.Demande.Statut != null ? new StatutDto { Id = dossier.Demande.Statut.Id, Code = dossier.Demande.Statut.Code, Libelle = dossier.Demande.Statut.Libelle } : null,
+                    CategorieEquipement = dossier.Demande.CategorieEquipement != null ? new CategorieEquipementDto { Id = dossier.Demande.CategorieEquipement.Id, Code = dossier.Demande.CategorieEquipement.Code, Libelle = dossier.Demande.CategorieEquipement.Libelle } : null,
+                    Documents = dossier.Demande.DocumentsDemandes.Select(doc => new DocumentDossierDto { Id = doc.Id, Nom = doc.Nom, FilePath = $"/api/demandes/demande/{doc.Id}/download" }).ToList()
+                }
+            } : new List<DemandeDto>(),
 
-            Attestations = dossier.Demandes.SelectMany(dem => dem.Attestations).Select(att => new AttestationDto
-            {
-                Id = att.Id,
-                DateDelivrance = att.DateDelivrance,
-                DateExpiration = att.DateExpiration,
-                FilePath = $"/api/documents/attestation/{att.Id}/download"
-            }).ToList()
+            Attestations = dossier.Demande != null
+                ? dossier.Demande.Attestations.Select(att => new AttestationDto
+                {
+                    Id = att.Id,
+                    DateDelivrance = att.DateDelivrance,
+                    DateExpiration = att.DateExpiration,
+                    FilePath = $"/api/documents/attestation/{att.Id}/download"
+                }).ToList()
+                : new List<AttestationDto>()
         }).ToList();
 
         return new DossiersListVm

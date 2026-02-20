@@ -1,9 +1,12 @@
-﻿using BackOffice.Application.Common.Exceptions;
+﻿using BackOffice.Application.Common; 
+using BackOffice.Application.Common.Exceptions;
 using BackOffice.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-// AJOUTEZ CETTE LIGNE SI ELLE N'Y EST PAS
-using BackOffice.Application.Common;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Admin.Queries.GetRedevableDetail;
 
@@ -22,13 +25,10 @@ public class GetRedevableDetailQueryHandler : IRequestHandler<GetRedevableDetail
             .Include(c => c.Dossiers)
                 .ThenInclude(d => d.Statut)
             .Include(c => c.Dossiers)
-                .ThenInclude(d => d.Demandes)
+                .ThenInclude(d => d.Demande) 
             .FirstOrDefaultAsync(c => c.Id == request.UtilisateurId, cancellationToken);
 
-        if (client == null)
-        {
-            throw new Exception($"Redevable avec l'ID '{request.UtilisateurId}' introuvable.");
-        }
+        if (client == null) throw new Exception("Redevable introuvable.");
 
         return new RedevableDetailDto
         {
@@ -36,20 +36,9 @@ public class GetRedevableDetailQueryHandler : IRequestHandler<GetRedevableDetail
             RaisonSociale = client.RaisonSociale,
             RegistreCommerce = client.RegistreCommerce,
             Desactive = client.Desactive == 1,
-            ContactNom = client.ContactNom,
-            ContactTelephone = client.ContactTelephone,
-            ContactFonction = client.ContactFonction,
             Email = client.Email,
-            Adresse = client.Adresse,
-            Bp = client.Bp,
-            Ville = client.Ville,
-            Pays = client.Pays,
-            Remarques = client.Remarques,
-            UtilisateurCreation = client.UtilisateurCreation,
 
-            NiveauValidation = client.NiveauValidation,
             DateCreation = client.DateCreation.FromUnixTimeMilliseconds(),
-            UtilisateurModification = client.UtilisateurModification,
             DateModification = client.DateModification.FromUnixTimeMilliseconds(),
 
             Dossiers = client.Dossiers.Select(d => new DossierRedevableDto
@@ -59,7 +48,7 @@ public class GetRedevableDetailQueryHandler : IRequestHandler<GetRedevableDetail
                 Libelle = d.Libelle,
                 DateOuverture = d.DateOuverture.FromUnixTimeMilliseconds(),
                 StatutLibelle = d.Statut?.Libelle ?? "Inconnu",
-                NombreEquipements = d.Demandes.Count
+                NombreEquipements = d.Demande != null ? 1 : 0
             }).ToList()
         };
     }
