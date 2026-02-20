@@ -40,7 +40,7 @@ public class CreateDossierCommandHandler : IRequestHandler<CreateDossierCommand,
             using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
             try
             {
-                if (await _context.Dossiers.AnyAsync(d => d.Libelle == request.Libelle && d.IdClient == userId.Value, cancellationToken))
+                if (await _context.Dossiers.AsNoTracking().AnyAsync(d => d.Libelle == request.Libelle && d.IdClient == userId.Value, cancellationToken))
                     throw new InvalidOperationException($"Un dossier avec le libellé '{request.Libelle}' existe déjà pour votre compte.");
 
                 var file = request.CourrierFile;
@@ -61,32 +61,45 @@ public class CreateDossierCommandHandler : IRequestHandler<CreateDossierCommand,
                 var defaultStatut = await _context.Statuts.FirstOrDefaultAsync(s => s.Code == StatutDossierEnum.NouveauDossier.ToString(), cancellationToken);
                 if (defaultStatut == null) throw new InvalidOperationException("Configuration système manquante : le statut par défaut 'NouveauDossier' est introuvable.");
 
+                var currentYear = DateTime.UtcNow.ToString("yy"); 
+                var prefix = $"Hom-{currentYear}-";
+
+                // On compte le nombre de dossiers créés pour l'année en cours pour incrémenter la séquence
+                var countThisYear = await _context.Dossiers
+                    .AsNoTracking()
+                    .CountAsync(d => d.Numero.StartsWith(prefix), cancellationToken);
+
+                var sequence = (countThisYear + 1).ToString("D4"); 
+                var generatedNumero = $"{prefix}{sequence}";
+
                 var dossier = new Dossier
                 {
                     Id = Guid.NewGuid(),
                     IdClient = userId.Value,
                     IdStatut = defaultStatut.Id,
                     DateOuverture = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
-                    Numero = $"HOM-{DateTime.UtcNow:yyyyMMddHHmmssfff}",
+                    Numero = generatedNumero,
                     Libelle = request.Libelle,
                     UtilisateurCreation = userId.Value.ToString(),
                     DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
                 };
                 _context.Dossiers.Add(dossier);
 
+                // Importation du document avec le nouveau numéro
                 await _fileStorageProvider.ImportDocumentDossierAsync(file, $"Lettre_Demande_{dossier.Numero}", 0, dossier.Id);
 
                 await _context.SaveChangesAsync(cancellationToken);
                 await transaction.CommitAsync(cancellationToken);
 
-                _logger.LogInformation("Dossier {DossierId} créé avec succès par l'utilisateur {UserId}.", dossier.Id, userId);
+                _logger.LogInformation("Dossier {DossierId} créé avec le numéro {Numero}.", dossier.Id, dossier.Numero);
 
                 await _notificationService.SendToGroupAsync(
                     groupName: "DRSCE",
                     title: "Nouveau Dossier",
                     message: $"Le dossier '{dossier.Libelle}' ({dossier.Numero}) vient d'être soumis.",
                     type: "V",
-                    targetUrl: $"/dossiers/{dossier.Id}"
+                    targetUrl: $"/dossiers/{dossier.Id}",
+                    entityId: dossier.Id.ToString()
                 );
 
                 return new CreateDossierResponseDto { DossierId = dossier.Id };

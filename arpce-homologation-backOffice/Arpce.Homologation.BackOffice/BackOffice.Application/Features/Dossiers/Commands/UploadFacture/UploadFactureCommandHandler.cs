@@ -32,41 +32,63 @@ public class UploadFactureCommandHandler : IRequestHandler<UploadFactureCommand,
         using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         try
         {
-            var dossier = await _context.Dossiers.FindAsync(new object[] { request.DossierId }, cancellationToken);
-            if (dossier == null) throw new Exception($"Dossier introuvable.");
+            // Récupération du dossier AVEC son statut 
+            var dossier = await _context.Dossiers
+                .Include(d => d.Statut)
+                .FirstOrDefaultAsync(d => d.Id == request.DossierId, cancellationToken);
 
+            if (dossier == null)
+            {
+                _logger.LogWarning("Tentative d'upload de facture pour un dossier inexistant : {DossierId}", request.DossierId);
+                throw new Exception($"Dossier introuvable.");
+            }
+
+            if (dossier.Statut == null || dossier.Statut.Code != "DossierPayer")
+            {
+                _logger.LogWarning("Refus d'upload facture. Le dossier {DossierId} est au statut {Statut} au lieu de DossierPayer.", dossier.Id, dossier.Statut?.Code);
+
+                throw new InvalidOperationException(
+                    $"L'upload de la facture n'est autorisé que si le dossier est au statut 'Paiement effectué' (DossierPayer). " +
+                    $"Statut actuel : '{dossier.Statut?.Libelle ?? "Inconnu"}'.");
+            }
+
+            // Validation du fichier
             var file = request.FactureFile;
-            if (file == null || file.Length == 0) throw new InvalidOperationException("Fichier manquant.");
-            if (Path.GetExtension(file.FileName).ToLowerInvariant() != ".pdf") throw new InvalidOperationException("PDF requis.");
+            if (file == null || file.Length == 0)
+            {
+                throw new InvalidOperationException("Le fichier de la facture est manquant.");
+            }
 
+            if (Path.GetExtension(file.FileName).ToLowerInvariant() != ".pdf")
+            {
+                throw new InvalidOperationException("La facture doit être au format PDF.");
+            }
+
+            // Stockage du document
             await _fileStorageProvider.ImportDocumentDossierAsync(
                 file: file,
                 nom: $"Facture_{dossier.Numero}",
-                type: 2,
+                type: 2, 
                 dossierId: dossier.Id
             );
 
-            var codeStatut = "EnPaiement";
-            var nouveauStatut = await _context.Statuts.FirstOrDefaultAsync(s => s.Code == codeStatut, cancellationToken);
 
-            if (nouveauStatut != null)
-            {
-                dossier.IdStatut = nouveauStatut.Id;
-            }
-            else
-            {
-                _logger.LogError("Statut 'EnPaiement' introuvable. Le statut du dossier n'a pas été mis à jour.");
-            }
-
+            // Sauvegarde
             await _context.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
 
-            await _auditService.LogAsync("Gestion des Dossiers", $"Facture téléversée pour '{dossier.Numero}'.", "UPLOAD", dossier.Id);
+            // Audit
+            await _auditService.LogAsync(
+                page: "Gestion des Dossiers",
+                libelle: $"Facture finale téléversée pour '{dossier.Numero}'.",
+                eventTypeCode: "UPLOAD",
+                dossierId: dossier.Id);
 
+            // Notification
             await _notificationService.SendToGroupAsync(
                 profilCode: "DAFC",
-                title: "Facture Émise",
-                message: $"La facture pour le dossier {dossier.Numero} est disponible. En attente de paiement.",
+                title: "Facture Disponible",
+                message: $"La facture finale pour le dossier {dossier.Numero} a été téléversée.",
                 type: "V",
                 targetUrl: $"/dossiers/{dossier.Id}",
                 entityId: dossier.Id.ToString()

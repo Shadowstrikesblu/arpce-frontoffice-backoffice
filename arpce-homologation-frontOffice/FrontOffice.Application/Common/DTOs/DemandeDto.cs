@@ -19,7 +19,7 @@ public class DemandeDto
     public decimal? PrixUnitaire { get; set; }
     public decimal? Remise { get; set; }
     public bool EstHomologable { get; set; }
-
+    public StatutDto? Statut { get; set; }
     // Objets complets liés
     public CategorieEquipementDto? CategorieEquipement { get; set; }
     public MotifRejetDto? MotifRejet { get; set; }

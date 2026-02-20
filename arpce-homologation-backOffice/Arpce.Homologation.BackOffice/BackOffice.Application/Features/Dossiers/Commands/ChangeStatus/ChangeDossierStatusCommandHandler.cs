@@ -75,7 +75,7 @@ public class ChangeDossierStatusCommandHandler : IRequestHandler<ChangeDossierSt
                 }
             }
 
-            if (request.CodeStatut == "DossierPayer")
+            if (request.CodeStatut == "DossierSignature")
             {
                 await _certificateGenerator.GenerateAttestationsForDossierAsync(dossier.Id);
             }

@@ -1,0 +1,9 @@
+2026-02-19 15:18:57.891 +01:00 [INF] Now listening on: https://localhost:7016
+2026-02-19 15:18:57.931 +01:00 [INF] Now listening on: http://localhost:5041
+2026-02-19 15:18:57.999 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-19 15:18:58.002 +01:00 [INF] Hosting environment: Development
+2026-02-19 15:18:58.004 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2026-02-19 15:19:02.298 +01:00 [INF] HTTP GET /index.html responded 200 in 154.6177 ms
+2026-02-19 15:19:02.366 +01:00 [INF] HTTP GET /css/swagger-custom.css responded 304 in 51.0435 ms
+2026-02-19 15:19:02.569 +01:00 [INF] HTTP GET /favicon-32x32.png responded 200 in 5.8988 ms
+2026-02-19 15:19:02.631 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 111.4311 ms

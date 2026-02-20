@@ -47,6 +47,12 @@ public class DossierConfiguration : IEntityTypeConfiguration<Dossier>
             .IsRequired(false)
             .OnDelete(DeleteBehavior.Restrict);
 
+        // RELATION 1:1 AVEC DEMANDE
+        builder.HasOne(d => d.Demande)
+            .WithOne(e => e.Dossier)
+            .HasForeignKey<Demande>(e => e.IdDossier)
+            .OnDelete(DeleteBehavior.Cascade);
+
         // Champs d'audit hérités de AuditableEntity
         builder.Property(c => c.UtilisateurCreation).HasMaxLength(60);
         builder.Property(c => c.DateCreation).HasColumnType("bigint");

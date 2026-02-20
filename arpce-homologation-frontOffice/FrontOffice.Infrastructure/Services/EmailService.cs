@@ -1,18 +1,14 @@
 ﻿using FrontOffice.Application.Common.Interfaces;
-using MailKit.Net.Smtp;
-using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using MailKit.Net.Smtp;
+using MailKit.Security;
 using MimeKit;
 using System;
 using System.Threading.Tasks;
 
 namespace FrontOffice.Infrastructure.Services;
 
-/// <summary>
-/// Implémentation du service d'envoi d'e-mails via SMTP avec MailKit.
-/// Conçu pour être compatible avec différents serveurs SMTP (Gmail, SendGrid, Exchange...).
-/// </summary>
 public class EmailService : IEmailService
 {
     private readonly IConfiguration _configuration;
@@ -26,60 +22,38 @@ public class EmailService : IEmailService
 
     public async Task SendEmailAsync(string toEmail, string subject, string body)
     {
-        var smtpServer = _configuration["EmailSettings:SmtpServer"];
-        var portString = _configuration["EmailSettings:Port"];
+        var message = new MimeKit.MimeMessage();
+        var from = _configuration["EmailSettings:SmtpFrom"];
         var senderName = _configuration["EmailSettings:SenderName"];
-        var senderEmail = _configuration["EmailSettings:SenderEmail"];
-        var username = _configuration["EmailSettings:Username"];
-        var password = _configuration["EmailSettings:Password"];
 
-        if (string.IsNullOrWhiteSpace(smtpServer) || string.IsNullOrWhiteSpace(portString) ||
-            string.IsNullOrWhiteSpace(senderEmail) || string.IsNullOrWhiteSpace(username) ||
-            string.IsNullOrWhiteSpace(password))
-        {
-            _logger.LogError("Configuration SMTP (EmailSettings) incomplète. L'email pour '{ToEmail}' n'a pas été envoyé.", toEmail);
-            return;
-        }
-
-        if (!int.TryParse(portString, out var port))
-        {
-            _logger.LogError("Le port SMTP '{PortString}' est invalide.", portString);
-            return;
-        }
-
-        var message = new MimeMessage();
-        message.From.Add(new MailboxAddress(senderName, senderEmail));
-        message.To.Add(new MailboxAddress(toEmail, toEmail));
+        message.From.Add(new MailboxAddress(senderName, from));
+        message.To.Add(new MailboxAddress("", toEmail));
         message.Subject = subject;
-        message.Body = new TextPart("html") { Text = body };
+
+        var bodyBuilder = new BodyBuilder { HtmlBody = body };
+        message.Body = bodyBuilder.ToMessageBody();
 
         using var client = new SmtpClient();
-
         try
         {
-            SecureSocketOptions options = port switch
-            {
-                465 => SecureSocketOptions.SslOnConnect,
-                587 => SecureSocketOptions.StartTls,
-                _ => SecureSocketOptions.Auto,
-            };
+            await client.ConnectAsync(
+                _configuration["EmailSettings:SmtpHost"],
+                int.Parse(_configuration["EmailSettings:SmtpPort"]),
+                SecureSocketOptions.SslOnConnect);
 
-            _logger.LogInformation("Connexion au serveur SMTP {SmtpServer} sur le port {Port} avec l'option {SecureOption}...", smtpServer, port, options);
-            await client.ConnectAsync(smtpServer, port, options);
+            await client.AuthenticateAsync(
+                _configuration["EmailSettings:SmtpUser"],
+                _configuration["EmailSettings:SmtpPass"]);
 
-            _logger.LogInformation("Authentification avec l'utilisateur '{Username}'...", username);
-            await client.AuthenticateAsync(username, password);
-
-            _logger.LogInformation("Envoi de l'email à '{ToEmail}'...", toEmail);
             await client.SendAsync(message);
-
             await client.DisconnectAsync(true);
-            _logger.LogInformation("Email envoyé avec succès.");
+
+            _logger.LogInformation("Email envoyé à {Email}", toEmail);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Échec de l'envoi de l'email à {ToEmail}. Erreur : {ErrorMessage}", toEmail, ex.Message);
-            throw new InvalidOperationException("Le service d'envoi d'emails a rencontré une erreur.", ex);
+            _logger.LogError(ex, "Erreur SMTP Hostinger pour {Email}", toEmail);
+            throw new InvalidOperationException("Le service d'envoi d'emails a rencontré une erreur.");
         }
     }
 }

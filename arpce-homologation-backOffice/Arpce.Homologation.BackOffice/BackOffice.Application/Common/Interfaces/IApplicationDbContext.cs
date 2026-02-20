@@ -40,6 +40,7 @@ public interface IApplicationDbContext
     DbSet<Proposition> Propositions { get; }
     DbSet<Statut> Statuts { get; }
     DatabaseFacade Database { get; }
+    DbSet<Signataire> Signataires { get; }
     public DbSet<Notification> Notifications { get; set; }
 
     /// <summary>

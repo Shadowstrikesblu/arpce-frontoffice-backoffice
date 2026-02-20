@@ -31,4 +31,7 @@ public class Notification : AuditableEntity
     // État
     public bool IsRead { get; set; } = false;
     public long DateEnvoi { get; set; }
+
+    public string Canal { get; set; } = "SYSTEM"; 
+    public string? StatutEnvoi { get; set; }
 }

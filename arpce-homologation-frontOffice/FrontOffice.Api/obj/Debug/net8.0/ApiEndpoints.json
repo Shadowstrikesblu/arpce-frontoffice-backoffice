@@ -509,6 +509,11 @@
         "IsRequired": false
       },
       {
+        "Name": "Type",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
         "Name": "Description",
         "Type": "System.String",
         "IsRequired": false
@@ -516,26 +521,6 @@
       {
         "Name": "QuantiteEquipements",
         "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "ContactNom",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "ContactEmail",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "ContactTelephone",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "ContactFonction",
-        "Type": "System.String",
         "IsRequired": false
       },
       {

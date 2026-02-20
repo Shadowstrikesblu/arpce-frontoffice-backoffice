@@ -17,4 +17,9 @@ public class CategorieEquipement : AuditableEntity
     public int? FraisHomologationQuantiteParLot { get; set; }
     public decimal? FraisControle { get; set; }
     public string? Remarques { get; set; }
+
+    public decimal CoutUnitaire { get; set; }
+    public bool EstCalculeParQuantite { get; set; }
+    public string TypeCalcul { get; set; } = "FORFAIT"; // QUANTITE, FORFAIT, MIXTE
+    public string? ReferenceLoiFinance { get; set; }
 }

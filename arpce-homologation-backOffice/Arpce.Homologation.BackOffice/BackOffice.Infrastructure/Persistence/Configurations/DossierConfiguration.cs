@@ -4,20 +4,16 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BackOffice.Infrastructure.Persistence.Configurations;
 
-/// <summary>
-/// Configuration EF Core pour l'entité Dossier.
-/// Mappe la classe .NET à la table 'dossiers'.
-/// </summary>
 public class DossierConfiguration : IEntityTypeConfiguration<Dossier>
 {
     public void Configure(EntityTypeBuilder<Dossier> builder)
     {
-        builder.ToTable("dossiers"); 
+        builder.ToTable("dossiers");
 
-        builder.HasKey(d => d.Id); 
+        builder.HasKey(d => d.Id);
 
         builder.Property(d => d.Numero)
-            .HasMaxLength(30) 
+            .HasMaxLength(30)
             .IsRequired();
 
         builder.Property(d => d.Libelle)
@@ -32,24 +28,30 @@ public class DossierConfiguration : IEntityTypeConfiguration<Dossier>
         builder.HasOne(d => d.Client)
             .WithMany(c => c.Dossiers)
             .HasForeignKey(d => d.IdClient)
-            .OnDelete(DeleteBehavior.Restrict); 
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(d => d.Statut)
-            .WithMany() 
+            .WithMany()
             .HasForeignKey(d => d.IdStatut)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(d => d.ModeReglement)
             .WithMany()
             .HasForeignKey(d => d.IdModeReglement)
-            .IsRequired(false) 
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<AdminUtilisateur>() 
-            .WithMany() 
+        builder.HasOne<AdminUtilisateur>()
+            .WithMany()
             .HasForeignKey(d => d.IdAgentInstructeur)
-            .IsRequired(false) 
-            .OnDelete(DeleteBehavior.Restrict); 
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // RELATION 1:1 AVEC DEMANDE
+        builder.HasOne(d => d.Demande)
+            .WithOne(e => e.Dossier)
+            .HasForeignKey<Demande>(e => e.IdDossier)
+            .OnDelete(DeleteBehavior.Cascade);
 
         // Champs d'audit hérités de AuditableEntity
         builder.Property(c => c.UtilisateurCreation).HasMaxLength(60);

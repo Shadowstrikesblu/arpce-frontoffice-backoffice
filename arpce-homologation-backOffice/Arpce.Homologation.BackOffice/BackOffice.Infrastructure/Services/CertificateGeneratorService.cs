@@ -7,6 +7,10 @@ using Microsoft.Extensions.Logging;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BackOffice.Infrastructure.Services;
 
@@ -35,63 +39,82 @@ public class CertificateGeneratorService : ICertificateGeneratorService
 
     public async Task GenerateAttestationsForDossierAsync(Guid dossierId)
     {
+        // Correction : On utilise .Include(d => d.Demande) au singulier (1:1)
         var dossier = await _context.Dossiers
-            .Include(d => d.Demandes)
+            .Include(d => d.Demande)
             .Include(d => d.Client)
             .FirstOrDefaultAsync(d => d.Id == dossierId);
 
-        if (dossier == null || !dossier.Demandes.Any()) return;
+        if (dossier == null || dossier.Demande == null)
+        {
+            _logger.LogWarning("Dossier {DossierId} ou sa demande associée introuvable.", dossierId);
+            return;
+        }
 
-        int currentYear = DateTime.UtcNow.Year;
-
-        int maxSequence = await _context.Attestations
-            .Where(a => a.DateDelivrance >= new DateTimeOffset(new DateTime(currentYear, 1, 1)).ToUnixTimeMilliseconds())
-            .MaxAsync(a => (int?)a.NumeroSequentiel) ?? 0;
-
-        int nextSequence = maxSequence + 1;
-
+        var demande = dossier.Demande;
         byte[] logoBytes = File.Exists(_logoPath) ? await File.ReadAllBytesAsync(_logoPath) : Array.Empty<byte>();
 
-        foreach (var demande in dossier.Demandes)
+        // On vérifie si une attestation existe déjà pour cette demande unique
+        var existingAttestation = await _context.Attestations
+            .FirstOrDefaultAsync(a => a.IdDemande == demande.Id);
+
+        string visaFinal;
+
+        // --- LOGIQUE DE VISA IMMUABLE ---
+        if (!string.IsNullOrWhiteSpace(existingAttestation?.VisaReference))
         {
-            var existingAttestation = await _context.Attestations.FirstOrDefaultAsync(a => a.IdDemande == demande.Id);
+            // Si le visa existe déjà, on ne le change JAMAIS (Immuabilité)
+            visaFinal = existingAttestation.VisaReference;
+        }
+        else
+        {
+            // Sinon, on génère un nouveau numéro unique pour l'année en cours
+            var currentYear = DateTime.UtcNow.Year;
+            var suffix = $"/ARPCE-DG/DAJI/DRSCE/{DateTime.UtcNow:yy}";
 
-            int seqNumber = existingAttestation?.NumeroSequentiel ?? nextSequence;
-            if (existingAttestation == null) nextSequence++;
+            // On cherche la séquence max de l'année en cours
+            var lastSequence = await _context.Attestations
+                .Where(a => a.VisaReference != null && a.VisaReference.EndsWith(suffix))
+                .CountAsync();
 
-            string formattedSeq = seqNumber.ToString("D4");
+            int nextSeq = lastSequence + 1;
+            visaFinal = $"N°{nextSeq:D4}{suffix}";
+        }
 
-            string referenceNumber = $"N°/{formattedSeq}/ARPCE-DG/{currentYear}";
+        byte[] pdfBytes = demande.EstHomologable
+            ? GenerateCertificatePdf(dossier, demande, visaFinal, logoBytes)
+            : GenerateLetterPdf(dossier, demande, visaFinal, logoBytes);
 
-            byte[] pdfBytes = demande.EstHomologable
-                ? GenerateCertificatePdf(dossier, demande, referenceNumber, logoBytes)
-                : GenerateLetterPdf(dossier, demande, referenceNumber, logoBytes);
+        if (existingAttestation != null)
+        {
+            existingAttestation.Donnees = pdfBytes;
+            existingAttestation.DateDelivrance = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            existingAttestation.DateExpiration = demande.EstHomologable
+                ? DateTimeOffset.UtcNow.AddYears(3).ToUnixTimeMilliseconds()
+                : DateTimeOffset.UtcNow.AddYears(10).ToUnixTimeMilliseconds();
+            existingAttestation.Extension = "pdf";
+            existingAttestation.VisaReference = visaFinal;
 
-            if (existingAttestation != null)
+            _context.Attestations.Update(existingAttestation);
+        }
+        else
+        {
+            _context.Attestations.Add(new Attestation
             {
-                existingAttestation.Donnees = pdfBytes;
-                existingAttestation.DateDelivrance = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-                existingAttestation.DateExpiration = demande.EstHomologable ? DateTimeOffset.UtcNow.AddYears(3).ToUnixTimeMilliseconds() : DateTimeOffset.UtcNow.AddYears(10).ToUnixTimeMilliseconds();
-                existingAttestation.Extension = "pdf";
-                _context.Attestations.Update(existingAttestation);
-            }
-            else
-            {
-                _context.Attestations.Add(new Attestation
-                {
-                    Id = Guid.NewGuid(),
-                    IdDemande = demande.Id,
-                    DateDelivrance = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
-                    DateExpiration = demande.EstHomologable ? DateTimeOffset.UtcNow.AddYears(3).ToUnixTimeMilliseconds() : DateTimeOffset.UtcNow.AddYears(10).ToUnixTimeMilliseconds(),
-                    Donnees = pdfBytes,
-                    Extension = "pdf",
-                    NumeroSequentiel = seqNumber
-                });
-            }
+                Id = Guid.NewGuid(),
+                IdDemande = demande.Id,
+                DateDelivrance = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+                DateExpiration = demande.EstHomologable
+                    ? DateTimeOffset.UtcNow.AddYears(3).ToUnixTimeMilliseconds()
+                    : DateTimeOffset.UtcNow.AddYears(10).ToUnixTimeMilliseconds(),
+                Donnees = pdfBytes,
+                Extension = "pdf",
+                VisaReference = visaFinal
+            });
         }
 
         await _context.SaveChangesAsync(default);
-        _logger.LogInformation("Documents générés pour le dossier {Numero}.", dossier.Numero);
+        _logger.LogInformation("Attestation générée avec succès pour le dossier {Numero} (Visa: {Visa}).", dossier.Numero, visaFinal);
     }
 
     private void DrawColorBar(IContainer container)
@@ -117,7 +140,7 @@ public class CertificateGeneratorService : ICertificateGeneratorService
 
                 page.Background().Row(row =>
                 {
-                    row.ConstantItem(1, Unit.Centimetre); 
+                    row.ConstantItem(1, Unit.Centimetre);
                     DrawColorBar(row.ConstantItem(15, Unit.Millimetre));
                     row.RelativeItem();
                 });
@@ -194,7 +217,7 @@ public class CertificateGeneratorService : ICertificateGeneratorService
 
                 page.Background().Row(row =>
                 {
-                    row.ConstantItem(1, Unit.Centimetre); 
+                    row.ConstantItem(1, Unit.Centimetre);
                     DrawColorBar(row.ConstantItem(15, Unit.Millimetre));
                     row.RelativeItem();
                 });

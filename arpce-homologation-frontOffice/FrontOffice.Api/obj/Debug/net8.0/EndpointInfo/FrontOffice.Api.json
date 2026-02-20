@@ -994,24 +994,15 @@
                   "Fabricant": {
                     "type": "string"
                   },
+                  "Type": {
+                    "type": "string"
+                  },
                   "Description": {
                     "type": "string"
                   },
                   "QuantiteEquipements": {
                     "type": "integer",
                     "format": "int32"
-                  },
-                  "ContactNom": {
-                    "type": "string"
-                  },
-                  "ContactEmail": {
-                    "type": "string"
-                  },
-                  "ContactTelephone": {
-                    "type": "string"
-                  },
-                  "ContactFonction": {
-                    "type": "string"
                   },
                   "TypeURL_FicheTechnique": {
                     "type": "string",
@@ -1035,22 +1026,13 @@
                 "Fabricant": {
                   "style": "form"
                 },
+                "Type": {
+                  "style": "form"
+                },
                 "Description": {
                   "style": "form"
                 },
                 "QuantiteEquipements": {
-                  "style": "form"
-                },
-                "ContactNom": {
-                  "style": "form"
-                },
-                "ContactEmail": {
-                  "style": "form"
-                },
-                "ContactTelephone": {
-                  "style": "form"
-                },
-                "ContactFonction": {
                   "style": "form"
                 },
                 "TypeURL_FicheTechnique": {
@@ -1841,6 +1823,9 @@
           "estHomologable": {
             "type": "boolean"
           },
+          "statut": {
+            "$ref": "#/components/schemas/StatutDto"
+          },
           "categorieEquipement": {
             "$ref": "#/components/schemas/CategorieEquipementDto"
           },
@@ -2113,6 +2098,20 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/DevisDto"
+            },
+            "nullable": true
+          },
+          "attestations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AttestationDto"
+            },
+            "nullable": true
+          },
+          "demandes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DemandeDto"
             },
             "nullable": true
           }

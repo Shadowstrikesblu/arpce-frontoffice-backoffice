@@ -3,11 +3,6 @@ using BackOffice.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Demandes.Commands.UploadCertificat;
 
@@ -41,37 +36,10 @@ public class UploadCertificatCommandHandler : IRequestHandler<UploadCertificatCo
                     .ThenInclude(d => d.Dossier)
                 .FirstOrDefaultAsync(a => a.Id == request.AttestationId, cancellationToken);
 
-            if (attestation == null)
-            {
-                throw new Exception($"Attestation '{request.AttestationId}' introuvable.");
-            }
+            if (attestation == null) throw new Exception("Attestation introuvable.");
 
-            if (string.IsNullOrWhiteSpace(attestation.VisaReference))
-            {
-                // Détermine l'année en cours 
-                var anneeStr = DateTime.Now.ToString("yy");
-                var anneeFull = DateTime.Now.Year;
-
-                // Calcule la séquence 
-                // On compte combien d'attestations ont déjà une référence pour cette année
-                var sequence = await _context.Attestations
-                    .CountAsync(a => a.VisaReference != null &&
-                                     a.VisaReference.EndsWith("/" + anneeStr), cancellationToken) + 1;
-
-                // Construire la référence officielle 
-                attestation.VisaReference = $"N°{sequence}/ARPCE-DG/DAJI/DRSCE/{anneeStr}";
-
-                _logger.LogInformation("Génération automatique du nouveau visa : {Visa}", attestation.VisaReference);
-            }
-            else
-            {
-                _logger.LogInformation("Réutilisation du visa immuable existant : {Visa}", attestation.VisaReference);
-            }
-
-            var visaFinal = attestation.VisaReference;
             var dossier = attestation.Demande.Dossier;
 
-            // Lecture du fichier
             if (request.CertificatFile == null || request.CertificatFile.Length == 0)
                 throw new InvalidOperationException("Fichier PDF obligatoire.");
 
@@ -82,46 +50,61 @@ public class UploadCertificatCommandHandler : IRequestHandler<UploadCertificatCo
                 fileData = memoryStream.ToArray();
             }
 
-            // Mise à jour de l'attestation
             attestation.Donnees = fileData;
             attestation.Extension = Path.GetExtension(request.CertificatFile.FileName)?.TrimStart('.').ToLowerInvariant() ?? "pdf";
             attestation.DateDelivrance = new DateTimeOffset(request.DateDelivrance).ToUnixTimeMilliseconds();
             attestation.DateExpiration = new DateTimeOffset(request.DateExpiration).ToUnixTimeMilliseconds();
 
             _context.Attestations.Update(attestation);
+
+            var statutSigneEquip = await _context.Statuts.AsNoTracking().FirstOrDefaultAsync(s => s.Code == "Signe", cancellationToken);
+            if (statutSigneEquip != null) attestation.Demande.IdStatut = statutSigneEquip.Id;
+
             await _context.SaveChangesAsync(cancellationToken);
 
-            // Vérification complétude dossier
-            var demandeIds = await _context.Demandes
+            // récupère les demandes en mémoire
+            var demandesDuDossier = await _context.Demandes
+                .AsNoTracking()
+                .Include(d => d.Statut)
                 .Where(d => d.IdDossier == dossier.Id)
-                .Select(d => d.Id)
                 .ToListAsync(cancellationToken);
 
-            var completes = await _context.Attestations
-                .CountAsync(a => demandeIds.Contains(a.IdDemande) && a.Donnees != null && a.Donnees.Length > 0, cancellationToken);
+            var demandeIds = demandesDuDossier.Select(d => d.Id).ToList();
 
-            if (demandeIds.Count > 0 && completes == demandeIds.Count)
+            // récupère les attestations en mémoire (SANS filtre Donnees en SQL)
+            var allAttestations = await _context.Attestations
+                .AsNoTracking()
+                .Where(a => demandeIds.Contains(a.IdDemande))
+                .ToListAsync(cancellationToken);
+
+            // fait le test complexe en C# (L'erreur 422 est impossible ici)
+            bool toutEstTraite = demandesDuDossier.All(d =>
+                (d.Statut != null && d.Statut.Code == "Refus") ||
+                allAttestations.Any(a => a.IdDemande == d.Id && a.Donnees != null && a.Donnees.Length > 0)
+            );
+
+            if (demandesDuDossier.Any() && toutEstTraite)
             {
-                var statut = await _context.Statuts.FirstOrDefaultAsync(s => s.Code == "DossierSigner", cancellationToken);
-                if (statut != null) dossier.IdStatut = statut.Id;
+                var statutSigneDossier = await _context.Statuts.FirstOrDefaultAsync(s => s.Code == "DossierSigner", cancellationToken);
+                if (statutSigneDossier != null && dossier.IdStatut != statutSigneDossier.Id)
+                {
+                    dossier.IdStatut = statutSigneDossier.Id;
+                    _context.Dossiers.Update(dossier);
+                    await _context.SaveChangesAsync(cancellationToken);
+                }
             }
 
-            await _context.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
 
-            // Audit et Notifications
-            await _auditService.LogAsync("Signature", $"Visa généré : {visaFinal}", "SIGNATURE", dossier.Id);
-
-            var msg = $"Attestation signée (Visa: {visaFinal}) pour {attestation.Demande.Equipement}.";
-            await _notificationService.SendToGroupAsync("DRSCE", "Signature", msg, "E", $"/dossiers/{dossier.Id}", dossier.Id.ToString());
-            await _notificationService.SendToGroupAsync("DAJI", "Signature", msg, "V", $"/dossiers/{dossier.Id}", dossier.Id.ToString());
+            await _auditService.LogAsync("Signature", $"Certificat chargé pour {attestation.Demande.Equipement}.", "SIGNATURE", dossier.Id);
+            await _notificationService.SendToGroupAsync("DRSCE", "Signature", "Attestation chargée.", "E", $"/dossiers/{dossier.Id}", dossier.Id.ToString());
 
             return true;
         }
         catch (Exception ex)
         {
             await transaction.RollbackAsync(cancellationToken);
-            _logger.LogError(ex, "Erreur signature automatique");
+            _logger.LogError(ex, "Erreur upload");
             throw;
         }
     }
