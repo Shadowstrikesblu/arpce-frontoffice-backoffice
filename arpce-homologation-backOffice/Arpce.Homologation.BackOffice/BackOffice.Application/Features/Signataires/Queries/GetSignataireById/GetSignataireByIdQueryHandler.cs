@@ -24,7 +24,9 @@ public class GetSignataireByIdQueryHandler : IRequestHandler<GetSignataireByIdQu
 
     public async Task<SignataireDto?> Handle(GetSignataireByIdQuery request, CancellationToken cancellationToken)
     {
+        // On récupère le signataire en incluant l'entité AdminUtilisateur liée
         var s = await _context.Signataires
+            .Include(x => x.AdminUtilisateur)
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
@@ -33,12 +35,12 @@ public class GetSignataireByIdQueryHandler : IRequestHandler<GetSignataireByIdQu
         return new SignataireDto
         {
             Id = s.Id,
-            Nom = s.Nom,
-            Prenoms = s.Prenoms,
-            Fonction = s.Fonction,
+            Nom = s.AdminUtilisateur.Nom,          
+            Prenoms = s.AdminUtilisateur.Prenoms,   
+            Fonction = s.AdminUtilisateur.Fonction, 
             SignatureImageUrl = s.SignatureImagePath,
             IsActive = s.IsActive,
-            AdminId = s.AdminId
+            AdminId = s.Id 
         };
     }
 }

@@ -413,19 +413,14 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "Libelle",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "CourrierFile",
-        "Type": "Microsoft.AspNetCore.Http.IFormFile",
-        "IsRequired": false
+        "Name": "command",
+        "Type": "FrontOffice.Application.Features.Demandes.Commands.CreateDossier.CreateDossierCommand",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "FrontOffice.Application.Features.Demandes.Commands.CreateDossier.CreateDossierResponseDto",
+        "Type": "System.Guid",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -467,6 +462,52 @@
           "text/json"
         ],
         "StatusCode": 404
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
+    "Method": "UploadDossierDocuments",
+    "RelativePath": "api/dossiers/{dossierId}/documents",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dossierId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "DossierId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "LettreDemande",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "FicheTechnique",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "DocumentsSupplementaires",
+        "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
       }
     ]
   },

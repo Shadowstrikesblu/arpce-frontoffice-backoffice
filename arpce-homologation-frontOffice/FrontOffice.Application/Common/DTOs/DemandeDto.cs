@@ -1,4 +1,7 @@
-﻿namespace FrontOffice.Application.Common.DTOs;
+﻿using System;
+using System.Collections.Generic;
+
+namespace FrontOffice.Application.Common.DTOs;
 
 public class DemandeDto
 {
@@ -14,13 +17,17 @@ public class DemandeDto
     public int? QuantiteEquipements { get; set; }
     public string? ContactNom { get; set; }
     public string? ContactEmail { get; set; }
+    public string? ContactTelephone { get; set; }
 
-    // Champs de facturation et statut
     public decimal? PrixUnitaire { get; set; }
     public decimal? Remise { get; set; }
     public bool EstHomologable { get; set; }
+
+    public bool RequiertEchantillon { get; set; }
+    public bool EchantillonSoumis { get; set; }
+    public BeneficiaireDto? Beneficiaire { get; set; }
+
     public StatutDto? Statut { get; set; }
-    // Objets complets liés
     public CategorieEquipementDto? CategorieEquipement { get; set; }
     public MotifRejetDto? MotifRejet { get; set; }
     public PropositionDto? Proposition { get; set; }

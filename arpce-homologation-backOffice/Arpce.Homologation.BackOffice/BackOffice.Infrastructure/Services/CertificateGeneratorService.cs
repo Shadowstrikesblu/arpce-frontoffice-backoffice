@@ -39,7 +39,6 @@ public class CertificateGeneratorService : ICertificateGeneratorService
 
     public async Task GenerateAttestationsForDossierAsync(Guid dossierId)
     {
-        // Correction : On utilise .Include(d => d.Demande) au singulier (1:1)
         var dossier = await _context.Dossiers
             .Include(d => d.Demande)
             .Include(d => d.Client)
@@ -47,53 +46,63 @@ public class CertificateGeneratorService : ICertificateGeneratorService
 
         if (dossier == null || dossier.Demande == null)
         {
-            _logger.LogWarning("Dossier {DossierId} ou sa demande associée introuvable.", dossierId);
+            _logger.LogWarning("Dossier {DossierId} ou demande associée introuvable.", dossierId);
             return;
         }
 
         var demande = dossier.Demande;
         byte[] logoBytes = File.Exists(_logoPath) ? await File.ReadAllBytesAsync(_logoPath) : Array.Empty<byte>();
 
-        // On vérifie si une attestation existe déjà pour cette demande unique
-        var existingAttestation = await _context.Attestations
-            .FirstOrDefaultAsync(a => a.IdDemande == demande.Id);
+        // Récupération de l'attestation existante (si elle a déjà été générée)
+        var existingAttestation = await _context.Attestations.FirstOrDefaultAsync(a => a.IdDemande == demande.Id);
 
+        // --- GESTION DU VISA UNIQUE ET IMMUABLE ---
         string visaFinal;
+        int seqNumber;
 
-        // --- LOGIQUE DE VISA IMMUABLE ---
-        if (!string.IsNullOrWhiteSpace(existingAttestation?.VisaReference))
+        // Si l'attestation existe déjà et possède un visa, on le GARDE (Immuabilité)
+        if (existingAttestation != null && !string.IsNullOrWhiteSpace(existingAttestation.VisaReference))
         {
-            // Si le visa existe déjà, on ne le change JAMAIS (Immuabilité)
             visaFinal = existingAttestation.VisaReference;
+            seqNumber = existingAttestation.NumeroSequentiel;
+            _logger.LogInformation("Réutilisation du visa existant : {Visa}", visaFinal);
         }
         else
         {
-            // Sinon, on génère un nouveau numéro unique pour l'année en cours
-            var currentYear = DateTime.UtcNow.Year;
-            var suffix = $"/ARPCE-DG/DAJI/DRSCE/{DateTime.UtcNow:yy}";
+            // Sinon, on génère un nouveau Visa
+            var currentYearShort = DateTime.UtcNow.ToString("yy"); 
+            var suffix = $"/ARPCE-DG/DAJI/DRSCE/{currentYearShort}";
 
-            // On cherche la séquence max de l'année en cours
-            var lastSequence = await _context.Attestations
-                .Where(a => a.VisaReference != null && a.VisaReference.EndsWith(suffix))
-                .CountAsync();
+            // On compte combien de visas existent déjà pour cette année pour avoir la séquence
+            var countThisYear = await _context.Attestations
+                .CountAsync(a => a.VisaReference != null && a.VisaReference.EndsWith(suffix));
 
-            int nextSeq = lastSequence + 1;
-            visaFinal = $"N°{nextSeq:D4}{suffix}";
+            seqNumber = countThisYear + 1;
+
+            // Format : N°0001/ARPCE-DG/DAJI/DRSCE/26
+            visaFinal = $"N°{seqNumber:D4}{suffix}";
+
+            _logger.LogInformation("Génération d'un nouveau visa : {Visa}", visaFinal);
         }
 
+        // Génération du PDF avec le visaFinal
         byte[] pdfBytes = demande.EstHomologable
             ? GenerateCertificatePdf(dossier, demande, visaFinal, logoBytes)
             : GenerateLetterPdf(dossier, demande, visaFinal, logoBytes);
 
         if (existingAttestation != null)
         {
+            // Mise à jour
             existingAttestation.Donnees = pdfBytes;
             existingAttestation.DateDelivrance = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             existingAttestation.DateExpiration = demande.EstHomologable
                 ? DateTimeOffset.UtcNow.AddYears(3).ToUnixTimeMilliseconds()
                 : DateTimeOffset.UtcNow.AddYears(10).ToUnixTimeMilliseconds();
             existingAttestation.Extension = "pdf";
+
+            // On s'assure que le visa est bien sauvegardé/conservé
             existingAttestation.VisaReference = visaFinal;
+            existingAttestation.NumeroSequentiel = seqNumber;
 
             _context.Attestations.Update(existingAttestation);
         }
@@ -109,12 +118,13 @@ public class CertificateGeneratorService : ICertificateGeneratorService
                     : DateTimeOffset.UtcNow.AddYears(10).ToUnixTimeMilliseconds(),
                 Donnees = pdfBytes,
                 Extension = "pdf",
-                VisaReference = visaFinal
+                NumeroSequentiel = seqNumber,
+                VisaReference = visaFinal 
             });
         }
 
         await _context.SaveChangesAsync(default);
-        _logger.LogInformation("Attestation générée avec succès pour le dossier {Numero} (Visa: {Visa}).", dossier.Numero, visaFinal);
+        _logger.LogInformation("Documents générés pour le dossier {Numero} avec Visa {Visa}.", dossier.Numero, visaFinal);
     }
 
     private void DrawColorBar(IContainer container)
@@ -154,7 +164,9 @@ public class CertificateGeneratorService : ICertificateGeneratorService
                         {
                             c.Item().Text("Agence de Régulation des Postes et des Communications Électroniques").FontSize(10).FontColor("#4E9741");
                             c.Item().AlignCenter().PaddingTop(10).Text("CERTIFICAT D'HOMOLOGATION").FontSize(16).Bold();
+
                             c.Item().AlignCenter().Text(referenceNumber).FontSize(12).Bold();
+
                             c.Item().AlignCenter().Text("----------o00o----------").FontSize(10);
                         });
                     });
@@ -230,6 +242,7 @@ public class CertificateGeneratorService : ICertificateGeneratorService
                         row.RelativeItem().PaddingLeft(10).Column(c =>
                         {
                             c.Item().Text("Agence de Régulation des Postes et des Communications Électroniques").FontSize(10).FontColor("#4E9741");
+
                             c.Item().PaddingTop(10).Text(referenceNumber).FontSize(10).Bold();
                         });
                         row.ConstantItem(100).AlignRight().Text("COPIE").SemiBold().FontColor(Colors.Grey.Medium);

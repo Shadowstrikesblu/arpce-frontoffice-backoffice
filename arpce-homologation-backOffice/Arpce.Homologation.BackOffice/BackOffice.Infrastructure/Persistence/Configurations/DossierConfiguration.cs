@@ -24,7 +24,7 @@ public class DossierConfiguration : IEntityTypeConfiguration<Dossier>
             .HasColumnType("bigint")
             .IsRequired();
 
-        // Définition des relations principales
+        // Relations
         builder.HasOne(d => d.Client)
             .WithMany(c => c.Dossiers)
             .HasForeignKey(d => d.IdClient)
@@ -47,13 +47,12 @@ public class DossierConfiguration : IEntityTypeConfiguration<Dossier>
             .IsRequired(false)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // RELATION 1:1 AVEC DEMANDE
         builder.HasOne(d => d.Demande)
-            .WithOne(e => e.Dossier)
-            .HasForeignKey<Demande>(e => e.IdDossier)
+            .WithOne(dem => dem.Dossier)
+            .HasForeignKey<Demande>(dem => dem.IdDossier)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Champs d'audit hérités de AuditableEntity
+        // Champs d'audit
         builder.Property(c => c.UtilisateurCreation).HasMaxLength(60);
         builder.Property(c => c.DateCreation).HasColumnType("bigint");
         builder.Property(c => c.UtilisateurModification).HasMaxLength(60);

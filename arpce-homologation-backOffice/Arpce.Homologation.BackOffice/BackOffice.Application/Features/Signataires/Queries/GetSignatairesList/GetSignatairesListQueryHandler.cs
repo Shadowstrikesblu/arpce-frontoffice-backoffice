@@ -28,8 +28,9 @@ public class GetSignatairesListQueryHandler : IRequestHandler<GetSignatairesList
     public async Task<SignatairesListVm> Handle(GetSignatairesListQuery request, CancellationToken cancellationToken)
     {
         var queryable = _context.Signataires
+            .Include(s => s.AdminUtilisateur) // Jointure obligatoire
             .AsNoTracking()
-            .OrderBy(s => s.Nom);
+            .OrderBy(s => s.AdminUtilisateur.Nom);
 
         var totalCount = await queryable.CountAsync(cancellationToken);
 
@@ -39,12 +40,11 @@ public class GetSignatairesListQueryHandler : IRequestHandler<GetSignatairesList
             .Select(s => new SignataireDto
             {
                 Id = s.Id,
-                Nom = s.Nom,
-                Prenoms = s.Prenoms,
-                Fonction = s.Fonction,
+                Nom = s.AdminUtilisateur.Nom,      
+                Prenoms = s.AdminUtilisateur.Prenoms,
+                Fonction = s.AdminUtilisateur.Fonction, 
                 SignatureImageUrl = s.SignatureImagePath,
-                IsActive = s.IsActive,
-                AdminId = s.AdminId
+                IsActive = s.IsActive
             })
             .ToListAsync(cancellationToken);
 

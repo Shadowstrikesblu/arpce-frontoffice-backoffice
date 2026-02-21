@@ -3,11 +3,6 @@ using FrontOffice.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace FrontOffice.Application.Features.Dossiers.Queries.GetDossierDetail;
 
@@ -39,18 +34,19 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
             .Include(d => d.ModeReglement)
             .Include(d => d.Commentaires)
             .Include(d => d.Devis)
-            .Include(d => d.DocumentsDossiers)
+            .Include(d => d.DocumentsDossiers) 
             .Include(d => d.Demande).ThenInclude(dem => dem.Statut)
-            .Include(d => d.Demande).ThenInclude(dem => dem.DocumentsDemandes)
+            .Include(d => d.Demande).ThenInclude(dem => dem.DocumentsDemandes) 
             .Include(d => d.Demande).ThenInclude(dem => dem.Attestations)
             .Include(d => d.Demande).ThenInclude(dem => dem.CategorieEquipement)
             .Include(d => d.Demande).ThenInclude(dem => dem.MotifRejet)
             .Include(d => d.Demande).ThenInclude(dem => dem.Proposition)
+            .Include(d => d.Demande).ThenInclude(dem => dem.Beneficiaire) 
             .FirstOrDefaultAsync(cancellationToken);
 
         if (dossier == null) throw new Exception("Dossier introuvable.");
 
-        var dossierVm = new DossierDetailVm
+        return new DossierDetailVm
         {
             Id = dossier.Id,
             DateOuverture = dossier.DateOuverture,
@@ -65,7 +61,7 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                 new DemandeDto
                 {
                     Id = dossier.Demande.Id,
-                    IdDossier = dossier.Demande.IdDossier,
+                    IdDossier = dossier.Id,
                     NumeroDemande = dossier.Demande.NumeroDemande,
                     Equipement = dossier.Demande.Equipement,
                     Modele = dossier.Demande.Modele,
@@ -79,10 +75,21 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                     PrixUnitaire = dossier.Demande.PrixUnitaire,
                     Remise = dossier.Demande.Remise,
                     EstHomologable = dossier.Demande.EstHomologable,
+                    RequiertEchantillon = dossier.Demande.RequiertEchantillon,
+                    EchantillonSoumis = dossier.Demande.EchantillonSoumis,
 
                     Statut = dossier.Demande.Statut != null ? new StatutDto { Id = dossier.Demande.Statut.Id, Code = dossier.Demande.Statut.Code, Libelle = dossier.Demande.Statut.Libelle } : null,
                     CategorieEquipement = dossier.Demande.CategorieEquipement != null ? new CategorieEquipementDto { Id = dossier.Demande.CategorieEquipement.Id, Code = dossier.Demande.CategorieEquipement.Code, Libelle = dossier.Demande.CategorieEquipement.Libelle } : null,
                     MotifRejet = dossier.Demande.MotifRejet != null ? new MotifRejetDto { Id = dossier.Demande.MotifRejet.Id, Code = dossier.Demande.MotifRejet.Code, Libelle = dossier.Demande.MotifRejet.Libelle } : null,
+
+                    Beneficiaire = dossier.Demande.Beneficiaire != null ? new BeneficiaireDto
+                    {
+                        Nom = dossier.Demande.Beneficiaire.Nom,
+                        Email = dossier.Demande.Beneficiaire.Email,
+                        Telephone = dossier.Demande.Beneficiaire.Telephone,
+                        Type = dossier.Demande.Beneficiaire.Type,
+                        Adresse = dossier.Demande.Beneficiaire.Adresse
+                    } : null,
 
                     Documents = dossier.Demande.DocumentsDemandes.Select(doc => new DocumentDossierDto
                     {
@@ -96,13 +103,20 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
 
             Devis = dossier.Devis.Select(dev => new DevisDto { Id = dev.Id, MontantEtude = dev.MontantEtude, PaiementOk = dev.PaiementOk }).ToList(),
             Commentaires = dossier.Commentaires.Select(com => new CommentaireDto { Id = com.Id, CommentaireTexte = com.CommentaireTexte, DateCommentaire = com.DateCommentaire }).ToList(),
-            Documents = dossier.DocumentsDossiers.Select(doc => new DocumentDossierDto { Id = doc.Id, Nom = doc.Nom, Extension = doc.Extension, FilePath = $"/api/documents/dossier/{doc.Id}/download" }).ToList(),
+
+            Documents = dossier.DocumentsDossiers.Select(doc => new DocumentDossierDto
+            {
+                Id = doc.Id,
+                Nom = doc.Nom,
+                Extension = doc.Extension,
+                FilePath = $"/api/documents/dossier/{doc.Id}/download"
+            }).ToList(),
 
             Attestations = dossier.Demande != null
-                ? dossier.Demande.Attestations.Select(att => new AttestationDto { Id = att.Id, DateDelivrance = att.DateDelivrance, FilePath = $"/api/documents/certificat/{att.Id}/download" }).ToList()
+                ? dossier.Demande.Attestations
+                    .Where(att => att.Donnees != null && att.Donnees.Length > 0)
+                    .Select(att => new AttestationDto { Id = att.Id, DateDelivrance = att.DateDelivrance, FilePath = $"/api/documents/certificat/{att.Id}/download" }).ToList()
                 : new List<AttestationDto>()
         };
-
-        return dossierVm;
     }
 }

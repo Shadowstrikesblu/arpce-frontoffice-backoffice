@@ -9,11 +9,15 @@ namespace FrontOffice.Domain.Entities
 {
     public class Signataire : AuditableEntity
     {
+        // L'Id ici sera le même que celui de l'AdminUtilisateur
         public Guid Id { get; set; }
-        public string Nom { get; set; } = string.Empty;
-        public string Prenoms { get; set; } = string.Empty;
-        public string Fonction { get; set; } = string.Empty;
-        public string? SignatureImagePath { get; set; } // Chemin vers le fichier sur le serveur
+
+        // Propriété spécifique uniquement au signataire
+        public string? SignatureImagePath { get; set; }
+
         public bool IsActive { get; set; } = true;
+
+        // Navigation vers l'utilisateur complet
+        public virtual AdminUtilisateur AdminUtilisateur { get; set; } = default!;
     }
 }

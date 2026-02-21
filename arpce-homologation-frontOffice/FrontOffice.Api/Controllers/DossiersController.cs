@@ -1,5 +1,6 @@
 ﻿using FrontOffice.Application.Features.Demandes.Commands.AddEquipementToDossier;
 using FrontOffice.Application.Features.Demandes.Commands.CreateDossier;
+using FrontOffice.Application.Features.Demandes.Commands.UploadDossierFiles;
 using FrontOffice.Application.Features.Demandes.Queries.GetDemandesOverview;
 using FrontOffice.Application.Features.Demandes.Queries.GetDossiersRecents;
 using FrontOffice.Application.Features.Demandes.Queries.GetPaiementEnAttente;
@@ -131,13 +132,25 @@ public class DossiersController : ControllerBase
     /// <summary>
     /// MODIFIÉ : Crée un nouveau dossier d'homologation.
     /// </summary>
-    [HttpPost] 
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateDossierResponseDto))]
-    public async Task<IActionResult> CreateDossier([FromForm] CreateDossierCommand command)
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Guid))]
+    public async Task<IActionResult> CreateDossier([FromBody] CreateDossierCommand command)
     {
+        var dossierId = await _mediator.Send(command);
+
+        return CreatedAtAction(nameof(GetDossierDetail), new { dossierId = dossierId }, new { id = dossierId });
+    }
+
+    /// <summary>
+    /// ÉTAPE 2.2 : Route dédiée à l'upload des fichiers une fois le dossier créé.
+    /// </summary>
+    [HttpPost("{dossierId:guid}/documents")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+    public async Task<IActionResult> UploadDossierDocuments(Guid dossierId, [FromForm] UploadDossierFilesCommand command)
+    {
+        command.DossierId = dossierId;
         var result = await _mediator.Send(command);
-        // La réponse pointe vers le nouvel endpoint de détail
-        return CreatedAtAction(nameof(GetDossierDetail), new { dossierId = result.DossierId }, result);
+        return Ok(new { ok = result });
     }
 
     /// <summary>

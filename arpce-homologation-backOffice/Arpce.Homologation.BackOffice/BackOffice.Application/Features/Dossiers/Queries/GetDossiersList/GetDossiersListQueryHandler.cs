@@ -5,11 +5,6 @@ using BackOffice.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Dossiers.Queries.GetDossiersList;
 
@@ -51,10 +46,12 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
             .Take(request.Parameters.TaillePage)
             .Include(d => d.Client)
             .Include(d => d.Statut)
+            .Include(d => d.DocumentsDossiers) 
             .Include(d => d.Demande).ThenInclude(dem => dem.Statut)
             .Include(d => d.Demande).ThenInclude(dem => dem.CategorieEquipement)
-            .Include(d => d.Demande).ThenInclude(dem => dem.DocumentsDemandes)
+            .Include(d => d.Demande).ThenInclude(dem => dem.DocumentsDemandes) 
             .Include(d => d.Demande).ThenInclude(dem => dem.Attestations)
+            .Include(d => d.Demande).ThenInclude(dem => dem.Beneficiaire) 
             .ToListAsync(cancellationToken);
 
         var dossierDtos = dossiersPaged.Select(dossier => new DossierListItemDto
@@ -79,9 +76,33 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
                     Type = dossier.Demande.Type,
                     Statut = dossier.Demande.Statut != null ? new StatutDto { Id = dossier.Demande.Statut.Id, Code = dossier.Demande.Statut.Code, Libelle = dossier.Demande.Statut.Libelle } : null,
                     CategorieEquipement = dossier.Demande.CategorieEquipement != null ? new CategorieEquipementDto { Id = dossier.Demande.CategorieEquipement.Id, Code = dossier.Demande.CategorieEquipement.Code, Libelle = dossier.Demande.CategorieEquipement.Libelle } : null,
-                    Documents = dossier.Demande.DocumentsDemandes.Select(doc => new DocumentDossierDto { Id = doc.Id, Nom = doc.Nom, FilePath = $"/api/demandes/demande/{doc.Id}/download" }).ToList()
+                    
+                    Documents = dossier.Demande.DocumentsDemandes.Select(doc => new DocumentDossierDto
+                    {
+                        Id = doc.Id,
+                        Nom = doc.Nom,
+                        FilePath = $"/api/demandes/demande/{doc.Id}/download"
+                    }).ToList(),
+
+                    Beneficiaire = dossier.Demande.Beneficiaire != null ? new BeneficiaireDto
+                    {
+                        Nom = dossier.Demande.Beneficiaire.Nom,
+                        Email = dossier.Demande.Beneficiaire.Email,
+                        Telephone = dossier.Demande.Beneficiaire.Telephone,
+                        Type = dossier.Demande.Beneficiaire.Type,
+                        Adresse = dossier.Demande.Beneficiaire.Adresse
+                    } : null
                 }
             } : new List<DemandeDto>(),
+
+            Documents = dossier.DocumentsDossiers.Select(doc => new DocumentDossierDto
+            {
+                Id = doc.Id,
+                Nom = doc.Nom,
+                Type = doc.Type,
+                Extension = doc.Extension,
+                FilePath = $"/api/demandes/dossier/{doc.Id}/download"
+            }).ToList(),
 
             Attestations = dossier.Demande != null
                 ? dossier.Demande.Attestations.Select(att => new AttestationDto

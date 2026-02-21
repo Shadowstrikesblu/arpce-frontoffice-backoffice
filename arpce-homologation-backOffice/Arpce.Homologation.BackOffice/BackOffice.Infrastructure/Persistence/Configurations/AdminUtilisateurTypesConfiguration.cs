@@ -20,7 +20,7 @@ public class AdminUtilisateurTypesConfiguration : IEntityTypeConfiguration<Admin
 
         builder.HasData(
             new AdminUtilisateurTypes { Id = adminTypeId, Libelle = "Administrateur" },
-            new AdminUtilisateurTypes { Id = Guid.NewGuid(), Libelle = "Utilisateur Standard" }, // Autres types
+            new AdminUtilisateurTypes { Id = Guid.NewGuid(), Libelle = "Utilisateur Standard" }, 
             new AdminUtilisateurTypes { Id = Guid.NewGuid(), Libelle = "Auditeur" }
         );
     }

@@ -1,6 +1,7 @@
 ﻿using BackOffice.Application.Common.Interfaces;
 using BackOffice.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace BackOffice.Application.Features.Signataires.Commands.CreateSignataire;
 
@@ -17,19 +18,22 @@ public class CreateSignataireCommandHandler : IRequestHandler<CreateSignataireCo
 
     public async Task<Guid> Handle(CreateSignataireCommand request, CancellationToken cancellationToken)
     {
-        // 1. Sauvegarde de l'image de signature
-        // On stocke dans un dossier spécifique "signatures"
-        var imagePath = await _fileStorage.UploadSignatureAsync(request.SignatureFile);
+        // On vérifie si l'utilisateur existe
+        var user = await _context.AdminUtilisateurs.FirstOrDefaultAsync(u => u.Id == request.AdminId, cancellationToken);
+        if (user == null) throw new Exception("Utilisateur introuvable.");
 
-        // 2. Création de l'entité
+        // Gestion de l'image (Optionnelle)
+        string? path = null;
+        if (request.SignatureFile != null)
+        {
+            path = await _fileStorage.UploadSignatureAsync(request.SignatureFile);
+        }
+
+        // Création du lien Signataire
         var signataire = new Signataire
         {
-            Id = Guid.NewGuid(),
-            Nom = request.Nom,
-            Prenoms = request.Prenoms,
-            Fonction = request.Fonction,
-            AdminId = request.AdminId,
-            SignatureImagePath = imagePath,
+            Id = request.AdminId, 
+            SignatureImagePath = path,
             IsActive = true
         };
 

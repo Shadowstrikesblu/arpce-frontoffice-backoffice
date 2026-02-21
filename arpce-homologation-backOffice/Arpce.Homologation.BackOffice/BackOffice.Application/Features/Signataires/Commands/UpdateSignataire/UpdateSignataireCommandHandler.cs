@@ -9,35 +9,47 @@ using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Signataires.Commands.UpdateSignataire
 {
-    public class UpdateSignataireCommandHandler : IRequestHandler<UpdateSignataireCommand, bool>
-    {
-        private readonly IApplicationDbContext _context;
-        private readonly IFileStorageProvider _fileStorage;
-
-        public UpdateSignataireCommandHandler(IApplicationDbContext context, IFileStorageProvider fileStorage)
+        public class UpdateSignataireCommandHandler : IRequestHandler<UpdateSignataireCommand, bool>
         {
-            _context = context;
-            _fileStorage = fileStorage;
-        }
+            private readonly IApplicationDbContext _context;
+            private readonly IFileStorageProvider _fileStorage;
 
-        public async Task<bool> Handle(UpdateSignataireCommand request, CancellationToken cancellationToken)
-        {
-            var signataire = await _context.Signataires.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
-            if (signataire == null) return false;
-
-            if (request.Nom != null) signataire.Nom = request.Nom;
-            if (request.Prenoms != null) signataire.Prenoms = request.Prenoms;
-            if (request.Fonction != null) signataire.Fonction = request.Fonction;
-            if (request.IsActive.HasValue) signataire.IsActive = request.IsActive.Value;
-
-            // Si une nouvelle signature est fournie, on remplace l'ancienne
-            if (request.SignatureFile != null)
+            public UpdateSignataireCommandHandler(IApplicationDbContext context, IFileStorageProvider fileStorage)
             {
-                signataire.SignatureImagePath = await _fileStorage.UploadSignatureAsync(request.SignatureFile);
+                _context = context;
+                _fileStorage = fileStorage;
             }
 
-            await _context.SaveChangesAsync(cancellationToken);
-            return true;
+            public async Task<bool> Handle(UpdateSignataireCommand request, CancellationToken cancellationToken)
+            {
+                // On récupère le signataire AVEC les infos de l'utilisateur lié
+                var signataire = await _context.Signataires
+                    .Include(s => s.AdminUtilisateur)
+                    .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+
+                if (signataire == null) return false;
+
+                // 1. Mise à jour de la fonction (dans AdminUtilisateur)
+                if (request.Fonction != null)
+                {
+                    signataire.AdminUtilisateur.Fonction = request.Fonction;
+                }
+
+                // 2. Mise à jour du statut actif (dans Signataire)
+                if (request.IsActive.HasValue)
+                {
+                    signataire.IsActive = request.IsActive.Value;
+                }
+
+                // 3. Mise à jour de l'image de signature (dans Signataire)
+                if (request.SignatureFile != null)
+                {
+                    signataire.SignatureImagePath = await _fileStorage.UploadSignatureAsync(request.SignatureFile);
+                }
+
+                await _context.SaveChangesAsync(cancellationToken);
+                return true;
+            }
         }
     }
-}
+

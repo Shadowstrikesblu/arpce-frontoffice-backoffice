@@ -19,17 +19,17 @@ public class Demande : AuditableEntity
     public int? QuantiteEquipements { get; set; }
     public string? ContactNom { get; set; }
     public string? ContactEmail { get; set; }
+    public string? ContactTelephone { get; set; }
 
     public Guid? IdStatut { get; set; }
     [ForeignKey("IdStatut")]
     public virtual Statut? Statut { get; set; }
 
-    // Champs de facturation et technique
     public decimal? PrixUnitaire { get; set; }
     public decimal? Remise { get; set; }
     public bool EstHomologable { get; set; } = true;
 
-    // Nouveaux champs : Logique d'échantillonnage
+    // Logique d'échantillonnage
     public bool RequiertEchantillon { get; set; }
     public bool EchantillonSoumis { get; set; }
 

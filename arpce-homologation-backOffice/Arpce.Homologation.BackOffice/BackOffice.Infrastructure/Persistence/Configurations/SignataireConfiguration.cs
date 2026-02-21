@@ -10,25 +10,23 @@ public class SignataireConfiguration : IEntityTypeConfiguration<Signataire>
     {
         builder.ToTable("signataires");
 
+        // L'Id de Signataire est la PK
         builder.HasKey(x => x.Id);
 
-        builder.Property(x => x.Nom).HasMaxLength(100).IsRequired();
-        builder.Property(x => x.Prenoms).HasMaxLength(100).IsRequired();
-        builder.Property(x => x.Fonction).HasMaxLength(150).IsRequired();
-        builder.Property(x => x.SignatureImagePath).HasMaxLength(512);
+        builder.Property(x => x.SignatureImagePath).HasMaxLength(512).IsRequired(false);
         builder.Property(x => x.IsActive).HasDefaultValue(true);
 
-        // Relation avec l'utilisateur Admin qui possède cette signature
-        builder.HasOne<AdminUtilisateur>()
-               .WithMany()
-               .HasForeignKey("AdminId")
-               .IsRequired()
+        // CONFIGURATION DE L'EXTENSION (Relation 1:1)
+        // L'Id de Signataire est aussi la Clé Étrangère vers AdminUtilisateur
+        builder.HasOne(x => x.AdminUtilisateur)
+               .WithOne(u => u.Signataire)
+               .HasForeignKey<Signataire>(x => x.Id)
                .OnDelete(DeleteBehavior.Restrict);
 
-        // Champs d'audit
-        builder.Property(c => c.UtilisateurCreation).HasMaxLength(60);
-        builder.Property(c => c.DateCreation).HasColumnType("bigint");
-        builder.Property(c => c.UtilisateurModification).HasMaxLength(60);
-        builder.Property(c => c.DateModification).HasColumnType("bigint");
+        // Audit
+        builder.Property(x => x.UtilisateurCreation).HasMaxLength(60);
+        builder.Property(x => x.DateCreation).HasColumnType("bigint");
+        builder.Property(x => x.UtilisateurModification).HasMaxLength(60);
+        builder.Property(x => x.DateModification).HasColumnType("bigint");
     }
 }

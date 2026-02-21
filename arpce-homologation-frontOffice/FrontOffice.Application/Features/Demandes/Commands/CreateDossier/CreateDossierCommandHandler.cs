@@ -4,113 +4,177 @@ using FrontOffice.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace FrontOffice.Application.Features.Demandes.Commands.CreateDossier;
 
-public class CreateDossierCommandHandler : IRequestHandler<CreateDossierCommand, CreateDossierResponseDto>
+public class CreateDossierCommandHandler : IRequestHandler<CreateDossierCommand, Guid>
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _currentUserService;
-    private readonly IFileStorageProvider _fileStorageProvider;
     private readonly ILogger<CreateDossierCommandHandler> _logger;
     private readonly INotificationService _notificationService;
+    private readonly IEmailService _emailService; // Ajout pour l'envoi au bénéficiaire
 
     public CreateDossierCommandHandler(
         IApplicationDbContext context,
         ICurrentUserService currentUserService,
-        IFileStorageProvider fileStorageProvider,
         ILogger<CreateDossierCommandHandler> logger,
-        INotificationService notificationService)
+        INotificationService notificationService,
+        IEmailService emailService)
     {
         _context = context;
         _currentUserService = currentUserService;
-        _fileStorageProvider = fileStorageProvider;
         _logger = logger;
         _notificationService = notificationService;
+        _emailService = emailService;
     }
 
-    public async Task<CreateDossierResponseDto> Handle(CreateDossierCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(CreateDossierCommand request, CancellationToken cancellationToken)
     {
         var userId = _currentUserService.UserId;
         if (!userId.HasValue) throw new UnauthorizedAccessException("Utilisateur non authentifié.");
 
         var strategy = _context.Database.CreateExecutionStrategy();
-        var response = await strategy.ExecuteAsync(async () =>
+        return await strategy.ExecuteAsync(async () =>
         {
             using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
             try
             {
-                if (await _context.Dossiers.AsNoTracking().AnyAsync(d => d.Libelle == request.Libelle && d.IdClient == userId.Value, cancellationToken))
-                    throw new InvalidOperationException($"Un dossier avec le libellé '{request.Libelle}' existe déjà pour votre compte.");
-
-                var file = request.CourrierFile;
-                if (file == null || file.Length == 0)
-                {
-                    throw new InvalidOperationException("La lettre de demande est un fichier obligatoire.");
-                }
-                const long maxFileSize = 3 * 1024 * 1024;
-                if (file.Length > maxFileSize)
-                {
-                    throw new InvalidOperationException($"La taille du fichier ne doit pas dépasser 3 Mo.");
-                }
-                if (Path.GetExtension(file.FileName).ToLowerInvariant() != ".pdf")
-                {
-                    throw new InvalidOperationException("Le fichier de la lettre de demande doit être au format PDF.");
-                }
-
-                var defaultStatut = await _context.Statuts.FirstOrDefaultAsync(s => s.Code == StatutDossierEnum.NouveauDossier.ToString(), cancellationToken);
-                if (defaultStatut == null) throw new InvalidOperationException("Configuration système manquante : le statut par défaut 'NouveauDossier' est introuvable.");
-
-                var currentYear = DateTime.UtcNow.ToString("yy"); 
+                // 1. Génération du Numéro officiel
+                var currentYear = DateTime.UtcNow.ToString("yy");
                 var prefix = $"Hom-{currentYear}-";
-
-                // On compte le nombre de dossiers créés pour l'année en cours pour incrémenter la séquence
-                var countThisYear = await _context.Dossiers
-                    .AsNoTracking()
+                var countThisYear = await _context.Dossiers.AsNoTracking()
                     .CountAsync(d => d.Numero.StartsWith(prefix), cancellationToken);
+                var generatedNumero = $"{prefix}{(countThisYear + 1).ToString("D4")}";
 
-                var sequence = (countThisYear + 1).ToString("D4"); 
-                var generatedNumero = $"{prefix}{sequence}";
+                // 2. Statut initial
+                var defaultStatut = await _context.Statuts.AsNoTracking()
+                    .FirstOrDefaultAsync(s => s.Code == StatutDossierEnum.NouveauDossier.ToString(), cancellationToken);
 
+                // 3. Création du Dossier
                 var dossier = new Dossier
                 {
                     Id = Guid.NewGuid(),
                     IdClient = userId.Value,
-                    IdStatut = defaultStatut.Id,
+                    IdStatut = defaultStatut!.Id,
                     DateOuverture = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
                     Numero = generatedNumero,
                     Libelle = request.Libelle,
-                    UtilisateurCreation = userId.Value.ToString(),
-                    DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+                    DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+                    UtilisateurCreation = userId.Value.ToString()
                 };
-                _context.Dossiers.Add(dossier);
 
-                // Importation du document avec le nouveau numéro
-                await _fileStorageProvider.ImportDocumentDossierAsync(file, $"Lettre_Demande_{dossier.Numero}", 0, dossier.Id);
+                // 4. Création de la Demande
+                var demande = new Demande
+                {
+                    Id = Guid.NewGuid(),
+                    IdDossier = dossier.Id,
+                    Equipement = request.Equipement,
+                    Modele = request.Modele,
+                    Marque = request.Marque,
+                    Fabricant = request.Fabricant,
+                    Type = request.Type,
+                    Description = request.Description,
+                    QuantiteEquipements = request.QuantiteEquipements,
+                    RequiertEchantillon = request.RequiertEchantillon,
+                    EchantillonSoumis = false,
+                    DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+                    UtilisateurCreation = userId.Value.ToString()
+                };
+
+                // 5. Création du Bénéficiaire
+                Beneficiaire? beneficiaire = null;
+                if (request.Beneficiaire != null)
+                {
+                    beneficiaire = new Beneficiaire
+                    {
+                        Id = Guid.NewGuid(),
+                        DemandeId = demande.Id,
+                        Nom = request.Beneficiaire.Nom,
+                        Email = request.Beneficiaire.Email,
+                        Telephone = request.Beneficiaire.Telephone,
+                        Type = request.Beneficiaire.Type,
+                        Adresse = request.Beneficiaire.Adresse,
+                        DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+                        UtilisateurCreation = userId.Value.ToString()
+                    };
+                    _context.Beneficiaires.Add(beneficiaire);
+                }
+
+                _context.Dossiers.Add(dossier);
+                _context.Demandes.Add(demande);
 
                 await _context.SaveChangesAsync(cancellationToken);
                 await transaction.CommitAsync(cancellationToken);
 
-                _logger.LogInformation("Dossier {DossierId} créé avec le numéro {Numero}.", dossier.Id, dossier.Numero);
+                // --- LOGIQUE D'ENVOI DE MAIL AU BÉNÉFICIAIRE ---
+                if (beneficiaire != null && !string.IsNullOrEmpty(beneficiaire.Email))
+                {
+                    await SendEmailToBeneficiary(beneficiaire, dossier, demande);
+                }
 
+                // 6. Notification SignalR pour le Back Office
                 await _notificationService.SendToGroupAsync(
                     groupName: "DRSCE",
-                    title: "Nouveau Dossier",
-                    message: $"Le dossier '{dossier.Libelle}' ({dossier.Numero}) vient d'être soumis.",
+                    title: "Nouveau Dossier Créé",
+                    message: $"Le dossier {dossier.Numero} a été initié par le client.",
                     type: "V",
-                    targetUrl: $"/dossiers/{dossier.Id}",
-                    entityId: dossier.Id.ToString()
+                    targetUrl: $"/platform/drsce/dossiers/{dossier.Id}"
                 );
 
-                return new CreateDossierResponseDto { DossierId = dossier.Id };
+                return dossier.Id;
             }
             catch (Exception ex)
             {
                 await transaction.RollbackAsync(cancellationToken);
-                _logger.LogError(ex, "Échec de la création du dossier.");
+                _logger.LogError(ex, "Échec de la création du dossier {Libelle}", request.Libelle);
                 throw;
             }
         });
-        return response;
+    }
+
+    private async Task SendEmailToBeneficiary(Beneficiaire beneficiaire, Dossier dossier, Demande demande)
+    {
+        try
+        {
+            var subject = $"[ARPCE] Ouverture de dossier d'homologation - {dossier.Numero}";
+            var body = $@"
+                <div style='font-family: Arial, sans-serif;'>
+                    <h3>Bonjour {beneficiaire.Nom},</h3>
+                    <p>Nous vous informons qu'un dossier d'homologation a été ouvert auprès de l'ARPCE pour l'équipement suivant :</p>
+                    <ul>
+                        <li><strong>Équipement :</strong> {demande.Equipement}</li>
+                        <li><strong>Modèle :</strong> {demande.Modele}</li>
+                        <li><strong>N° de Dossier :</strong> {dossier.Numero}</li>
+                    </ul>
+                    <p>Vous recevrez des notifications concernant l'évolution de ce dossier.</p>
+                    <br/>
+                    <p>Cordialement,<br/>L'équipe ARPCE</p>
+                </div>";
+
+            await _emailService.SendEmailAsync(beneficiaire.Email!, subject, body);
+
+            // Historisation de la notification (Requirement 6.2)
+            var log = new Notification
+            {
+                Id = Guid.NewGuid(),
+                Title = subject,
+                Message = $"Email envoyé au bénéficiaire {beneficiaire.Nom}",
+                Type = "Info",
+                Canal = "EMAIL",
+                Destinataire = beneficiaire.Email!,
+                DateEnvoi = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+                StatutEnvoi = "SUCCESS"
+            };
+            _context.Notifications.Add(log);
+            await _context.SaveChangesAsync(default);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erreur lors de l'envoi du mail au bénéficiaire {Email}", beneficiaire.Email);
+        }
     }
 }

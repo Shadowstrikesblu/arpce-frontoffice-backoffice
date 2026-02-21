@@ -33,5 +33,9 @@ public class NotificationConfiguration : IEntityTypeConfiguration<Notification>
         builder.HasIndex(n => n.ProfilCode);
         builder.HasIndex(n => n.IsBroadcast); 
         builder.HasIndex(n => n.DateEnvoi);
+
+        builder.Property(n => n.Canal).HasMaxLength(20).HasDefaultValue("SYSTEM");
+        builder.Property(n => n.Destinataire).HasMaxLength(150);
+        builder.Property(n => n.StatutEnvoi).HasMaxLength(20);
     }
 }

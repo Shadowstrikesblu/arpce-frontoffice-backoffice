@@ -50,6 +50,8 @@ public class FrontOfficeDbContext : DbContext, IApplicationDbContext
 
     public DbSet<Signataire> Signataires { get; set; }
 
+    public DbSet<Beneficiaire> Beneficiaires { get; set; }
+
 
     /// <summary>
     /// Méthode pour gérer automatiquement les champs d'audit.

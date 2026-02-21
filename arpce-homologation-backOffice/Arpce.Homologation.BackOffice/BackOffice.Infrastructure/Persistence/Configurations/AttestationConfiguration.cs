@@ -4,10 +4,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BackOffice.Infrastructure.Persistence.Configurations;
 
-/// <summary>
-/// Configuration EF Core pour l'entité Attestation.
-/// Mappe la classe .NET à la table 'attestations'.
-/// </summary>
 public class AttestationConfiguration : IEntityTypeConfiguration<Attestation>
 {
     public void Configure(EntityTypeBuilder<Attestation> builder)
@@ -32,11 +28,26 @@ public class AttestationConfiguration : IEntityTypeConfiguration<Attestation>
             .IsRequired()
             .HasDefaultValue(0);
 
+        builder.Property(a => a.VisaReference)
+            .HasMaxLength(100);
+
         builder.HasIndex(a => a.NumeroSequentiel);
 
+        // Relation avec la Demande
         builder.HasOne(a => a.Demande)
             .WithMany(d => d.Attestations)
             .HasForeignKey(a => a.IdDemande)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(a => a.Signataire)
+            .WithMany() 
+            .HasForeignKey(a => a.SignataireId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Audit
+        builder.Property(c => c.UtilisateurCreation).HasMaxLength(60);
+        builder.Property(c => c.DateCreation).HasColumnType("bigint");
+        builder.Property(c => c.UtilisateurModification).HasMaxLength(60);
+        builder.Property(c => c.DateModification).HasColumnType("bigint");
     }
 }

@@ -12,9 +12,9 @@ public class Dossier : AuditableEntity
     public long DateOuverture { get; set; }
     public string Numero { get; set; } = string.Empty;
     public string Libelle { get; set; } = string.Empty;
+
     public Guid? IdAgentInstructeur { get; set; }
 
-    // Relations
     public virtual Client Client { get; set; } = default!;
     public virtual Statut Statut { get; set; } = default!;
     public virtual ModeReglement? ModeReglement { get; set; }

@@ -11,9 +11,7 @@ namespace BackOffice.Application.Features.Signataires.Commands.UpdateSignataire
     public class UpdateSignataireCommand : IRequest<bool>
     {
         public Guid Id { get; set; }
-        public string? Nom { get; set; }
-        public string? Prenoms { get; set; }
-        public string? Fonction { get; set; }
+        public string? Fonction { get; set; } 
         public bool? IsActive { get; set; }
         public IFormFile? SignatureFile { get; set; }
     }

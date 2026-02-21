@@ -18,9 +18,9 @@ public class ConfirmAccountCommandHandlerTests
         _mockContext = new Mock<IApplicationDbContext>();
         _mockCurrentUserService = new Mock<ICurrentUserService>();
 
-        _handler = new ConfirmAccountCommandHandler(
-            _mockContext.Object,
-            _mockCurrentUserService.Object);
+        //_handler = new ConfirmAccountCommandHandler(
+        //    _mockContext.Object,
+        //    _mockCurrentUserService.Object);
     }
 
     [Fact]
