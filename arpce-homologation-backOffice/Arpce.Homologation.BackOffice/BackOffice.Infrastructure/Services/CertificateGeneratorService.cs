@@ -7,6 +7,10 @@ using Microsoft.Extensions.Logging;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BackOffice.Infrastructure.Services;
 
@@ -36,62 +40,91 @@ public class CertificateGeneratorService : ICertificateGeneratorService
     public async Task GenerateAttestationsForDossierAsync(Guid dossierId)
     {
         var dossier = await _context.Dossiers
-            .Include(d => d.Demandes)
+            .Include(d => d.Demande)
             .Include(d => d.Client)
             .FirstOrDefaultAsync(d => d.Id == dossierId);
 
-        if (dossier == null || !dossier.Demandes.Any()) return;
+        if (dossier == null || dossier.Demande == null)
+        {
+            _logger.LogWarning("Dossier {DossierId} ou demande associée introuvable.", dossierId);
+            return;
+        }
 
-        int currentYear = DateTime.UtcNow.Year;
-
-        int maxSequence = await _context.Attestations
-            .Where(a => a.DateDelivrance >= new DateTimeOffset(new DateTime(currentYear, 1, 1)).ToUnixTimeMilliseconds())
-            .MaxAsync(a => (int?)a.NumeroSequentiel) ?? 0;
-
-        int nextSequence = maxSequence + 1;
-
+        var demande = dossier.Demande;
         byte[] logoBytes = File.Exists(_logoPath) ? await File.ReadAllBytesAsync(_logoPath) : Array.Empty<byte>();
 
-        foreach (var demande in dossier.Demandes)
+        // Récupération de l'attestation existante (si elle a déjà été générée)
+        var existingAttestation = await _context.Attestations.FirstOrDefaultAsync(a => a.IdDemande == demande.Id);
+
+        // --- GESTION DU VISA UNIQUE ET IMMUABLE ---
+        string visaFinal;
+        int seqNumber;
+
+        // Si l'attestation existe déjà et possède un visa, on le GARDE (Immuabilité)
+        if (existingAttestation != null && !string.IsNullOrWhiteSpace(existingAttestation.VisaReference))
         {
-            var existingAttestation = await _context.Attestations.FirstOrDefaultAsync(a => a.IdDemande == demande.Id);
+            visaFinal = existingAttestation.VisaReference;
+            seqNumber = existingAttestation.NumeroSequentiel;
+            _logger.LogInformation("Réutilisation du visa existant : {Visa}", visaFinal);
+        }
+        else
+        {
+            // Sinon, on génère un nouveau Visa
+            var currentYearShort = DateTime.UtcNow.ToString("yy"); 
+            var suffix = $"/ARPCE-DG/DAJI/DRSCE/{currentYearShort}";
 
-            int seqNumber = existingAttestation?.NumeroSequentiel ?? nextSequence;
-            if (existingAttestation == null) nextSequence++;
+            // On compte combien de visas existent déjà pour cette année pour avoir la séquence
+            var countThisYear = await _context.Attestations
+                .CountAsync(a => a.VisaReference != null && a.VisaReference.EndsWith(suffix));
 
-            string formattedSeq = seqNumber.ToString("D4");
+            seqNumber = countThisYear + 1;
 
-            string referenceNumber = $"N°/{formattedSeq}/ARPCE-DG/{currentYear}";
+            // Format : N°0001/ARPCE-DG/DAJI/DRSCE/26
+            visaFinal = $"N°{seqNumber:D4}{suffix}";
 
-            byte[] pdfBytes = demande.EstHomologable
-                ? GenerateCertificatePdf(dossier, demande, referenceNumber, logoBytes)
-                : GenerateLetterPdf(dossier, demande, referenceNumber, logoBytes);
+            _logger.LogInformation("Génération d'un nouveau visa : {Visa}", visaFinal);
+        }
 
-            if (existingAttestation != null)
+        // Génération du PDF avec le visaFinal
+        byte[] pdfBytes = demande.EstHomologable
+            ? GenerateCertificatePdf(dossier, demande, visaFinal, logoBytes)
+            : GenerateLetterPdf(dossier, demande, visaFinal, logoBytes);
+
+        if (existingAttestation != null)
+        {
+            // Mise à jour
+            existingAttestation.Donnees = pdfBytes;
+            existingAttestation.DateDelivrance = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            existingAttestation.DateExpiration = demande.EstHomologable
+                ? DateTimeOffset.UtcNow.AddYears(3).ToUnixTimeMilliseconds()
+                : DateTimeOffset.UtcNow.AddYears(10).ToUnixTimeMilliseconds();
+            existingAttestation.Extension = "pdf";
+
+            // On s'assure que le visa est bien sauvegardé/conservé
+            existingAttestation.VisaReference = visaFinal;
+            existingAttestation.NumeroSequentiel = seqNumber;
+
+            _context.Attestations.Update(existingAttestation);
+        }
+        else
+        {
+            _context.Attestations.Add(new Attestation
             {
-                existingAttestation.Donnees = pdfBytes;
-                existingAttestation.DateDelivrance = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-                existingAttestation.DateExpiration = demande.EstHomologable ? DateTimeOffset.UtcNow.AddYears(3).ToUnixTimeMilliseconds() : DateTimeOffset.UtcNow.AddYears(10).ToUnixTimeMilliseconds();
-                existingAttestation.Extension = "pdf";
-                _context.Attestations.Update(existingAttestation);
-            }
-            else
-            {
-                _context.Attestations.Add(new Attestation
-                {
-                    Id = Guid.NewGuid(),
-                    IdDemande = demande.Id,
-                    DateDelivrance = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
-                    DateExpiration = demande.EstHomologable ? DateTimeOffset.UtcNow.AddYears(3).ToUnixTimeMilliseconds() : DateTimeOffset.UtcNow.AddYears(10).ToUnixTimeMilliseconds(),
-                    Donnees = pdfBytes,
-                    Extension = "pdf",
-                    NumeroSequentiel = seqNumber
-                });
-            }
+                Id = Guid.NewGuid(),
+                IdDemande = demande.Id,
+                DateDelivrance = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+                DateExpiration = demande.EstHomologable
+                    ? DateTimeOffset.UtcNow.AddYears(3).ToUnixTimeMilliseconds()
+                    : DateTimeOffset.UtcNow.AddYears(10).ToUnixTimeMilliseconds(),
+                Donnees = pdfBytes,
+                Extension = "pdf",
+                NumeroSequentiel = seqNumber,
+                VisaReference = visaFinal 
+            });
         }
 
         await _context.SaveChangesAsync(default);
-        _logger.LogInformation("Documents générés pour le dossier {Numero}.", dossier.Numero);
+        _logger.LogInformation("Documents générés pour le dossier {Numero} avec Visa {Visa}.", dossier.Numero, visaFinal);
     }
 
     private void DrawColorBar(IContainer container)
@@ -117,7 +150,7 @@ public class CertificateGeneratorService : ICertificateGeneratorService
 
                 page.Background().Row(row =>
                 {
-                    row.ConstantItem(1, Unit.Centimetre); 
+                    row.ConstantItem(1, Unit.Centimetre);
                     DrawColorBar(row.ConstantItem(15, Unit.Millimetre));
                     row.RelativeItem();
                 });
@@ -131,7 +164,9 @@ public class CertificateGeneratorService : ICertificateGeneratorService
                         {
                             c.Item().Text("Agence de Régulation des Postes et des Communications Électroniques").FontSize(10).FontColor("#4E9741");
                             c.Item().AlignCenter().PaddingTop(10).Text("CERTIFICAT D'HOMOLOGATION").FontSize(16).Bold();
+
                             c.Item().AlignCenter().Text(referenceNumber).FontSize(12).Bold();
+
                             c.Item().AlignCenter().Text("----------o00o----------").FontSize(10);
                         });
                     });
@@ -194,7 +229,7 @@ public class CertificateGeneratorService : ICertificateGeneratorService
 
                 page.Background().Row(row =>
                 {
-                    row.ConstantItem(1, Unit.Centimetre); 
+                    row.ConstantItem(1, Unit.Centimetre);
                     DrawColorBar(row.ConstantItem(15, Unit.Millimetre));
                     row.RelativeItem();
                 });
@@ -207,6 +242,7 @@ public class CertificateGeneratorService : ICertificateGeneratorService
                         row.RelativeItem().PaddingLeft(10).Column(c =>
                         {
                             c.Item().Text("Agence de Régulation des Postes et des Communications Électroniques").FontSize(10).FontColor("#4E9741");
+
                             c.Item().PaddingTop(10).Text(referenceNumber).FontSize(10).Bold();
                         });
                         row.ConstantItem(100).AlignRight().Text("COPIE").SemiBold().FontColor(Colors.Grey.Medium);

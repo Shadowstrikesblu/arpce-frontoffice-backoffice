@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using System;
 
 namespace BackOffice.Application.Features.Authentication.Commands.Register;
 
@@ -11,6 +12,11 @@ public class RegisterAgentCommand : IRequest<AuthenticationResult>
     /// Le nom de compte (login) de l'agent. Doit être unique.
     /// </summary>
     public string Compte { get; set; } = string.Empty;
+
+    /// <summary>
+    /// L'adresse e-mail de l'agent (utilisée pour les notifications).
+    /// </summary>
+    public string? Email { get; set; }
 
     /// <summary>
     /// Le nom de famille de l'agent.

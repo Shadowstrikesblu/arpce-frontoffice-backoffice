@@ -1,4 +1,5 @@
 ﻿using BackOffice.Application.Common.Interfaces;
+using BackOffice.Application.Common.Models;
 using BackOffice.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -39,93 +40,100 @@ public class ChangeDossierStatusCommandHandler : IRequestHandler<ChangeDossierSt
         using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         try
         {
-            var dossier = await _context.Dossiers.FirstOrDefaultAsync(d => d.Id == request.DossierId, cancellationToken);
+            var dossier = await _context.Dossiers
+                .Include(d => d.Demande).ThenInclude(dem => dem.CategorieEquipement)
+                .FirstOrDefaultAsync(d => d.Id == request.DossierId, cancellationToken);
+
             if (dossier == null) throw new Exception("Dossier introuvable.");
 
             var nouveauStatut = await _context.Statuts.FirstOrDefaultAsync(s => s.Code == request.CodeStatut, cancellationToken);
-            if (nouveauStatut == null) throw new Exception($"Statut '{request.CodeStatut}' introuvable.");
+            if (nouveauStatut == null) throw new Exception("Statut introuvable.");
 
             dossier.IdStatut = nouveauStatut.Id;
             dossier.DateModification = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
-            if (!string.IsNullOrWhiteSpace(request.Commentaire))
+            // 1. Logique de Calcul si Instruction approuvée
+            if (request.CodeStatut == "InstructionApprouve")
             {
-                var agentId = _currentUserService.UserId;
-                string nomAgent = "Système";
-                if (agentId.HasValue)
-                {
-                    var agent = await _context.AdminUtilisateurs.FindAsync(new object[] { agentId.Value }, cancellationToken);
-                    if (agent != null) nomAgent = $"{agent.Prenoms} {agent.Nom}";
-                }
-                _context.Commentaires.Add(new Commentaire { Id = Guid.NewGuid(), IdDossier = dossier.Id, DateCommentaire = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(), CommentaireTexte = request.Commentaire, NomInstructeur = nomAgent });
+                await PerformFeeRecalculation(dossier, cancellationToken);
             }
 
             await _context.SaveChangesAsync(cancellationToken);
 
+            NotificationEvent? eventToTrigger = request.CodeStatut switch
+            {
+                "Instruction" => NotificationEvent.NouveauDossier,
+                "ApprobationInstruction" => NotificationEvent.DemandeApprobation,
+                "InstructionApprouve" => NotificationEvent.NouveauDevisComptable,
+                "PaiementBanque" => NotificationEvent.NouveauPaiement,
+                "DossierSignature" => NotificationEvent.NouveauProjetCertification,
+                "DossierSigner" => NotificationEvent.NouveauCertificat,
+                "RefusDossier" => NotificationEvent.DossierRefuse,
+                _ => null
+            };
+
+            if (eventToTrigger.HasValue)
+            {
+                await _notificationService.SendEventNotificationAsync(eventToTrigger.Value, dossier.Id);
+            }
+
+            // 3. Génération Documents
             if (request.CodeStatut == "DevisEmit")
             {
                 var devis = await _context.Devis.FirstOrDefaultAsync(d => d.IdDossier == request.DossierId, cancellationToken);
-                if (devis != null)
-                {
-                    await _devisGeneratorService.GenerateAndSaveDevisPdfAsync(devis.Id);
-                }
-                else
-                {
-                    _logger.LogWarning("Impossible de générer le PDF : aucun devis trouvé pour le dossier {DossierId}", request.DossierId);
-                }
+                if (devis != null) await _devisGeneratorService.GenerateAndSaveDevisPdfAsync(devis.Id);
             }
 
-            if (request.CodeStatut == "DossierPayer")
+            if (request.CodeStatut == "DossierSignature")
             {
                 await _certificateGenerator.GenerateAttestationsForDossierAsync(dossier.Id);
             }
 
-            string targetGroup = "DRSCE"; 
-            string notifType = "V";
-            string title = "Changement de Statut";
-            string message = $"Le statut du dossier {dossier.Numero} est maintenant : {nouveauStatut.Libelle}";
-            bool shouldNotify = true;
-            string? secondaryTargetGroup = null;
-            string? secondaryNotifType = null;
-
-            switch (request.CodeStatut)
-            {
-                case "Instruction": targetGroup = "DRSCE"; notifType = "E"; title = "Début Instruction"; message = $"Le dossier {dossier.Numero} est en cours d'instruction."; break;
-                case "ApprobationInstruction": targetGroup = "DRSCE"; notifType = "T"; title = "Approbation Requise"; message = $"Le dossier {dossier.Numero} attend votre approbation."; break;
-                case "InstructionApprouve": targetGroup = "DAFC"; notifType = "V"; title = "Instruction Approuvée"; message = $"L'instruction pour {dossier.Numero} est approuvée. Prêt pour la facturation."; secondaryTargetGroup = "DRSCE"; secondaryNotifType = "V"; break;
-                case "Echantillon": targetGroup = "DRSCE"; notifType = "V"; title = "Échantillon Requis"; break;
-                case "DevisCreer": targetGroup = "DAFC"; notifType = "V"; title = "Devis Créé"; message = $"Le devis pour le dossier {dossier.Numero} est prêt à être validé."; break;
-                case "DevisValideSC": targetGroup = "DAFC"; notifType = "E"; title = "Devis Validé (CS)"; break;
-                case "DevisValideTr": targetGroup = "DAFC"; notifType = "V"; title = "Devis Validé (Trésorerie)"; break;
-                case "DevisEmit": targetGroup = "DAFC"; notifType = "V"; title = "Devis Émis au Client"; break;
-                case "PaiementRejete": targetGroup = "DAFC"; notifType = "V"; title = "Paiement Rejeté"; break;
-                case "PaiementBanque": targetGroup = "DAFC"; notifType = "E"; title = "Paiement par Banque"; message = $"Une preuve de paiement a été soumise pour le dossier {dossier.Numero}."; break;
-                case "DossierPayer": targetGroup = "DRSCE"; notifType = "E"; title = "Paiement Confirmé"; message = $"Paiement confirmé pour {dossier.Numero}."; secondaryTargetGroup = "DAFC"; secondaryNotifType = "V"; break;
-                case "DossierSignature": targetGroup = "DAJI"; notifType = "V"; title = "Attestation en Signature"; break;
-                case "DossierSigner": targetGroup = "DRSCE"; notifType = "E"; title = "Attestation Signée"; secondaryTargetGroup = "DAJI"; secondaryNotifType = "V"; break;
-                default: shouldNotify = false; break;
-            }
-
-            if (shouldNotify)
-            {
-                await _notificationService.SendToGroupAsync(profilCode: targetGroup, title: title, message: message, type: notifType, targetUrl: $"/dossiers/{dossier.Id}", entityId: dossier.Id.ToString());
-                if (secondaryTargetGroup != null)
-                {
-                    await _notificationService.SendToGroupAsync(profilCode: secondaryTargetGroup, title: title, message: message, type: secondaryNotifType, targetUrl: $"/dossiers/{dossier.Id}", entityId: dossier.Id.ToString());
-                }
-            }
-
-            await _auditService.LogAsync("Gestion des Dossiers", $"Statut du dossier '{dossier.Numero}' changé vers '{nouveauStatut.Libelle}'.", "MODIFICATION", dossier.Id);
+            await _auditService.LogAsync("Gestion des Dossiers", $"Changement statut : {nouveauStatut.Libelle}", "MODIFICATION", dossier.Id);
 
             await transaction.CommitAsync(cancellationToken);
-
             return true;
         }
         catch (Exception ex)
         {
             await transaction.RollbackAsync(cancellationToken);
-            _logger.LogError(ex, "Échec du changement de statut pour le dossier {DossierId}", request.DossierId);
+            _logger.LogError(ex, "Échec changement statut pour le dossier {DossierId}", request.DossierId);
             throw;
         }
+    }
+
+    private async Task PerformFeeRecalculation(Dossier dossier, CancellationToken ct)
+    {
+        var demande = dossier.Demande;
+        if (demande?.CategorieEquipement == null) return;
+        var cat = demande.CategorieEquipement;
+        int qty = demande.QuantiteEquipements ?? 1;
+
+        decimal etude = cat.FraisEtude ?? 0m;
+        decimal controle = cat.FraisControle ?? 0m;
+        decimal homologation = 0m;
+
+        if (cat.ModeCalcul == ModeCalcul.PER_BLOCK)
+        {
+            decimal blocks = Math.Ceiling((decimal)qty / (cat.BlockSize ?? 50));
+            homologation = (cat.FraisHomologation ?? 0m) * blocks;
+        }
+        else if (cat.ModeCalcul == ModeCalcul.PER_UNIT)
+            homologation = (cat.FraisHomologation ?? 0m) * qty;
+        else
+            homologation = cat.FraisHomologation ?? 0m;
+
+        demande.PrixUnitaire = etude + homologation + controle;
+
+        var devis = await _context.Devis.FirstOrDefaultAsync(d => d.IdDossier == dossier.Id, ct);
+        if (devis == null)
+        {
+            devis = new Devis { Id = Guid.NewGuid(), IdDossier = dossier.Id, IdDemande = demande.Id };
+            _context.Devis.Add(devis);
+        }
+        devis.Date = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        devis.MontantEtude = etude;
+        devis.MontantHomologation = homologation;
+        devis.MontantControle = controle;
     }
 }

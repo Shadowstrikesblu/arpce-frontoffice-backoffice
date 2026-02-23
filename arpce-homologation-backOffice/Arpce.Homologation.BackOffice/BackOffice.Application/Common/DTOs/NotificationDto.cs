@@ -12,4 +12,7 @@ public class NotificationDto
     public string? EntityId { get; set; }
     public bool IsRead { get; set; }
     public DateTime DateEnvoi { get; set; }
+    public Guid? UserId { get; set; }
+    public string? ProfilCode { get; set; }
+    public bool IsBroadcast { get; set; }
 }

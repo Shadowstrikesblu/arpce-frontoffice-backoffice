@@ -1,0 +1,896 @@
+[
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.AuthenticationController",
+    "Method": "ChangePassword",
+    "RelativePath": "api/auth/change-password",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "FrontOffice.Application.Features.Authentication.Commands.ChangePassword.ChangePasswordCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.AuthenticationController",
+    "Method": "ConfirmAccount",
+    "RelativePath": "api/auth/confirm-account",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "FrontOffice.Application.Features.Authentication.Commands.ConfirmAccount.ConfirmAccountCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FrontOffice.Application.Features.Authentication.AuthenticationResult",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 401
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 422
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.AuthenticationController",
+    "Method": "ConnectByToken",
+    "RelativePath": "api/auth/connect-by-token",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "FrontOffice.Application.Features.Authentication.Queries.ConnectByToken.ConnectByTokenResult",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 401
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.AuthenticationController",
+    "Method": "ForgotPassword",
+    "RelativePath": "api/auth/forgot-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "FrontOffice.Application.Features.Authentication.Commands.ForgotPassword.ForgotPasswordCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FrontOffice.Application.Features.Authentication.AuthenticationResult",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.AuthenticationController",
+    "Method": "Login",
+    "RelativePath": "api/auth/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "FrontOffice.Application.Features.Authentication.Queries.Login.LoginClientQuery",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.AuthenticationController",
+    "Method": "Register",
+    "RelativePath": "api/auth/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.AuthenticationController",
+    "Method": "ResendOtp",
+    "RelativePath": "api/auth/resend-otp",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.AuthenticationController",
+    "Method": "ResetPassword",
+    "RelativePath": "api/auth/reset-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "FrontOffice.Application.Features.Authentication.Commands.ResetPassword.ResetPasswordCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 422
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.ClientsController",
+    "Method": "UpdateClientContact",
+    "RelativePath": "api/clients/{clientId}/contact",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "clientId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "command",
+        "Type": "FrontOffice.Application.Features.Clients.Commands.UpdateClientContact.UpdateClientContactCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FrontOffice.Application.Common.DTOs.ClientContactDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 401
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 404
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.ClientsController",
+    "Method": "DeleteAccount",
+    "RelativePath": "api/clients/delete-account",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "FrontOffice.Application.Features.Clients.Commands.DeleteAccount.DeleteAccountCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.ClientsController",
+    "Method": "UpdateClientProfile",
+    "RelativePath": "api/clients/profile",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "FrontOffice.Application.Features.Clients.Commands.UpdateClientProfile.UpdateClientProfileCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FrontOffice.Application.Common.DTOs.ClientProfileDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.DocumentsController",
+    "Method": "DownloadDocument",
+    "RelativePath": "api/documents/{type}/{id}/download",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "type",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.DocumentsController",
+    "Method": "DownloadCertificat",
+    "RelativePath": "api/documents/certificat/{id}/download",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.FileContentResult",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 404
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
+    "Method": "GetDossiersList",
+    "RelativePath": "api/dossiers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "TaillePage",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Recherche",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "TrierPar",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Ordre",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FrontOffice.Application.Features.Dossiers.Queries.GetDossiersList.DossiersListVm",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
+    "Method": "CreateDossier",
+    "RelativePath": "api/dossiers",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "FrontOffice.Application.Features.Demandes.Commands.CreateDossier.CreateDossierCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Guid",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 201
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
+    "Method": "GetDossierDetail",
+    "RelativePath": "api/dossiers/{dossierId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dossierId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FrontOffice.Application.Features.Dossiers.Queries.GetDossierDetail.DossierDetailVm",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 404
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
+    "Method": "UploadDossierDocuments",
+    "RelativePath": "api/dossiers/{dossierId}/documents",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dossierId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "DossierId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "LettreDemande",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "FicheTechnique",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "DocumentsSupplementaires",
+        "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
+    "Method": "AddEquipementToDossier",
+    "RelativePath": "api/dossiers/{dossierId}/equipements",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dossierId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "IdDossier",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "Equipement",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Modele",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Marque",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Fabricant",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Type",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Description",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "QuantiteEquipements",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "TypeURL_FicheTechnique",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
+    "Method": "UploadPreuvePaiement",
+    "RelativePath": "api/dossiers/{dossierId}/preuve-paiement",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dossierId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "DossierId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "PreuvePaiement",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
+    "Method": "ValidateDevis",
+    "RelativePath": "api/dossiers/{dossierId}/valider-devis",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dossierId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 401
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 422
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
+    "Method": "GetDossiersOverview",
+    "RelativePath": "api/dossiers/apercu",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "FrontOffice.Application.Features.Demandes.Queries.GetDemandesOverview.DemandesOverviewDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
+    "Method": "GetDevisNonValides",
+    "RelativePath": "api/dossiers/devis-non-valides",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "TaillePage",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Recherche",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "TrierPar",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Ordre",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
+    "Method": "GetFacturesNonValidees",
+    "RelativePath": "api/dossiers/factures-non-validees",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "TaillePage",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Recherche",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "TrierPar",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Ordre",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FrontOffice.Application.Features.Dossiers.Queries.GetDossiersList.DossiersListVm",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
+    "Method": "GetDossiersFullList",
+    "RelativePath": "api/dossiers/full",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "TaillePage",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Recherche",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "TrierPar",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Ordre",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FrontOffice.Application.Features.Dossiers.Queries.GetDossiersFullList.DossiersFullListVm",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
+    "Method": "GetPaiementsEnAttenteList",
+    "RelativePath": "api/dossiers/paiements-en-attente",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[FrontOffice.Application.Features.Demandes.Queries.GetPaiementsEnAttente.PaiementEnAttenteDto, FrontOffice.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FrontOffice.Api.Controllers.DossiersController",
+    "Method": "GetDossiersRecents",
+    "RelativePath": "api/dossiers/recents",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[FrontOffice.Application.Features.Demandes.Queries.GetDossiersRecents.DossierRecentItemDto, FrontOffice.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PaiementsController",
+    "Method": "PayByMomo",
+    "RelativePath": "api/paiements/dossier/{dossierId}/momo",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dossierId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "command",
+        "Type": "FrontOffice.Application.Features.Paiements.Commands.PayByMomo.PayByProviderCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PaiementsController",
+    "Method": "MomoWebhook",
+    "RelativePath": "api/paiements/momo-webhook",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "payload",
+        "Type": "FrontOffice.Application.Features.Paiements.Commands.HandleMomoWebhook.MomoWebhookPayload",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PublicController",
+    "Method": "SendContactMail",
+    "RelativePath": "api/public/contact",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "FrontOffice.Application.Features.Public.Commands.SendContactMail.SendContactMailCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

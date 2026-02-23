@@ -1,4 +1,5 @@
-﻿using BackOffice.Application.Features.Demandes.Commands.UploadCertificat;
+﻿using BackOffice.Application.Features.Attestations.Commands.LinkSignataire;
+using BackOffice.Application.Features.Demandes.Commands.UploadCertificat;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,17 @@ public class AttestationsController : ControllerBase
     {
         command.AttestationId = attestationId;
 
+        var result = await _mediator.Send(command);
+        return Ok(new { ok = result });
+    }
+
+    /// <summary>
+    /// Lie un signataire à une attestation et déclenche la régénération du PDF.
+    /// </summary>
+    [HttpPatch("signataire")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+    public async Task<IActionResult> LinkSignataire([FromBody] LinkSignataireCommand command)
+    {
         var result = await _mediator.Send(command);
         return Ok(new { ok = result });
     }

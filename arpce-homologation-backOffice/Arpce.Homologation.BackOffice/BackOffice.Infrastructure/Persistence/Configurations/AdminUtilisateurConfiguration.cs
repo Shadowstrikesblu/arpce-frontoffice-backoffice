@@ -50,7 +50,7 @@ public class AdminUtilisateurConfiguration : IEntityTypeConfiguration<AdminUtili
             .WithMany()
             .HasForeignKey(u => u.IdUtilisateurType)
             .OnDelete(DeleteBehavior.Restrict);
-
+        builder.Property(u => u.Email).HasMaxLength(255);
 
         var passwordHasher = new PasswordHasher();
         var adminPasswordHash = passwordHasher.Hash("admin.arpce@2025");
@@ -65,7 +65,7 @@ public class AdminUtilisateurConfiguration : IEntityTypeConfiguration<AdminUtili
             {
                 Id = adminUserId,
                 IdUtilisateurType = adminTypeId,
-                IdProfil = null,
+                IdProfil = new Guid("11111111-1111-1111-1111-111111111111"),
                 Compte = "admin",
                 Nom = "root", 
                 Prenoms = "ARPCE",

@@ -33,6 +33,8 @@ public interface IApplicationDbContext
     DbSet<Statut> Statuts { get; }
     DbSet<Notification> Notifications { get; }
     DatabaseFacade Database { get; }
+    DbSet<Signataire> Signataires { get; }
+    DbSet<Beneficiaire> Beneficiaires { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

@@ -848,26 +848,19 @@
         ],
         "requestBody": {
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "Libelle": {
-                    "type": "string"
-                  },
-                  "CourrierFile": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              },
-              "encoding": {
-                "Libelle": {
-                  "style": "form"
-                },
-                "CourrierFile": {
-                  "style": "form"
-                }
+                "$ref": "#/components/schemas/CreateDossierCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDossierCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDossierCommand"
               }
             }
           }
@@ -878,17 +871,20 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateDossierResponseDto"
+                  "type": "string",
+                  "format": "uuid"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateDossierResponseDto"
+                  "type": "string",
+                  "format": "uuid"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateDossierResponseDto"
+                  "type": "string",
+                  "format": "uuid"
                 }
               }
             }
@@ -956,6 +952,90 @@
         }
       }
     },
+    "/api/dossiers/{dossierId}/documents": {
+      "post": {
+        "tags": [
+          "Dossiers"
+        ],
+        "parameters": [
+          {
+            "name": "dossierId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "DossierId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "LettreDemande": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "FicheTechnique": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "DocumentsSupplementaires": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "DossierId": {
+                  "style": "form"
+                },
+                "LettreDemande": {
+                  "style": "form"
+                },
+                "FicheTechnique": {
+                  "style": "form"
+                },
+                "DocumentsSupplementaires": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/dossiers/{dossierId}/equipements": {
       "post": {
         "tags": [
@@ -994,24 +1074,15 @@
                   "Fabricant": {
                     "type": "string"
                   },
+                  "Type": {
+                    "type": "string"
+                  },
                   "Description": {
                     "type": "string"
                   },
                   "QuantiteEquipements": {
                     "type": "integer",
                     "format": "int32"
-                  },
-                  "ContactNom": {
-                    "type": "string"
-                  },
-                  "ContactEmail": {
-                    "type": "string"
-                  },
-                  "ContactTelephone": {
-                    "type": "string"
-                  },
-                  "ContactFonction": {
-                    "type": "string"
                   },
                   "TypeURL_FicheTechnique": {
                     "type": "string",
@@ -1035,22 +1106,13 @@
                 "Fabricant": {
                   "style": "form"
                 },
+                "Type": {
+                  "style": "form"
+                },
                 "Description": {
                   "style": "form"
                 },
                 "QuantiteEquipements": {
-                  "style": "form"
-                },
-                "ContactNom": {
-                  "style": "form"
-                },
-                "ContactEmail": {
-                  "style": "form"
-                },
-                "ContactTelephone": {
-                  "style": "form"
-                },
-                "ContactFonction": {
                   "style": "form"
                 },
                 "TypeURL_FicheTechnique": {
@@ -1548,6 +1610,32 @@
         },
         "additionalProperties": false
       },
+      "BeneficiaireDto": {
+        "type": "object",
+        "properties": {
+          "nom": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "telephone": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "adresse": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CategorieEquipementDto": {
         "type": "object",
         "properties": {
@@ -1756,12 +1844,46 @@
         },
         "additionalProperties": false
       },
-      "CreateDossierResponseDto": {
+      "CreateDossierCommand": {
         "type": "object",
         "properties": {
-          "dossierId": {
+          "libelle": {
             "type": "string",
-            "format": "uuid"
+            "nullable": true
+          },
+          "equipement": {
+            "type": "string",
+            "nullable": true
+          },
+          "modele": {
+            "type": "string",
+            "nullable": true
+          },
+          "marque": {
+            "type": "string",
+            "nullable": true
+          },
+          "fabricant": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "quantiteEquipements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "requiertEchantillon": {
+            "type": "boolean"
+          },
+          "beneficiaire": {
+            "$ref": "#/components/schemas/BeneficiaireDto"
           }
         },
         "additionalProperties": false
@@ -1828,6 +1950,10 @@
             "type": "string",
             "nullable": true
           },
+          "contactTelephone": {
+            "type": "string",
+            "nullable": true
+          },
           "prixUnitaire": {
             "type": "number",
             "format": "double",
@@ -1840,6 +1966,18 @@
           },
           "estHomologable": {
             "type": "boolean"
+          },
+          "requiertEchantillon": {
+            "type": "boolean"
+          },
+          "echantillonSoumis": {
+            "type": "boolean"
+          },
+          "beneficiaire": {
+            "$ref": "#/components/schemas/BeneficiaireDto"
+          },
+          "statut": {
+            "$ref": "#/components/schemas/StatutDto"
           },
           "categorieEquipement": {
             "$ref": "#/components/schemas/CategorieEquipementDto"
@@ -2113,6 +2251,20 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/DevisDto"
+            },
+            "nullable": true
+          },
+          "attestations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AttestationDto"
+            },
+            "nullable": true
+          },
+          "demandes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DemandeDto"
             },
             "nullable": true
           }

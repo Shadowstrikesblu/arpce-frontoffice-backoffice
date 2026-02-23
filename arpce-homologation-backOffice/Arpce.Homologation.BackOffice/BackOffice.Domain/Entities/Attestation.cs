@@ -15,4 +15,7 @@ public class Attestation : AuditableEntity
     public string Extension { get; set; } = "pdf";
     public int NumeroSequentiel { get; set; }
     public string? VisaReference { get; set; }
+
+    public Guid? SignataireId { get; set; }
+    public virtual Signataire? Signataire { get; set; }
 }

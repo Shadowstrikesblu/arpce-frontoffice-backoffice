@@ -16,43 +16,28 @@ public class GetNotificationHistoryQuery : IRequest<NotificationListVm>
 public class GetNotificationHistoryQueryHandler : IRequestHandler<GetNotificationHistoryQuery, NotificationListVm>
 {
     private readonly IApplicationDbContext _context;
-    private readonly ICurrentUserService _currentUserService;
 
-    public GetNotificationHistoryQueryHandler(IApplicationDbContext context, ICurrentUserService currentUserService)
+    public GetNotificationHistoryQueryHandler(IApplicationDbContext context)
     {
         _context = context;
-        _currentUserService = currentUserService;
     }
 
     public async Task<NotificationListVm> Handle(GetNotificationHistoryQuery request, CancellationToken cancellationToken)
     {
-        var userId = _currentUserService.UserId;
-
-        // On récupère le profil de l'utilisateur pour inclure les notifs de groupe
-        var user = await _context.AdminUtilisateurs
-            .Include(u => u.Profil)
-            .AsNoTracking()
-            .FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
-
-        string? profilCode = user?.Profil?.Code;
-
         IQueryable<Notification> query = _context.Notifications
             .AsNoTracking()
-            .Where(n =>
-                (n.UserId == userId) ||
-                (profilCode != null && n.ProfilCode == profilCode) ||
-                (n.IsBroadcast == true) 
-            )
             .OrderByDescending(n => n.DateEnvoi);
 
-        // Pagination
+        // Calcul du total de toutes les notifications en base
         var totalCount = await query.CountAsync(cancellationToken);
 
+        // Récupération paginée de l'historique complet
         var items = await query
             .Skip((request.Page - 1) * request.PageTaille)
             .Take(request.PageTaille)
             .ToListAsync(cancellationToken);
 
+        // Mapping vers le DTO incluant les champs de ciblage
         var dtos = items.Select(n => new NotificationDto
         {
             Id = n.Id,
@@ -62,9 +47,15 @@ public class GetNotificationHistoryQueryHandler : IRequestHandler<GetNotificatio
             TargetUrl = n.TargetUrl,
             EntityId = n.EntityId,
             IsRead = n.IsRead,
-            DateEnvoi = n.DateEnvoi.FromUnixTimeMilliseconds()
+            DateEnvoi = n.DateEnvoi.FromUnixTimeMilliseconds(),
+
+            // mappe les nouveaux champs requis
+            UserId = n.UserId,
+            ProfilCode = n.ProfilCode,
+            IsBroadcast = n.IsBroadcast
         }).ToList();
 
+        // Retour du résultat
         return new NotificationListVm
         {
             Notifications = dtos,

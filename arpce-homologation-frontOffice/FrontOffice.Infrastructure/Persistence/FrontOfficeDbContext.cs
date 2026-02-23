@@ -46,10 +46,11 @@ public class FrontOfficeDbContext : DbContext, IApplicationDbContext
     public DbSet<MotifRejet> MotifsRejets { get; set; }
     public DbSet<Proposition> Propositions { get; set; }
     public DbSet<Statut> Statuts { get; set; }
-
     public DbSet<Notification> Notifications { get; set; }
 
+    public DbSet<Signataire> Signataires { get; set; }
 
+    public DbSet<Beneficiaire> Beneficiaires { get; set; }
 
 
     /// <summary>

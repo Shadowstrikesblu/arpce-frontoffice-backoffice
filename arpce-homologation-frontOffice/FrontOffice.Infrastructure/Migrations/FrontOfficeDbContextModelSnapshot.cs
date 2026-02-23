@@ -22,6 +22,64 @@ namespace FrontOffice.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Dossier", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("DateOuverture")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid?>("IdAgentInstructeur")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdClient")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("IdModeReglement")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdStatut")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Libelle")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("Numero")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("UtilisateurCreation")
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("UtilisateurModification")
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdAgentInstructeur");
+
+                    b.HasIndex("IdClient");
+
+                    b.HasIndex("IdModeReglement");
+
+                    b.HasIndex("IdStatut");
+
+                    b.ToTable("dossiers", (string)null);
+                });
+
             modelBuilder.Entity("FrontOffice.Domain.Entities.AdminAccess", b =>
                 {
                     b.Property<Guid>("Id")
@@ -396,6 +454,9 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Property<byte>("Desactive")
                         .HasColumnType("tinyint");
 
+                    b.Property<string>("Fonction")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid?>("IdProfil")
                         .HasColumnType("uniqueidentifier");
 
@@ -489,6 +550,69 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(0);
 
+                    b.Property<Guid?>("SignataireId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UtilisateurCreation")
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("UtilisateurModification")
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("VisaReference")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdDemande");
+
+                    b.HasIndex("NumeroSequentiel");
+
+                    b.HasIndex("SignataireId");
+
+                    b.ToTable("attestations", (string)null);
+                });
+
+            modelBuilder.Entity("FrontOffice.Domain.Entities.Beneficiaire", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Adresse")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("DemandeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("LettreDocumentPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nom")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Telephone")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UtilisateurCreation")
                         .HasColumnType("nvarchar(max)");
 
@@ -497,11 +621,10 @@ namespace FrontOffice.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdDemande");
+                    b.HasIndex("DemandeId")
+                        .IsUnique();
 
-                    b.HasIndex("NumeroSequentiel");
-
-                    b.ToTable("attestations", (string)null);
+                    b.ToTable("beneficiaires", (string)null);
                 });
 
             modelBuilder.Entity("FrontOffice.Domain.Entities.CategorieEquipement", b =>
@@ -510,16 +633,28 @@ namespace FrontOffice.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int?>("BlockSize")
+                        .HasColumnType("int");
+
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
+
+                    b.Property<decimal>("CoutUnitaire")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValue(0m);
 
                     b.Property<long?>("DateCreation")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("DateModification")
                         .HasColumnType("bigint");
+
+                    b.Property<bool>("EstCalculeParQuantite")
+                        .HasColumnType("bit");
 
                     b.Property<string>("FormuleHomologation")
                         .HasMaxLength(255)
@@ -545,12 +680,34 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
+                    b.Property<int>("ModeCalcul")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<int?>("QtyMax")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("QtyMin")
+                        .HasColumnType("int");
+
                     b.Property<int?>("QuantiteReference")
                         .HasColumnType("int");
+
+                    b.Property<string>("ReferenceLoiFinance")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Remarques")
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("TypeCalcul")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValue("FORFAIT");
 
                     b.Property<string>("TypeClient")
                         .IsRequired()
@@ -744,6 +901,9 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
+                    b.Property<string>("ContactTelephone")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long?>("DateCreation")
                         .HasColumnType("bigint");
 
@@ -753,6 +913,11 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
+
+                    b.Property<bool>("EchantillonSoumis")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Equipement")
                         .HasMaxLength(120)
@@ -779,6 +944,9 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Property<Guid?>("IdProposition")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("IdStatut")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Marque")
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
@@ -788,8 +956,8 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasColumnType("nvarchar(120)");
 
                     b.Property<string>("NumeroDemande")
-                        .HasMaxLength(12)
-                        .HasColumnType("nvarchar(12)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<decimal?>("PrixUnitaire")
                         .HasColumnType("money");
@@ -799,6 +967,11 @@ namespace FrontOffice.Infrastructure.Migrations
 
                     b.Property<decimal?>("Remise")
                         .HasColumnType("decimal(5, 2)");
+
+                    b.Property<bool>("RequiertEchantillon")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Type")
                         .HasMaxLength(120)
@@ -816,11 +989,14 @@ namespace FrontOffice.Infrastructure.Migrations
 
                     b.HasIndex("IdCategorie");
 
-                    b.HasIndex("IdDossier");
+                    b.HasIndex("IdDossier")
+                        .IsUnique();
 
                     b.HasIndex("IdMotifRejet");
 
                     b.HasIndex("IdProposition");
+
+                    b.HasIndex("IdStatut");
 
                     b.ToTable("demandes", (string)null);
                 });
@@ -974,64 +1150,6 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.ToTable("documentsDossiers", (string)null);
                 });
 
-            modelBuilder.Entity("FrontOffice.Domain.Entities.Dossier", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<long?>("DateCreation")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("DateModification")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("DateOuverture")
-                        .HasColumnType("bigint");
-
-                    b.Property<Guid?>("IdAgentInstructeur")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IdClient")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("IdModeReglement")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IdStatut")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Libelle")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
-
-                    b.Property<string>("Numero")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("UtilisateurCreation")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.Property<string>("UtilisateurModification")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdAgentInstructeur");
-
-                    b.HasIndex("IdClient");
-
-                    b.HasIndex("IdModeReglement");
-
-                    b.HasIndex("IdStatut");
-
-                    b.ToTable("dossiers", (string)null);
-                });
-
             modelBuilder.Entity("FrontOffice.Domain.Entities.ModeReglement", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1076,28 +1194,28 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c35c4927-cf35-4d83-abc3-31dfe037241f"),
+                            Id = new Guid("0906b711-c3e0-49f6-9443-f6871557c367"),
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("ac627f18-bbd6-4374-82ca-95dce1905b47"),
+                            Id = new Guid("65256e0b-6740-40fa-98dc-9f457c7cf50f"),
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("cbdbc515-6084-4f59-992c-800b47dbf0c3"),
+                            Id = new Guid("5aeb16a6-e930-434d-a0f7-b08ec7df0f4f"),
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("b34d7580-a2c2-477e-9d61-2ba40c33ca36"),
+                            Id = new Guid("278de3c1-4104-4787-9b2e-961955a66ddd"),
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1
@@ -1143,6 +1261,91 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.ToTable("motifsRejets", (string)null);
                 });
 
+            modelBuilder.Entity("FrontOffice.Domain.Entities.Notification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Canal")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValue("SYSTEM");
+
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("DateEnvoi")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Destinataire")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("EntityId")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsBroadcast")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ProfilCode")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("StatutEnvoi")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("TargetUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UtilisateurCreation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UtilisateurModification")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DateEnvoi");
+
+                    b.HasIndex("IsBroadcast");
+
+                    b.HasIndex("ProfilCode");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("notifications", (string)null);
+                });
+
             modelBuilder.Entity("FrontOffice.Domain.Entities.Proposition", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1176,6 +1379,39 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("propositions", (string)null);
+                });
+
+            modelBuilder.Entity("FrontOffice.Domain.Entities.Signataire", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DateModification")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("SignatureImagePath")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("UtilisateurCreation")
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("UtilisateurModification")
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("signataires", (string)null);
                 });
 
             modelBuilder.Entity("FrontOffice.Domain.Entities.Statut", b =>
@@ -1324,12 +1560,67 @@ namespace FrontOffice.Infrastructure.Migrations
                             Id = new Guid("ed13c54b-5e63-4a0f-a0a7-332a7c27a217"),
                             Code = "DossierSigner",
                             Libelle = "Attestation signée"
+                        },
+                        new
+                        {
+                            Id = new Guid("b2c3d4e5-f6a7-4b89-acbd-2e3f4a5b6c7d"),
+                            Code = "Refus",
+                            Libelle = "Refusé"
+                        },
+                        new
+                        {
+                            Id = new Guid("c3d4e5f6-0b1c-2d3e-afbd-6e7f8a9b0c1d"),
+                            Code = "Signe",
+                            Libelle = "Signé"
+                        },
+                        new
+                        {
+                            Id = new Guid("d4e5f6a7-b8c9-4d0e-afbd-2e3f4a5b6c7d"),
+                            Code = "Accepte",
+                            Libelle = "Accepté"
+                        },
+                        new
+                        {
+                            Id = new Guid("17171717-1717-1717-1717-171717171717"),
+                            Code = "PaiementCaisse",
+                            Libelle = "Dossier payé à la caisse"
                         });
+                });
+
+            modelBuilder.Entity("Dossier", b =>
+                {
+                    b.HasOne("FrontOffice.Domain.Entities.AdminUtilisateur", null)
+                        .WithMany()
+                        .HasForeignKey("IdAgentInstructeur")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("FrontOffice.Domain.Entities.Client", "Client")
+                        .WithMany("Dossiers")
+                        .HasForeignKey("IdClient")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("FrontOffice.Domain.Entities.ModeReglement", "ModeReglement")
+                        .WithMany()
+                        .HasForeignKey("IdModeReglement")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("FrontOffice.Domain.Entities.Statut", "Statut")
+                        .WithMany()
+                        .HasForeignKey("IdStatut")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("ModeReglement");
+
+                    b.Navigation("Statut");
                 });
 
             modelBuilder.Entity("FrontOffice.Domain.Entities.AdminJournal", b =>
                 {
-                    b.HasOne("FrontOffice.Domain.Entities.Dossier", "Dossier")
+                    b.HasOne("Dossier", "Dossier")
                         .WithMany()
                         .HasForeignKey("DossierId");
 
@@ -1412,12 +1703,30 @@ namespace FrontOffice.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("FrontOffice.Domain.Entities.Signataire", "Signataire")
+                        .WithMany()
+                        .HasForeignKey("SignataireId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Demande");
+
+                    b.Navigation("Signataire");
+                });
+
+            modelBuilder.Entity("FrontOffice.Domain.Entities.Beneficiaire", b =>
+                {
+                    b.HasOne("FrontOffice.Domain.Entities.Demande", "Demande")
+                        .WithOne("Beneficiaire")
+                        .HasForeignKey("FrontOffice.Domain.Entities.Beneficiaire", "DemandeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Demande");
                 });
 
             modelBuilder.Entity("FrontOffice.Domain.Entities.Commentaire", b =>
                 {
-                    b.HasOne("FrontOffice.Domain.Entities.Dossier", "Dossier")
+                    b.HasOne("Dossier", "Dossier")
                         .WithMany("Commentaires")
                         .HasForeignKey("IdDossier")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1433,9 +1742,9 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasForeignKey("IdCategorie")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("FrontOffice.Domain.Entities.Dossier", "Dossier")
-                        .WithMany("Demandes")
-                        .HasForeignKey("IdDossier")
+                    b.HasOne("Dossier", "Dossier")
+                        .WithOne("Demande")
+                        .HasForeignKey("FrontOffice.Domain.Entities.Demande", "IdDossier")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1449,6 +1758,10 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasForeignKey("IdProposition")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("FrontOffice.Domain.Entities.Statut", "Statut")
+                        .WithMany()
+                        .HasForeignKey("IdStatut");
+
                     b.Navigation("CategorieEquipement");
 
                     b.Navigation("Dossier");
@@ -1456,6 +1769,8 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Navigation("MotifRejet");
 
                     b.Navigation("Proposition");
+
+                    b.Navigation("Statut");
                 });
 
             modelBuilder.Entity("FrontOffice.Domain.Entities.Devis", b =>
@@ -1465,7 +1780,7 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasForeignKey("IdDemande")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("FrontOffice.Domain.Entities.Dossier", "Dossier")
+                    b.HasOne("Dossier", "Dossier")
                         .WithMany("Devis")
                         .HasForeignKey("IdDossier")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1489,7 +1804,7 @@ namespace FrontOffice.Infrastructure.Migrations
 
             modelBuilder.Entity("FrontOffice.Domain.Entities.DocumentDossier", b =>
                 {
-                    b.HasOne("FrontOffice.Domain.Entities.Dossier", "Dossier")
+                    b.HasOne("Dossier", "Dossier")
                         .WithMany("DocumentsDossiers")
                         .HasForeignKey("IdDossier")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1498,35 +1813,27 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Navigation("Dossier");
                 });
 
-            modelBuilder.Entity("FrontOffice.Domain.Entities.Dossier", b =>
+            modelBuilder.Entity("FrontOffice.Domain.Entities.Signataire", b =>
                 {
-                    b.HasOne("FrontOffice.Domain.Entities.AdminUtilisateur", null)
-                        .WithMany()
-                        .HasForeignKey("IdAgentInstructeur")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("FrontOffice.Domain.Entities.Client", "Client")
-                        .WithMany("Dossiers")
-                        .HasForeignKey("IdClient")
+                    b.HasOne("FrontOffice.Domain.Entities.AdminUtilisateur", "AdminUtilisateur")
+                        .WithOne("Signataire")
+                        .HasForeignKey("FrontOffice.Domain.Entities.Signataire", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("FrontOffice.Domain.Entities.ModeReglement", "ModeReglement")
-                        .WithMany()
-                        .HasForeignKey("IdModeReglement")
-                        .OnDelete(DeleteBehavior.Restrict);
+                    b.Navigation("AdminUtilisateur");
+                });
 
-                    b.HasOne("FrontOffice.Domain.Entities.Statut", "Statut")
-                        .WithMany()
-                        .HasForeignKey("IdStatut")
-                        .OnDelete(DeleteBehavior.Restrict)
+            modelBuilder.Entity("Dossier", b =>
+                {
+                    b.Navigation("Commentaires");
+
+                    b.Navigation("Demande")
                         .IsRequired();
 
-                    b.Navigation("Client");
+                    b.Navigation("Devis");
 
-                    b.Navigation("ModeReglement");
-
-                    b.Navigation("Statut");
+                    b.Navigation("DocumentsDossiers");
                 });
 
             modelBuilder.Entity("FrontOffice.Domain.Entities.AdminProfils", b =>
@@ -1538,6 +1845,11 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Navigation("Utilisateurs");
                 });
 
+            modelBuilder.Entity("FrontOffice.Domain.Entities.AdminUtilisateur", b =>
+                {
+                    b.Navigation("Signataire");
+                });
+
             modelBuilder.Entity("FrontOffice.Domain.Entities.Client", b =>
                 {
                     b.Navigation("Dossiers");
@@ -1547,20 +1859,11 @@ namespace FrontOffice.Infrastructure.Migrations
                 {
                     b.Navigation("Attestations");
 
+                    b.Navigation("Beneficiaire");
+
                     b.Navigation("Devis");
 
                     b.Navigation("DocumentsDemandes");
-                });
-
-            modelBuilder.Entity("FrontOffice.Domain.Entities.Dossier", b =>
-                {
-                    b.Navigation("Commentaires");
-
-                    b.Navigation("Demandes");
-
-                    b.Navigation("Devis");
-
-                    b.Navigation("DocumentsDossiers");
                 });
 #pragma warning restore 612, 618
         }

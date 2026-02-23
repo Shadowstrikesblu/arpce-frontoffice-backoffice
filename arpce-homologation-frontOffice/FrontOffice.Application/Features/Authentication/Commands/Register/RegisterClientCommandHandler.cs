@@ -51,8 +51,6 @@ public class RegisterClientCommandHandler : IRequestHandler<RegisterClientComman
     /// </summary>
     public async Task<AuthenticationResult> Handle(RegisterClientCommand request, CancellationToken cancellationToken)
     {
-        // ... (Logique Captcha si activée)
-
         var existingClient = await _context.Clients
             .FirstOrDefaultAsync(c => c.Email == request.Email, cancellationToken);
 

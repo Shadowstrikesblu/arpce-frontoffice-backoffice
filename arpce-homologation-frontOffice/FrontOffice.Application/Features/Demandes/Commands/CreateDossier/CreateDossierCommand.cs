@@ -1,19 +1,20 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Http; 
+﻿using FrontOffice.Application.Common.DTOs;
+using MediatR;
+
 namespace FrontOffice.Application.Features.Demandes.Commands.CreateDossier;
 
-/// <summary>
-/// Commande pour créer un nouveau dossier d'homologation.
-/// </summary>
-public class CreateDossierCommand : IRequest<CreateDossierResponseDto>
+public class CreateDossierCommand : IRequest<Guid>
 {
-    /// <summary>
-    /// Le nom ou libellé du dossier. Doit être unique.
-    /// </summary>
     public string Libelle { get; set; } = string.Empty;
+    public string Equipement { get; set; } = string.Empty;
+    public string Modele { get; set; } = string.Empty;
+    public string Marque { get; set; } = string.Empty;
+    public string Fabricant { get; set; } = string.Empty;
+    public string? Type { get; set; }
+    public string? Description { get; set; }
+    public int QuantiteEquipements { get; set; }
 
-    /// <summary>
-    /// La lettre de demande d'homologation (fichier PDF, max 3 Mo).
-    /// </summary>
-    public IFormFile CourrierFile { get; set; } = default!; 
+    public bool RequiertEchantillon { get; set; }
+
+    public BeneficiaireDto? Beneficiaire { get; set; }
 }

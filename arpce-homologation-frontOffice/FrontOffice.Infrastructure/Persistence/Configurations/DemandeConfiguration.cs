@@ -10,7 +10,7 @@ public class DemandeConfiguration : IEntityTypeConfiguration<Demande>
 
         builder.HasKey(d => d.Id);
 
-        builder.Property(d => d.NumeroDemande).HasMaxLength(12);
+        builder.Property(d => d.NumeroDemande).HasMaxLength(30);
         builder.Property(d => d.Equipement).HasMaxLength(120);
         builder.Property(d => d.Modele).HasMaxLength(120);
         builder.Property(d => d.Marque).HasMaxLength(120);
@@ -22,14 +22,9 @@ public class DemandeConfiguration : IEntityTypeConfiguration<Demande>
         builder.Property(d => d.QuantiteEquipements).HasColumnType("int");
 
         builder.Property(d => d.PrixUnitaire).HasColumnType("money");
-
         builder.Property(d => d.Remise).HasColumnType("decimal(5, 2)");
 
-        // Définition des relations
-        builder.HasOne(d => d.Dossier)
-            .WithMany(dossier => dossier.Demandes)
-            .HasForeignKey(d => d.IdDossier)
-            .OnDelete(DeleteBehavior.Cascade);
+        // Les relations Dossier sont gérées côté DossierConfiguration (WithOne)
 
         builder.HasOne(d => d.CategorieEquipement)
             .WithMany()
@@ -52,8 +47,10 @@ public class DemandeConfiguration : IEntityTypeConfiguration<Demande>
         builder.Property(c => c.DateModification).HasColumnType("bigint");
 
         builder.Property(d => d.EstHomologable)
-            .HasColumnType("bit")
-            .IsRequired()
             .HasDefaultValue(true);
+
+        // Nouveaux champs
+        builder.Property(x => x.RequiertEchantillon).HasDefaultValue(false);
+        builder.Property(x => x.EchantillonSoumis).HasDefaultValue(false);
     }
 }

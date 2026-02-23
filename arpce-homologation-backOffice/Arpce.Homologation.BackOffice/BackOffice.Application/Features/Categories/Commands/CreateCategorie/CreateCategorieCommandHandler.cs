@@ -8,17 +8,10 @@ namespace BackOffice.Application.Features.Categories.Commands.CreateCategorie;
 public class CreateCategorieCommandHandler : IRequestHandler<CreateCategorieCommand, CategorieEquipementDto>
 {
     private readonly IApplicationDbContext _context;
-    private readonly IAuditService _auditService;
-    private readonly INotificationService _notificationService;
 
-    public CreateCategorieCommandHandler(
-        IApplicationDbContext context,
-        IAuditService auditService,
-        INotificationService notificationService)
+    public CreateCategorieCommandHandler(IApplicationDbContext context)
     {
         _context = context;
-        _auditService = auditService;
-        _notificationService = notificationService;
     }
 
     public async Task<CategorieEquipementDto> Handle(CreateCategorieCommand request, CancellationToken cancellationToken)
@@ -28,30 +21,24 @@ public class CreateCategorieCommandHandler : IRequestHandler<CreateCategorieComm
             Id = Guid.NewGuid(),
             Code = request.Code,
             Libelle = request.Libelle,
-            TypeEquipement = request.TypeEquipement,
-            TypeClient = request.TypeClient,
             FraisEtude = request.FraisEtude,
             FraisHomologation = request.FraisHomologation,
             FraisControle = request.FraisControle,
-            FormuleHomologation = request.FormuleHomologation,
-            QuantiteReference = request.QuantiteReference,
-            Remarques = request.Remarques
+
+            ModeCalcul = request.ModeCalcul,
+            BlockSize = request.BlockSize,
+            QtyMin = request.QtyMin,
+            QtyMax = request.QtyMax,
+            ReferenceLoiFinance = request.ReferenceLoiFinance,
+
+            TypeEquipement = request.TypeEquipement ?? string.Empty,
+            Remarques = request.Remarques,
+            DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+            UtilisateurCreation = "SYSTEM"
         };
 
         _context.CategoriesEquipements.Add(entity);
         await _context.SaveChangesAsync(cancellationToken);
-
-        await _auditService.LogAsync(
-            page: "Gestion des Catégories",
-            libelle: $"Création de la catégorie '{request.Code}' - {request.Libelle}.",
-            eventTypeCode: "CREATION");
-
-        await _notificationService.SendToGroupAsync(
-            profilCode: "ADMIN", 
-            title: "Nouvelle Catégorie",
-            message: $"La catégorie d'équipement '{entity.Libelle}' a été créée.",
-            type: "E"
-        );
 
         return new CategorieEquipementDto
         {
@@ -59,13 +46,14 @@ public class CreateCategorieCommandHandler : IRequestHandler<CreateCategorieComm
             Code = entity.Code,
             Libelle = entity.Libelle,
             TypeEquipement = entity.TypeEquipement,
-            TypeClient = entity.TypeClient,
             FraisEtude = entity.FraisEtude,
             FraisHomologation = entity.FraisHomologation,
             FraisControle = entity.FraisControle,
-            FormuleHomologation = entity.FormuleHomologation,
-            QuantiteReference = entity.QuantiteReference,
-            Remarques = entity.Remarques
+            ModeCalcul = entity.ModeCalcul,
+            BlockSize = entity.BlockSize,
+            QtyMin = entity.QtyMin,    
+            QtyMax = entity.QtyMax,    
+            ReferenceLoiFinance = entity.ReferenceLoiFinance 
         };
     }
 }

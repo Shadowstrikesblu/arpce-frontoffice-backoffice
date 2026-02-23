@@ -1,4 +1,6 @@
 ﻿using FrontOffice.Application.Common.DTOs;
+using System;
+using System.Collections.Generic;
 
 namespace FrontOffice.Application.Features.Dossiers.Queries.GetDossiersFullList;
 
@@ -15,7 +17,6 @@ public class DossierFullListItemDto
     public StatutDto? Statut { get; set; }
     public ModeReglementDto? ModeReglement { get; set; }
 
-    // Pour nbDemandes (demandé dans le schéma initial)
     public int NbDemandes { get; set; }
 
     public List<DemandeDto> Demandes { get; set; } = new List<DemandeDto>();

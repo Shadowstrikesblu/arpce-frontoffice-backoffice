@@ -2,6 +2,11 @@
 using FrontOffice.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace FrontOffice.Application.Features.Demandes.Queries.GetDossiersRecents;
 
@@ -27,15 +32,14 @@ public class GetDossiersRecentsQueryHandler : IRequestHandler<GetDossiersRecents
         var dossiersRecents = await _context.Dossiers
             .Where(d => d.IdClient == userId.Value)
             .Include(d => d.Statut)
-            .Include(d => d.Demandes)
-            .OrderByDescending(d => d.DateOuverture) 
+            .Include(d => d.Demande) 
+            .OrderByDescending(d => d.DateOuverture)
             .Select(d => new DossierRecentItemDto
             {
                 Id = d.Id,
                 IdClient = d.IdClient,
                 IdStatut = d.IdStatut,
                 IdModeReglement = d.IdModeReglement,
-
                 DateOuverture = d.DateOuverture,
                 Numero = d.Numero,
                 Libelle = d.Libelle,
@@ -45,15 +49,18 @@ public class GetDossiersRecentsQueryHandler : IRequestHandler<GetDossiersRecents
                     Code = d.Statut.Code,
                     Libelle = d.Statut.Libelle
                 } : null,
-                Demandes = d.Demandes.Select(dem => new DemandeDto
+                Demandes = d.Demande != null ? new List<DemandeDto>
                 {
-                    Id = dem.Id,
-                    IdDossier = dem.IdDossier,
-                    NumeroDemande = dem.NumeroDemande,
-                    Equipement = dem.Equipement,
-                    Modele = dem.Modele,
-                    Marque = dem.Marque
-                }).ToList()
+                    new DemandeDto
+                    {
+                        Id = d.Demande.Id,
+                        IdDossier = d.Demande.IdDossier,
+                        NumeroDemande = d.Demande.NumeroDemande,
+                        Equipement = d.Demande.Equipement,
+                        Modele = d.Demande.Modele,
+                        Marque = d.Demande.Marque
+                    }
+                } : new List<DemandeDto>()
             })
             .ToListAsync(cancellationToken);
 

@@ -2,6 +2,9 @@
 using BackOffice.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Authentication.Commands.Register;
 
@@ -32,35 +35,49 @@ public class RegisterAgentCommandHandler : IRequestHandler<RegisterAgentCommand,
     /// </summary>
     public async Task<AuthenticationResult> Handle(RegisterAgentCommand request, CancellationToken cancellationToken)
     {
-        // Vérifie si un agent avec le même nom de compte existe déjà.
+        // Vérification de l'unicité du compte
         if (await _context.AdminUtilisateurs.AnyAsync(u => u.Compte == request.Compte, cancellationToken))
         {
             throw new InvalidOperationException("Un agent avec ce nom de compte existe déjà.");
         }
 
-        // Hache le mot de passe fourni.
+        // Vérification de l'unicité de l'email (si fourni)
+        if (!string.IsNullOrEmpty(request.Email) &&
+            await _context.AdminUtilisateurs.AnyAsync(u => u.Email == request.Email, cancellationToken))
+        {
+            throw new InvalidOperationException("Un agent avec cette adresse e-mail existe déjà.");
+        }
+
+        // Hachage du mot de passe
         var hashedPassword = _passwordHasher.Hash(request.Password);
 
-        // Crée la nouvelle entité AdminUtilisateur.
+        // Définition du type d'utilisateur par défaut (ID du seed pour Agent standard)
+        var defaultUserTypeId = new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6");
+
+        // Création de l'entité AdminUtilisateur
         var agent = new AdminUtilisateur
         {
             Id = Guid.NewGuid(),
             Compte = request.Compte,
+            Email = request.Email,
             Nom = request.Nom,
             Prenoms = request.Prenoms,
             MotPasse = hashedPassword,
-            Desactive = false, 
-            ChangementMotPasse = true 
+            IdUtilisateurType = defaultUserTypeId, 
+            Desactive = false,
+            ChangementMotPasse = true,
+            DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+            UtilisateurCreation = "SYSTEM_REGISTER"
         };
 
-        // Ajoute le nouvel agent au contexte et sauvegarde dans la base de données.
+        // Sauvegarde en base de données
         _context.AdminUtilisateurs.Add(agent);
         await _context.SaveChangesAsync(cancellationToken);
 
-        // Génére un token JWT pour la session de l'agent nouvellement créé.
-        var token = _jwtTokenGenerator.GenerateToken(agent.Id, agent.Compte);
+        // Génération du token (On utilise l'email s'il existe, sinon le compte)
+        var token = _jwtTokenGenerator.GenerateToken(agent.Id, agent.Email ?? agent.Compte);
 
-        // Retourne le résultat avec un message de succès et le token.
+        // Retou du résultat
         return new AuthenticationResult
         {
             Message = "Inscription de l'agent réussie.",

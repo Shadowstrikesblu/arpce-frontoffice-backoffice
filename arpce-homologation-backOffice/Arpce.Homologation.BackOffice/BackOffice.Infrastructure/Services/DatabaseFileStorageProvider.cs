@@ -2,19 +2,9 @@
 using BackOffice.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace BackOffice.Infrastructure.Services;
 
-/// <summary>
-/// Gère le stockage des fichiers directement dans la base de données via Entity Framework Core.
-/// </summary>
-/// <summary>
-/// Gère le stockage des fichiers directement dans la base de données via Entity Framework Core.
-/// Cette version est modifiée pour ne pas sauvegarder automatiquement, permettant le contrôle par une transaction externe.
-/// </summary>
 public class DatabaseFileStorageProvider : IFileStorageProvider
 {
     private readonly IApplicationDbContext _context;
@@ -25,58 +15,53 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
     }
 
     /// <summary>
-    /// Prépare une entité DocumentDossier pour l'insertion sans la sauvegarder.
+    /// Importe un document lié à un dossier (ex: Lettre de demande, Facture).
     /// </summary>
-    public async Task<DocumentDossier> ImportDocumentDossierAsync(IFormFile file, string nom, byte type, Guid dossierId)
+    public async Task<DocumentDossier> ImportDocumentDossierAsync(IFormFile file, string nom, byte type, Guid dossierId, string? libelle = null)
     {
-        // Lit le contenu du fichier en mémoire
-        byte[] fileData;
-        using (var memoryStream = new MemoryStream())
-        {
-            await file.CopyToAsync(memoryStream);
-            fileData = memoryStream.ToArray();
-        }
+        if (file == null || file.Length == 0) throw new ArgumentException("Le fichier est vide.");
 
-        // Crée l'entité DocumentDossier
+        using var ms = new MemoryStream();
+        await file.CopyToAsync(ms);
+
         var document = new DocumentDossier
         {
             Id = Guid.NewGuid(),
             IdDossier = dossierId,
             Nom = nom,
+            Libelle = libelle, 
+            Extension = Path.GetExtension(file.FileName).TrimStart('.').ToLower(),
             Type = type,
-            Extension = Path.GetExtension(file.FileName)?.TrimStart('.').ToLowerInvariant() ?? string.Empty,
-            Donnees = fileData,
-            UtilisateurCreation = "API_UPLOAD",
-            DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+            Donnees = ms.ToArray(),
+            DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+            UtilisateurCreation = "SYSTEM_UPLOAD"
         };
 
-        // Ajoute l'entité au contexte
         _context.DocumentsDossiers.Add(document);
 
         return document;
     }
 
     /// <summary>
-    /// Prépare une entité DocumentDemande pour l'insertion sans la sauvegarder.
+    /// Importe un document lié à une demande/équipement (ex: Fiche technique, Annexes).
     /// </summary>
-    public async Task<DocumentDemande> ImportDocumentDemandeAsync(IFormFile file, string nom, Guid demandeId)
+    public async Task<DocumentDemande> ImportDocumentDemandeAsync(IFormFile file, string nom, Guid demandeId, string? libelle = null)
     {
-        byte[] fileData;
-        using (var memoryStream = new MemoryStream())
-        {
-            await file.CopyToAsync(memoryStream);
-            fileData = memoryStream.ToArray();
-        }
+        if (file == null || file.Length == 0) throw new ArgumentException("Le fichier est vide.");
+
+        using var ms = new MemoryStream();
+        await file.CopyToAsync(ms);
 
         var document = new DocumentDemande
         {
             Id = Guid.NewGuid(),
             IdDemande = demandeId,
             Nom = nom,
-            Extension = Path.GetExtension(file.FileName)?.TrimStart('.').ToLowerInvariant() ?? string.Empty,
-            Donnees = fileData,
-            UtilisateurCreation = "API_UPLOAD",
-            DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+            Libelle = libelle, 
+            Extension = Path.GetExtension(file.FileName).TrimStart('.').ToLower(),
+            Donnees = ms.ToArray(),
+            DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+            UtilisateurCreation = "SYSTEM_UPLOAD"
         };
 
         _context.DocumentsDemandes.Add(document);
@@ -85,57 +70,72 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
     }
 
     /// <summary>
-    /// Récupère les données binaires d'un DocumentDossier depuis la base.
+    /// Sauvegarde un document généré par le système (ex: Reçu de caisse) à partir d'un tableau d'octets.
     /// </summary>
-    public async Task<(byte[] content, string fileName, string contentType)> ExportDocumentDossierAsync(Guid documentId)
+    public async Task<DocumentDossier> SaveDocumentDossierFromBytesAsync(byte[] content, string nom, byte type, Guid dossierId, string? libelle = null)
     {
-        var document = await _context.DocumentsDossiers
-            .AsNoTracking()
-            .FirstOrDefaultAsync(d => d.Id == documentId);
-
-        if (document == null || document.Donnees == null || document.Donnees.Length == 0)
+        var document = new DocumentDossier
         {
-            throw new FileNotFoundException("Document de dossier introuvable ou vide.");
-        }
+            Id = Guid.NewGuid(),
+            IdDossier = dossierId,
+            Nom = nom,
+            Libelle = libelle,
+            Extension = "pdf",
+            Type = type,
+            Donnees = content,
+            DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+            UtilisateurCreation = "SYSTEM_GEN"
+        };
 
-        var fileName = $"{document.Nom}.{document.Extension}";
-        var contentType = GetMimeType(fileName);
-
-        return (document.Donnees, fileName, contentType);
+        _context.DocumentsDossiers.Add(document);
+        return document;
     }
 
     /// <summary>
-    /// Récupère les données binaires d'un DocumentDemande depuis la base.
+    /// Enregistre une image de signature sur le disque et retourne le chemin relatif.
     /// </summary>
-    public async Task<(byte[] content, string fileName, string contentType)> ExportDocumentDemandeAsync(Guid documentId)
+    public async Task<string> UploadSignatureAsync(IFormFile file)
     {
-        var document = await _context.DocumentsDemandes
-            .AsNoTracking()
-            .FirstOrDefaultAsync(d => d.Id == documentId);
+        if (file == null || file.Length == 0) return string.Empty;
 
-        if (document == null || document.Donnees == null || document.Donnees.Length == 0)
+        var uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "signatures");
+        if (!Directory.Exists(uploadFolder)) Directory.CreateDirectory(uploadFolder);
+
+        var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+        var filePath = Path.Combine(uploadFolder, fileName);
+
+        using (var stream = new FileStream(filePath, FileMode.Create))
         {
-            throw new FileNotFoundException("Document de demande introuvable ou vide.");
+            await file.CopyToAsync(stream);
         }
 
-        var fileName = $"{document.Nom}.{document.Extension}";
-        var contentType = GetMimeType(fileName);
-
-        return (document.Donnees, fileName, contentType);
+        return $"/uploads/signatures/{fileName}";
     }
 
-    private string GetMimeType(string fileName)
+    public async Task<(byte[] content, string fileName, string contentType)> ExportDocumentDossierAsync(Guid documentId)
     {
-        var extension = Path.GetExtension(fileName).ToLowerInvariant();
-        return extension switch
+        var doc = await _context.DocumentsDossiers.FirstOrDefaultAsync(x => x.Id == documentId);
+        if (doc == null || doc.Donnees == null) throw new FileNotFoundException();
+
+        return (doc.Donnees, doc.Nom, GetContentType(doc.Extension));
+    }
+
+    public async Task<(byte[] content, string fileName, string contentType)> ExportDocumentDemandeAsync(Guid documentId)
+    {
+        var doc = await _context.DocumentsDemandes.FirstOrDefaultAsync(x => x.Id == documentId);
+        if (doc == null || doc.Donnees == null) throw new FileNotFoundException();
+
+        return (doc.Donnees, doc.Nom, GetContentType(doc.Extension));
+    }
+
+    private string GetContentType(string extension)
+    {
+        return extension.ToLower() switch
         {
-            ".pdf" => "application/pdf",
-            ".jpg" => "image/jpeg",
-            ".jpeg" => "image/jpeg",
-            ".png" => "image/png",
-            ".doc" => "application/msword",
-            ".docx" => "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            _ => "application/octet-stream",
+            "pdf" => "application/pdf",
+            "jpg" or "jpeg" => "image/jpeg",
+            "png" => "image/png",
+            _ => "application/octet-stream"
         };
     }
 }

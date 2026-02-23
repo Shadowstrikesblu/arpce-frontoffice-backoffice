@@ -1,4 +1,6 @@
-﻿namespace BackOffice.Application.Common.Interfaces;
+﻿using BackOffice.Application.Common.Models;
+
+namespace BackOffice.Application.Common.Interfaces;
 
 /// <summary>
 /// Service de gestion des notifications (Temps réel + Persistance).
@@ -19,4 +21,5 @@ public interface INotificationService
     /// Notifie un groupe (Profil) spécifique.
     /// </summary>
     Task SendToGroupAsync(string profilCode, string title, string message, string type = "Info", string? targetUrl = null, string? entityId = null);
+    Task SendEventNotificationAsync(NotificationEvent eventType, Guid entityId);
 }
