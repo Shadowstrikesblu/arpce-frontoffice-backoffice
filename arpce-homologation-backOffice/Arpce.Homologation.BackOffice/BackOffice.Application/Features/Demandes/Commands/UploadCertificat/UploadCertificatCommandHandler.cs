@@ -1,8 +1,12 @@
 ﻿using BackOffice.Application.Common.Interfaces;
-using BackOffice.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Demandes.Commands.UploadCertificat;
 
@@ -37,11 +41,17 @@ public class UploadCertificatCommandHandler : IRequestHandler<UploadCertificatCo
                     .ThenInclude(d => d.Dossier)
                 .FirstOrDefaultAsync(a => a.Id == request.AttestationId, cancellationToken);
 
-            if (attestation == null) throw new Exception("Attestation introuvable.");
+            if (attestationToUpdate == null)
+                throw new Exception("Attestation introuvable.");
 
-            var dossier = attestation.Demande.Dossier;
+            if (attestationToUpdate.Demande == null)
+                throw new Exception("Demande introuvable pour cette attestation.");
 
-            if (request.CertificatFile == null || request.CertificatFile.Length == 0)
+            var dossier = attestationToUpdate.Demande.Dossier
+                ?? throw new Exception("Dossier introuvable pour cette demande.");
+
+            var file = request.CertificatFile;
+            if (file == null || file.Length == 0)
                 throw new InvalidOperationException("Fichier PDF obligatoire.");
 
             byte[] fileData;
@@ -51,15 +61,21 @@ public class UploadCertificatCommandHandler : IRequestHandler<UploadCertificatCo
                 fileData = memoryStream.ToArray();
             }
 
-            attestation.Donnees = fileData;
-            attestation.Extension = Path.GetExtension(request.CertificatFile.FileName)?.TrimStart('.').ToLowerInvariant() ?? "pdf";
-            attestation.DateDelivrance = new DateTimeOffset(request.DateDelivrance).ToUnixTimeMilliseconds();
-            attestation.DateExpiration = new DateTimeOffset(request.DateExpiration).ToUnixTimeMilliseconds();
+            // Mise à jour attestation
+            attestationToUpdate.Donnees = fileData;
+            attestationToUpdate.Extension = Path.GetExtension(file.FileName)?.TrimStart('.').ToLowerInvariant() ?? "pdf";
+            attestationToUpdate.DateDelivrance = new DateTimeOffset(request.DateDelivrance).ToUnixTimeMilliseconds();
+            attestationToUpdate.DateExpiration = new DateTimeOffset(request.DateExpiration).ToUnixTimeMilliseconds();
 
-            _context.Attestations.Update(attestation);
+            _context.Attestations.Update(attestationToUpdate);
 
-            var statutSigneEquip = await _context.Statuts.AsNoTracking().FirstOrDefaultAsync(s => s.Code == "Signe", cancellationToken);
-            if (statutSigneEquip != null) attestation.Demande.IdStatut = statutSigneEquip.Id;
+            // Met à jour le statut de la demande liée (équipement signé)
+            var statutSigneEquip = await _context.Statuts
+                .AsNoTracking()
+                .FirstOrDefaultAsync(s => s.Code == "Signe", cancellationToken);
+
+            if (statutSigneEquip != null)
+                attestationToUpdate.Demande.IdStatut = statutSigneEquip.Id;
 
             await _context.SaveChangesAsync(cancellationToken);
 
@@ -86,7 +102,9 @@ public class UploadCertificatCommandHandler : IRequestHandler<UploadCertificatCo
 
             if (demandesDuDossier.Any() && toutEstTraite)
             {
-                var statutSigneDossier = await _context.Statuts.FirstOrDefaultAsync(s => s.Code == "DossierSigner", cancellationToken);
+                var statutSigneDossier = await _context.Statuts
+                    .FirstOrDefaultAsync(s => s.Code == "DossierSigner", cancellationToken);
+
                 if (statutSigneDossier != null && dossier.IdStatut != statutSigneDossier.Id)
                 {
                     dossier.IdStatut = statutSigneDossier.Id;
@@ -97,8 +115,19 @@ public class UploadCertificatCommandHandler : IRequestHandler<UploadCertificatCo
 
             await transaction.CommitAsync(cancellationToken);
 
-            await _auditService.LogAsync("Signature", $"Certificat chargé pour {attestation.Demande.Equipement}.", "SIGNATURE", dossier.Id);
-            await _notificationService.SendToGroupAsync("DRSCE", "Signature", "Attestation chargée.", "E", $"/dossiers/{dossier.Id}", dossier.Id.ToString());
+            await _auditService.LogAsync(
+                "Signature",
+                $"Certificat chargé pour {attestationToUpdate.Demande.Equipement}.",
+                "SIGNATURE",
+                dossier.Id);
+
+            await _notificationService.SendToGroupAsync(
+                "DRSCE",
+                "Signature",
+                "Attestation chargée.",
+                "E",
+                $"/dossiers/{dossier.Id}",
+                dossier.Id.ToString());
 
             return true;
         }

@@ -12,13 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackOffice.Infrastructure.Migrations
 {
     [DbContext(typeof(BackOfficeDbContext))]
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.Designer.cs
-    [Migration("20260119105134_InitialCreate")]
+    [Migration("20260223145734_InitialCreate")]
     partial class InitialCreate
-========
-    [Migration("20260223120037_AddEmailLoggingToNotifications")]
-    partial class AddEmailLoggingToNotifications
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260223120037_AddEmailLoggingToNotifications.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -129,101 +124,61 @@ namespace BackOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.Designer.cs
-                            Id = new Guid("9da2bd78-47c4-4843-85ae-c696005fa6d1"),
-========
-                            Id = new Guid("6d159023-6452-4773-b43b-230ef911c9e0"),
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260223120037_AddEmailLoggingToNotifications.Designer.cs
+                            Id = new Guid("255a9163-c079-4090-97ca-3c021ae4782f"),
                             Code = "CREATION",
                             Libelle = "Création de données"
                         },
                         new
                         {
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.Designer.cs
-                            Id = new Guid("4d47836d-2f06-47e1-8a3c-afc2ab50628b"),
-========
-                            Id = new Guid("f32fd84c-af8e-42bf-af52-5e1825c9249e"),
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260223120037_AddEmailLoggingToNotifications.Designer.cs
+                            Id = new Guid("02b0768a-79ac-40d1-abbf-4acfb661dc80"),
                             Code = "MODIFICATION",
                             Libelle = "Modification de données"
                         },
                         new
                         {
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.Designer.cs
-                            Id = new Guid("adae6e88-6e93-40db-9eb9-b5d79d4b3657"),
-========
-                            Id = new Guid("c2b04f9d-4b70-444a-a164-42de87f32cfa"),
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260223120037_AddEmailLoggingToNotifications.Designer.cs
+                            Id = new Guid("917e710c-ad56-464f-aaea-82ef1f76d286"),
                             Code = "SUPPRESSION",
                             Libelle = "Suppression de données"
                         },
                         new
                         {
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.Designer.cs
-                            Id = new Guid("d6931afa-b112-4b55-8050-e0327fdfdd19"),
-========
-                            Id = new Guid("5e3f8643-2a3e-4426-bbc7-c96a67cb690f"),
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260223120037_AddEmailLoggingToNotifications.Designer.cs
+                            Id = new Guid("866384a2-2882-4881-9804-1895a212b58e"),
                             Code = "VALIDATION",
                             Libelle = "Validation de processus"
                         },
                         new
                         {
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.Designer.cs
-                            Id = new Guid("d0f22330-ff5c-40ac-923d-e059a1c652a5"),
-========
-                            Id = new Guid("87bb2b5a-a28e-413e-9b29-3a4c7b085438"),
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260223120037_AddEmailLoggingToNotifications.Designer.cs
+                            Id = new Guid("bc6acaf0-31e4-4b19-a711-4b10eeb0c05b"),
                             Code = "CONNEXION",
                             Libelle = "Modification"
                         },
                         new
                         {
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.Designer.cs
-                            Id = new Guid("2b0fe0cd-acc6-429f-9db4-1745d67fb57c"),
-========
-                            Id = new Guid("a41fa40d-38fa-4bd3-8243-528da0aa82a0"),
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260223120037_AddEmailLoggingToNotifications.Designer.cs
+                            Id = new Guid("23c52266-b67d-47c2-8638-0ecfba4398d6"),
                             Code = "MODIFICATION",
                             Libelle = "Connexion utilisateur"
                         },
                         new
                         {
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.Designer.cs
-                            Id = new Guid("7bd2ae35-b879-47f7-b2dc-608deb0c152c"),
-========
-                            Id = new Guid("89cc4ee8-497a-4bf1-915c-b740f20ea703"),
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260223120037_AddEmailLoggingToNotifications.Designer.cs
+                            Id = new Guid("f02a6a38-88e4-489b-8fe7-cf81a390efd0"),
                             Code = "ATTRIBUTION",
                             Libelle = "Attribution de droits/profils"
                         },
                         new
                         {
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.Designer.cs
-                            Id = new Guid("9511286e-3062-44ac-8746-286b734b0e72"),
-========
-                            Id = new Guid("4419f88b-9ab2-4780-9d11-d64c59863d4a"),
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260223120037_AddEmailLoggingToNotifications.Designer.cs
+                            Id = new Guid("0174873c-69d6-457d-a990-6b8ed2024769"),
                             Code = "SECURITE",
                             Libelle = "Action de sécurité"
                         },
                         new
                         {
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.Designer.cs
-                            Id = new Guid("8ec80bd6-4fe6-4642-a525-fcdd9c7b23a3"),
-========
-                            Id = new Guid("db896aa6-ca2f-45f5-b31c-bf6a7707b433"),
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260223120037_AddEmailLoggingToNotifications.Designer.cs
+                            Id = new Guid("fd1be7d6-6c13-4a85-88a7-20a21ce40585"),
                             Code = "COMMUNICATION",
                             Libelle = "Envoi de communication"
                         },
                         new
                         {
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.Designer.cs
-                            Id = new Guid("91f9df2a-4c33-4ab5-b1ad-fbc2c1d939f0"),
-========
-                            Id = new Guid("a3a5fe88-6f16-466a-b259-b432730cc1fb"),
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260223120037_AddEmailLoggingToNotifications.Designer.cs
+                            Id = new Guid("061cdbe9-ba8b-4107-a211-a37fabbedc12"),
                             Code = "QUALIFICATION",
                             Libelle = "Qualification de données"
                         });
@@ -584,19 +539,11 @@ namespace BackOffice.Infrastructure.Migrations
                             Id = new Guid("88888888-8888-8888-8888-888888888888"),
                             ChangementMotPasse = true,
                             Compte = "admin",
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.Designer.cs
-                            DateCreation = 1768819892739L,
-========
-                            DateCreation = 1771848034238L,
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260223120037_AddEmailLoggingToNotifications.Designer.cs
+                            DateCreation = 1771858653878L,
                             Desactive = false,
                             IdProfil = new Guid("11111111-1111-1111-1111-111111111111"),
                             IdUtilisateurType = new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"),
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.Designer.cs
-                            MotPasse = "$2a$11$PX88UVziEdrf/Bwe4ucNbeHgk37Aa5XdZExv.HwRLczEDMgFpSCB6",
-========
-                            MotPasse = "$2a$11$bt1bcLCw/isbFd1/ESg/EuarJ/HXHbLSBW.mx.IptqYDXFHU7QBBi",
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260223120037_AddEmailLoggingToNotifications.Designer.cs
+                            MotPasse = "$2a$11$6ANwRL01kFrOQgA6jMo0.OUCQ3PuSFni4HIHWKvJWrtGr4h6iKZ2u",
                             Nom = "root",
                             Prenoms = "ARPCE",
                             UtilisateurCreation = "SYSTEM_SEED"
@@ -626,20 +573,12 @@ namespace BackOffice.Infrastructure.Migrations
                         },
                         new
                         {
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.Designer.cs
-                            Id = new Guid("4583f6fd-2bd8-4a32-bf12-e5bce856f55a"),
-========
-                            Id = new Guid("22a17862-4189-48c6-ab6d-8980ba19188f"),
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260223120037_AddEmailLoggingToNotifications.Designer.cs
+                            Id = new Guid("0ebff54c-2498-4a3f-80ca-677cb875d644"),
                             Libelle = "Utilisateur Standard"
                         },
                         new
                         {
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.Designer.cs
-                            Id = new Guid("10f810b7-9978-427c-87c1-a2bcb12f234d"),
-========
-                            Id = new Guid("eb2eb459-5ab5-41bb-a95d-0afe49b6714e"),
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260223120037_AddEmailLoggingToNotifications.Designer.cs
+                            Id = new Guid("5de76fc5-5124-49d9-a0bc-662dc7653205"),
                             Libelle = "Auditeur"
                         });
                 });
@@ -1211,6 +1150,9 @@ namespace BackOffice.Infrastructure.Migrations
                     b.Property<Guid>("IdDemande")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Libelle")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Nom")
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
@@ -1256,6 +1198,9 @@ namespace BackOffice.Infrastructure.Migrations
 
                     b.Property<Guid>("IdDossier")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Libelle")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nom")
                         .HasMaxLength(120)
@@ -1381,44 +1326,28 @@ namespace BackOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.Designer.cs
-                            Id = new Guid("83e2450c-e4cf-48ea-a5ed-8e153c468bc8"),
-========
-                            Id = new Guid("72360c60-2084-4fcb-ac2d-73c7873cd1eb"),
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260223120037_AddEmailLoggingToNotifications.Designer.cs
+                            Id = new Guid("75438050-76d8-4169-acab-4248c5f0ae67"),
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.Designer.cs
-                            Id = new Guid("ed0f25f3-741d-4469-aaf6-552c6c1351ae"),
-========
-                            Id = new Guid("3818a39d-907b-4fa1-90c4-07d71bdf8ef2"),
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260223120037_AddEmailLoggingToNotifications.Designer.cs
+                            Id = new Guid("8ccf6fd4-f7f5-42ad-98b2-2d770f8bcd7a"),
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.Designer.cs
-                            Id = new Guid("f8221891-15c8-4dd2-810c-96e607d3b962"),
-========
-                            Id = new Guid("3cca1b10-1351-4368-9cc0-690cffd62c14"),
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260223120037_AddEmailLoggingToNotifications.Designer.cs
+                            Id = new Guid("f92e40b3-8385-422f-a676-0408a3440d23"),
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.Designer.cs
-                            Id = new Guid("4dce936e-8b80-4ffd-ad0a-592bc2ab4c1e"),
-========
-                            Id = new Guid("1752724d-0590-43d8-acb3-481a25e24f5c"),
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260223120037_AddEmailLoggingToNotifications.Designer.cs
+                            Id = new Guid("ae70a9a1-0fd4-4953-be94-6ac72cf20457"),
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1

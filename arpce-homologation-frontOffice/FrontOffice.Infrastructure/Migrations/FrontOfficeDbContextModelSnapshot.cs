@@ -1082,6 +1082,9 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Property<Guid>("IdDemande")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Libelle")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Nom")
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
@@ -1194,28 +1197,28 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0906b711-c3e0-49f6-9443-f6871557c367"),
+                            Id = new Guid("87449d20-374f-4cd9-9290-26c9d03762f0"),
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("65256e0b-6740-40fa-98dc-9f457c7cf50f"),
+                            Id = new Guid("c21d89b6-f451-4ca8-a1c2-3cbc3f9faf39"),
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("5aeb16a6-e930-434d-a0f7-b08ec7df0f4f"),
+                            Id = new Guid("4342ffcc-9f67-4b76-8eef-78962e3f91b0"),
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("278de3c1-4104-4787-9b2e-961955a66ddd"),
+                            Id = new Guid("a898e811-fa0b-46c4-bbe7-1e2166b87477"),
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1

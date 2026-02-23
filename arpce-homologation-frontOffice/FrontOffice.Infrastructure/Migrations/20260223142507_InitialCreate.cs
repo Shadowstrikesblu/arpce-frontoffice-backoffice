@@ -8,11 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FrontOffice.Infrastructure.Migrations
 {
     /// <inheritdoc />
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.cs
     public partial class InitialCreate : Migration
-========
-    public partial class AddEmailLoggingToNotifications : Migration
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20260223120214_AddEmailLoggingToNotifications.cs
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -734,6 +730,7 @@ namespace FrontOffice.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdDemande = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nom = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: true),
+                    Libelle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Donnees = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     Extension = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
                     FilePath = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
@@ -754,51 +751,14 @@ namespace FrontOffice.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.cs
-                table: "adminEvenementsTypes",
-                columns: new[] { "Id", "Code", "Libelle" },
-                values: new object[,]
-                {
-                    { new Guid("2b0fe0cd-acc6-429f-9db4-1745d67fb57c"), "MODIFICATION", "Connexion utilisateur" },
-                    { new Guid("4d47836d-2f06-47e1-8a3c-afc2ab50628b"), "MODIFICATION", "Modification de données" },
-                    { new Guid("7bd2ae35-b879-47f7-b2dc-608deb0c152c"), "ATTRIBUTION", "Attribution de droits/profils" },
-                    { new Guid("8ec80bd6-4fe6-4642-a525-fcdd9c7b23a3"), "COMMUNICATION", "Envoi de communication" },
-                    { new Guid("91f9df2a-4c33-4ab5-b1ad-fbc2c1d939f0"), "QUALIFICATION", "Qualification de données" },
-                    { new Guid("9511286e-3062-44ac-8746-286b734b0e72"), "SECURITE", "Action de sécurité" },
-                    { new Guid("9da2bd78-47c4-4843-85ae-c696005fa6d1"), "CREATION", "Création de données" },
-                    { new Guid("adae6e88-6e93-40db-9eb9-b5d79d4b3657"), "SUPPRESSION", "Suppression de données" },
-                    { new Guid("d0f22330-ff5c-40ac-923d-e059a1c652a5"), "CONNEXION", "Modification" },
-                    { new Guid("d6931afa-b112-4b55-8050-e0327fdfdd19"), "VALIDATION", "Validation de processus" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "adminUtilisateurTypes",
-                columns: new[] { "Id", "Libelle" },
-                values: new object[,]
-                {
-                    { new Guid("10f810b7-9978-427c-87c1-a2bcb12f234d"), "Auditeur" },
-                    { new Guid("4583f6fd-2bd8-4a32-bf12-e5bce856f55a"), "Utilisateur Standard" },
-                    { new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"), "Administrateur" }
-                });
-
-            migrationBuilder.InsertData(
-========
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20260223120214_AddEmailLoggingToNotifications.cs
                 table: "modesReglements",
                 columns: new[] { "Id", "Code", "DateCreation", "DateModification", "Libelle", "MobileBanking", "Remarques", "UtilisateurCreation", "UtilisateurModification" },
                 values: new object[,]
                 {
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.cs
-                    { new Guid("4dce936e-8b80-4ffd-ad0a-592bc2ab4c1e"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
-                    { new Guid("83e2450c-e4cf-48ea-a5ed-8e153c468bc8"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
-                    { new Guid("ed0f25f3-741d-4469-aaf6-552c6c1351ae"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
-                    { new Guid("f8221891-15c8-4dd2-810c-96e607d3b962"), "Especes", null, null, "Espèces", (byte)0, null, null, null }
-========
-                    { new Guid("0906b711-c3e0-49f6-9443-f6871557c367"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
-                    { new Guid("278de3c1-4104-4787-9b2e-961955a66ddd"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
-                    { new Guid("5aeb16a6-e930-434d-a0f7-b08ec7df0f4f"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
-                    { new Guid("65256e0b-6740-40fa-98dc-9f457c7cf50f"), "Cheque", null, null, "Chèque", (byte)0, null, null, null }
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20260223120214_AddEmailLoggingToNotifications.cs
+                    { new Guid("4342ffcc-9f67-4b76-8eef-78962e3f91b0"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
+                    { new Guid("87449d20-374f-4cd9-9290-26c9d03762f0"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
+                    { new Guid("a898e811-fa0b-46c4-bbe7-1e2166b87477"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
+                    { new Guid("c21d89b6-f451-4ca8-a1c2-3cbc3f9faf39"), "Cheque", null, null, "Chèque", (byte)0, null, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -833,14 +793,6 @@ namespace FrontOffice.Infrastructure.Migrations
                     { new Guid("fc01b3e8-82d8-4e55-953f-0fc9edb2a208"), "DevisValideTr", "Devis validé par Trésorerie" }
                 });
 
-<<<<<<<< HEAD:arpce-homologation-backOffice/Arpce.Homologation.BackOffice/BackOffice.Infrastructure/Migrations/20260119105134_InitialCreate.cs
-            migrationBuilder.InsertData(
-                table: "AdminUtilisateurs",
-                columns: new[] { "Id", "AdminProfilsId", "ChangementMotPasse", "Compte", "DateCreation", "DateModification", "DerniereConnexion", "Desactive", "IdProfil", "IdUtilisateurType", "MotPasse", "Nom", "Prenoms", "Remarques", "UtilisateurCreation", "UtilisateurModification" },
-                values: new object[] { new Guid("88888888-8888-8888-8888-888888888888"), null, true, "admin", 1768819892739L, null, null, false, null, new Guid("7e5b7d94-4f5d-4eff-9983-c8f846d3cee6"), "$2a$11$PX88UVziEdrf/Bwe4ucNbeHgk37Aa5XdZExv.HwRLczEDMgFpSCB6", "root", "ARPCE", null, "SYSTEM_SEED", null });
-
-========
->>>>>>>> c8e97c29c01c12abf7786bc70b382c97c1d5b2cc:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20260223120214_AddEmailLoggingToNotifications.cs
             migrationBuilder.CreateIndex(
                 name: "IX_adminJournal_DossierId",
                 table: "adminJournal",
