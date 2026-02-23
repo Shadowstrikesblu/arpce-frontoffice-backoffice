@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using BackOffice.Domain.Entities; 
+using BackOffice.Domain.Entities;
 using System;
 using System.Threading.Tasks;
 
@@ -8,17 +8,21 @@ namespace BackOffice.Application.Common.Interfaces;
 public interface IFileStorageProvider
 {
     /// <summary>
-    /// Sauvegarde un fichie en mémoire et le persiste en tant que DocumentDossier via EF Core.
+    /// Sauvegarde un fichier et le persiste avec un libellé optionnel.
     /// </summary>
-    Task<DocumentDossier> ImportDocumentDossierAsync(IFormFile file, string nom, byte type, Guid dossierId);
+    Task<DocumentDossier> ImportDocumentDossierAsync(IFormFile file, string nom, byte type, Guid dossierId, string? libelle = null);
 
     /// <summary>
-    /// Sauvegarde un fichie en mémoire et le persiste en tant que DocumentDemande via EF Core.
+    /// Sauvegarde une fiche technique ou annexe avec un libellé optionnel.
     /// </summary>
-    Task<DocumentDemande> ImportDocumentDemandeAsync(IFormFile file, string nom, Guid demandeId);
+    Task<DocumentDemande> ImportDocumentDemandeAsync(IFormFile file, string nom, Guid demandeId, string? libelle = null);
 
     Task<(byte[] content, string fileName, string contentType)> ExportDocumentDossierAsync(Guid documentId);
     Task<(byte[] content, string fileName, string contentType)> ExportDocumentDemandeAsync(Guid documentId);
     Task<string> UploadSignatureAsync(IFormFile file);
-    Task<DocumentDossier> SaveDocumentDossierFromBytesAsync(byte[] content, string nom, byte type, Guid dossierId);
+
+    /// <summary>
+    /// Sauvegarde un document généré (ex: reçu) avec un libellé.
+    /// </summary>
+    Task<DocumentDossier> SaveDocumentDossierFromBytesAsync(byte[] content, string nom, byte type, Guid dossierId, string? libelle = null);
 }

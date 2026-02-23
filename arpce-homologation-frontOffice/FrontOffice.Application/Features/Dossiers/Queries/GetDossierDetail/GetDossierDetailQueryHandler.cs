@@ -95,6 +95,7 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                     {
                         Id = doc.Id,
                         Nom = doc.Nom,
+                        Libelle = doc.Libelle,
                         Extension = doc.Extension,
                         FilePath = $"/api/documents/demande/{doc.Id}/download"
                     }).ToList()

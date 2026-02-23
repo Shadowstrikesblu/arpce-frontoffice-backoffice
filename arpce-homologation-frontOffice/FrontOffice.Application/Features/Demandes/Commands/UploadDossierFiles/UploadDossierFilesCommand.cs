@@ -10,4 +10,5 @@ public class UploadDossierFilesCommand : IRequest<bool>
     public IFormFile LettreDemande { get; set; } = default!;
     public IFormFile FicheTechnique { get; set; } = default!;
     public List<IFormFile>? DocumentsSupplementaires { get; set; }
+    public List<string>? LibellesDocumentsSupplementaires { get; set; }
 }

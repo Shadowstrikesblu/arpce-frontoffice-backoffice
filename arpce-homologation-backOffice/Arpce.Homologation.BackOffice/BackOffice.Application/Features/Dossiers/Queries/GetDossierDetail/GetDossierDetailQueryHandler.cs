@@ -96,7 +96,7 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
             } : null,
 
             Commentaires = dossier.Commentaires.Select(com => new CommentaireDto { Id = com.Id, CommentaireTexte = com.CommentaireTexte, NomInstructeur = com.NomInstructeur, DateCommentaire = com.DateCommentaire }).ToList(),
-            Documents = dossier.DocumentsDossiers.Select(doc => new DocumentDossierDto { Id = doc.Id, Nom = doc.Nom, FilePath = $"/api/demandes/dossier/{doc.Id}/download" }).ToList(),
+            Documents = dossier.DocumentsDossiers.Select(doc => new DocumentDossierDto { Id = doc.Id, Nom = doc.Nom, Libelle = doc.Libelle, FilePath = $"/api/demandes/dossier/{doc.Id}/download" }).ToList(),
 
             Devis = dossier.Devis.Select(dev => new DevisDto
             {
