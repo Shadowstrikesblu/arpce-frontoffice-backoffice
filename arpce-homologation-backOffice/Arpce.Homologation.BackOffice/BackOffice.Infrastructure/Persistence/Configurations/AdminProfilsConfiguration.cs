@@ -22,5 +22,11 @@ public class AdminProfilsConfiguration : IEntityTypeConfiguration<AdminProfils>
         builder.Property(ap => ap.UtilisateurModification).HasMaxLength(60);
         builder.Property(p => p.DateModification)
                 .HasColumnType("bigint");
+
+        builder.HasData(
+        new AdminProfils { Id = new Guid("11111111-1111-1111-1111-111111111111"), Code = "ADMIN", Libelle = "Administrateur" }
+        //new AdminProfils { Id = new Guid("22222222-2222-2222-2222-222222222222"), Code = "DRSCE", Libelle = "Direction Technique" },
+        //new AdminProfils { Id = new Guid("33333333-3333-3333-3333-333333333333"), Code = "DAFC", Libelle = "Direction Financière" }
+    );
     }
 }

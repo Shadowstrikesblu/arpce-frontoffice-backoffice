@@ -1,6 +1,9 @@
 ﻿using BackOffice.Application.Common.Interfaces;
 using BackOffice.Domain.Entities;
 using MediatR;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Admin.Commands.CreateAdmin;
 
@@ -27,6 +30,7 @@ public class CreateAdminCommandHandler : IRequestHandler<CreateAdminCommand, boo
         {
             Id = Guid.NewGuid(),
             Compte = request.Compte,
+            Email = request.Email,
             Nom = request.Nom,
             Prenoms = request.Prenoms,
             MotPasse = hashedPassword,
@@ -35,6 +39,7 @@ public class CreateAdminCommandHandler : IRequestHandler<CreateAdminCommand, boo
             IdUtilisateurType = request.IdUtilisateurType,
             IdProfil = request.IdProfil,
             DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+            UtilisateurCreation = "SYSTEM_ADMIN"
         };
 
         _context.AdminUtilisateurs.Add(admin);
@@ -42,7 +47,7 @@ public class CreateAdminCommandHandler : IRequestHandler<CreateAdminCommand, boo
 
         await _auditService.LogAsync(
             page: "Gestion des Utilisateurs",
-            libelle: $"Création de l'utilisateur admin '{request.Compte}'.",
+            libelle: $"Création de l'utilisateur admin '{request.Compte}' (Email: {request.Email}).",
             eventTypeCode: "CREATION");
 
         return true;

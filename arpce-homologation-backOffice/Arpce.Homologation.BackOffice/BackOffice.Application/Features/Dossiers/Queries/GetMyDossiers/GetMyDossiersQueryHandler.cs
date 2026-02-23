@@ -26,50 +26,16 @@ public class GetMyDossiersQueryHandler : IRequestHandler<GetMyDossiersQuery, Dos
     public async Task<DossiersListVm> Handle(GetMyDossiersQuery request, CancellationToken cancellationToken)
     {
         var agentId = _currentUserService.UserId;
-        if (!agentId.HasValue)
-        {
-            throw new UnauthorizedAccessException("Accès non autorisé. L'authentification de l'agent est requise.");
-        }
+        if (!agentId.HasValue) throw new UnauthorizedAccessException();
 
-        var query = _context.Dossiers.AsNoTracking();
-
-        query = query.Where(d => d.IdAgentInstructeur == agentId.Value);
-
-        if (!string.IsNullOrWhiteSpace(request.Parameters.Recherche))
-        {
-            var searchTerm = request.Parameters.Recherche.Trim().ToLower();
-            query = query.Where(d =>
-                d.Numero.ToLower().Contains(searchTerm) ||
-                d.Libelle.ToLower().Contains(searchTerm) ||
-                (d.Client != null && d.Client.RaisonSociale.ToLower().Contains(searchTerm))
-            );
-        }
-
-        if (!string.IsNullOrWhiteSpace(request.Parameters.Status))
-        {
-            var statusTerm = request.Parameters.Status.Trim();
-            query = query.Where(d => d.Statut.Code == statusTerm);
-        }
-
-        bool isDescending = request.Parameters.Ordre?.ToLower() == "desc";
-        query = request.Parameters.TrierPar?.ToLower() switch
-        {
-            "date_creation" => isDescending ? query.OrderByDescending(d => d.DateCreation) : query.OrderBy(d => d.DateCreation),
-            "date-update" => isDescending ? query.OrderByDescending(d => d.DateModification) : query.OrderBy(d => d.DateModification),
-            "libelle" => isDescending ? query.OrderByDescending(d => d.Libelle) : query.OrderBy(d => d.Libelle),
-            _ => query.OrderByDescending(d => d.DateCreation)
-        };
+        var query = _context.Dossiers.AsNoTracking().Where(d => d.IdAgentInstructeur == agentId.Value);
 
         var totalCount = await query.CountAsync(cancellationToken);
-        if (totalCount == 0)
-        {
-            return new DossiersListVm { Page = request.Parameters.Page, TotalPage = 0, Dossiers = new() };
-        }
 
         var dossiersPaged = await query
             .Include(d => d.Client)
             .Include(d => d.Statut)
-            .Include(d => d.Demande) 
+            .Include(d => d.Demande) // Singulier
             .Skip((request.Parameters.Page - 1) * request.Parameters.TaillePage)
             .Take(request.Parameters.TaillePage)
             .ToListAsync(cancellationToken);
@@ -83,19 +49,21 @@ public class GetMyDossiersQueryHandler : IRequestHandler<GetMyDossiersQuery, Dos
             Client = dossier.Client != null ? new ClientDto { Id = dossier.Client.Id, RaisonSociale = dossier.Client.RaisonSociale } : null,
             Statut = dossier.Statut != null ? new StatutDto { Id = dossier.Statut.Id, Code = dossier.Statut.Code, Libelle = dossier.Statut.Libelle } : null,
 
-            Demandes = dossier.Demande != null
-                ? new List<DemandeDto> { new DemandeDto { Id = dossier.Demande.Id, Equipement = dossier.Demande.Equipement, Modele = dossier.Demande.Modele, Marque = dossier.Demande.Marque } }
-                : new List<DemandeDto>()
+            // Mapping 1:1
+            Demande = dossier.Demande != null ? new DemandeDto
+            {
+                Id = dossier.Demande.Id,
+                Equipement = dossier.Demande.Equipement,
+                Modele = dossier.Demande.Modele
+            } : null
         }).ToList();
 
-        var viewModel = new DossiersListVm
+        return new DossiersListVm
         {
             Dossiers = dossierDtos,
             Page = request.Parameters.Page,
             PageTaille = request.Parameters.TaillePage,
             TotalPage = (int)Math.Ceiling(totalCount / (double)request.Parameters.TaillePage)
         };
-
-        return viewModel;
     }
 }

@@ -20,6 +20,7 @@ public class AdminUtilisateur
     public long? DateCreation { get; set; }
     public string? UtilisateurModification { get; set; }
     public long? DateModification { get; set; }
+    public string? Email { get; set; }
     public virtual Signataire? Signataire { get; set; }
     public virtual AdminProfils? Profil { get; set; }
     public virtual AdminUtilisateurTypes? UtilisateurType { get; set; }

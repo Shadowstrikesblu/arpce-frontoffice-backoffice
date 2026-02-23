@@ -151,17 +151,21 @@ namespace FrontOffice.Infrastructure.Migrations
                     TypeEquipement = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     TypeClient = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     FormuleHomologation = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    QuantiteReference = table.Column<int>(type: "int", nullable: true),
                     FraisEtude = table.Column<decimal>(type: "money", nullable: true),
                     FraisHomologation = table.Column<decimal>(type: "money", nullable: true),
+                    FraisControle = table.Column<decimal>(type: "money", nullable: true),
                     FraisHomologationParLot = table.Column<byte>(type: "tinyint", nullable: true),
                     FraisHomologationQuantiteParLot = table.Column<int>(type: "int", nullable: true),
-                    FraisControle = table.Column<decimal>(type: "money", nullable: true),
-                    Remarques = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
+                    QuantiteReference = table.Column<int>(type: "int", nullable: true),
                     CoutUnitaire = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false, defaultValue: 0m),
                     EstCalculeParQuantite = table.Column<bool>(type: "bit", nullable: false),
                     TypeCalcul = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false, defaultValue: "FORFAIT"),
-                    ReferenceLoiFinance = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ReferenceLoiFinance = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    QtyMin = table.Column<int>(type: "int", nullable: true),
+                    QtyMax = table.Column<int>(type: "int", nullable: true),
+                    ModeCalcul = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    BlockSize = table.Column<int>(type: "int", nullable: true),
+                    Remarques = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
                     UtilisateurCreation = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     DateCreation = table.Column<long>(type: "bigint", nullable: true),
                     UtilisateurModification = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
@@ -750,10 +754,10 @@ namespace FrontOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "DateCreation", "DateModification", "Libelle", "MobileBanking", "Remarques", "UtilisateurCreation", "UtilisateurModification" },
                 values: new object[,]
                 {
-                    { new Guid("0a6db8b3-7a73-40f2-8caa-370cc54924bd"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
-                    { new Guid("19e5e5ac-b4f6-4939-bf6a-d0b1e04fb2ef"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
-                    { new Guid("7afe870c-ccbe-403b-97c7-505407bbe215"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
-                    { new Guid("b78e682f-5d5d-48cf-b929-fb7fbec9eb9e"), "Especes", null, null, "Espèces", (byte)0, null, null, null }
+                    { new Guid("0906b711-c3e0-49f6-9443-f6871557c367"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
+                    { new Guid("278de3c1-4104-4787-9b2e-961955a66ddd"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
+                    { new Guid("5aeb16a6-e930-434d-a0f7-b08ec7df0f4f"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
+                    { new Guid("65256e0b-6740-40fa-98dc-9f457c7cf50f"), "Cheque", null, null, "Chèque", (byte)0, null, null, null }
                 });
 
             migrationBuilder.InsertData(

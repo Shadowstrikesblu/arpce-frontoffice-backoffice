@@ -158,5 +158,27 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
 
         // On retourne l'URL relative pour le Front-end
         return $"/uploads/signatures/{fileName}";
+
+
+    }
+
+
+    public async Task<DocumentDossier> SaveDocumentDossierFromBytesAsync(byte[] content, string nom, byte type, Guid dossierId)
+    {
+        var document = new DocumentDossier
+        {
+            Id = Guid.NewGuid(),
+            IdDossier = dossierId,
+            Nom = nom,
+            Extension = "pdf",
+            Type = type,
+            Donnees = content, 
+            DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+            UtilisateurCreation = "SYSTEM_CAISSE"
+        };
+
+        _context.DocumentsDossiers.Add(document);
+
+        return document;
     }
 }

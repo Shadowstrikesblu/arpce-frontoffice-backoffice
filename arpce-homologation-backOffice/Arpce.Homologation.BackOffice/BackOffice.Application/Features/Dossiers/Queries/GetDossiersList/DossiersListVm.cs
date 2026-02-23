@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using BackOffice.Application.Common.DTOs;
+using System.Collections.Generic;
 
 namespace BackOffice.Application.Features.Dossiers.Queries.GetDossiersList;
 

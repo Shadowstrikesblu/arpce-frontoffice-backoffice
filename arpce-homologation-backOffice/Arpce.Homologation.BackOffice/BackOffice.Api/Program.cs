@@ -89,6 +89,7 @@ builder.Services.AddScoped<IFileStorageProvider, DatabaseFileStorageProvider>();
 builder.Services.AddTransient<INotificationService, SignalRNotificationService>();
 builder.Services.AddTransient<ICertificateGeneratorService, CertificateGeneratorService>();
 builder.Services.AddTransient<IDevisGeneratorService, DevisGeneratorService>();
+builder.Services.AddTransient<IReceiptGeneratorService, ReceiptGeneratorService>();
 
 // Configuration de l'Authentification JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
