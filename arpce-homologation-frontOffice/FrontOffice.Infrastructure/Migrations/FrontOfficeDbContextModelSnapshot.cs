@@ -31,6 +31,12 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Property<long?>("DateCreation")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("DateDemandeEchantillon")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DateEnvoiDevis")
+                        .HasColumnType("bigint");
+
                     b.Property<long?>("DateModification")
                         .HasColumnType("bigint");
 
@@ -58,6 +64,11 @@ namespace FrontOffice.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
+
+                    b.Property<bool>("PenaliteAppliquee")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("UtilisateurCreation")
                         .HasMaxLength(60)
@@ -1031,6 +1042,11 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Property<decimal?>("MontantHomologation")
                         .HasColumnType("money");
 
+                    b.Property<decimal>("MontantPenalite")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValue(0m);
+
                     b.Property<string>("PaiementMobileId")
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
@@ -1131,6 +1147,9 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Property<Guid>("IdDossier")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Libelle")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Nom")
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
@@ -1197,28 +1216,28 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("87449d20-374f-4cd9-9290-26c9d03762f0"),
+                            Id = new Guid("299c1953-2c50-474e-9ec1-efa00911ea70"),
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("c21d89b6-f451-4ca8-a1c2-3cbc3f9faf39"),
+                            Id = new Guid("166cee73-33d0-49ff-859a-661348530e06"),
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("4342ffcc-9f67-4b76-8eef-78962e3f91b0"),
+                            Id = new Guid("a6152542-6110-4397-a902-8bbbd9ee343d"),
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("a898e811-fa0b-46c4-bbe7-1e2166b87477"),
+                            Id = new Guid("d2db9d23-afb8-44c2-a825-8e32d12d76be"),
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1

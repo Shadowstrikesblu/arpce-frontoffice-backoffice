@@ -1,6 +1,8 @@
 ﻿using BackOffice.Application.Common.Interfaces;
+using BackOffice.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace BackOffice.Application.Features.Dossiers.Commands.SendMail;
 
@@ -9,18 +11,21 @@ public class SendMailToClientCommandHandler : IRequestHandler<SendMailToClientCo
     private readonly IApplicationDbContext _context;
     private readonly IEmailService _emailService;
     private readonly IAuditService _auditService;
-    private readonly INotificationService _notificationService; 
+    private readonly INotificationService _notificationService;
+    private readonly ILogger<SendMailToClientCommandHandler> _logger;
 
     public SendMailToClientCommandHandler(
         IApplicationDbContext context,
         IEmailService emailService,
         IAuditService auditService,
-        INotificationService notificationService) 
+        INotificationService notificationService,
+        ILogger<SendMailToClientCommandHandler> logger)
     {
         _context = context;
         _emailService = emailService;
         _auditService = auditService;
         _notificationService = notificationService;
+        _logger = logger;
     }
 
     public async Task<bool> Handle(SendMailToClientCommand request, CancellationToken cancellationToken)
@@ -30,35 +35,32 @@ public class SendMailToClientCommandHandler : IRequestHandler<SendMailToClientCo
             .FirstOrDefaultAsync(d => d.Id == request.DossierId, cancellationToken);
 
         if (dossier == null) throw new Exception("Dossier introuvable.");
-        if (dossier.Client?.Email == null) throw new Exception("Le client n'a pas d'adresse e-mail.");
+        if (string.IsNullOrEmpty(dossier.Client?.Email)) throw new Exception("Le client n'a pas d'adresse e-mail.");
 
-        string subject = "";
-        string body = "";
+        await _emailService.SendEmailAsync(dossier.Client.Email, request.Sujet, request.Corps, request.Attachments);
 
-        switch (request.Type)
+        if (!string.IsNullOrEmpty(request.NouveauStatusCode))
         {
-            case "RappelPaiement":
-                subject = $"Rappel de Paiement - Dossier {dossier.Numero}";
-                body = $"<h1>Rappel</h1><p>Bonjour, nous vous rappelons que le paiement pour votre dossier d'homologation N°{dossier.Numero} est en attente.</p>";
-                break;
-            default:
-                throw new Exception($"Type de mail '{request.Type}' non supporté.");
+            var statut = await _context.Statuts.FirstOrDefaultAsync(s => s.Code == request.NouveauStatusCode, cancellationToken);
+            if (statut != null)
+            {
+                dossier.IdStatut = statut.Id;
+                dossier.DateModification = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            }
         }
 
-        await _emailService.SendEmailAsync(dossier.Client.Email, subject, body);
+        _context.Commentaires.Add(new Commentaire
+        {
+            Id = Guid.NewGuid(),
+            IdDossier = dossier.Id,
+            CommentaireTexte = $"[EMAIL ENVOYÉ] Sujet: {request.Sujet}",
+            DateCommentaire = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+            NomInstructeur = "Système / Agent"
+        });
 
-        await _auditService.LogAsync(
-            page: "Communication Client",
-            libelle: $"Envoi d'un e-mail de type '{request.Type}' pour le dossier '{dossier.Numero}'.",
-            eventTypeCode: "COMMUNICATION",
-            dossierId: dossier.Id);
+        await _context.SaveChangesAsync(cancellationToken);
 
-        await _notificationService.SendToGroupAsync(
-            profilCode: "DAFC",
-            title: "Communication Client",
-            message: $"Un rappel de paiement a été envoyé pour le dossier {dossier.Numero}.",
-            type: "V" 
-        );
+        await _auditService.LogAsync("Communication", $"Email envoyé au client: {request.Sujet}", "EMAIL", dossier.Id);
 
         return true;
     }

@@ -2,6 +2,11 @@
 using FrontOffice.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace FrontOffice.Application.Features.Dossiers.Queries.GetDossiersList;
 
@@ -25,12 +30,15 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
             .AsNoTracking()
             .Where(d => d.IdClient == userId.Value)
             .Include(d => d.Statut)
-            .Include(d => d.DocumentsDossiers) 
-            .Include(d => d.Devis) 
+            .Include(d => d.DocumentsDossiers)
+            .Include(d => d.Devis)
             .Include(d => d.Demande).ThenInclude(dem => dem.Statut)
             .Include(d => d.Demande).ThenInclude(dem => dem.Attestations)
             .Include(d => d.Demande).ThenInclude(dem => dem.DocumentsDemandes)
-            .Include(d => d.Demande).ThenInclude(dem => dem.Beneficiaire) 
+            .Include(d => d.Demande).ThenInclude(dem => dem.Beneficiaire)
+            // --- INCLUSIONS MANQUANTES AJOUTÉES ---
+            .Include(d => d.Demande).ThenInclude(dem => dem.CategorieEquipement)
+            .Include(d => d.Demande).ThenInclude(dem => dem.MotifRejet)
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(request.Parameters.Recherche))
@@ -55,21 +63,33 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
             Libelle = dossier.Libelle,
             Statut = dossier.Statut != null ? new StatutDto { Id = dossier.Statut.Id, Code = dossier.Statut.Code, Libelle = dossier.Statut.Libelle } : null,
 
+            // MAPPING COMPLET DES DOCUMENTS DU DOSSIER (Avec Libellé et Type)
             Documents = dossier.DocumentsDossiers.Select(doc => new DocumentDossierDto
             {
                 Id = doc.Id,
                 Nom = doc.Nom,
+                Libelle = doc.Libelle,
+                Type = doc.Type,
                 Extension = doc.Extension,
                 FilePath = $"/api/documents/dossier/{doc.Id}/download"
             }).ToList(),
 
-            Devis = dossier.Devis?.Select(dev => new DevisDto { Id = dev.Id, PaiementOk = dev.PaiementOk }).ToList() ?? new(),
+            Devis = dossier.Devis?.Select(dev => new DevisDto
+            {
+                Id = dev.Id,
+                Date = dev.Date,
+                MontantEtude = dev.MontantEtude,
+                MontantHomologation = dev.MontantHomologation,
+                MontantControle = dev.MontantControle,
+                PaiementOk = dev.PaiementOk
+            }).ToList() ?? new(),
 
             Demandes = dossier.Demande != null ? new List<DemandeDto>
             {
                 new DemandeDto
                 {
                     Id = dossier.Demande.Id,
+                    IdDossier = dossier.Id,
                     Equipement = dossier.Demande.Equipement,
                     Modele = dossier.Demande.Modele,
                     Marque = dossier.Demande.Marque,
@@ -80,6 +100,8 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
                     PrixUnitaire = dossier.Demande.PrixUnitaire,
                     Remise = dossier.Demande.Remise,
                     EstHomologable = dossier.Demande.EstHomologable,
+                    RequiertEchantillon = dossier.Demande.RequiertEchantillon,
+                    EchantillonSoumis = dossier.Demande.EchantillonSoumis,
 
                     Statut = dossier.Demande.Statut != null ? new StatutDto
                     {
@@ -88,8 +110,23 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
                         Libelle = dossier.Demande.Statut.Libelle
                     } : null,
 
+                    CategorieEquipement = dossier.Demande.CategorieEquipement != null ? new CategorieEquipementDto
+                    {
+                        Id = dossier.Demande.CategorieEquipement.Id,
+                        Code = dossier.Demande.CategorieEquipement.Code,
+                        Libelle = dossier.Demande.CategorieEquipement.Libelle
+                    } : null,
+
+                    MotifRejet = dossier.Demande.MotifRejet != null ? new MotifRejetDto
+                    {
+                        Id = dossier.Demande.MotifRejet.Id,
+                        Code = dossier.Demande.MotifRejet.Code,
+                        Libelle = dossier.Demande.MotifRejet.Libelle
+                    } : null,
+
                     Beneficiaire = dossier.Demande.Beneficiaire != null ? new BeneficiaireDto
                     {
+                        //Id = dossier.Demande.Beneficiaire.Id,
                         Nom = dossier.Demande.Beneficiaire.Nom,
                         Email = dossier.Demande.Beneficiaire.Email,
                         Telephone = dossier.Demande.Beneficiaire.Telephone,
@@ -101,6 +138,7 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
                     {
                         Id = doc.Id,
                         Nom = doc.Nom,
+                        Libelle = doc.Libelle,
                         Extension = doc.Extension,
                         FilePath = $"/api/documents/demande/{doc.Id}/download"
                     }).ToList()
@@ -114,6 +152,7 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
                     {
                         Id = att.Id,
                         DateDelivrance = att.DateDelivrance,
+                        DateExpiration = att.DateExpiration,
                         FilePath = $"/api/documents/certificat/{att.Id}/download"
                     }).ToList()
                 : new List<AttestationDto>()
@@ -124,6 +163,7 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
         {
             Dossiers = dossierDtos,
             Page = request.Parameters.Page,
+            PageTaille = request.Parameters.TaillePage,
             TotalPage = (int)Math.Ceiling(totalCount / (double)request.Parameters.TaillePage),
             Recherche = request.Parameters.Recherche
         };

@@ -9,6 +9,9 @@ using Microsoft.Extensions.Logging;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace BackOffice.Infrastructure.Services;
 
@@ -19,10 +22,7 @@ public class DevisGeneratorService : IDevisGeneratorService
     private readonly ILogger<DevisGeneratorService> _logger;
     private readonly string _logoPath;
 
-    public DevisGeneratorService(
-        IApplicationDbContext context,
-        IConfiguration configuration,
-        ILogger<DevisGeneratorService> logger)
+    public DevisGeneratorService(IApplicationDbContext context, IConfiguration configuration, ILogger<DevisGeneratorService> logger)
     {
         _context = context;
         _logger = logger;
@@ -38,15 +38,14 @@ public class DevisGeneratorService : IDevisGeneratorService
             .Include(d => d.Dossier).ThenInclude(dos => dos.Client)
             .FirstOrDefaultAsync(d => d.Id == devisId);
 
-        if (devis == null)
-        {
-            _logger.LogError("Devis introuvable pour génération PDF : {DevisId}", devisId);
-            throw new FileNotFoundException("Devis introuvable.");
-        }
+        if (devis == null) throw new FileNotFoundException("Devis introuvable.");
 
         byte[] logoBytes = File.Exists(_logoPath) ? await File.ReadAllBytesAsync(_logoPath) : Array.Empty<byte>();
 
-        var total = devis.MontantEtude + (devis.MontantHomologation ?? 0) + (devis.MontantControle ?? 0);
+        var total = devis.MontantEtude
+                    + (devis.MontantHomologation ?? 0)
+                    + (devis.MontantControle ?? 0)
+                    + devis.MontantPenalite; 
 
         var pdfBytes = Document.Create(container =>
         {
@@ -75,6 +74,7 @@ public class DevisGeneratorService : IDevisGeneratorService
                     col.Item().Text(text => { text.Span("Client : ").SemiBold(); text.Span(devis.Dossier.Client.RaisonSociale); });
                     col.Item().Text(text => { text.Span("Dossier N° : ").SemiBold(); text.Span(devis.Dossier.Numero); });
                     col.Item().Text(text => { text.Span("Objet : ").SemiBold(); text.Span(devis.Dossier.Libelle); });
+
                     col.Item().PaddingTop(20).Table(table =>
                     {
                         table.ColumnsDefinition(columns => { columns.RelativeColumn(3); columns.RelativeColumn(1); });
@@ -88,6 +88,12 @@ public class DevisGeneratorService : IDevisGeneratorService
 
                         table.Cell().Border(1).Padding(5).Text("Frais de contrôle sur site");
                         table.Cell().Border(1).Padding(5).AlignRight().Text($"{devis.MontantControle:N0}");
+
+                        if (devis.MontantPenalite > 0)
+                        {
+                            table.Cell().Border(1).Padding(5).Text("Pénalité de retard (10%)").FontColor(Colors.Red.Medium).Bold();
+                            table.Cell().Border(1).Padding(5).AlignRight().Text($"{devis.MontantPenalite:N0}").FontColor(Colors.Red.Medium).Bold();
+                        }
 
                         table.Cell().Border(1).Padding(5).Background(Colors.Grey.Lighten3).Text("MONTANT TOTAL HT").Bold();
                         table.Cell().Border(1).Padding(5).Background(Colors.Grey.Lighten3).AlignRight().Text($"{total:N0}").Bold();

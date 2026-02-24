@@ -12,7 +12,11 @@ public class Dossier : AuditableEntity
     public long DateOuverture { get; set; }
     public string Numero { get; set; } = string.Empty;
     public string Libelle { get; set; } = string.Empty;
-
+    public long? DateEnvoiDevis { get; set; }         
+    public long? DateDemandeEchantillon { get; set; } 
+    public bool PenaliteAppliquee { get; set; } = false;
+    public bool RappelPaiementEnvoye { get; set; } = false;
+    public bool RappelEchantillonEnvoye { get; set; } = false;
     public Guid? IdAgentInstructeur { get; set; }
 
     public virtual Client Client { get; set; } = default!;

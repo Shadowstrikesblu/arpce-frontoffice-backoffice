@@ -10,7 +10,7 @@ namespace FrontOffice.Infrastructure.Services;
 
 /// <summary>
 /// Gère le stockage des fichiers directement dans la base de données via Entity Framework Core.
-/// Cette version n'appelle PAS SaveChanges, permettant le contrôle par une transaction externe.
+/// Cette version implémente l'interface complète incluant les libellés et la gestion des flux binaires.
 /// </summary>
 public class DatabaseFileStorageProvider : IFileStorageProvider
 {
@@ -29,29 +29,29 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
     // --------------------------------------------------------------------
 
     /// <summary>
-    /// Prépare une entité DocumentDossier pour l'insertion sans la sauvegarder.
+    /// Prépare une entité DocumentDossier pour l'insertion (avec libellé optionnel).
     /// </summary>
-    public async Task<DocumentDossier> ImportDocumentDossierAsync(
-        IFormFile file,
-        string nom,
-        byte type,
-        Guid dossierId,
-        string? utilisateurCreation)
+    public async Task<DocumentDossier> ImportDocumentDossierAsync(IFormFile file, string nom, byte type, Guid dossierId, string? libelle = null)
     {
-        if (file == null || file.Length == 0)
-            throw new InvalidOperationException("Fichier invalide ou vide.");
+        if (file == null || file.Length == 0) throw new ArgumentException("Le fichier est vide.");
 
-        var fileData = await ReadFileBytesAsync(file);
+        byte[] fileData;
+        using (var memoryStream = new MemoryStream())
+        {
+            await file.CopyToAsync(memoryStream);
+            fileData = memoryStream.ToArray();
+        }
 
         var document = new DocumentDossier
         {
             Id = Guid.NewGuid(),
             IdDossier = dossierId,
             Nom = nom,
+            Libelle = libelle, 
             Type = type,
-            Extension = GetExtension(file.FileName),
+            Extension = Path.GetExtension(file.FileName)?.TrimStart('.').ToLowerInvariant() ?? string.Empty,
             Donnees = fileData,
-            UtilisateurCreation = string.IsNullOrWhiteSpace(utilisateurCreation) ? DefaultUser : utilisateurCreation,
+            UtilisateurCreation = "API_UPLOAD",
             DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
 
@@ -60,25 +60,26 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
     }
 
     /// <summary>
-    /// Prépare une entité DocumentDemande pour l'insertion sans la sauvegarder.
+    /// Prépare une entité DocumentDemande pour l'insertion (avec libellé optionnel).
     /// </summary>
-    public async Task<DocumentDemande> ImportDocumentDemandeAsync(
-        IFormFile file,
-        string nom,
-        Guid demandeId,
-        string? utilisateurCreation)
+    public async Task<DocumentDemande> ImportDocumentDemandeAsync(IFormFile file, string nom, Guid demandeId, string? libelle = null)
     {
-        if (file == null || file.Length == 0)
-            throw new InvalidOperationException("Fichier invalide ou vide.");
+        if (file == null || file.Length == 0) throw new ArgumentException("Le fichier est vide.");
 
-        var fileData = await ReadFileBytesAsync(file);
+        byte[] fileData;
+        using (var memoryStream = new MemoryStream())
+        {
+            await file.CopyToAsync(memoryStream);
+            fileData = memoryStream.ToArray();
+        }
 
         var document = new DocumentDemande
         {
             Id = Guid.NewGuid(),
             IdDemande = demandeId,
             Nom = nom,
-            Extension = GetExtension(file.FileName),
+            Libelle = libelle, // Prise en compte du libellé
+            Extension = Path.GetExtension(file.FileName)?.TrimStart('.').ToLowerInvariant() ?? string.Empty,
             Donnees = fileData,
             UtilisateurCreation = string.IsNullOrWhiteSpace(utilisateurCreation) ? DefaultUser : utilisateurCreation,
             DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
@@ -89,38 +90,40 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
     }
 
     /// <summary>
-    /// Enregistre une signature en base (comme DocumentDossier "signature") sans sauvegarder.
-    /// Retourne un identifiant (Guid) sous forme de string.
+    /// Sauvegarde un document généré (ex: reçu PDF) directement à partir de données binaires.
     /// </summary>
-    public async Task<string> UploadSignatureAsync(IFormFile file)
+    public async Task<DocumentDossier> SaveDocumentDossierFromBytesAsync(byte[] content, string nom, byte type, Guid dossierId, string? libelle = null)
     {
-        if (file == null || file.Length == 0)
-            throw new InvalidOperationException("Signature invalide ou vide.");
-
-        var fileData = await ReadFileBytesAsync(file);
-        var id = Guid.NewGuid();
-
-        // Si vous avez une table dédiée aux signatures, remplacez ceci par votre entité.
         var document = new DocumentDossier
         {
-            Id = id,
-            IdDossier = Guid.Empty,      // pas lié à un dossier ici (adapter si besoin)
-            Nom = "signature",
-            Type = SignatureDocType,
-            Extension = GetExtension(file.FileName),
-            Donnees = fileData,
-            UtilisateurCreation = DefaultUser,
+            Id = Guid.NewGuid(),
+            IdDossier = dossierId,
+            Nom = nom,
+            Libelle = libelle,
+            Extension = "pdf",
+            Type = type,
+            Donnees = content,
+            UtilisateurCreation = "SYSTEM_GEN",
             DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
 
         _context.DocumentsDossiers.Add(document);
 
-        // Pas de SaveChanges ici (transaction externe)
-        return id.ToString();
+        return document;
     }
 
     /// <summary>
-    /// Crée un DocumentDossier à partir d'un byte[] sans sauvegarder.
+    /// Signature factice pour le FrontOffice (le stockage physique des signatures est géré par le BackOffice).
+    /// Implémenté pour respecter le contrat d'interface.
+    /// </summary>
+    public Task<string> UploadSignatureAsync(IFormFile file)
+    {
+        // Le Front-Office n'a généralement pas besoin de cette méthode
+        throw new NotImplementedException("La gestion des images de signature est réservée au Back-Office.");
+    }
+
+    /// <summary>
+    /// Récupère les données binaires d'un DocumentDossier.
     /// </summary>
     public Task<DocumentDossier> SaveDocumentDossierFromBytesAsync(
         byte[] data,
@@ -177,6 +180,9 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
         return (document.Donnees, fileName, contentType);
     }
 
+    /// <summary>
+    /// Récupère les données binaires d'un DocumentDemande.
+    /// </summary>
     public async Task<(byte[] content, string fileName, string contentType)> ExportDocumentDemandeAsync(Guid documentId)
     {
         var document = await _context.DocumentsDemandes
@@ -212,8 +218,7 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
         return extension switch
         {
             ".pdf" => "application/pdf",
-            ".jpg" => "image/jpeg",
-            ".jpeg" => "image/jpeg",
+            ".jpg" or ".jpeg" => "image/jpeg",
             ".png" => "image/png",
             ".doc" => "application/msword",
             ".docx" => "application/vnd.openxmlformats-officedocument.wordprocessingml.document",

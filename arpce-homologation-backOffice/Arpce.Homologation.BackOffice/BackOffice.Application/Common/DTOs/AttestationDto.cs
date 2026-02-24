@@ -13,6 +13,5 @@ namespace BackOffice.Application.Common.DTOs
         public long DateExpiration { get; set; }
         public string? FilePath { get; set; }
 
-        // On ne retourne pas les données binaires (byte[]), mais peut-être un lien de téléchargement si nécessaire.
     }
 }

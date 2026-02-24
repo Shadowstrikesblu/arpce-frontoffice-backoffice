@@ -1,10 +1,12 @@
-﻿using MediatR;
+﻿using BackOffice.Domain.Entities;
+using MediatR;
+using System;
 
 namespace BackOffice.Application.Features.Categories.Commands.UpdateCategorie;
 
 public class UpdateCategorieCommand : IRequest<bool>
 {
-    public Guid Id { get; set; } 
+    public Guid Id { get; set; }
     public string? Code { get; set; }
     public string? Libelle { get; set; }
     public string? TypeEquipement { get; set; }
@@ -15,4 +17,10 @@ public class UpdateCategorieCommand : IRequest<bool>
     public string? FormuleHomologation { get; set; }
     public int? QuantiteReference { get; set; }
     public string? Remarques { get; set; }
+    public ModeCalcul? ModeCalcul { get; set; }
+    public int? BlockSize { get; set; }
+    public int? QtyMin { get; set; }
+    public int? QtyMax { get; set; }
+    public string? ReferenceLoiFinance { get; set; }
+    public decimal? CoutUnitaire { get; set; }
 }

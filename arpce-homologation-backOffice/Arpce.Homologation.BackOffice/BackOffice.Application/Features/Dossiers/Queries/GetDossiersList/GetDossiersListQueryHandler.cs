@@ -5,11 +5,6 @@ using BackOffice.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Dossiers.Queries.GetDossiersList;
 
@@ -52,6 +47,7 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
             .Include(d => d.Client)
             .Include(d => d.Statut)
             .Include(d => d.DocumentsDossiers)
+            .Include(d => d.Devis) // Inclusion Devis
             .Include(d => d.Demande).ThenInclude(dem => dem.Statut)
             .Include(d => d.Demande).ThenInclude(dem => dem.CategorieEquipement)
             .Include(d => d.Demande).ThenInclude(dem => dem.DocumentsDemandes)
@@ -105,6 +101,18 @@ public class GetDossiersListQueryHandler : IRequestHandler<GetDossiersListQuery,
                 Extension = doc.Extension,
                 FilePath = $"/api/demandes/dossier/{doc.Id}/download"
             }).ToList(),
+
+            Devis = dossier.Devis?.Select(dev => new DevisDto
+            {
+                Id = dev.Id,
+                Date = dev.Date,
+                MontantEtude = dev.MontantEtude,
+                MontantHomologation = dev.MontantHomologation,
+                MontantControle = dev.MontantControle,
+                MontantPenalite = dev.MontantPenalite,
+                MontantTotal = dev.MontantEtude + (dev.MontantHomologation ?? 0) + (dev.MontantControle ?? 0) + dev.MontantPenalite,
+                PaiementOk = dev.PaiementOk
+            }).ToList() ?? new(),
 
             Attestations = dossier.Demande != null
                 ? dossier.Demande.Attestations.Select(att => new AttestationDto

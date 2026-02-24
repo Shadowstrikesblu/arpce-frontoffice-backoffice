@@ -1,6 +1,7 @@
 using BackOffice.Api.Middleware;
 using BackOffice.Application;
 using BackOffice.Application.Common.Interfaces;
+using BackOffice.Infrastructure.BackgroundServices;
 using BackOffice.Infrastructure.Persistence;
 using BackOffice.Infrastructure.Security;
 using BackOffice.Infrastructure.Services;
@@ -94,18 +95,20 @@ try
     builder.Services.AddMediatR(cfg =>
         cfg.RegisterServicesFromAssembly(typeof(AssemblyReference).Assembly));
 
-    // Services BackOffice (Sécurité, LDAP, Audit, Générateurs)
-    builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
-    builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
-    builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
-    builder.Services.AddTransient<IEmailService, EmailService>();
-    builder.Services.AddTransient<ILdapService, LdapService>();
-    builder.Services.AddScoped<IAuditService, AuditService>();
-    builder.Services.AddScoped<IFileStorageProvider, DatabaseFileStorageProvider>();
-    builder.Services.AddTransient<INotificationService, SignalRNotificationService>();
-    builder.Services.AddTransient<ICertificateGeneratorService, CertificateGeneratorService>();
-    builder.Services.AddTransient<IDevisGeneratorService, DevisGeneratorService>();
-    builder.Services.AddTransient<IReceiptGeneratorService, ReceiptGeneratorService>();
+// Ajoute les services pour la s�curit� et l'utilisateur courant
+builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddTransient<IEmailService, EmailService>();
+builder.Services.AddTransient<ILdapService, LdapService>();
+builder.Services.AddScoped<IAuditService, AuditService>();
+builder.Services.AddScoped<IFileStorageProvider, DatabaseFileStorageProvider>();
+builder.Services.AddTransient<INotificationService, SignalRNotificationService>();
+builder.Services.AddTransient<ICertificateGeneratorService, CertificateGeneratorService>();
+builder.Services.AddTransient<IDevisGeneratorService, DevisGeneratorService>();
+builder.Services.AddTransient<IReceiptGeneratorService, ReceiptGeneratorService>();
+builder.Services.AddHostedService<DossierAutomationWorker>();
 
     // Configuration Authentification JWT
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

@@ -3,6 +3,7 @@ using BackOffice.Application.Common.Models;
 using BackOffice.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,17 +16,20 @@ public class EnregistrerPaiementCaisseCommandHandler : IRequestHandler<Enregistr
     private readonly IReceiptGeneratorService _receiptGenerator;
     private readonly IFileStorageProvider _fileStorage;
     private readonly INotificationService _notificationService;
+    private readonly ILogger<EnregistrerPaiementCaisseCommandHandler> _logger;
 
     public EnregistrerPaiementCaisseCommandHandler(
         IApplicationDbContext context,
         IReceiptGeneratorService receiptGenerator,
         IFileStorageProvider fileStorage,
-        INotificationService notificationService)
+        INotificationService notificationService,
+        ILogger<EnregistrerPaiementCaisseCommandHandler> logger)
     {
         _context = context;
         _receiptGenerator = receiptGenerator;
         _fileStorage = fileStorage;
         _notificationService = notificationService;
+        _logger = logger;
     }
 
     public async Task<bool> Handle(EnregistrerPaiementCaisseCommand request, CancellationToken cancellationToken)
@@ -33,57 +37,52 @@ public class EnregistrerPaiementCaisseCommandHandler : IRequestHandler<Enregistr
         using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         try
         {
-            // Recherche le dossier par son numéro unique (Hom-YY-XXXX)
             var dossier = await _context.Dossiers
-                .Include(d => d.Demande)
                 .Include(d => d.Client)
+                .Include(d => d.Demande)
                 .FirstOrDefaultAsync(d => d.Numero == request.NumeroDossier, cancellationToken);
 
-            if (dossier == null)
-                throw new Exception($"Dossier N° {request.NumeroDossier} introuvable.");
+            if (dossier == null) throw new Exception($"Dossier N° {request.NumeroDossier} introuvable.");
 
-            // Générer le Reçu PDF (Contenu binaire)
-            var quittance = request.NumeroQuittance ?? $"Q-{DateTime.UtcNow:yyyyMMdd}-{new Random().Next(100, 999)}";
+            var quittance = request.NumeroQuittance ?? $"Q-{DateTime.UtcNow:yyyyMMddHHmm}";
             byte[] pdfBytes = await _receiptGenerator.GenerateReceiptPdfAsync(
                 dossier.Id,
                 request.MontantEncaisse,
                 request.ModePaiement,
                 quittance);
 
-            // Persister le document via le FileStorage 
             await _fileStorage.SaveDocumentDossierFromBytesAsync(
                 pdfBytes,
                 $"Recu_Caisse_{dossier.Numero}.pdf",
-                3, // Type 3 = Preuve de paiement
-                dossier.Id);
+                3,
+                dossier.Id,
+                "Reçu de paiement caisse officiel");
 
-            // Mise à jour du Devis (Statut Payé)
             var devis = await _context.Devis.FirstOrDefaultAsync(d => d.IdDossier == dossier.Id, cancellationToken);
             if (devis != null)
             {
-                devis.PaiementOk = 1;
-                devis.PaiementMobileId = quittance;
+                devis.PaiementOk = 1; 
+                devis.PaiementMobileId = quittance; 
             }
 
-            // Mise à jour du Statut du Dossier
             var statutCaisse = await _context.Statuts.FirstOrDefaultAsync(s => s.Code == "PaiementCaisse", cancellationToken);
             if (statutCaisse != null)
             {
                 dossier.IdStatut = statutCaisse.Id;
             }
 
-            // Sauvegarde et Validation
             await _context.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
 
-            // Notification Centralisée
             await _notificationService.SendEventNotificationAsync(NotificationEvent.NouveauPaiement, dossier.Id);
 
+            _logger.LogInformation("Paiement caisse enregistré pour le dossier {Num}", dossier.Numero);
             return true;
         }
         catch (Exception ex)
         {
             await transaction.RollbackAsync(cancellationToken);
+            _logger.LogError(ex, "Erreur lors du paiement caisse pour {Num}", request.NumeroDossier);
             throw;
         }
     }

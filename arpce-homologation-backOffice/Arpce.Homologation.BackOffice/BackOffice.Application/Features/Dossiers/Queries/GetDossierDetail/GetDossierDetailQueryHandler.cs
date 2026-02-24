@@ -1,7 +1,6 @@
 ﻿using BackOffice.Application.Common.DTOs;
 using BackOffice.Application.Common.Interfaces;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -26,20 +25,16 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
             .AsNoTracking()
             .Include(d => d.Client)
             .Include(d => d.Statut)
-            .Include(d => d.ModeReglement)
-            .Include(d => d.Commentaires)
             .Include(d => d.DocumentsDossiers)
             .Include(d => d.Devis)
             .Include(d => d.Demande).ThenInclude(dem => dem.Statut)
-            .Include(d => d.Demande).ThenInclude(dem => dem.DocumentsDemandes)
             .Include(d => d.Demande).ThenInclude(dem => dem.CategorieEquipement)
-            .Include(d => d.Demande).ThenInclude(dem => dem.MotifRejet)
-            .Include(d => d.Demande).ThenInclude(dem => dem.Proposition)
-            .Include(d => d.Demande).ThenInclude(dem => dem.Attestations)
             .Include(d => d.Demande).ThenInclude(dem => dem.Beneficiaire)
+            .Include(d => d.Demande).ThenInclude(dem => dem.DocumentsDemandes)
+            .Include(d => d.Demande).ThenInclude(dem => dem.Attestations)
             .FirstOrDefaultAsync(d => d.Id == request.DossierId, cancellationToken);
 
-        if (dossier == null) throw new Exception($"Le dossier avec l'ID '{request.DossierId}' est introuvable.");
+        if (dossier == null) throw new Exception("Dossier introuvable.");
 
         return new DossierDetailVm
         {
@@ -49,22 +44,17 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
             Libelle = dossier.Libelle,
             Client = dossier.Client != null ? new ClientDto { Id = dossier.Client.Id, RaisonSociale = dossier.Client.RaisonSociale } : null,
             Statut = dossier.Statut != null ? new StatutDto { Id = dossier.Statut.Id, Code = dossier.Statut.Code, Libelle = dossier.Statut.Libelle } : null,
-            ModeReglement = dossier.ModeReglement != null ? new ModeReglementDto { Id = dossier.ModeReglement.Id, Code = dossier.ModeReglement.Code, Libelle = dossier.ModeReglement.Libelle } : null,
 
             Demande = dossier.Demande != null ? new DemandeDto
             {
                 Id = dossier.Demande.Id,
-                IdDossier = dossier.Id,
-                NumeroDemande = dossier.Demande.NumeroDemande,
                 Equipement = dossier.Demande.Equipement,
                 Modele = dossier.Demande.Modele,
                 Marque = dossier.Demande.Marque,
                 Fabricant = dossier.Demande.Fabricant,
                 Type = dossier.Demande.Type,
-                Description = dossier.Demande.Description,
-                QuantiteEquipements = dossier.Demande.QuantiteEquipements,
                 PrixUnitaire = dossier.Demande.PrixUnitaire,
-                EstHomologable = dossier.Demande.EstHomologable,
+                QuantiteEquipements = dossier.Demande.QuantiteEquipements,
                 RequiertEchantillon = dossier.Demande.RequiertEchantillon,
                 EchantillonSoumis = dossier.Demande.EchantillonSoumis,
 
@@ -72,7 +62,6 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
 
                 Beneficiaire = dossier.Demande.Beneficiaire != null ? new BeneficiaireDto
                 {
-                    Id = dossier.Demande.Beneficiaire.Id,
                     Nom = dossier.Demande.Beneficiaire.Nom,
                     Email = dossier.Demande.Beneficiaire.Email,
                     Telephone = dossier.Demande.Beneficiaire.Telephone,
@@ -92,11 +81,20 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                     ReferenceLoiFinance = dossier.Demande.CategorieEquipement.ReferenceLoiFinance
                 } : null,
 
-                Documents = dossier.Demande.DocumentsDemandes.Select(doc => new DocumentDossierDto { Id = doc.Id, Nom = doc.Nom, FilePath = $"/api/demandes/demande/{doc.Id}/download" }).ToList()
+                Documents = dossier.Demande.DocumentsDemandes.Select(doc => new DocumentDossierDto
+                {
+                    Id = doc.Id,
+                    Nom = doc.Nom,
+                    FilePath = $"/api/demandes/demande/{doc.Id}/download"
+                }).ToList()
             } : null,
 
-            Commentaires = dossier.Commentaires.Select(com => new CommentaireDto { Id = com.Id, CommentaireTexte = com.CommentaireTexte, NomInstructeur = com.NomInstructeur, DateCommentaire = com.DateCommentaire }).ToList(),
-            Documents = dossier.DocumentsDossiers.Select(doc => new DocumentDossierDto { Id = doc.Id, Nom = doc.Nom, Libelle = doc.Libelle, FilePath = $"/api/demandes/dossier/{doc.Id}/download" }).ToList(),
+            Documents = dossier.DocumentsDossiers.Select(doc => new DocumentDossierDto
+            {
+                Id = doc.Id,
+                Nom = doc.Nom,
+                FilePath = $"/api/demandes/dossier/{doc.Id}/download"
+            }).ToList(),
 
             Devis = dossier.Devis.Select(dev => new DevisDto
             {
@@ -105,6 +103,8 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
                 MontantEtude = dev.MontantEtude,
                 MontantHomologation = dev.MontantHomologation,
                 MontantControle = dev.MontantControle,
+                MontantPenalite = dev.MontantPenalite, 
+                MontantTotal = dev.MontantEtude + (dev.MontantHomologation ?? 0) + (dev.MontantControle ?? 0) + dev.MontantPenalite, // Calcul Backend
                 PaiementOk = dev.PaiementOk,
                 FilePath = $"/api/devis/{dev.Id}/download"
             }).ToList(),
