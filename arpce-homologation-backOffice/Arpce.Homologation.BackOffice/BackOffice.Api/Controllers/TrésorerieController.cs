@@ -14,6 +14,9 @@ public class TresorerieController : ControllerBase
     private readonly ISender _mediator;
     public TresorerieController(ISender mediator) => _mediator = mediator;
 
+    /// <summary>
+    /// Enregistre un paiement physique et génère le reçu PDF ARPCE.
+    /// </summary>
     [HttpPost("paiement-caisse")]
     public async Task<IActionResult> EnregistrerPaiement([FromBody] EnregistrerPaiementCaisseCommand command)
     {
