@@ -1,11 +1,10 @@
 ﻿using BackOffice.Application.Common.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
-using System;
-using System.Threading.Tasks;
 
 namespace BackOffice.Infrastructure.Services;
 
@@ -20,7 +19,7 @@ public class EmailService : IEmailService
         _logger = logger;
     }
 
-    public async Task SendEmailAsync(string toEmail, string subject, string body)
+    public async Task SendEmailAsync(string toEmail, string subject, string body, List<IFormFile>? attachments = null)
     {
         var message = new MimeKit.MimeMessage();
         var from = _configuration["EmailSettings:SmtpFrom"];
@@ -30,6 +29,20 @@ public class EmailService : IEmailService
         message.Subject = subject;
 
         var bodyBuilder = new BodyBuilder { HtmlBody = body };
+
+        if (attachments != null && attachments.Any())
+        {
+            foreach (var file in attachments)
+            {
+                if (file.Length > 0)
+                {
+                    using var ms = new MemoryStream();
+                    await file.CopyToAsync(ms);
+                    bodyBuilder.Attachments.Add(file.FileName, ms.ToArray(), ContentType.Parse(file.ContentType ?? "application/octet-stream"));
+                }
+            }
+        }
+
         message.Body = bodyBuilder.ToMessageBody();
 
         using var client = new SmtpClient();
@@ -47,12 +60,12 @@ public class EmailService : IEmailService
             await client.SendAsync(message);
             await client.DisconnectAsync(true);
 
-            _logger.LogInformation("Email envoyé avec succès à {Email}", toEmail);
+            _logger.LogInformation("Email avec pièces jointes envoyé avec succès à {Email}", toEmail);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Erreur lors de l'envoi de l'email à {Email}", toEmail);
-            throw; 
+            throw;
         }
     }
 }

@@ -1,6 +1,7 @@
 using BackOffice.Api.Middleware;
 using BackOffice.Application;
 using BackOffice.Application.Common.Interfaces;
+using BackOffice.Infrastructure.BackgroundServices;
 using BackOffice.Infrastructure.Persistence;
 using BackOffice.Infrastructure.Security;
 using BackOffice.Infrastructure.Services;
@@ -90,6 +91,7 @@ builder.Services.AddTransient<INotificationService, SignalRNotificationService>(
 builder.Services.AddTransient<ICertificateGeneratorService, CertificateGeneratorService>();
 builder.Services.AddTransient<IDevisGeneratorService, DevisGeneratorService>();
 builder.Services.AddTransient<IReceiptGeneratorService, ReceiptGeneratorService>();
+builder.Services.AddHostedService<DossierAutomationWorker>();
 
 // Configuration de l'Authentification JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

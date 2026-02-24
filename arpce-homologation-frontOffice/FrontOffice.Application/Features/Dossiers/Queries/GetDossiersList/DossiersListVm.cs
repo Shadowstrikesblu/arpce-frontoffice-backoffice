@@ -14,6 +14,11 @@ public class DossiersListVm
     public int Page { get; set; }
 
     /// <summary>
+    /// Le nombre d'éléments par page (Taille de la page).
+    /// </summary>
+    public int PageTaille { get; set; } 
+
+    /// <summary>
     /// Le nombre total de pages disponibles.
     /// </summary>
     public int TotalPage { get; set; }

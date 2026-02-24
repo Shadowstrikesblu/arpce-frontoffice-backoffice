@@ -992,6 +992,12 @@
                       "type": "string",
                       "format": "binary"
                     }
+                  },
+                  "LibellesDocumentsSupplementaires": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
                   }
                 }
               },
@@ -1006,6 +1012,9 @@
                   "style": "form"
                 },
                 "DocumentsSupplementaires": {
+                  "style": "form"
+                },
+                "LibellesDocumentsSupplementaires": {
                   "style": "form"
                 }
               }
@@ -2069,6 +2078,10 @@
             "format": "uuid"
           },
           "nom": {
+            "type": "string",
+            "nullable": true
+          },
+          "libelle": {
             "type": "string",
             "nullable": true
           },

@@ -10,7 +10,7 @@ namespace FrontOffice.Infrastructure.Services;
 
 /// <summary>
 /// Gère le stockage des fichiers directement dans la base de données via Entity Framework Core.
-/// Cette version est modifiée pour ne pas sauvegarder automatiquement, permettant le contrôle par une transaction externe.
+/// Cette version implémente l'interface complète incluant les libellés et la gestion des flux binaires.
 /// </summary>
 public class DatabaseFileStorageProvider : IFileStorageProvider
 {
@@ -22,11 +22,12 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
     }
 
     /// <summary>
-    /// Prépare une entité DocumentDossier pour l'insertion sans la sauvegarder.
+    /// Prépare une entité DocumentDossier pour l'insertion (avec libellé optionnel).
     /// </summary>
-    public async Task<DocumentDossier> ImportDocumentDossierAsync(IFormFile file, string nom, byte type, Guid dossierId)
+    public async Task<DocumentDossier> ImportDocumentDossierAsync(IFormFile file, string nom, byte type, Guid dossierId, string? libelle = null)
     {
-        // Lit le contenu du fichier en mémoire
+        if (file == null || file.Length == 0) throw new ArgumentException("Le fichier est vide.");
+
         byte[] fileData;
         using (var memoryStream = new MemoryStream())
         {
@@ -34,30 +35,31 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
             fileData = memoryStream.ToArray();
         }
 
-        // Crée l'entité DocumentDossier
         var document = new DocumentDossier
         {
             Id = Guid.NewGuid(),
             IdDossier = dossierId,
             Nom = nom,
+            Libelle = libelle, 
             Type = type,
             Extension = Path.GetExtension(file.FileName)?.TrimStart('.').ToLowerInvariant() ?? string.Empty,
-            Donnees = fileData, 
+            Donnees = fileData,
             UtilisateurCreation = "API_UPLOAD",
             DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
 
-        // Ajoute l'entité au contexte, mais NE PAS sauvegarder.
         _context.DocumentsDossiers.Add(document);
 
         return document;
     }
 
     /// <summary>
-    /// Prépare une entité DocumentDemande pour l'insertion sans la sauvegarder.
+    /// Prépare une entité DocumentDemande pour l'insertion (avec libellé optionnel).
     /// </summary>
-    public async Task<DocumentDemande> ImportDocumentDemandeAsync(IFormFile file, string nom, Guid demandeId)
+    public async Task<DocumentDemande> ImportDocumentDemandeAsync(IFormFile file, string nom, Guid demandeId, string? libelle = null)
     {
+        if (file == null || file.Length == 0) throw new ArgumentException("Le fichier est vide.");
+
         byte[] fileData;
         using (var memoryStream = new MemoryStream())
         {
@@ -70,6 +72,7 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
             Id = Guid.NewGuid(),
             IdDemande = demandeId,
             Nom = nom,
+            Libelle = libelle, // Prise en compte du libellé
             Extension = Path.GetExtension(file.FileName)?.TrimStart('.').ToLowerInvariant() ?? string.Empty,
             Donnees = fileData,
             UtilisateurCreation = "API_UPLOAD",
@@ -82,7 +85,40 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
     }
 
     /// <summary>
-    /// Récupère les données binaires d'un DocumentDossier depuis la base.
+    /// Sauvegarde un document généré (ex: reçu PDF) directement à partir de données binaires.
+    /// </summary>
+    public async Task<DocumentDossier> SaveDocumentDossierFromBytesAsync(byte[] content, string nom, byte type, Guid dossierId, string? libelle = null)
+    {
+        var document = new DocumentDossier
+        {
+            Id = Guid.NewGuid(),
+            IdDossier = dossierId,
+            Nom = nom,
+            Libelle = libelle,
+            Extension = "pdf",
+            Type = type,
+            Donnees = content,
+            UtilisateurCreation = "SYSTEM_GEN",
+            DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+        };
+
+        _context.DocumentsDossiers.Add(document);
+
+        return document;
+    }
+
+    /// <summary>
+    /// Signature factice pour le FrontOffice (le stockage physique des signatures est géré par le BackOffice).
+    /// Implémenté pour respecter le contrat d'interface.
+    /// </summary>
+    public Task<string> UploadSignatureAsync(IFormFile file)
+    {
+        // Le Front-Office n'a généralement pas besoin de cette méthode
+        throw new NotImplementedException("La gestion des images de signature est réservée au Back-Office.");
+    }
+
+    /// <summary>
+    /// Récupère les données binaires d'un DocumentDossier.
     /// </summary>
     public async Task<(byte[] content, string fileName, string contentType)> ExportDocumentDossierAsync(Guid documentId)
     {
@@ -102,7 +138,7 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
     }
 
     /// <summary>
-    /// Récupère les données binaires d'un DocumentDemande depuis la base.
+    /// Récupère les données binaires d'un DocumentDemande.
     /// </summary>
     public async Task<(byte[] content, string fileName, string contentType)> ExportDocumentDemandeAsync(Guid documentId)
     {
@@ -127,8 +163,7 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
         return extension switch
         {
             ".pdf" => "application/pdf",
-            ".jpg" => "image/jpeg",
-            ".jpeg" => "image/jpeg",
+            ".jpg" or ".jpeg" => "image/jpeg",
             ".png" => "image/png",
             ".doc" => "application/msword",
             ".docx" => "application/vnd.openxmlformats-officedocument.wordprocessingml.document",

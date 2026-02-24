@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FrontOffice.Infrastructure.Migrations
 {
     [DbContext(typeof(FrontOfficeDbContext))]
-    [Migration("20260223120214_AddEmailLoggingToNotifications")]
+    [Migration("20260224121903_AddEmailLoggingToNotifications")]
     partial class AddEmailLoggingToNotifications
     {
         /// <inheritdoc />
@@ -32,6 +32,12 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<long?>("DateCreation")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DateDemandeEchantillon")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DateEnvoiDevis")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("DateModification")
@@ -61,6 +67,11 @@ namespace FrontOffice.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
+
+                    b.Property<bool>("PenaliteAppliquee")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("UtilisateurCreation")
                         .HasMaxLength(60)
@@ -1034,6 +1045,11 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Property<decimal?>("MontantHomologation")
                         .HasColumnType("money");
 
+                    b.Property<decimal>("MontantPenalite")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValue(0m);
+
                     b.Property<string>("PaiementMobileId")
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
@@ -1085,6 +1101,9 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Property<Guid>("IdDemande")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Libelle")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Nom")
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
@@ -1130,6 +1149,9 @@ namespace FrontOffice.Infrastructure.Migrations
 
                     b.Property<Guid>("IdDossier")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Libelle")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nom")
                         .HasMaxLength(120)
@@ -1197,28 +1219,28 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0906b711-c3e0-49f6-9443-f6871557c367"),
+                            Id = new Guid("299c1953-2c50-474e-9ec1-efa00911ea70"),
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("65256e0b-6740-40fa-98dc-9f457c7cf50f"),
+                            Id = new Guid("166cee73-33d0-49ff-859a-661348530e06"),
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("5aeb16a6-e930-434d-a0f7-b08ec7df0f4f"),
+                            Id = new Guid("a6152542-6110-4397-a902-8bbbd9ee343d"),
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("278de3c1-4104-4787-9b2e-961955a66ddd"),
+                            Id = new Guid("d2db9d23-afb8-44c2-a825-8e32d12d76be"),
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1

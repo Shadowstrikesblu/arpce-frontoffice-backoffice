@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace FrontOffice.Application.Features.Dossiers.Queries.GetDossierDetail;
 
 public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuery, DossierDetailVm>
@@ -41,7 +42,7 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
             .Include(d => d.Demande).ThenInclude(dem => dem.CategorieEquipement)
             .Include(d => d.Demande).ThenInclude(dem => dem.MotifRejet)
             .Include(d => d.Demande).ThenInclude(dem => dem.Proposition)
-            .Include(d => d.Demande).ThenInclude(dem => dem.Beneficiaire) 
+            .Include(d => d.Demande).ThenInclude(dem => dem.Beneficiaire)
             .FirstOrDefaultAsync(cancellationToken);
 
         if (dossier == null) throw new Exception("Dossier introuvable.");
@@ -56,59 +57,60 @@ public class GetDossierDetailQueryHandler : IRequestHandler<GetDossierDetailQuer
             Statut = dossier.Statut != null ? new StatutDto { Id = dossier.Statut.Id, Code = dossier.Statut.Code, Libelle = dossier.Statut.Libelle } : null,
             ModeReglement = dossier.ModeReglement != null ? new ModeReglementDto { Id = dossier.ModeReglement.Id, Code = dossier.ModeReglement.Code, Libelle = dossier.ModeReglement.Libelle } : null,
 
-            Demandes = dossier.Demande != null ? new List<DemandeDto>
+            Demande = dossier.Demande != null ? new DemandeDto
             {
-                new DemandeDto
+                Id = dossier.Demande.Id,
+                IdDossier = dossier.Id,
+                NumeroDemande = dossier.Demande.NumeroDemande,
+                Equipement = dossier.Demande.Equipement,
+                Modele = dossier.Demande.Modele,
+                Marque = dossier.Demande.Marque,
+                Fabricant = dossier.Demande.Fabricant,
+                Type = dossier.Demande.Type,
+                Description = dossier.Demande.Description,
+                QuantiteEquipements = dossier.Demande.QuantiteEquipements,
+                ContactNom = dossier.Demande.ContactNom,
+                ContactEmail = dossier.Demande.ContactEmail,
+                PrixUnitaire = dossier.Demande.PrixUnitaire,
+                Remise = dossier.Demande.Remise,
+                EstHomologable = dossier.Demande.EstHomologable,
+                RequiertEchantillon = dossier.Demande.RequiertEchantillon,
+                EchantillonSoumis = dossier.Demande.EchantillonSoumis,
+
+                Statut = dossier.Demande.Statut != null ? new StatutDto { Id = dossier.Demande.Statut.Id, Code = dossier.Demande.Statut.Code, Libelle = dossier.Demande.Statut.Libelle } : null,
+
+                CategorieEquipement = dossier.Demande.CategorieEquipement != null ? new CategorieEquipementDto { Id = dossier.Demande.CategorieEquipement.Id, Code = dossier.Demande.CategorieEquipement.Code, Libelle = dossier.Demande.CategorieEquipement.Libelle } : null,
+
+                MotifRejet = dossier.Demande.MotifRejet != null ? new MotifRejetDto { Id = dossier.Demande.MotifRejet.Id, Code = dossier.Demande.MotifRejet.Code, Libelle = dossier.Demande.MotifRejet.Libelle } : null,
+
+                Beneficiaire = dossier.Demande.Beneficiaire != null ? new BeneficiaireDto
                 {
-                    Id = dossier.Demande.Id,
-                    IdDossier = dossier.Id,
-                    NumeroDemande = dossier.Demande.NumeroDemande,
-                    Equipement = dossier.Demande.Equipement,
-                    Modele = dossier.Demande.Modele,
-                    Marque = dossier.Demande.Marque,
-                    Fabricant = dossier.Demande.Fabricant,
-                    Type = dossier.Demande.Type,
-                    Description = dossier.Demande.Description,
-                    QuantiteEquipements = dossier.Demande.QuantiteEquipements,
-                    ContactNom = dossier.Demande.ContactNom,
-                    ContactEmail = dossier.Demande.ContactEmail,
-                    PrixUnitaire = dossier.Demande.PrixUnitaire,
-                    Remise = dossier.Demande.Remise,
-                    EstHomologable = dossier.Demande.EstHomologable,
-                    RequiertEchantillon = dossier.Demande.RequiertEchantillon,
-                    EchantillonSoumis = dossier.Demande.EchantillonSoumis,
+                    Nom = dossier.Demande.Beneficiaire.Nom,
+                    Email = dossier.Demande.Beneficiaire.Email,
+                    Telephone = dossier.Demande.Beneficiaire.Telephone,
+                    Type = dossier.Demande.Beneficiaire.Type,
+                    Adresse = dossier.Demande.Beneficiaire.Adresse
+                } : null,
 
-                    Statut = dossier.Demande.Statut != null ? new StatutDto { Id = dossier.Demande.Statut.Id, Code = dossier.Demande.Statut.Code, Libelle = dossier.Demande.Statut.Libelle } : null,
-                    CategorieEquipement = dossier.Demande.CategorieEquipement != null ? new CategorieEquipementDto { Id = dossier.Demande.CategorieEquipement.Id, Code = dossier.Demande.CategorieEquipement.Code, Libelle = dossier.Demande.CategorieEquipement.Libelle } : null,
-                    MotifRejet = dossier.Demande.MotifRejet != null ? new MotifRejetDto { Id = dossier.Demande.MotifRejet.Id, Code = dossier.Demande.MotifRejet.Code, Libelle = dossier.Demande.MotifRejet.Libelle } : null,
-
-                    Beneficiaire = dossier.Demande.Beneficiaire != null ? new BeneficiaireDto
-                    {
-                        Nom = dossier.Demande.Beneficiaire.Nom,
-                        Email = dossier.Demande.Beneficiaire.Email,
-                        Telephone = dossier.Demande.Beneficiaire.Telephone,
-                        Type = dossier.Demande.Beneficiaire.Type,
-                        Adresse = dossier.Demande.Beneficiaire.Adresse
-                    } : null,
-
-                    Documents = dossier.Demande.DocumentsDemandes.Select(doc => new DocumentDossierDto
-                    {
-                        Id = doc.Id,
-                        Nom = doc.Nom,
-                        Libelle = doc.Libelle,
-                        Extension = doc.Extension,
-                        FilePath = $"/api/documents/demande/{doc.Id}/download"
-                    }).ToList()
-                }
-            } : new List<DemandeDto>(),
+                Documents = dossier.Demande.DocumentsDemandes.Select(doc => new DocumentDossierDto
+                {
+                    Id = doc.Id,
+                    Nom = doc.Nom,
+                    Libelle = doc.Libelle,
+                    Extension = doc.Extension,
+                    FilePath = $"/api/documents/demande/{doc.Id}/download"
+                }).ToList()
+            } : null,
 
             Devis = dossier.Devis.Select(dev => new DevisDto { Id = dev.Id, MontantEtude = dev.MontantEtude, PaiementOk = dev.PaiementOk }).ToList(),
-            Commentaires = dossier.Commentaires.Select(com => new CommentaireDto { Id = com.Id, CommentaireTexte = com.CommentaireTexte, DateCommentaire = com.DateCommentaire }).ToList(),
+            Commentaires = dossier.Commentaires.Select(com => new CommentaireDto { Id = com.Id, CommentaireTexte = com.CommentaireTexte, NomInstructeur = com.NomInstructeur, DateCommentaire = com.DateCommentaire }).ToList(),
 
             Documents = dossier.DocumentsDossiers.Select(doc => new DocumentDossierDto
             {
                 Id = doc.Id,
                 Nom = doc.Nom,
+                Libelle = doc.Libelle,
+                Type = doc.Type,
                 Extension = doc.Extension,
                 FilePath = $"/api/documents/dossier/{doc.Id}/download"
             }).ToList(),

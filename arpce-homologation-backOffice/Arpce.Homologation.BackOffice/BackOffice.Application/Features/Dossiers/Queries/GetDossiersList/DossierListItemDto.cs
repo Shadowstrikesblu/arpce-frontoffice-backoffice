@@ -14,7 +14,7 @@ public class DossierListItemDto
     public StatutDto? Statut { get; set; }
 
     public DemandeDto? Demande { get; set; }
-
+    public List<DevisDto> Devis { get; set; } = new();
     public List<DocumentDossierDto> Documents { get; set; } = new();
     public List<AttestationDto> Attestations { get; set; } = new();
 }
