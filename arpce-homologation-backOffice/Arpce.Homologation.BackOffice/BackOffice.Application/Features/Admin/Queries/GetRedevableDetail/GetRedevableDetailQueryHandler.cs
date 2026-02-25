@@ -1,12 +1,9 @@
-﻿using BackOffice.Application.Common; 
+﻿using BackOffice.Application.Common;
+using BackOffice.Application.Common.DTOs;
 using BackOffice.Application.Common.Exceptions;
 using BackOffice.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Admin.Queries.GetRedevableDetail;
 
@@ -22,24 +19,40 @@ public class GetRedevableDetailQueryHandler : IRequestHandler<GetRedevableDetail
     public async Task<RedevableDetailDto> Handle(GetRedevableDetailQuery request, CancellationToken cancellationToken)
     {
         var client = await _context.Clients.AsNoTracking()
-            .Include(c => c.Dossiers)
-                .ThenInclude(d => d.Statut)
-            .Include(c => c.Dossiers)
-                .ThenInclude(d => d.Demande) 
+            .Include(c => c.Dossiers).ThenInclude(d => d.Statut)
+            .Include(c => c.Dossiers).ThenInclude(d => d.Demande)
             .FirstOrDefaultAsync(c => c.Id == request.UtilisateurId, cancellationToken);
 
         if (client == null) throw new Exception("Redevable introuvable.");
 
         return new RedevableDetailDto
         {
+            Id = client.Id,
             Code = client.Code,
             RaisonSociale = client.RaisonSociale,
             RegistreCommerce = client.RegistreCommerce,
             Desactive = client.Desactive == 1,
+            ContactNom = client.ContactNom,
+            ContactTelephone = client.ContactTelephone,
+            ContactFonction = client.ContactFonction,
             Email = client.Email,
+            Adresse = client.Adresse,
+            Bp = client.Bp,
+            Ville = client.Ville,
+            Pays = client.Pays,
+            Remarques = client.Remarques,
+            UtilisateurCreation = client.UtilisateurCreation,
+            NiveauValidation = client.NiveauValidation,
 
-            DateCreation = client.DateCreation.FromUnixTimeMilliseconds(),
-            DateModification = client.DateModification.FromUnixTimeMilliseconds(),
+            DateCreation = client.DateCreation.HasValue
+                ? client.DateCreation.Value.FromUnixTimeMilliseconds()
+                : DateTime.MinValue,
+
+            UtilisateurModification = client.UtilisateurModification,
+
+            DateModification = client.DateModification.HasValue
+                ? client.DateModification.Value.FromUnixTimeMilliseconds()
+                : null,
 
             Dossiers = client.Dossiers.Select(d => new DossierRedevableDto
             {

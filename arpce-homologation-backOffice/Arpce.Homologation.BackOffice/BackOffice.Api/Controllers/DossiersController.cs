@@ -180,18 +180,12 @@ public class DossiersController : ControllerBase
     }
 
     [HttpPost("{dossierId:guid}/envoyer-mail")]
-    public async Task<IActionResult> SendMail(Guid dossierId, [FromBody] SendMailToClientCommand command)
+    [Consumes("multipart/form-data")] // Indispensable pour IFormFile
+    public async Task<IActionResult> SendMail(Guid dossierId, [FromForm] SendMailToClientCommand command)
     {
         command.DossierId = dossierId;
-        try
-        {
-            var result = await _mediator.Send(command);
-            return Ok(new { ok = result });
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(new { error = ex.Message });
-        }
+        var result = await _mediator.Send(command);
+        return Ok(new { ok = result });
     }
 
     /// <summary>

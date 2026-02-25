@@ -2,9 +2,6 @@
 using BackOffice.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace BackOffice.Application.Features.Attestations.Commands.LinkSignataire;
 
@@ -30,23 +27,23 @@ public class LinkSignataireCommandHandler : IRequestHandler<LinkSignataireComman
         if (attestation == null) throw new Exception("Attestation introuvable.");
 
         var signataireExists = await _context.Signataires.AnyAsync(s => s.Id == request.SignataireId, cancellationToken);
-        if (!signataireExists) throw new Exception("Signataire introuvable.");
+        if (!signataireExists) throw new Exception("Le signataire sélectionné est introuvable.");
 
         attestation.SignataireId = request.SignataireId;
         await _context.SaveChangesAsync(cancellationToken);
 
         await _certificateGenerator.GenerateAttestationsForDossierAsync(attestation.Demande.IdDossier);
 
-        var updatedAttestation = await _context.Attestations
+        var updated = await _context.Attestations
             .AsNoTracking()
             .FirstOrDefaultAsync(a => a.Id == request.AttestationId, cancellationToken);
 
         return new AttestationDto
         {
-            Id = updatedAttestation!.Id,
-            DateDelivrance = updatedAttestation.DateDelivrance,
-            DateExpiration = updatedAttestation.DateExpiration,
-            FilePath = $"/api/documents/attestation/{updatedAttestation.Id}/download"
+            Id = updated!.Id,
+            DateDelivrance = updated.DateDelivrance,
+            DateExpiration = updated.DateExpiration,
+            FilePath = $"/api/documents/attestation/{updated.Id}/download"
         };
     }
 }

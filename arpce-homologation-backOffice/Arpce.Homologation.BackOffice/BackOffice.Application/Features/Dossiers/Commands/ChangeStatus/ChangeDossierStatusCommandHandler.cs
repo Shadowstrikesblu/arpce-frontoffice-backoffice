@@ -15,6 +15,7 @@ public class ChangeDossierStatusCommandHandler : IRequestHandler<ChangeDossierSt
     private readonly INotificationService _notificationService;
     private readonly ICertificateGeneratorService _certificateGenerator;
     private readonly IDevisGeneratorService _devisGeneratorService;
+    private readonly IReceiptGeneratorService _receiptGenerator;
     private readonly ILogger<ChangeDossierStatusCommandHandler> _logger;
 
     public ChangeDossierStatusCommandHandler(
@@ -24,6 +25,7 @@ public class ChangeDossierStatusCommandHandler : IRequestHandler<ChangeDossierSt
         INotificationService notificationService,
         ICertificateGeneratorService certificateGenerator,
         IDevisGeneratorService devisGeneratorService,
+        IReceiptGeneratorService receiptGenerator,
         ILogger<ChangeDossierStatusCommandHandler> logger)
     {
         _context = context;
@@ -32,6 +34,7 @@ public class ChangeDossierStatusCommandHandler : IRequestHandler<ChangeDossierSt
         _notificationService = notificationService;
         _certificateGenerator = certificateGenerator;
         _devisGeneratorService = devisGeneratorService;
+        _receiptGenerator = receiptGenerator;
         _logger = logger;
     }
 
@@ -52,10 +55,29 @@ public class ChangeDossierStatusCommandHandler : IRequestHandler<ChangeDossierSt
             dossier.IdStatut = nouveauStatut.Id;
             dossier.DateModification = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
-            // 1. Logique de Calcul si Instruction approuvée
+            if (!string.IsNullOrWhiteSpace(request.Commentaire))
+            {
+                var agent = await _context.AdminUtilisateurs.AsNoTracking().FirstOrDefaultAsync(u => u.Id == _currentUserService.UserId, cancellationToken);
+                _context.Commentaires.Add(new Commentaire
+                {
+                    Id = Guid.NewGuid(),
+                    IdDossier = dossier.Id,
+                    DateCommentaire = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+                    CommentaireTexte = request.Commentaire,
+                    NomInstructeur = agent != null ? $"{agent.Prenoms} {agent.Nom}" : "Système"
+                });
+            }
+
             if (request.CodeStatut == "InstructionApprouve")
             {
-                await PerformFeeRecalculation(dossier, cancellationToken);
+                if (dossier.Demande != null && dossier.Demande.EstHomologable)
+                {
+                    await PerformFeeRecalculation(dossier, cancellationToken);
+                }
+                else
+                {
+                    _logger.LogInformation("Dossier {Num} : Pas de calcul de devis (Équipement non homologable).", dossier.Numero);
+                }
             }
 
             await _context.SaveChangesAsync(cancellationToken);
@@ -77,11 +99,20 @@ public class ChangeDossierStatusCommandHandler : IRequestHandler<ChangeDossierSt
                 await _notificationService.SendEventNotificationAsync(eventToTrigger.Value, dossier.Id);
             }
 
-            // 3. Génération Documents
             if (request.CodeStatut == "DevisEmit")
             {
                 var devis = await _context.Devis.FirstOrDefaultAsync(d => d.IdDossier == request.DossierId, cancellationToken);
                 if (devis != null) await _devisGeneratorService.GenerateAndSaveDevisPdfAsync(devis.Id);
+            }
+
+            if (request.CodeStatut == "PaiementCaisse")
+            {
+                var devis = await _context.Devis.FirstOrDefaultAsync(d => d.IdDossier == request.DossierId, cancellationToken);
+                if (devis != null)
+                {
+                    decimal total = devis.MontantTotal; 
+                    await _receiptGenerator.GenerateReceiptPdfAsync(dossier.Id, total, "Caisse", "Q-" + dossier.Numero);
+                }
             }
 
             if (request.CodeStatut == "DossierSignature")
@@ -89,7 +120,7 @@ public class ChangeDossierStatusCommandHandler : IRequestHandler<ChangeDossierSt
                 await _certificateGenerator.GenerateAttestationsForDossierAsync(dossier.Id);
             }
 
-            await _auditService.LogAsync("Gestion des Dossiers", $"Changement statut : {nouveauStatut.Libelle}", "MODIFICATION", dossier.Id);
+            await _auditService.LogAsync("Gestion des Dossiers", $"Passage au statut : {nouveauStatut.Libelle}", "MODIFICATION", dossier.Id);
 
             await transaction.CommitAsync(cancellationToken);
             return true;
@@ -97,7 +128,7 @@ public class ChangeDossierStatusCommandHandler : IRequestHandler<ChangeDossierSt
         catch (Exception ex)
         {
             await transaction.RollbackAsync(cancellationToken);
-            _logger.LogError(ex, "Échec changement statut pour le dossier {DossierId}", request.DossierId);
+            _logger.LogError(ex, "Erreur changement statut {DossierId}", request.DossierId);
             throw;
         }
     }
@@ -106,6 +137,7 @@ public class ChangeDossierStatusCommandHandler : IRequestHandler<ChangeDossierSt
     {
         var demande = dossier.Demande;
         if (demande?.CategorieEquipement == null) return;
+
         var cat = demande.CategorieEquipement;
         int qty = demande.QuantiteEquipements ?? 1;
 
@@ -123,7 +155,8 @@ public class ChangeDossierStatusCommandHandler : IRequestHandler<ChangeDossierSt
         else
             homologation = cat.FraisHomologation ?? 0m;
 
-        demande.PrixUnitaire = etude + homologation + controle;
+        decimal totalBase = etude + homologation + controle;
+        demande.PrixUnitaire = totalBase;
 
         var devis = await _context.Devis.FirstOrDefaultAsync(d => d.IdDossier == dossier.Id, ct);
         if (devis == null)
@@ -131,9 +164,12 @@ public class ChangeDossierStatusCommandHandler : IRequestHandler<ChangeDossierSt
             devis = new Devis { Id = Guid.NewGuid(), IdDossier = dossier.Id, IdDemande = demande.Id };
             _context.Devis.Add(devis);
         }
+
         devis.Date = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         devis.MontantEtude = etude;
         devis.MontantHomologation = homologation;
         devis.MontantControle = controle;
+
+        devis.MontantTotal = totalBase + devis.MontantPenalite;
     }
 }

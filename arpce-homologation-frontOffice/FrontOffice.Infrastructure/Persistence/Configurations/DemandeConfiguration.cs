@@ -47,7 +47,9 @@ public class DemandeConfiguration : IEntityTypeConfiguration<Demande>
         builder.Property(c => c.DateModification).HasColumnType("bigint");
 
         builder.Property(d => d.EstHomologable)
-            .HasDefaultValue(true);
+    .HasColumnType("bit")
+    .IsRequired()
+    .HasDefaultValue(false);
 
         // Nouveaux champs
         builder.Property(x => x.RequiertEchantillon).HasDefaultValue(false);
