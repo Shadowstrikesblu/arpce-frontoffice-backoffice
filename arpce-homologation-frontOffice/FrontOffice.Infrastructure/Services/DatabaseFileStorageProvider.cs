@@ -31,9 +31,15 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
     /// <summary>
     /// Prépare une entité DocumentDossier pour l'insertion (avec libellé optionnel).
     /// </summary>
-    public async Task<DocumentDossier> ImportDocumentDossierAsync(IFormFile file, string nom, byte type, Guid dossierId, string? libelle = null)
+    public async Task<DocumentDossier> ImportDocumentDossierAsync(
+        IFormFile file,
+        string nom,
+        byte type,
+        Guid dossierId,
+        string? libelle = null)
     {
-        if (file == null || file.Length == 0) throw new ArgumentException("Le fichier est vide.");
+        if (file == null || file.Length == 0)
+            throw new ArgumentException("Le fichier est vide.");
 
         byte[] fileData;
         using (var memoryStream = new MemoryStream())
@@ -47,11 +53,11 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
             Id = Guid.NewGuid(),
             IdDossier = dossierId,
             Nom = nom,
-            Libelle = libelle, 
+            Libelle = libelle,
             Type = type,
             Extension = Path.GetExtension(file.FileName)?.TrimStart('.').ToLowerInvariant() ?? string.Empty,
             Donnees = fileData,
-            UtilisateurCreation = "API_UPLOAD",
+            UtilisateurCreation = DefaultUser,
             DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
 
@@ -62,9 +68,14 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
     /// <summary>
     /// Prépare une entité DocumentDemande pour l'insertion (avec libellé optionnel).
     /// </summary>
-    public async Task<DocumentDemande> ImportDocumentDemandeAsync(IFormFile file, string nom, Guid demandeId, string? libelle = null)
+    public async Task<DocumentDemande> ImportDocumentDemandeAsync(
+        IFormFile file,
+        string nom,
+        Guid demandeId,
+        string? libelle = null)
     {
-        if (file == null || file.Length == 0) throw new ArgumentException("Le fichier est vide.");
+        if (file == null || file.Length == 0)
+            throw new ArgumentException("Le fichier est vide.");
 
         byte[] fileData;
         using (var memoryStream = new MemoryStream())
@@ -78,10 +89,10 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
             Id = Guid.NewGuid(),
             IdDemande = demandeId,
             Nom = nom,
-            Libelle = libelle, // Prise en compte du libellé
+            Libelle = libelle,
             Extension = Path.GetExtension(file.FileName)?.TrimStart('.').ToLowerInvariant() ?? string.Empty,
             Donnees = fileData,
-            UtilisateurCreation = string.IsNullOrWhiteSpace(utilisateurCreation) ? DefaultUser : utilisateurCreation,
+            UtilisateurCreation = DefaultUser,
             DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
 
@@ -92,8 +103,16 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
     /// <summary>
     /// Sauvegarde un document généré (ex: reçu PDF) directement à partir de données binaires.
     /// </summary>
-    public async Task<DocumentDossier> SaveDocumentDossierFromBytesAsync(byte[] content, string nom, byte type, Guid dossierId, string? libelle = null)
+    public Task<DocumentDossier> SaveDocumentDossierFromBytesAsync(
+        byte[] content,
+        string nom,
+        byte type,
+        Guid dossierId,
+        string? libelle = null)
     {
+        if (content == null || content.Length == 0)
+            throw new InvalidOperationException("Données vides.");
+
         var document = new DocumentDossier
         {
             Id = Guid.NewGuid(),
@@ -108,47 +127,16 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
         };
 
         _context.DocumentsDossiers.Add(document);
-
-        return document;
+        return Task.FromResult(document);
     }
 
     /// <summary>
-    /// Signature factice pour le FrontOffice (le stockage physique des signatures est géré par le BackOffice).
+    /// Signature factice pour le FrontOffice.
     /// Implémenté pour respecter le contrat d'interface.
     /// </summary>
     public Task<string> UploadSignatureAsync(IFormFile file)
     {
-        // Le Front-Office n'a généralement pas besoin de cette méthode
         throw new NotImplementedException("La gestion des images de signature est réservée au Back-Office.");
-    }
-
-    /// <summary>
-    /// Récupère les données binaires d'un DocumentDossier.
-    /// </summary>
-    public Task<DocumentDossier> SaveDocumentDossierFromBytesAsync(
-        byte[] data,
-        string nom,
-        byte type,
-        Guid dossierId,
-        string? utilisateurCreation)
-    {
-        if (data == null || data.Length == 0)
-            throw new InvalidOperationException("Données vides.");
-
-        var document = new DocumentDossier
-        {
-            Id = Guid.NewGuid(),
-            IdDossier = dossierId,
-            Nom = nom,
-            Type = type,
-            Extension = "pdf", // si vous devez conserver l'extension, ajoutez-la en paramètre
-            Donnees = data,
-            UtilisateurCreation = string.IsNullOrWhiteSpace(utilisateurCreation) ? DefaultUser : utilisateurCreation,
-            DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
-        };
-
-        _context.DocumentsDossiers.Add(document);
-        return Task.FromResult(document);
     }
 
     // --------------------------------------------------------------------
@@ -156,13 +144,13 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
     // --------------------------------------------------------------------
 
     public Task<DocumentDossier> ImportDocumentDossierAsync(IFormFile file, string nom, byte type, Guid dossierId)
-        => ImportDocumentDossierAsync(file, nom, type, dossierId, DefaultUser);
+        => ImportDocumentDossierAsync(file, nom, type, dossierId, libelle: null);
 
     public Task<DocumentDemande> ImportDocumentDemandeAsync(IFormFile file, string nom, Guid demandeId)
-        => ImportDocumentDemandeAsync(file, nom, demandeId, DefaultUser);
+        => ImportDocumentDemandeAsync(file, nom, demandeId, libelle: null);
 
     // --------------------------------------------------------------------
-    // Export methods (unchanged)
+    // Export methods
     // --------------------------------------------------------------------
 
     public async Task<(byte[] content, string fileName, string contentType)> ExportDocumentDossierAsync(Guid documentId)
@@ -180,9 +168,6 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
         return (document.Donnees, fileName, contentType);
     }
 
-    /// <summary>
-    /// Récupère les données binaires d'un DocumentDemande.
-    /// </summary>
     public async Task<(byte[] content, string fileName, string contentType)> ExportDocumentDemandeAsync(Guid documentId)
     {
         var document = await _context.DocumentsDemandes
@@ -197,20 +182,6 @@ public class DatabaseFileStorageProvider : IFileStorageProvider
 
         return (document.Donnees, fileName, contentType);
     }
-
-    // --------------------------------------------------------------------
-    // Helpers
-    // --------------------------------------------------------------------
-
-    private static async Task<byte[]> ReadFileBytesAsync(IFormFile file)
-    {
-        using var memoryStream = new MemoryStream();
-        await file.CopyToAsync(memoryStream);
-        return memoryStream.ToArray();
-    }
-
-    private static string GetExtension(string fileName)
-        => Path.GetExtension(fileName)?.TrimStart('.').ToLowerInvariant() ?? string.Empty;
 
     private static string GetMimeType(string fileName)
     {

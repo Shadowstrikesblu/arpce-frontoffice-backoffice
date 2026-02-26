@@ -422,6 +422,8 @@ namespace FrontOffice.Infrastructure.Migrations
                     DateEnvoiDevis = table.Column<long>(type: "bigint", nullable: true),
                     DateDemandeEchantillon = table.Column<long>(type: "bigint", nullable: true),
                     PenaliteAppliquee = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    RappelPaiementEnvoye = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    RappelEchantillonEnvoye = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     IdAgentInstructeur = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UtilisateurCreation = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     DateCreation = table.Column<long>(type: "bigint", nullable: true),
@@ -703,6 +705,7 @@ namespace FrontOffice.Infrastructure.Migrations
                     MontantPenalite = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     Date = table.Column<long>(type: "bigint", nullable: false),
                     MontantEtude = table.Column<decimal>(type: "money", nullable: false),
+                    MontantTotal = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     MontantHomologation = table.Column<decimal>(type: "money", nullable: true),
                     MontantControle = table.Column<decimal>(type: "money", nullable: true),
                     PaiementOk = table.Column<byte>(type: "tinyint", nullable: true),
@@ -760,17 +763,10 @@ namespace FrontOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "DateCreation", "DateModification", "Libelle", "MobileBanking", "Remarques", "UtilisateurCreation", "UtilisateurModification" },
                 values: new object[,]
                 {
-<<<<<<<< HEAD:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20260223142507_InitialCreate.cs
-                    { new Guid("4342ffcc-9f67-4b76-8eef-78962e3f91b0"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
-                    { new Guid("87449d20-374f-4cd9-9290-26c9d03762f0"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
-                    { new Guid("a898e811-fa0b-46c4-bbe7-1e2166b87477"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
-                    { new Guid("c21d89b6-f451-4ca8-a1c2-3cbc3f9faf39"), "Cheque", null, null, "Chèque", (byte)0, null, null, null }
-========
-                    { new Guid("166cee73-33d0-49ff-859a-661348530e06"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
-                    { new Guid("299c1953-2c50-474e-9ec1-efa00911ea70"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
-                    { new Guid("a6152542-6110-4397-a902-8bbbd9ee343d"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
-                    { new Guid("d2db9d23-afb8-44c2-a825-8e32d12d76be"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null }
->>>>>>>> 39752f7e67ea28540b269d0a4bd842f8f9e0e144:arpce-homologation-frontOffice/FrontOffice.Infrastructure/Migrations/20260224121903_AddEmailLoggingToNotifications.cs
+                    { new Guid("443c6055-b7cd-44f6-82b3-eb98f5210be4"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
+                    { new Guid("a785cc6c-bdbf-4898-bebe-0c806762bf86"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
+                    { new Guid("d0a9ec82-2723-42cd-936e-0111dc394da4"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
+                    { new Guid("d1deecef-e550-4d80-a2bd-5ee6200242b0"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null }
                 });
 
             migrationBuilder.InsertData(

@@ -70,6 +70,16 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
+                    b.Property<bool>("RappelEchantillonEnvoye")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("RappelPaiementEnvoye")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.Property<string>("UtilisateurCreation")
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
@@ -1047,6 +1057,11 @@ namespace FrontOffice.Infrastructure.Migrations
                         .HasColumnType("money")
                         .HasDefaultValue(0m);
 
+                    b.Property<decimal>("MontantTotal")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValue(0m);
+
                     b.Property<string>("PaiementMobileId")
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
@@ -1216,28 +1231,28 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("299c1953-2c50-474e-9ec1-efa00911ea70"),
+                            Id = new Guid("a785cc6c-bdbf-4898-bebe-0c806762bf86"),
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("166cee73-33d0-49ff-859a-661348530e06"),
+                            Id = new Guid("443c6055-b7cd-44f6-82b3-eb98f5210be4"),
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("a6152542-6110-4397-a902-8bbbd9ee343d"),
+                            Id = new Guid("d0a9ec82-2723-42cd-936e-0111dc394da4"),
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("d2db9d23-afb8-44c2-a825-8e32d12d76be"),
+                            Id = new Guid("d1deecef-e550-4d80-a2bd-5ee6200242b0"),
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1
