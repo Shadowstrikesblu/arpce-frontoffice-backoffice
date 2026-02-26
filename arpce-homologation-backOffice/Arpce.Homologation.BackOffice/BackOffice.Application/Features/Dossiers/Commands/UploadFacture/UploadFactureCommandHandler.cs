@@ -10,20 +10,13 @@ public class UploadFactureCommandHandler : IRequestHandler<UploadFactureCommand,
     private readonly IApplicationDbContext _context;
     private readonly IFileStorageProvider _fileStorageProvider;
     private readonly IAuditService _auditService;
-    private readonly INotificationService _notificationService;
     private readonly ILogger<UploadFactureCommandHandler> _logger;
 
-    public UploadFactureCommandHandler(
-        IApplicationDbContext context,
-        IFileStorageProvider fileStorageProvider,
-        IAuditService auditService,
-        INotificationService notificationService,
-        ILogger<UploadFactureCommandHandler> logger)
+    public UploadFactureCommandHandler(IApplicationDbContext context, IFileStorageProvider fileStorageProvider, IAuditService auditService, ILogger<UploadFactureCommandHandler> logger)
     {
         _context = context;
         _fileStorageProvider = fileStorageProvider;
         _auditService = auditService;
-        _notificationService = notificationService;
         _logger = logger;
     }
 
@@ -32,74 +25,29 @@ public class UploadFactureCommandHandler : IRequestHandler<UploadFactureCommand,
         using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         try
         {
-            // Récupération du dossier AVEC son statut 
-            var dossier = await _context.Dossiers
-                .Include(d => d.Statut)
-                .FirstOrDefaultAsync(d => d.Id == request.DossierId, cancellationToken);
+            var dossier = await _context.Dossiers.FirstOrDefaultAsync(d => d.Id == request.DossierId, cancellationToken);
+            if (dossier == null) throw new Exception("Dossier introuvable.");
 
-            if (dossier == null)
-            {
-                _logger.LogWarning("Tentative d'upload de facture pour un dossier inexistant : {DossierId}", request.DossierId);
-                throw new Exception($"Dossier introuvable.");
-            }
+            if (request.FactureFile == null || request.FactureFile.Length == 0)
+                throw new InvalidOperationException("Fichier manquant.");
 
-            if (dossier.Statut == null || dossier.Statut.Code != "DossierPayer")
-            {
-                _logger.LogWarning("Refus d'upload facture. Le dossier {DossierId} est au statut {Statut} au lieu de DossierPayer.", dossier.Id, dossier.Statut?.Code);
-
-                throw new InvalidOperationException(
-                    $"L'upload de la facture n'est autorisé que si le dossier est au statut 'Paiement effectué' (DossierPayer). " +
-                    $"Statut actuel : '{dossier.Statut?.Libelle ?? "Inconnu"}'.");
-            }
-
-            // Validation du fichier
-            var file = request.FactureFile;
-            if (file == null || file.Length == 0)
-            {
-                throw new InvalidOperationException("Le fichier de la facture est manquant.");
-            }
-
-            if (Path.GetExtension(file.FileName).ToLowerInvariant() != ".pdf")
-            {
-                throw new InvalidOperationException("La facture doit être au format PDF.");
-            }
-
-            // Stockage du document
             await _fileStorageProvider.ImportDocumentDossierAsync(
-                file: file,
+                file: request.FactureFile,
                 nom: $"Facture_{dossier.Numero}",
-                type: 2, 
-                dossierId: dossier.Id
+                type: 2,
+                dossierId: dossier.Id,
+                libelle: "Facture finale"
             );
 
-
-            // Sauvegarde
             await _context.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
 
-            // Audit
-            await _auditService.LogAsync(
-                page: "Gestion des Dossiers",
-                libelle: $"Facture finale téléversée pour '{dossier.Numero}'.",
-                eventTypeCode: "UPLOAD",
-                dossierId: dossier.Id);
-
-            // Notification
-            await _notificationService.SendToGroupAsync(
-                profilCode: "DAFC",
-                title: "Facture Disponible",
-                message: $"La facture finale pour le dossier {dossier.Numero} a été téléversée.",
-                type: "V",
-                targetUrl: $"/dossiers/{dossier.Id}",
-                entityId: dossier.Id.ToString()
-            );
-
+            await _auditService.LogAsync("Gestion Dossiers", $"Facture chargée pour {dossier.Numero}", "UPLOAD", dossier.Id);
             return true;
         }
         catch (Exception ex)
         {
             await transaction.RollbackAsync(cancellationToken);
-            _logger.LogError(ex, "Échec de l'upload de la facture pour le dossier {DossierId}", request.DossierId);
             throw;
         }
     }

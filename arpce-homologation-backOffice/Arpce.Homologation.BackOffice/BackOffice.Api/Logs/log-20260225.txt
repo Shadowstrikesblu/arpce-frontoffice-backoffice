@@ -1,0 +1,181 @@
+2026-02-25 16:40:13.421 +01:00 [INF] Moteur d'automatisation des délais DAFC et DRSCE démarré.
+2026-02-25 16:40:23.592 +01:00 [ERR] Failed executing DbCommand (124ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[DateCreation], [d].[DateDemandeEchantillon], [d].[DateEnvoiDevis], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[PenaliteAppliquee], [d].[RappelEchantillonEnvoye], [d].[RappelPaiementEnvoye], [d].[UtilisateurCreation], [d].[UtilisateurModification], [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville], [d1].[Id], [d1].[Date], [d1].[DateCreation], [d1].[DateModification], [d1].[IdDemande], [d1].[IdDossier], [d1].[MontantControle], [d1].[MontantEtude], [d1].[MontantHomologation], [d1].[MontantPenalite], [d1].[MontantTotal], [d1].[PaiementMobileId], [d1].[PaiementOk], [d1].[UtilisateurCreation], [d1].[UtilisateurModification]
+FROM [dossiers] AS [d]
+INNER JOIN [clients] AS [c] ON [d].[IdClient] = [c].[Id]
+LEFT JOIN [devis] AS [d1] ON [d].[Id] = [d1].[IdDossier]
+WHERE [d].[DateEnvoiDevis] IS NOT NULL AND EXISTS (
+    SELECT 1
+    FROM [devis] AS [d0]
+    WHERE [d].[Id] = [d0].[IdDossier] AND ([d0].[PaiementOk] <> CAST(1 AS tinyint) OR [d0].[PaiementOk] IS NULL))
+ORDER BY [d].[Id], [c].[Id]
+2026-02-25 16:40:23.639 +01:00 [INF] Now listening on: https://localhost:7238
+2026-02-25 16:40:23.650 +01:00 [INF] Now listening on: http://localhost:5126
+2026-02-25 16:40:23.703 +01:00 [ERR] An exception occurred while iterating over the results of a query for context type 'BackOffice.Infrastructure.Persistence.BackOfficeDbContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Nom de colonne non valide : 'MontantTotal'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:8de52a84-38f2-48a2-8165-89a2c1e68da0
+Error Number:207,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Nom de colonne non valide : 'MontantTotal'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:8de52a84-38f2-48a2-8165-89a2c1e68da0
+Error Number:207,State:1,Class:16
+2026-02-25 16:40:23.878 +01:00 [ERR] Erreur dans le cycle d'automatisation des dossiers.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Nom de colonne non valide : 'MontantTotal'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at BackOffice.Infrastructure.BackgroundServices.DossierAutomationWorker.ProcessPaiementsEnRetard(IApplicationDbContext context, IEmailService email, IDevisGeneratorService devisGenerator) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Infrastructure\BackgroundServices\DossierAutomationWorker.cs:line 64
+   at BackOffice.Infrastructure.BackgroundServices.DossierAutomationWorker.ExecuteAsync(CancellationToken stoppingToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Infrastructure\BackgroundServices\DossierAutomationWorker.cs:line 40
+ClientConnectionId:8de52a84-38f2-48a2-8165-89a2c1e68da0
+Error Number:207,State:1,Class:16
+2026-02-25 16:40:24.008 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-25 16:40:24.013 +01:00 [INF] Hosting environment: Development
+2026-02-25 16:40:24.018 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api
+2026-02-25 16:40:58.875 +01:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-02-25 16:40:59.655 +01:00 [INF] Executed DbCommand (339ms) [Parameters=[@__request_Compte_0='?' (Size = 100)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AdminProfilsId], [a].[ChangementMotPasse], [a].[Compte], [a].[DateCreation], [a].[DateModification], [a].[DerniereConnexion], [a].[Desactive], [a].[Email], [a].[Fonction], [a].[IdProfil], [a].[IdUtilisateurType], [a].[MotPasse], [a].[Nom], [a].[Prenoms], [a].[Remarques], [a].[UtilisateurCreation], [a].[UtilisateurModification], [a0].[Id], [a0].[Code], [a0].[DateCreation], [a0].[DateModification], [a0].[Libelle], [a0].[Remarques], [a0].[UtilisateurCreation], [a0].[UtilisateurModification]
+FROM [AdminUtilisateurs] AS [a]
+LEFT JOIN [adminProfils] AS [a0] ON [a].[IdProfil] = [a0].[Id]
+WHERE [a].[Compte] = @__request_Compte_0
+2026-02-25 16:41:01.214 +01:00 [INF] Executed DbCommand (17ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [AdminUtilisateurs] SET [DerniereConnexion] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+2026-02-25 16:42:01.979 +01:00 [INF] Executed DbCommand (87ms) [Parameters=[@__request_UtilisateurId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [c0].[Id], [c0].[Adresse], [c0].[Bp], [c0].[ChangementMotPasse], [c0].[Code], [c0].[ContactFonction], [c0].[ContactNom], [c0].[ContactTelephone], [c0].[DateCreation], [c0].[DateModification], [c0].[Desactive], [c0].[Email], [c0].[IsVerified], [c0].[MotPasse], [c0].[NiveauValidation], [c0].[Pays], [c0].[RaisonSociale], [c0].[RegistreCommerce], [c0].[Remarques], [c0].[TypeClient], [c0].[UtilisateurCreation], [c0].[UtilisateurModification], [c0].[VerificationCode], [c0].[VerificationTokenExpiry], [c0].[Ville], [s0].[Id], [s0].[DateCreation], [s0].[DateDemandeEchantillon], [s0].[DateEnvoiDevis], [s0].[DateModification], [s0].[DateOuverture], [s0].[IdAgentInstructeur], [s0].[IdClient], [s0].[IdModeReglement], [s0].[IdStatut], [s0].[Libelle], [s0].[Numero], [s0].[PenaliteAppliquee], [s0].[RappelEchantillonEnvoye], [s0].[RappelPaiementEnvoye], [s0].[UtilisateurCreation], [s0].[UtilisateurModification], [s0].[Id0], [s0].[Code], [s0].[Libelle0], [s0].[Id1], [s0].[ContactEmail], [s0].[ContactNom], [s0].[ContactTelephone], [s0].[DateCreation0], [s0].[DateModification0], [s0].[Description], [s0].[EchantillonSoumis], [s0].[Equipement], [s0].[EstHomologable], [s0].[Fabricant], [s0].[IdCategorie], [s0].[IdDossier], [s0].[IdMotifRejet], [s0].[IdProposition], [s0].[IdStatut0], [s0].[Marque], [s0].[Modele], [s0].[NumeroDemande], [s0].[PrixUnitaire], [s0].[QuantiteEquipements], [s0].[Remise], [s0].[RequiertEchantillon], [s0].[Type], [s0].[UtilisateurCreation0], [s0].[UtilisateurModification0]
+FROM (
+    SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+    FROM [clients] AS [c]
+    WHERE [c].[Id] = @__request_UtilisateurId_0
+) AS [c0]
+LEFT JOIN (
+    SELECT [d].[Id], [d].[DateCreation], [d].[DateDemandeEchantillon], [d].[DateEnvoiDevis], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[PenaliteAppliquee], [d].[RappelEchantillonEnvoye], [d].[RappelPaiementEnvoye], [d].[UtilisateurCreation], [d].[UtilisateurModification], [s].[Id] AS [Id0], [s].[Code], [s].[Libelle] AS [Libelle0], [d0].[Id] AS [Id1], [d0].[ContactEmail], [d0].[ContactNom], [d0].[ContactTelephone], [d0].[DateCreation] AS [DateCreation0], [d0].[DateModification] AS [DateModification0], [d0].[Description], [d0].[EchantillonSoumis], [d0].[Equipement], [d0].[EstHomologable], [d0].[Fabricant], [d0].[IdCategorie], [d0].[IdDossier], [d0].[IdMotifRejet], [d0].[IdProposition], [d0].[IdStatut] AS [IdStatut0], [d0].[Marque], [d0].[Modele], [d0].[NumeroDemande], [d0].[PrixUnitaire], [d0].[QuantiteEquipements], [d0].[Remise], [d0].[RequiertEchantillon], [d0].[Type], [d0].[UtilisateurCreation] AS [UtilisateurCreation0], [d0].[UtilisateurModification] AS [UtilisateurModification0]
+    FROM [dossiers] AS [d]
+    INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+    LEFT JOIN [demandes] AS [d0] ON [d].[Id] = [d0].[IdDossier]
+) AS [s0] ON [c0].[Id] = [s0].[IdClient]
+ORDER BY [c0].[Id], [s0].[Id], [s0].[Id0]
+2026-02-25 16:45:14.862 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-02-25 16:45:15.446 +01:00 [ERR] Failed executing DbCommand (34ms) [Parameters=[@__request_DossierId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s1].[Id], [s1].[DateCreation], [s1].[DateDemandeEchantillon], [s1].[DateEnvoiDevis], [s1].[DateModification], [s1].[DateOuverture], [s1].[IdAgentInstructeur], [s1].[IdClient], [s1].[IdModeReglement], [s1].[IdStatut], [s1].[Libelle], [s1].[Numero], [s1].[PenaliteAppliquee], [s1].[RappelEchantillonEnvoye], [s1].[RappelPaiementEnvoye], [s1].[UtilisateurCreation], [s1].[UtilisateurModification], [s1].[Id0], [s1].[Adresse], [s1].[Bp], [s1].[ChangementMotPasse], [s1].[Code], [s1].[ContactFonction], [s1].[ContactNom], [s1].[ContactTelephone], [s1].[DateCreation0], [s1].[DateModification0], [s1].[Desactive], [s1].[Email], [s1].[IsVerified], [s1].[MotPasse], [s1].[NiveauValidation], [s1].[Pays], [s1].[RaisonSociale], [s1].[RegistreCommerce], [s1].[Remarques], [s1].[TypeClient], [s1].[UtilisateurCreation0], [s1].[UtilisateurModification0], [s1].[VerificationCode], [s1].[VerificationTokenExpiry], [s1].[Ville], [s1].[Id1], [s1].[Code0], [s1].[Libelle0], [s1].[Id2], [s1].[Code1], [s1].[DateCreation1], [s1].[DateModification1], [s1].[Libelle1], [s1].[MobileBanking], [s1].[Remarques0], [s1].[UtilisateurCreation1], [s1].[UtilisateurModification1], [s1].[Id3], [s1].[Id4], [s1].[Id5], [s1].[Id6], [s1].[Id7], [s1].[Id8], [c1].[Id], [c1].[commentaire], [c1].[DateCommentaire], [c1].[DateCreation], [c1].[DateModification], [c1].[IdDossier], [c1].[NomInstructeur], [c1].[Proposition], [c1].[UtilisateurCreation], [c1].[UtilisateurModification], [d1].[Id], [d1].[Date], [d1].[DateCreation], [d1].[DateModification], [d1].[IdDemande], [d1].[IdDossier], [d1].[MontantControle], [d1].[MontantEtude], [d1].[MontantHomologation], [d1].[MontantPenalite], [d1].[MontantTotal], [d1].[PaiementMobileId], [d1].[PaiementOk], [d1].[UtilisateurCreation], [d1].[UtilisateurModification], [d2].[Id], [d2].[DateCreation], [d2].[DateModification], [d2].[Donnees], [d2].[Extension], [d2].[FilePath], [d2].[IdDossier], [d2].[Libelle], [d2].[Nom], [d2].[Type], [d2].[UtilisateurCreation], [d2].[UtilisateurModification], [s1].[ContactEmail], [s1].[ContactNom0], [s1].[ContactTelephone0], [s1].[DateCreation2], [s1].[DateModification2], [s1].[Description], [s1].[EchantillonSoumis], [s1].[Equipement], [s1].[EstHomologable], [s1].[Fabricant], [s1].[IdCategorie], [s1].[IdDossier], [s1].[IdMotifRejet], [s1].[IdProposition], [s1].[IdStatut0], [s1].[Marque], [s1].[Modele], [s1].[NumeroDemande], [s1].[PrixUnitaire], [s1].[QuantiteEquipements], [s1].[Remise], [s1].[RequiertEchantillon], [s1].[Type], [s1].[UtilisateurCreation2], [s1].[UtilisateurModification2], [s1].[Code2], [s1].[Libelle2], [d3].[Id], [d3].[DateCreation], [d3].[DateModification], [d3].[Donnees], [d3].[Extension], [d3].[FilePath], [d3].[IdDemande], [d3].[Libelle], [d3].[Nom], [d3].[UtilisateurCreation], [d3].[UtilisateurModification], [s1].[BlockSize], [s1].[Code3], [s1].[CoutUnitaire], [s1].[DateCreation3], [s1].[DateModification3], [s1].[EstCalculeParQuantite], [s1].[FormuleHomologation], [s1].[FraisControle], [s1].[FraisEtude], [s1].[FraisHomologation], [s1].[FraisHomologationParLot], [s1].[FraisHomologationQuantiteParLot], [s1].[Libelle3], [s1].[ModeCalcul], [s1].[QtyMax], [s1].[QtyMin], [s1].[QuantiteReference], [s1].[ReferenceLoiFinance], [s1].[Remarques1], [s1].[TypeCalcul], [s1].[TypeClient0], [s1].[TypeEquipement], [s1].[UtilisateurCreation3], [s1].[UtilisateurModification3], [s1].[Code4], [s1].[DateCreation4], [s1].[DateModification4], [s1].[Libelle4], [s1].[Remarques2], [s1].[UtilisateurCreation4], [s1].[UtilisateurModification4], [s1].[Code5], [s1].[DateCreation5], [s1].[DateModification5], [s1].[Libelle5], [s1].[UtilisateurCreation5], [s1].[UtilisateurModification5], [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[SignataireId], [a].[UtilisateurCreation], [a].[UtilisateurModification], [a].[VisaReference], [s1].[Adresse0], [s1].[DateCreation6], [s1].[DateModification6], [s1].[DemandeId], [s1].[Email0], [s1].[LettreDocumentPath], [s1].[Nom], [s1].[Telephone], [s1].[Type0], [s1].[UtilisateurCreation6], [s1].[UtilisateurModification6]
+FROM (
+    SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateDemandeEchantillon], [d].[DateEnvoiDevis], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[PenaliteAppliquee], [d].[RappelEchantillonEnvoye], [d].[RappelPaiementEnvoye], [d].[UtilisateurCreation], [d].[UtilisateurModification], [c].[Id] AS [Id0], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation] AS [DateCreation0], [c].[DateModification] AS [DateModification0], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation] AS [UtilisateurCreation0], [c].[UtilisateurModification] AS [UtilisateurModification0], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville], [s].[Id] AS [Id1], [s].[Code] AS [Code0], [s].[Libelle] AS [Libelle0], [m].[Id] AS [Id2], [m].[Code] AS [Code1], [m].[DateCreation] AS [DateCreation1], [m].[DateModification] AS [DateModification1], [m].[Libelle] AS [Libelle1], [m].[MobileBanking], [m].[Remarques] AS [Remarques0], [m].[UtilisateurCreation] AS [UtilisateurCreation1], [m].[UtilisateurModification] AS [UtilisateurModification1], [d0].[Id] AS [Id3], [d0].[ContactEmail], [d0].[ContactNom] AS [ContactNom0], [d0].[ContactTelephone] AS [ContactTelephone0], [d0].[DateCreation] AS [DateCreation2], [d0].[DateModification] AS [DateModification2], [d0].[Description], [d0].[EchantillonSoumis], [d0].[Equipement], [d0].[EstHomologable], [d0].[Fabricant], [d0].[IdCategorie], [d0].[IdDossier], [d0].[IdMotifRejet], [d0].[IdProposition], [d0].[IdStatut] AS [IdStatut0], [d0].[Marque], [d0].[Modele], [d0].[NumeroDemande], [d0].[PrixUnitaire], [d0].[QuantiteEquipements], [d0].[Remise], [d0].[RequiertEchantillon], [d0].[Type], [d0].[UtilisateurCreation] AS [UtilisateurCreation2], [d0].[UtilisateurModification] AS [UtilisateurModification2], [s0].[Id] AS [Id4], [s0].[Code] AS [Code2], [s0].[Libelle] AS [Libelle2], [c0].[Id] AS [Id5], [c0].[BlockSize], [c0].[Code] AS [Code3], [c0].[CoutUnitaire], [c0].[DateCreation] AS [DateCreation3], [c0].[DateModification] AS [DateModification3], [c0].[EstCalculeParQuantite], [c0].[FormuleHomologation], [c0].[FraisControle], [c0].[FraisEtude], [c0].[FraisHomologation], [c0].[FraisHomologationParLot], [c0].[FraisHomologationQuantiteParLot], [c0].[Libelle] AS [Libelle3], [c0].[ModeCalcul], [c0].[QtyMax], [c0].[QtyMin], [c0].[QuantiteReference], [c0].[ReferenceLoiFinance], [c0].[Remarques] AS [Remarques1], [c0].[TypeCalcul], [c0].[TypeClient] AS [TypeClient0], [c0].[TypeEquipement], [c0].[UtilisateurCreation] AS [UtilisateurCreation3], [c0].[UtilisateurModification] AS [UtilisateurModification3], [m0].[Id] AS [Id6], [m0].[Code] AS [Code4], [m0].[DateCreation] AS [DateCreation4], [m0].[DateModification] AS [DateModification4], [m0].[Libelle] AS [Libelle4], [m0].[Remarques] AS [Remarques2], [m0].[UtilisateurCreation] AS [UtilisateurCreation4], [m0].[UtilisateurModification] AS [UtilisateurModification4], [p].[Id] AS [Id7], [p].[Code] AS [Code5], [p].[DateCreation] AS [DateCreation5], [p].[DateModification] AS [DateModification5], [p].[Libelle] AS [Libelle5], [p].[UtilisateurCreation] AS [UtilisateurCreation5], [p].[UtilisateurModification] AS [UtilisateurModification5], [b].[Id] AS [Id8], [b].[Adresse] AS [Adresse0], [b].[DateCreation] AS [DateCreation6], [b].[DateModification] AS [DateModification6], [b].[DemandeId], [b].[Email] AS [Email0], [b].[LettreDocumentPath], [b].[Nom], [b].[Telephone], [b].[Type] AS [Type0], [b].[UtilisateurCreation] AS [UtilisateurCreation6], [b].[UtilisateurModification] AS [UtilisateurModification6]
+    FROM [dossiers] AS [d]
+    INNER JOIN [clients] AS [c] ON [d].[IdClient] = [c].[Id]
+    INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+    LEFT JOIN [modesReglements] AS [m] ON [d].[IdModeReglement] = [m].[Id]
+    LEFT JOIN [demandes] AS [d0] ON [d].[Id] = [d0].[IdDossier]
+    LEFT JOIN [statuts] AS [s0] ON [d0].[IdStatut] = [s0].[Id]
+    LEFT JOIN [categoriesEquipements] AS [c0] ON [d0].[IdCategorie] = [c0].[Id]
+    LEFT JOIN [motifsRejets] AS [m0] ON [d0].[IdMotifRejet] = [m0].[Id]
+    LEFT JOIN [propositions] AS [p] ON [d0].[IdProposition] = [p].[Id]
+    LEFT JOIN [beneficiaires] AS [b] ON [d0].[Id] = [b].[DemandeId]
+    WHERE [d].[Id] = @__request_DossierId_0
+) AS [s1]
+LEFT JOIN [commentaires] AS [c1] ON [s1].[Id] = [c1].[IdDossier]
+LEFT JOIN [devis] AS [d1] ON [s1].[Id] = [d1].[IdDossier]
+LEFT JOIN [documentsDossiers] AS [d2] ON [s1].[Id] = [d2].[IdDossier]
+LEFT JOIN [documentsDemandes] AS [d3] ON [s1].[Id3] = [d3].[IdDemande]
+LEFT JOIN [attestations] AS [a] ON [s1].[Id3] = [a].[IdDemande]
+ORDER BY [s1].[Id], [s1].[Id0], [s1].[Id1], [s1].[Id2], [s1].[Id3], [s1].[Id4], [s1].[Id5], [s1].[Id6], [s1].[Id7], [s1].[Id8], [c1].[Id], [d1].[Id], [d2].[Id], [d3].[Id]
+2026-02-25 16:45:15.477 +01:00 [ERR] An exception occurred while iterating over the results of a query for context type 'BackOffice.Infrastructure.Persistence.BackOfficeDbContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Nom de colonne non valide : 'MontantTotal'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:8de52a84-38f2-48a2-8165-89a2c1e68da0
+Error Number:207,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Nom de colonne non valide : 'MontantTotal'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:8de52a84-38f2-48a2-8165-89a2c1e68da0
+Error Number:207,State:1,Class:16
+2026-02-25 16:45:15.980 +01:00 [ERR] Une exception non gérée a été interceptée.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Nom de colonne non valide : 'MontantTotal'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at BackOffice.Application.Features.Dossiers.Queries.GetDossierDetail.GetDossierDetailQueryHandler.Handle(GetDossierDetailQuery request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Application\Features\Dossiers\Queries\GetDossierDetail\GetDossierDetailQueryHandler.cs:line 25
+   at BackOffice.Api.Controllers.DossiersController.GetDossierDetail(Guid dossierId) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\Controllers\DossiersController.cs:line 104
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at BackOffice.Api.Middleware.ErrorHandlingMiddleware.Invoke(HttpContext context) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-backOffice\Arpce.Homologation.BackOffice\BackOffice.Api\Middleware\ErrorHandlingMiddleware.cs:line 21
+ClientConnectionId:8de52a84-38f2-48a2-8165-89a2c1e68da0
+Error Number:207,State:1,Class:16
