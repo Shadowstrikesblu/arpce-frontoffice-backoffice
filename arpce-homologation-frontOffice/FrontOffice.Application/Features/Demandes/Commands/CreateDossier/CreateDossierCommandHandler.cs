@@ -16,7 +16,7 @@ public class CreateDossierCommandHandler : IRequestHandler<CreateDossierCommand,
     private readonly ICurrentUserService _currentUserService;
     private readonly ILogger<CreateDossierCommandHandler> _logger;
     private readonly INotificationService _notificationService;
-    private readonly IEmailService _emailService; // Ajout pour l'envoi au bénéficiaire
+    private readonly IEmailService _emailService;
 
     public CreateDossierCommandHandler(
         IApplicationDbContext context,
@@ -43,18 +43,18 @@ public class CreateDossierCommandHandler : IRequestHandler<CreateDossierCommand,
             using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
             try
             {
-                // 1. Génération du Numéro officiel
+                // Génération du Numéro officiel
                 var currentYear = DateTime.UtcNow.ToString("yy");
                 var prefix = $"Hom-{currentYear}-";
                 var countThisYear = await _context.Dossiers.AsNoTracking()
                     .CountAsync(d => d.Numero.StartsWith(prefix), cancellationToken);
                 var generatedNumero = $"{prefix}{(countThisYear + 1).ToString("D4")}";
 
-                // 2. Statut initial
+                // Statut initial
                 var defaultStatut = await _context.Statuts.AsNoTracking()
                     .FirstOrDefaultAsync(s => s.Code == StatutDossierEnum.NouveauDossier.ToString(), cancellationToken);
 
-                // 3. Création du Dossier
+                // Création du Dossier
                 var dossier = new Dossier
                 {
                     Id = Guid.NewGuid(),
@@ -67,37 +67,41 @@ public class CreateDossierCommandHandler : IRequestHandler<CreateDossierCommand,
                     UtilisateurCreation = userId.Value.ToString()
                 };
 
-                // 4. Création de la Demande
+                // Création de la Demande
                 var demande = new Demande
                 {
                     Id = Guid.NewGuid(),
                     IdDossier = dossier.Id,
-                    Equipement = request.Equipement,
-                    Modele = request.Modele,
-                    Marque = request.Marque,
-                    Fabricant = request.Fabricant,
-                    Type = request.Type,
-                    Description = request.Description,
-                    QuantiteEquipements = request.QuantiteEquipements,
-                    RequiertEchantillon = request.RequiertEchantillon,
+                    Equipement = request.Demande.Equipement,
+                    Modele = request.Demande.Modele,
+                    Marque = request.Demande.Marque,
+                    Fabricant = request.Demande.Fabricant,
+                    Type = request.Demande.Type,
+                    Description = request.Demande.Description,
+                    QuantiteEquipements = request.Demande.QuantiteEquipements,
+
+                    PrixUnitaire = request.Demande.PrixUnitaire ?? 0,
+                    EstHomologable = request.EstHomologable, 
+
+                    RequiertEchantillon = request.Demande.RequiertEchantillon,
                     EchantillonSoumis = false,
                     DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
                     UtilisateurCreation = userId.Value.ToString()
                 };
 
-                // 5. Création du Bénéficiaire
+                // Création du Bénéficiaire
                 Beneficiaire? beneficiaire = null;
-                if (request.Beneficiaire != null)
+                if (request.Demande.Beneficiaire != null)
                 {
                     beneficiaire = new Beneficiaire
                     {
                         Id = Guid.NewGuid(),
                         DemandeId = demande.Id,
-                        Nom = request.Beneficiaire.Nom,
-                        Email = request.Beneficiaire.Email,
-                        Telephone = request.Beneficiaire.Telephone,
-                        Type = request.Beneficiaire.Type,
-                        Adresse = request.Beneficiaire.Adresse,
+                        Nom = request.Demande.Beneficiaire.Nom,
+                        Email = request.Demande.Beneficiaire.Email,
+                        Telephone = request.Demande.Beneficiaire.Telephone,
+                        Type = request.Demande.Beneficiaire.Type,
+                        Adresse = request.Demande.Beneficiaire.Adresse,
                         DateCreation = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
                         UtilisateurCreation = userId.Value.ToString()
                     };
@@ -116,7 +120,7 @@ public class CreateDossierCommandHandler : IRequestHandler<CreateDossierCommand,
                     await SendEmailToBeneficiary(beneficiaire, dossier, demande);
                 }
 
-                // 6. Notification SignalR pour le Back Office
+                // Notification SignalR pour le Back Office
                 await _notificationService.SendToGroupAsync(
                     groupName: "DRSCE",
                     title: "Nouveau Dossier Créé",
@@ -157,7 +161,6 @@ public class CreateDossierCommandHandler : IRequestHandler<CreateDossierCommand,
 
             await _emailService.SendEmailAsync(beneficiaire.Email!, subject, body);
 
-            // Historisation de la notification (Requirement 6.2)
             var log = new Notification
             {
                 Id = Guid.NewGuid(),

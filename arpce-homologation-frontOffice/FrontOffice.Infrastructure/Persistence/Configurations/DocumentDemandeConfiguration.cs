@@ -15,6 +15,7 @@ public class DocumentDemandeConfiguration : IEntityTypeConfiguration<DocumentDem
         builder.Property(d => d.Nom).HasMaxLength(120);
         builder.Property(d => d.Extension).HasMaxLength(12).IsRequired();
         builder.Property(d => d.FilePath).HasMaxLength(512);
+        builder.Property(d => d.Type).HasColumnType("tinyint");
 
         // Définition de la relation avec Demande
         builder.HasOne(d => d.Demande)

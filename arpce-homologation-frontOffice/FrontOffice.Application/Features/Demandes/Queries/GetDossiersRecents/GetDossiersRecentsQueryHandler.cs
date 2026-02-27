@@ -55,7 +55,7 @@ public class GetDossiersRecentsQueryHandler : IRequestHandler<GetDossiersRecents
                     {
                         Id = d.Demande.Id,
                         IdDossier = d.Demande.IdDossier,
-                        NumeroDemande = d.Demande.NumeroDemande,
+                        //NumeroDemande = d.Demande.NumeroDemande,
                         Equipement = d.Demande.Equipement,
                         Modele = d.Demande.Modele,
                         Marque = d.Demande.Marque

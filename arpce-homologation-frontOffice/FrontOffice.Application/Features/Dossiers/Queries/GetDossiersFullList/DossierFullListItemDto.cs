@@ -17,7 +17,7 @@ public class DossierFullListItemDto
     public StatutDto? Statut { get; set; }
     public ModeReglementDto? ModeReglement { get; set; }
 
-    public int NbDemandes { get; set; }
+    //public int NbDemandes { get; set; }
 
     public List<DemandeDto> Demandes { get; set; } = new List<DemandeDto>();
     public List<DevisDto> Devis { get; set; } = new List<DevisDto>();

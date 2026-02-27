@@ -24,7 +24,7 @@ public class Dossier : AuditableEntity
     public virtual ModeReglement? ModeReglement { get; set; }
 
     public virtual Demande Demande { get; set; } = default!;
-
+    
     public virtual ICollection<Commentaire> Commentaires { get; set; } = new List<Commentaire>();
     public virtual ICollection<DocumentDossier> DocumentsDossiers { get; set; } = new List<DocumentDossier>();
     public virtual ICollection<Devis> Devis { get; set; } = new List<Devis>();

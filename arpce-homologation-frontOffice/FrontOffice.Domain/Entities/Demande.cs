@@ -19,7 +19,7 @@ public class Demande : AuditableEntity
     public int? QuantiteEquipements { get; set; }
     public string? ContactNom { get; set; }
     public string? ContactEmail { get; set; }
-    public string? ContactTelephone { get; set; }
+    public string? ContactTelephone { get; set; } 
 
     public Guid? IdStatut { get; set; }
     [ForeignKey("IdStatut")]

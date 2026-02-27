@@ -44,15 +44,11 @@ public class GetDossiersFullListQueryHandler : IRequestHandler<GetDossiersFullLi
             .Skip((request.Parameters.Page - 1) * request.Parameters.TaillePage)
             .Take(request.Parameters.TaillePage)
             .Include(d => d.Statut)
-            .Include(d => d.ModeReglement)
-            .Include(d => d.Commentaires)
             .Include(d => d.Devis)
             .Include(d => d.DocumentsDossiers)
-            .Include(d => d.Demande).ThenInclude(dem => dem.Statut) 
-            .Include(d => d.Demande).ThenInclude(dem => dem.Attestations)
+            .Include(d => d.Demande).ThenInclude(dem => dem.Statut)
             .Include(d => d.Demande).ThenInclude(dem => dem.CategorieEquipement)
-            .Include(d => d.Demande).ThenInclude(dem => dem.MotifRejet)
-            .Include(d => d.Demande).ThenInclude(dem => dem.Proposition)
+            .Include(d => d.Demande).ThenInclude(dem => dem.Beneficiaire)
             .Include(d => d.Demande).ThenInclude(dem => dem.DocumentsDemandes)
             .ToListAsync(cancellationToken);
 
@@ -62,46 +58,69 @@ public class GetDossiersFullListQueryHandler : IRequestHandler<GetDossiersFullLi
             Numero = d.Numero,
             Libelle = d.Libelle,
             DateOuverture = d.DateOuverture,
-            NbDemandes = d.Demande != null ? 1 : 0, 
+            //NbDemandes = d.Demande != null ? 1 : 0,
 
             Statut = d.Statut != null ? new StatutDto { Id = d.Statut.Id, Code = d.Statut.Code, Libelle = d.Statut.Libelle } : null,
-            ModeReglement = d.ModeReglement != null ? new ModeReglementDto { Id = d.ModeReglement.Id, Code = d.ModeReglement.Code, Libelle = d.ModeReglement.Libelle } : null,
 
-            Commentaires = d.Commentaires.Select(com => new CommentaireDto { Id = com.Id, DateCommentaire = com.DateCommentaire, CommentaireTexte = com.CommentaireTexte, NomInstructeur = com.NomInstructeur }).ToList(),
-            Devis = d.Devis.Select(dev => new DevisDto { Id = dev.Id, Date = dev.Date, MontantEtude = dev.MontantEtude, MontantHomologation = dev.MontantHomologation, PaiementOk = dev.PaiementOk }).ToList(),
-            Documents = d.DocumentsDossiers.Select(doc => new DocumentDossierDto { Id = doc.Id, Nom = doc.Nom, Extension = doc.Extension, FilePath = $"/api/documents/dossier/{doc.Id}/download" }).ToList(),
+            Devis = d.Devis.Select(dev => new DevisDto
+            {
+                Id = dev.Id,
+                Date = dev.Date,
+                MontantEtude = dev.MontantEtude,
+                MontantHomologation = dev.MontantHomologation,
+                MontantControle = dev.MontantControle,
+                MontantPenalite = dev.MontantPenalite,
+                MontantTotal = dev.MontantTotal,
+                PaiementOk = dev.PaiementOk,
+                FilePath = $"/api/devis/{dev.Id}/download"
+            }).ToList(),
 
             Demandes = d.Demande != null ? new List<DemandeDto>
             {
                 new DemandeDto
                 {
                     Id = d.Demande.Id,
-                    IdDossier = d.Id,
-                    Equipement = d.Demande.Equipement,
-                    Modele = d.Demande.Modele,
-                    Marque = d.Demande.Marque,
-                    Fabricant = d.Demande.Fabricant,
-                    Type = d.Demande.Type,
-                    QuantiteEquipements = d.Demande.QuantiteEquipements,
-                    PrixUnitaire = d.Demande.PrixUnitaire,
-                    Remise = d.Demande.Remise,
-                    EstHomologable = d.Demande.EstHomologable,
-
-                    Statut = d.Demande.Statut != null ? new StatutDto
+                IdDossier = d.Id,
+                Equipement = d.Demande.Equipement,
+                Modele = d.Demande.Modele,
+                Marque = d.Demande.Marque,
+                Fabricant = d.Demande.Fabricant,
+                Type = d.Demande.Type,
+                Description = d.Demande.Description,
+                QuantiteEquipements = d.Demande.QuantiteEquipements,
+                PrixUnitaire = d.Demande.PrixUnitaire,
+                EstHomologable = d.Demande.EstHomologable,
+                    CategorieEquipement = d.Demande.CategorieEquipement != null ? new CategorieEquipementDto
                     {
-                        Id = d.Demande.Statut.Id,
-                        Code = d.Demande.Statut.Code,
-                        Libelle = d.Demande.Statut.Libelle
+                        Id = d.Demande.CategorieEquipement.Id,
+                        Code = d.Demande.CategorieEquipement.Code,
+                        Libelle = d.Demande.CategorieEquipement.Libelle,
+                        TypeEquipement = d.Demande.CategorieEquipement.TypeEquipement,
+                        TypeClient = d.Demande.CategorieEquipement.TypeClient,
+                        FraisEtude = d.Demande.CategorieEquipement.FraisEtude,
+                        FraisHomologation = d.Demande.CategorieEquipement.FraisHomologation,
+                        FraisControle = d.Demande.CategorieEquipement.FraisControle,
+                        ModeCalcul = d.Demande.CategorieEquipement.ModeCalcul,
+                        BlockSize = d.Demande.CategorieEquipement.BlockSize,
+                        ReferenceLoiFinance = d.Demande.CategorieEquipement.ReferenceLoiFinance,
+                        Remarques = d.Demande.CategorieEquipement.Remarques,
+                        QtyMin = d.Demande.CategorieEquipement.QtyMin,
+                        QtyMax = d.Demande.CategorieEquipement.QtyMax
                     } : null,
-
-                    CategorieEquipement = d.Demande.CategorieEquipement != null ? new CategorieEquipementDto { Id = d.Demande.CategorieEquipement.Id, Code = d.Demande.CategorieEquipement.Code, Libelle = d.Demande.CategorieEquipement.Libelle } : null,
-                    MotifRejet = d.Demande.MotifRejet != null ? new MotifRejetDto { Id = d.Demande.MotifRejet.Id, Code = d.Demande.MotifRejet.Code, Libelle = d.Demande.MotifRejet.Libelle } : null,
-                    Proposition = d.Demande.Proposition != null ? new PropositionDto { Id = d.Demande.Proposition.Id, Code = d.Demande.Proposition.Code, Libelle = d.Demande.Proposition.Libelle } : null,
-                    Documents = d.Demande.DocumentsDemandes.Select(doc => new DocumentDossierDto { Id = doc.Id, Nom = doc.Nom, Extension = doc.Extension, FilePath = $"/api/documents/demande/{doc.Id}/download" }).ToList()
+                    Beneficiaire = d.Demande.Beneficiaire != null ? new BeneficiaireDto
+                    {
+                        Id = d.Demande.Beneficiaire.Id,
+                        Nom = d.Demande.Beneficiaire.Nom,
+                        Email = d.Demande.Beneficiaire.Email,
+                        Adresse = d.Demande.Beneficiaire.Adresse,
+                        Telephone = d.Demande.Beneficiaire.Telephone,
+                        Type = d.Demande.Beneficiaire.Type,
+                        //LettreDocumentPath = d.Demande.Beneficiaire.LettreDocumentPath
+                    } : null
                 }
             } : new List<DemandeDto>(),
 
-            Attestations = d.Demande != null ? d.Demande.Attestations.Select(att => new AttestationDto { Id = att.Id, DateDelivrance = att.DateDelivrance, DateExpiration = att.DateExpiration, FilePath = $"/api/documents/certificat/{att.Id}/download" }).ToList() : new List<AttestationDto>()
+            Documents = d.DocumentsDossiers.Select(doc => new DocumentDossierDto { Id = doc.Id, Nom = doc.Nom, Libelle = doc.Libelle, FilePath = $"/api/documents/dossier/{doc.Id}/download" }).ToList()
         }).ToList();
 
         return new DossiersFullListVm

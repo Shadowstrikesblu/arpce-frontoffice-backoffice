@@ -38,8 +38,7 @@ public class GetCategoriesListQueryHandler : IRequestHandler<GetCategoriesListQu
                 FraisEtude = c.FraisEtude,
                 FraisHomologation = c.FraisHomologation,
                 FraisControle = c.FraisControle,
-                FormuleHomologation = c.FormuleHomologation,
-                QuantiteReference = c.QuantiteReference,
+               
                 Remarques = c.Remarques,
                 ModeCalcul = c.ModeCalcul,
                 BlockSize = c.BlockSize,

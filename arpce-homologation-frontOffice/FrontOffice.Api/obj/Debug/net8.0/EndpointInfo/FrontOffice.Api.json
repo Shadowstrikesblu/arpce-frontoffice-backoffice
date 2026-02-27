@@ -1622,6 +1622,10 @@
       "BeneficiaireDto": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
           "nom": {
             "type": "string",
             "nullable": true
@@ -1660,6 +1664,14 @@
             "type": "string",
             "nullable": true
           },
+          "typeEquipement": {
+            "type": "string",
+            "nullable": true
+          },
+          "typeClient": {
+            "type": "string",
+            "nullable": true
+          },
           "fraisEtude": {
             "type": "number",
             "format": "double",
@@ -1673,6 +1685,32 @@
           "fraisControle": {
             "type": "number",
             "format": "double",
+            "nullable": true
+          },
+          "remarques": {
+            "type": "string",
+            "nullable": true
+          },
+          "modeCalcul": {
+            "$ref": "#/components/schemas/ModeCalcul"
+          },
+          "blockSize": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "qtyMin": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "qtyMax": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "referenceLoiFinance": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -1860,6 +1898,28 @@
             "type": "string",
             "nullable": true
           },
+          "estHomologable": {
+            "type": "boolean"
+          },
+          "demande": {
+            "$ref": "#/components/schemas/DemandeCommandDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteAccountCommand": {
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DemandeCommandDto": {
+        "type": "object",
+        "properties": {
           "equipement": {
             "type": "string",
             "nullable": true
@@ -1888,21 +1948,16 @@
             "type": "integer",
             "format": "int32"
           },
+          "prixUnitaire": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
           "requiertEchantillon": {
             "type": "boolean"
           },
           "beneficiaire": {
             "$ref": "#/components/schemas/BeneficiaireDto"
-          }
-        },
-        "additionalProperties": false
-      },
-      "DeleteAccountCommand": {
-        "type": "object",
-        "properties": {
-          "password": {
-            "type": "string",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1917,10 +1972,6 @@
           "idDossier": {
             "type": "string",
             "format": "uuid"
-          },
-          "numeroDemande": {
-            "type": "string",
-            "nullable": true
           },
           "equipement": {
             "type": "string",
@@ -1964,11 +2015,6 @@
             "nullable": true
           },
           "prixUnitaire": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "remise": {
             "type": "number",
             "format": "double",
             "nullable": true
@@ -2058,6 +2104,14 @@
             "format": "double",
             "nullable": true
           },
+          "montantPenalite": {
+            "type": "number",
+            "format": "double"
+          },
+          "montantTotal": {
+            "type": "number",
+            "format": "double"
+          },
           "paiementOk": {
             "type": "integer",
             "format": "int32",
@@ -2126,12 +2180,8 @@
           "modeReglement": {
             "$ref": "#/components/schemas/ModeReglementDto"
           },
-          "demandes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DemandeDto"
-            },
-            "nullable": true
+          "demande": {
+            "$ref": "#/components/schemas/DemandeDto"
           },
           "devis": {
             "type": "array",
@@ -2188,10 +2238,6 @@
           },
           "modeReglement": {
             "$ref": "#/components/schemas/ModeReglementDto"
-          },
-          "nbDemandes": {
-            "type": "integer",
-            "format": "int32"
           },
           "demandes": {
             "type": "array",
@@ -2361,6 +2407,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "pageTaille": {
+            "type": "integer",
+            "format": "int32"
+          },
           "totalPage": {
             "type": "integer",
             "format": "int32"
@@ -2402,6 +2452,15 @@
           }
         },
         "additionalProperties": false
+      },
+      "ModeCalcul": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
       },
       "ModeReglementDto": {
         "type": "object",

@@ -12,7 +12,7 @@ public class DossierListItemDto
     public string Libelle { get; set; } = string.Empty;
     public ClientDto? Client { get; set; }
     public StatutDto? Statut { get; set; }
-
+    public string? FilePath { get; set; }
     public DemandeDto? Demande { get; set; }
     public List<DevisDto> Devis { get; set; } = new();
     public List<DocumentDossierDto> Documents { get; set; } = new();
