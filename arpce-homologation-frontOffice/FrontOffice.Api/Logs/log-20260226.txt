@@ -1,9 +1,297 @@
-2026-02-26 00:06:48.694 +00:00 [FTL] L'application FrontOffice s'est arrêtée de manière inattendue sur le VPS.
-Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
-   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
-   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
-   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
-   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
-   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
-   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
-   at Program.<Main>$(String[] args) in C:\Users\Admin2\Downloads\Sites\BackEnd\arpce-homologation-frontOffice\FrontOffice.Api\Program.cs:line 161
+2026-02-26 11:50:39.727 +01:00 [INF] Now listening on: https://localhost:7016
+2026-02-26 11:50:39.775 +01:00 [INF] Now listening on: http://localhost:5041
+2026-02-26 11:50:39.874 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-26 11:50:39.878 +01:00 [INF] Hosting environment: Development
+2026-02-26 11:50:39.882 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2026-02-26 11:53:20.066 +01:00 [INF] HTTP GET /index.html responded 200 in 137.4497 ms
+2026-02-26 11:53:20.345 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 75.9292 ms
+2026-02-26 16:23:49.490 +01:00 [INF] Now listening on: https://localhost:7016
+2026-02-26 16:23:49.519 +01:00 [INF] Now listening on: http://localhost:5041
+2026-02-26 16:23:49.576 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-26 16:23:49.579 +01:00 [INF] Hosting environment: Development
+2026-02-26 16:23:49.583 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2026-02-26 16:23:52.270 +01:00 [INF] HTTP GET /index.html responded 200 in 138.6572 ms
+2026-02-26 16:23:52.543 +01:00 [INF] HTTP GET /favicon-32x32.png responded 200 in 17.1897 ms
+2026-02-26 16:23:52.635 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 128.8726 ms
+2026-02-26 16:24:32.985 +01:00 [INF] Executed DbCommand (162ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-02-26 16:24:33.297 +01:00 [ERR] HTTP POST /api/auth/login responded 500 in 6918.8177 ms
+System.UnauthorizedAccessException: L'adresse e-mail ou le mot de passe est incorrect.
+   at FrontOffice.Application.Features.Authentication.Queries.Login.LoginClientQueryHandler.Handle(LoginClientQuery request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Queries\Login\LoginClientQueryHandler.cs:line 34
+   at FrontOffice.Api.Controllers.AuthenticationController.Login(LoginClientQuery query) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 39
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-02-26 16:24:45.573 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-02-26 16:24:46.210 +01:00 [ERR] HTTP POST /api/auth/login responded 500 in 668.2609 ms
+System.UnauthorizedAccessException: L'adresse e-mail ou le mot de passe est incorrect.
+   at FrontOffice.Application.Features.Authentication.Queries.Login.LoginClientQueryHandler.Handle(LoginClientQuery request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Queries\Login\LoginClientQueryHandler.cs:line 34
+   at FrontOffice.Api.Controllers.AuthenticationController.Login(LoginClientQuery query) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 39
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-02-26 16:25:03.525 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-02-26 16:25:03.603 +01:00 [ERR] HTTP POST /api/auth/login responded 500 in 175.4342 ms
+System.UnauthorizedAccessException: L'adresse e-mail ou le mot de passe est incorrect.
+   at FrontOffice.Application.Features.Authentication.Queries.Login.LoginClientQueryHandler.Handle(LoginClientQuery request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Queries\Login\LoginClientQueryHandler.cs:line 34
+   at FrontOffice.Api.Controllers.AuthenticationController.Login(LoginClientQuery query) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 39
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-02-26 16:26:11.962 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-02-26 16:26:12.044 +01:00 [ERR] HTTP POST /api/auth/register responded 500 in 112.6934 ms
+System.InvalidOperationException: Un compte client avec cet e-mail existe déjà et est en cours de validation ou actif.
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.Handle(RegisterClientCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 61
+   at FrontOffice.Api.Controllers.AuthenticationController.Register(RegisterClientCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 31
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-02-26 16:26:47.705 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-02-26 16:26:48.022 +01:00 [ERR] HTTP POST /api/auth/login responded 500 in 330.5034 ms
+System.UnauthorizedAccessException: L'adresse e-mail ou le mot de passe est incorrect.
+   at FrontOffice.Application.Features.Authentication.Queries.Login.LoginClientQueryHandler.Handle(LoginClientQuery request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Queries\Login\LoginClientQueryHandler.cs:line 34
+   at FrontOffice.Api.Controllers.AuthenticationController.Login(LoginClientQuery query) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 39
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-02-26 16:26:58.462 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-02-26 16:26:58.551 +01:00 [ERR] HTTP POST /api/auth/login responded 500 in 93.1975 ms
+System.UnauthorizedAccessException: L'adresse e-mail ou le mot de passe est incorrect.
+   at FrontOffice.Application.Features.Authentication.Queries.Login.LoginClientQueryHandler.Handle(LoginClientQuery request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Queries\Login\LoginClientQueryHandler.cs:line 34
+   at FrontOffice.Api.Controllers.AuthenticationController.Login(LoginClientQuery query) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 39
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-02-26 16:27:23.559 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-02-26 16:27:23.631 +01:00 [ERR] HTTP POST /api/auth/register responded 500 in 85.9314 ms
+System.InvalidOperationException: Un compte client avec cet e-mail existe déjà et est en cours de validation ou actif.
+   at FrontOffice.Application.Features.Authentication.Commands.Register.RegisterClientCommandHandler.Handle(RegisterClientCommand request, CancellationToken cancellationToken) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Application\Features\Authentication\Commands\Register\RegisterClientCommandHandler.cs:line 61
+   at FrontOffice.Api.Controllers.AuthenticationController.Register(RegisterClientCommand command) in D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api\Controllers\AuthenticationController.cs:line 31
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-02-26 16:27:38.235 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-02-26 16:27:38.679 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 255), @p2='?' (Size = 60), @p3='?' (Size = 1) (DbType = Byte), @p4='?' (Size = 30), @p5='?' (Size = 60), @p6='?' (Size = 60), @p7='?' (Size = 30), @p8='?' (DbType = Int64), @p9='?' (DbType = Int64), @p10='?' (Size = 1) (DbType = Byte), @p11='?' (Size = 120), @p12='?' (Size = 255), @p13='?' (Size = 100), @p14='?' (Size = 120), @p15='?' (Size = 60), @p16='?' (Size = 512), @p17='?' (Size = 20), @p18='?' (Size = 60), @p19='?' (Size = 60), @p20='?' (Size = 6), @p21='?' (DbType = Int64), @p22='?' (Size = 100)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [clients] ([Id], [Adresse], [Bp], [ChangementMotPasse], [Code], [ContactFonction], [ContactNom], [ContactTelephone], [DateCreation], [DateModification], [Desactive], [Email], [MotPasse], [Pays], [RaisonSociale], [RegistreCommerce], [Remarques], [TypeClient], [UtilisateurCreation], [UtilisateurModification], [VerificationCode], [VerificationTokenExpiry], [Ville])
+OUTPUT INSERTED.[IsVerified], INSERTED.[NiveauValidation]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22);
+2026-02-26 16:27:42.200 +01:00 [INF] Email envoyé à orichekaya1+@gmail.com
+2026-02-26 16:27:44.704 +01:00 [INF] Email envoyé à orichekaya@gmail.com
+2026-02-26 16:27:44.830 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 20), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (DbType = Int64), @p5='?' (Size = 150), @p6='?' (Size = 100), @p7='?' (DbType = Boolean), @p8='?' (DbType = Boolean), @p9='?' (Size = 1000), @p10='?' (Size = 100), @p11='?' (Size = 20), @p12='?' (Size = 500), @p13='?' (Size = 200), @p14='?' (Size = 50), @p15='?' (DbType = Guid), @p16='?' (Size = 4000), @p17='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [notifications] ([Id], [Canal], [DateCreation], [DateEnvoi], [DateModification], [Destinataire], [EntityId], [IsBroadcast], [IsRead], [Message], [ProfilCode], [StatutEnvoi], [TargetUrl], [Title], [Type], [UserId], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17);
+2026-02-26 16:27:44.846 +01:00 [INF] HTTP POST /api/auth/register responded 200 in 6615.2369 ms
+2026-02-26 16:31:31.653 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__get_Item_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Id] = @__get_Item_0
+2026-02-26 16:31:31.692 +01:00 [INF] Executed DbCommand (17ms) [Parameters=[@p6='?' (DbType = Guid), @p0='?' (DbType = Int64), @p1='?' (DbType = Boolean), @p2='?' (DbType = Int32), @p3='?' (Size = 60), @p4='?' (Size = 6), @p5='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [clients] SET [DateModification] = @p0, [IsVerified] = @p1, [NiveauValidation] = @p2, [UtilisateurModification] = @p3, [VerificationCode] = @p4, [VerificationTokenExpiry] = @p5
+OUTPUT 1
+WHERE [Id] = @p6;
+2026-02-26 16:31:31.702 +01:00 [INF] HTTP POST /api/auth/confirm-account responded 200 in 236.5607 ms
+2026-02-26 16:41:25.045 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@__prefix_0_startswith='?' (Size = 30)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+WHERE [d].[Numero] LIKE @__prefix_0_startswith ESCAPE N'\'
+2026-02-26 16:41:25.071 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Code], [s].[Libelle]
+FROM [statuts] AS [s]
+WHERE [s].[Code] = N'NouveauDossier'
+2026-02-26 16:41:25.471 +01:00 [INF] Executed DbCommand (20ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Int64), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (DbType = Int64), @p5='?' (DbType = Int64), @p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (Size = 120), @p11='?' (Size = 30), @p12='?' (Size = 60), @p13='?' (Size = 60), @p14='?' (DbType = Guid), @p15='?' (Size = 60), @p16='?' (Size = 60), @p17='?' (Size = 4000), @p18='?' (DbType = Int64), @p19='?' (DbType = Int64), @p20='?' (Size = 512), @p21='?' (Size = 120), @p22='?' (DbType = Boolean), @p23='?' (Size = 120), @p24='?' (DbType = Guid), @p25='?' (DbType = Guid), @p26='?' (DbType = Guid), @p27='?' (DbType = Guid), @p28='?' (DbType = Guid), @p29='?' (Size = 120), @p30='?' (Size = 120), @p31='?' (Size = 30), @p32='?' (DbType = Currency), @p33='?' (DbType = Int32), @p34='?' (Precision = 5) (Scale = 2) (DbType = Decimal), @p35='?' (Size = 120), @p36='?' (Size = 60), @p37='?' (Size = 60)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [dossiers] ([Id], [DateCreation], [DateDemandeEchantillon], [DateEnvoiDevis], [DateModification], [DateOuverture], [IdAgentInstructeur], [IdClient], [IdModeReglement], [IdStatut], [Libelle], [Numero], [UtilisateurCreation], [UtilisateurModification])
+OUTPUT INSERTED.[PenaliteAppliquee], INSERTED.[RappelEchantillonEnvoye], INSERTED.[RappelPaiementEnvoye]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13);
+INSERT INTO [demandes] ([Id], [ContactEmail], [ContactNom], [ContactTelephone], [DateCreation], [DateModification], [Description], [Equipement], [EstHomologable], [Fabricant], [IdCategorie], [IdDossier], [IdMotifRejet], [IdProposition], [IdStatut], [Marque], [Modele], [NumeroDemande], [PrixUnitaire], [QuantiteEquipements], [Remise], [Type], [UtilisateurCreation], [UtilisateurModification])
+OUTPUT INSERTED.[EchantillonSoumis], INSERTED.[RequiertEchantillon]
+VALUES (@p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32, @p33, @p34, @p35, @p36, @p37);
+2026-02-26 16:41:25.512 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 20), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (DbType = Int64), @p5='?' (Size = 150), @p6='?' (Size = 100), @p7='?' (DbType = Boolean), @p8='?' (DbType = Boolean), @p9='?' (Size = 1000), @p10='?' (Size = 100), @p11='?' (Size = 20), @p12='?' (Size = 500), @p13='?' (Size = 200), @p14='?' (Size = 50), @p15='?' (DbType = Guid), @p16='?' (Size = 4000), @p17='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [notifications] ([Id], [Canal], [DateCreation], [DateEnvoi], [DateModification], [Destinataire], [EntityId], [IsBroadcast], [IsRead], [Message], [ProfilCode], [StatutEnvoi], [TargetUrl], [Title], [Type], [UserId], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17);
+2026-02-26 16:41:25.571 +01:00 [INF] HTTP POST /api/dossiers responded 201 in 661.6844 ms
+2026-02-26 17:26:09.803 +01:00 [INF] Now listening on: https://localhost:7016
+2026-02-26 17:26:09.832 +01:00 [INF] Now listening on: http://localhost:5041
+2026-02-26 17:26:09.889 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-26 17:26:09.892 +01:00 [INF] Hosting environment: Development
+2026-02-26 17:26:09.894 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2026-02-26 17:26:55.159 +01:00 [INF] HTTP GET /index.html responded 200 in 110.0874 ms
+2026-02-26 17:26:55.653 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 105.0895 ms
+2026-02-26 17:27:08.350 +01:00 [INF] Executed DbCommand (67ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-02-26 17:27:09.179 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 3469.7730 ms
+2026-02-26 17:32:42.728 +01:00 [INF] Now listening on: https://localhost:7016
+2026-02-26 17:32:42.761 +01:00 [INF] Now listening on: http://localhost:5041
+2026-02-26 17:32:42.827 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-26 17:32:42.830 +01:00 [INF] Hosting environment: Development
+2026-02-26 17:32:42.832 +01:00 [INF] Content root path: D:\CDS\work_space\arpce-homologation-backends-cds\arpce-homologation-frontOffice\FrontOffice.Api
+2026-02-26 17:32:47.835 +01:00 [INF] HTTP GET /index.html responded 200 in 124.1005 ms
+2026-02-26 17:32:48.299 +01:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 111.6162 ms
+2026-02-26 17:33:02.074 +01:00 [INF] Executed DbCommand (78ms) [Parameters=[@__request_Email_0='?' (Size = 120)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Adresse], [c].[Bp], [c].[ChangementMotPasse], [c].[Code], [c].[ContactFonction], [c].[ContactNom], [c].[ContactTelephone], [c].[DateCreation], [c].[DateModification], [c].[Desactive], [c].[Email], [c].[IsVerified], [c].[MotPasse], [c].[NiveauValidation], [c].[Pays], [c].[RaisonSociale], [c].[RegistreCommerce], [c].[Remarques], [c].[TypeClient], [c].[UtilisateurCreation], [c].[UtilisateurModification], [c].[VerificationCode], [c].[VerificationTokenExpiry], [c].[Ville]
+FROM [clients] AS [c]
+WHERE [c].[Email] = @__request_Email_0
+2026-02-26 17:33:02.926 +01:00 [INF] HTTP POST /api/auth/login responded 200 in 3878.2391 ms
+2026-02-26 17:36:02.663 +01:00 [INF] Executed DbCommand (11ms) [Parameters=[@__prefix_0_startswith='?' (Size = 30)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dossiers] AS [d]
+WHERE [d].[Numero] LIKE @__prefix_0_startswith ESCAPE N'\'
+2026-02-26 17:36:02.699 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Code], [s].[Libelle]
+FROM [statuts] AS [s]
+WHERE [s].[Code] = N'NouveauDossier'
+2026-02-26 17:36:03.157 +01:00 [INF] Executed DbCommand (20ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Int64), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (DbType = Int64), @p5='?' (DbType = Int64), @p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (Size = 120), @p11='?' (Size = 30), @p12='?' (Size = 60), @p13='?' (Size = 60), @p14='?' (DbType = Guid), @p15='?' (Size = 60), @p16='?' (Size = 60), @p17='?' (Size = 4000), @p18='?' (DbType = Int64), @p19='?' (DbType = Int64), @p20='?' (Size = 512), @p21='?' (Size = 120), @p22='?' (DbType = Boolean), @p23='?' (Size = 120), @p24='?' (DbType = Guid), @p25='?' (DbType = Guid), @p26='?' (DbType = Guid), @p27='?' (DbType = Guid), @p28='?' (DbType = Guid), @p29='?' (Size = 120), @p30='?' (Size = 120), @p31='?' (Size = 30), @p32='?' (DbType = Currency), @p33='?' (DbType = Int32), @p34='?' (Precision = 5) (Scale = 2) (DbType = Decimal), @p35='?' (DbType = Boolean), @p36='?' (Size = 120), @p37='?' (Size = 60), @p38='?' (Size = 60), @p39='?' (DbType = Guid), @p40='?' (Size = 4000), @p41='?' (DbType = Int64), @p42='?' (DbType = Int64), @p43='?' (DbType = Guid), @p44='?' (Size = 150), @p45='?' (Size = 4000), @p46='?' (Size = 200), @p47='?' (Size = 50), @p48='?' (Size = 4000), @p49='?' (Size = 4000), @p50='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [dossiers] ([Id], [DateCreation], [DateDemandeEchantillon], [DateEnvoiDevis], [DateModification], [DateOuverture], [IdAgentInstructeur], [IdClient], [IdModeReglement], [IdStatut], [Libelle], [Numero], [UtilisateurCreation], [UtilisateurModification])
+OUTPUT INSERTED.[PenaliteAppliquee], INSERTED.[RappelEchantillonEnvoye], INSERTED.[RappelPaiementEnvoye]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13);
+INSERT INTO [demandes] ([Id], [ContactEmail], [ContactNom], [ContactTelephone], [DateCreation], [DateModification], [Description], [Equipement], [EstHomologable], [Fabricant], [IdCategorie], [IdDossier], [IdMotifRejet], [IdProposition], [IdStatut], [Marque], [Modele], [NumeroDemande], [PrixUnitaire], [QuantiteEquipements], [Remise], [RequiertEchantillon], [Type], [UtilisateurCreation], [UtilisateurModification])
+OUTPUT INSERTED.[EchantillonSoumis]
+VALUES (@p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32, @p33, @p34, @p35, @p36, @p37, @p38);
+INSERT INTO [beneficiaires] ([Id], [Adresse], [DateCreation], [DateModification], [DemandeId], [Email], [LettreDocumentPath], [Nom], [Telephone], [Type], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p39, @p40, @p41, @p42, @p43, @p44, @p45, @p46, @p47, @p48, @p49, @p50);
+2026-02-26 17:36:05.876 +01:00 [INF] Email envoyé à contact@digitalconnect.cg
+2026-02-26 17:36:05.968 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 20), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (DbType = Int64), @p5='?' (Size = 150), @p6='?' (Size = 100), @p7='?' (DbType = Boolean), @p8='?' (DbType = Boolean), @p9='?' (Size = 1000), @p10='?' (Size = 100), @p11='?' (Size = 20), @p12='?' (Size = 500), @p13='?' (Size = 200), @p14='?' (Size = 50), @p15='?' (DbType = Guid), @p16='?' (Size = 4000), @p17='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [notifications] ([Id], [Canal], [DateCreation], [DateEnvoi], [DateModification], [Destinataire], [EntityId], [IsBroadcast], [IsRead], [Message], [ProfilCode], [StatutEnvoi], [TargetUrl], [Title], [Type], [UserId], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17);
+2026-02-26 17:36:05.982 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 20), @p2='?' (DbType = Int64), @p3='?' (DbType = Int64), @p4='?' (DbType = Int64), @p5='?' (Size = 150), @p6='?' (Size = 100), @p7='?' (DbType = Boolean), @p8='?' (DbType = Boolean), @p9='?' (Size = 1000), @p10='?' (Size = 100), @p11='?' (Size = 20), @p12='?' (Size = 500), @p13='?' (Size = 200), @p14='?' (Size = 50), @p15='?' (DbType = Guid), @p16='?' (Size = 4000), @p17='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [notifications] ([Id], [Canal], [DateCreation], [DateEnvoi], [DateModification], [Destinataire], [EntityId], [IsBroadcast], [IsRead], [Message], [ProfilCode], [StatutEnvoi], [TargetUrl], [Title], [Type], [UserId], [UtilisateurCreation], [UtilisateurModification])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17);
+2026-02-26 17:36:06.023 +01:00 [INF] HTTP POST /api/dossiers responded 201 in 3622.3697 ms
+2026-02-26 17:40:14.029 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-02-26 17:40:14.137 +01:00 [INF] Executed DbCommand (45ms) [Parameters=[@__request_DossierId_0='?' (DbType = Guid), @__userId_Value_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[DateCreation], [t].[DateDemandeEchantillon], [t].[DateEnvoiDevis], [t].[DateModification], [t].[DateOuverture], [t].[IdAgentInstructeur], [t].[IdClient], [t].[IdModeReglement], [t].[IdStatut], [t].[Libelle], [t].[Numero], [t].[PenaliteAppliquee], [t].[RappelEchantillonEnvoye], [t].[RappelPaiementEnvoye], [t].[UtilisateurCreation], [t].[UtilisateurModification], [t].[Id0], [t].[Code], [t].[Libelle0], [t].[Id1], [t].[Code0], [t].[DateCreation0], [t].[DateModification0], [t].[Libelle1], [t].[MobileBanking], [t].[Remarques], [t].[UtilisateurCreation0], [t].[UtilisateurModification0], [t].[Id2], [t].[Id3], [t].[Id4], [t].[Id5], [t].[Id6], [t].[Id7], [c0].[Id], [c0].[commentaire], [c0].[DateCommentaire], [c0].[DateCreation], [c0].[DateModification], [c0].[IdDossier], [c0].[NomInstructeur], [c0].[Proposition], [c0].[UtilisateurCreation], [c0].[UtilisateurModification], [d1].[Id], [d1].[Date], [d1].[DateCreation], [d1].[DateModification], [d1].[IdDemande], [d1].[IdDossier], [d1].[MontantControle], [d1].[MontantEtude], [d1].[MontantHomologation], [d1].[MontantPenalite], [d1].[MontantTotal], [d1].[PaiementMobileId], [d1].[PaiementOk], [d1].[UtilisateurCreation], [d1].[UtilisateurModification], [d2].[Id], [d2].[DateCreation], [d2].[DateModification], [d2].[Donnees], [d2].[Extension], [d2].[FilePath], [d2].[IdDossier], [d2].[Libelle], [d2].[Nom], [d2].[Type], [d2].[UtilisateurCreation], [d2].[UtilisateurModification], [t].[ContactEmail], [t].[ContactNom], [t].[ContactTelephone], [t].[DateCreation1], [t].[DateModification1], [t].[Description], [t].[EchantillonSoumis], [t].[Equipement], [t].[EstHomologable], [t].[Fabricant], [t].[IdCategorie], [t].[IdDossier], [t].[IdMotifRejet], [t].[IdProposition], [t].[IdStatut0], [t].[Marque], [t].[Modele], [t].[NumeroDemande], [t].[PrixUnitaire], [t].[QuantiteEquipements], [t].[Remise], [t].[RequiertEchantillon], [t].[Type], [t].[UtilisateurCreation1], [t].[UtilisateurModification1], [t].[Code1], [t].[Libelle2], [d3].[Id], [d3].[DateCreation], [d3].[DateModification], [d3].[Donnees], [d3].[Extension], [d3].[FilePath], [d3].[IdDemande], [d3].[Libelle], [d3].[Nom], [d3].[UtilisateurCreation], [d3].[UtilisateurModification], [a].[Id], [a].[DateCreation], [a].[DateDelivrance], [a].[DateExpiration], [a].[DateModification], [a].[Donnees], [a].[Extension], [a].[IdDemande], [a].[NumeroSequentiel], [a].[SignataireId], [a].[UtilisateurCreation], [a].[UtilisateurModification], [a].[VisaReference], [t].[BlockSize], [t].[Code2], [t].[CoutUnitaire], [t].[DateCreation2], [t].[DateModification2], [t].[EstCalculeParQuantite], [t].[FormuleHomologation], [t].[FraisControle], [t].[FraisEtude], [t].[FraisHomologation], [t].[FraisHomologationParLot], [t].[FraisHomologationQuantiteParLot], [t].[Libelle3], [t].[ModeCalcul], [t].[QtyMax], [t].[QtyMin], [t].[QuantiteReference], [t].[ReferenceLoiFinance], [t].[Remarques0], [t].[TypeCalcul], [t].[TypeClient], [t].[TypeEquipement], [t].[UtilisateurCreation2], [t].[UtilisateurModification2], [t].[Code3], [t].[DateCreation3], [t].[DateModification3], [t].[Libelle4], [t].[Remarques1], [t].[UtilisateurCreation3], [t].[UtilisateurModification3], [t].[Code4], [t].[DateCreation4], [t].[DateModification4], [t].[Libelle5], [t].[UtilisateurCreation4], [t].[UtilisateurModification4], [t].[Adresse], [t].[DateCreation5], [t].[DateModification5], [t].[DemandeId], [t].[Email], [t].[LettreDocumentPath], [t].[Nom], [t].[Telephone], [t].[Type0], [t].[UtilisateurCreation5], [t].[UtilisateurModification5]
+FROM (
+    SELECT TOP(1) [d].[Id], [d].[DateCreation], [d].[DateDemandeEchantillon], [d].[DateEnvoiDevis], [d].[DateModification], [d].[DateOuverture], [d].[IdAgentInstructeur], [d].[IdClient], [d].[IdModeReglement], [d].[IdStatut], [d].[Libelle], [d].[Numero], [d].[PenaliteAppliquee], [d].[RappelEchantillonEnvoye], [d].[RappelPaiementEnvoye], [d].[UtilisateurCreation], [d].[UtilisateurModification], [s].[Id] AS [Id0], [s].[Code], [s].[Libelle] AS [Libelle0], [m].[Id] AS [Id1], [m].[Code] AS [Code0], [m].[DateCreation] AS [DateCreation0], [m].[DateModification] AS [DateModification0], [m].[Libelle] AS [Libelle1], [m].[MobileBanking], [m].[Remarques], [m].[UtilisateurCreation] AS [UtilisateurCreation0], [m].[UtilisateurModification] AS [UtilisateurModification0], [d0].[Id] AS [Id2], [d0].[ContactEmail], [d0].[ContactNom], [d0].[ContactTelephone], [d0].[DateCreation] AS [DateCreation1], [d0].[DateModification] AS [DateModification1], [d0].[Description], [d0].[EchantillonSoumis], [d0].[Equipement], [d0].[EstHomologable], [d0].[Fabricant], [d0].[IdCategorie], [d0].[IdDossier], [d0].[IdMotifRejet], [d0].[IdProposition], [d0].[IdStatut] AS [IdStatut0], [d0].[Marque], [d0].[Modele], [d0].[NumeroDemande], [d0].[PrixUnitaire], [d0].[QuantiteEquipements], [d0].[Remise], [d0].[RequiertEchantillon], [d0].[Type], [d0].[UtilisateurCreation] AS [UtilisateurCreation1], [d0].[UtilisateurModification] AS [UtilisateurModification1], [s0].[Id] AS [Id3], [s0].[Code] AS [Code1], [s0].[Libelle] AS [Libelle2], [c].[Id] AS [Id4], [c].[BlockSize], [c].[Code] AS [Code2], [c].[CoutUnitaire], [c].[DateCreation] AS [DateCreation2], [c].[DateModification] AS [DateModification2], [c].[EstCalculeParQuantite], [c].[FormuleHomologation], [c].[FraisControle], [c].[FraisEtude], [c].[FraisHomologation], [c].[FraisHomologationParLot], [c].[FraisHomologationQuantiteParLot], [c].[Libelle] AS [Libelle3], [c].[ModeCalcul], [c].[QtyMax], [c].[QtyMin], [c].[QuantiteReference], [c].[ReferenceLoiFinance], [c].[Remarques] AS [Remarques0], [c].[TypeCalcul], [c].[TypeClient], [c].[TypeEquipement], [c].[UtilisateurCreation] AS [UtilisateurCreation2], [c].[UtilisateurModification] AS [UtilisateurModification2], [m0].[Id] AS [Id5], [m0].[Code] AS [Code3], [m0].[DateCreation] AS [DateCreation3], [m0].[DateModification] AS [DateModification3], [m0].[Libelle] AS [Libelle4], [m0].[Remarques] AS [Remarques1], [m0].[UtilisateurCreation] AS [UtilisateurCreation3], [m0].[UtilisateurModification] AS [UtilisateurModification3], [p].[Id] AS [Id6], [p].[Code] AS [Code4], [p].[DateCreation] AS [DateCreation4], [p].[DateModification] AS [DateModification4], [p].[Libelle] AS [Libelle5], [p].[UtilisateurCreation] AS [UtilisateurCreation4], [p].[UtilisateurModification] AS [UtilisateurModification4], [b].[Id] AS [Id7], [b].[Adresse], [b].[DateCreation] AS [DateCreation5], [b].[DateModification] AS [DateModification5], [b].[DemandeId], [b].[Email], [b].[LettreDocumentPath], [b].[Nom], [b].[Telephone], [b].[Type] AS [Type0], [b].[UtilisateurCreation] AS [UtilisateurCreation5], [b].[UtilisateurModification] AS [UtilisateurModification5]
+    FROM [dossiers] AS [d]
+    INNER JOIN [statuts] AS [s] ON [d].[IdStatut] = [s].[Id]
+    LEFT JOIN [modesReglements] AS [m] ON [d].[IdModeReglement] = [m].[Id]
+    LEFT JOIN [demandes] AS [d0] ON [d].[Id] = [d0].[IdDossier]
+    LEFT JOIN [statuts] AS [s0] ON [d0].[IdStatut] = [s0].[Id]
+    LEFT JOIN [categoriesEquipements] AS [c] ON [d0].[IdCategorie] = [c].[Id]
+    LEFT JOIN [motifsRejets] AS [m0] ON [d0].[IdMotifRejet] = [m0].[Id]
+    LEFT JOIN [propositions] AS [p] ON [d0].[IdProposition] = [p].[Id]
+    LEFT JOIN [beneficiaires] AS [b] ON [d0].[Id] = [b].[DemandeId]
+    WHERE [d].[Id] = @__request_DossierId_0 AND [d].[IdClient] = @__userId_Value_1
+) AS [t]
+LEFT JOIN [commentaires] AS [c0] ON [t].[Id] = [c0].[IdDossier]
+LEFT JOIN [devis] AS [d1] ON [t].[Id] = [d1].[IdDossier]
+LEFT JOIN [documentsDossiers] AS [d2] ON [t].[Id] = [d2].[IdDossier]
+LEFT JOIN [documentsDemandes] AS [d3] ON [t].[Id2] = [d3].[IdDemande]
+LEFT JOIN [attestations] AS [a] ON [t].[Id2] = [a].[IdDemande]
+ORDER BY [t].[Id], [t].[Id0], [t].[Id1], [t].[Id2], [t].[Id3], [t].[Id4], [t].[Id5], [t].[Id6], [t].[Id7], [c0].[Id], [d1].[Id], [d2].[Id], [d3].[Id]
+2026-02-26 17:40:14.229 +01:00 [INF] HTTP GET /api/dossiers/F11C1C67-E6D3-4E69-954D-534496AF5224 responded 200 in 483.8714 ms

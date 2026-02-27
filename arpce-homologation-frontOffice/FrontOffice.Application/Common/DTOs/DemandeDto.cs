@@ -7,7 +7,7 @@ public class DemandeDto
 {
     public Guid Id { get; set; }
     public Guid IdDossier { get; set; }
-    public string? NumeroDemande { get; set; }
+    //public string? NumeroDemande { get; set; }
     public string? Equipement { get; set; }
     public string? Modele { get; set; }
     public string? Marque { get; set; }
@@ -20,7 +20,7 @@ public class DemandeDto
     public string? ContactTelephone { get; set; }
 
     public decimal? PrixUnitaire { get; set; }
-    public decimal? Remise { get; set; }
+    //public decimal? Remise { get; set; }
     public bool EstHomologable { get; set; }
 
     public bool RequiertEchantillon { get; set; }

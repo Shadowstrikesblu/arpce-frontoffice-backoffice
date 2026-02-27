@@ -24,7 +24,7 @@ public class CreateCategorieCommandHandler : IRequestHandler<CreateCategorieComm
             FraisEtude = request.FraisEtude,
             FraisHomologation = request.FraisHomologation,
             FraisControle = request.FraisControle,
-
+            TypeClient = request.TypeClient,
             ModeCalcul = request.ModeCalcul,
             BlockSize = request.BlockSize,
             QtyMin = request.QtyMin,

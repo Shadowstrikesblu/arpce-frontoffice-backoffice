@@ -6,126 +6,121 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BackOffice.Application.Features.Demandes.Queries.DownloadDocument
+namespace BackOffice.Application.Features.Demandes.Queries.DownloadDocument;
+
+/// <summary>
+/// Gère la logique de récupération du contenu binaire d'un document pour le téléchargement.
+/// Supporte désormais les types : dossier, demande, devis et recu.
+/// </summary>
+public class DownloadDocumentQueryHandler : IRequestHandler<DownloadDocumentQuery, DownloadDocumentResult>
 {
-    /// <summary>
-    /// Gère la logique de récupération du contenu binaire d'un document pour le téléchargement.
-    /// Version Back Office : L'agent a accès à tous les documents, incluant les devis générés.
-    /// </summary>
-    public class DownloadDocumentQueryHandler : IRequestHandler<DownloadDocumentQuery, DownloadDocumentResult>
+    private readonly IApplicationDbContext _context;
+
+    public DownloadDocumentQueryHandler(IApplicationDbContext context)
     {
-        private readonly IApplicationDbContext _context;
+        _context = context;
+    }
 
-        public DownloadDocumentQueryHandler(IApplicationDbContext context)
+    public async Task<DownloadDocumentResult> Handle(DownloadDocumentQuery request, CancellationToken cancellationToken)
+    {
+        byte[]? fileContents = null;
+        string fileName = "document";
+        string extension = "pdf"; 
+
+        var type = request.DocumentType.ToLower();
+
+        switch (type)
         {
-            _context = context;
-        }
-
-        public async Task<DownloadDocumentResult> Handle(DownloadDocumentQuery request, CancellationToken cancellationToken)
-        {
-            byte[]? fileContents = null;
-            string fileName = "document";
-            string extension = "bin";
-
-            // Détermine dans quelle table chercher le document en fonction du type
-            if (request.DocumentType.Equals("dossier", StringComparison.OrdinalIgnoreCase))
-            {
-                // Recherche dans la table des documents directement liés au dossier
-                var document = await _context.DocumentsDossiers
+            case "dossier":
+                var documentDossier = await _context.DocumentsDossiers
                     .AsNoTracking()
                     .FirstOrDefaultAsync(dd => dd.Id == request.DocumentId, cancellationToken);
 
-                if (document == null)
+                if (documentDossier != null)
                 {
-                    throw new FileNotFoundException($"Document de dossier avec l'ID '{request.DocumentId}' introuvable.");
+                    fileContents = documentDossier.Donnees;
+                    fileName = documentDossier.Nom ?? $"dossier_{documentDossier.Id}";
+                    extension = documentDossier.Extension;
                 }
+                break;
 
-                fileContents = document.Donnees;
-                fileName = document.Nom ?? $"dossier_{document.Id}";
-                extension = document.Extension;
-            }
-            else if (request.DocumentType.Equals("demande", StringComparison.OrdinalIgnoreCase))
-            {
-                // Recherche dans la table des documents liés à la demande (équipement)
-                var document = await _context.DocumentsDemandes
+            case "demande":
+                var documentDemande = await _context.DocumentsDemandes
                     .AsNoTracking()
                     .FirstOrDefaultAsync(dd => dd.Id == request.DocumentId, cancellationToken);
 
-                if (document == null)
+                if (documentDemande != null)
                 {
-                    throw new FileNotFoundException($"Document de demande avec l'ID '{request.DocumentId}' introuvable.");
+                    fileContents = documentDemande.Donnees;
+                    fileName = documentDemande.Nom ?? $"demande_{documentDemande.Id}";
+                    extension = documentDemande.Extension;
                 }
+                break;
 
-                fileContents = document.Donnees;
-                fileName = document.Nom ?? $"demande_{document.Id}";
-                extension = document.Extension;
-            }
-            else if (request.DocumentType.Equals("devis", StringComparison.OrdinalIgnoreCase))
-            {
-                // --- LOGIQUE POUR LES DEVIS ---
-                // 1. On cherche d'abord la ligne dans la table 'devis' pour obtenir l'IdDossier
+            case "devis":
                 var devisRecord = await _context.Devis
                     .AsNoTracking()
                     .FirstOrDefaultAsync(d => d.Id == request.DocumentId, cancellationToken);
 
-                if (devisRecord == null)
+                if (devisRecord != null)
                 {
-                    throw new FileNotFoundException($"Aucun enregistrement de devis trouvé pour l'ID '{request.DocumentId}'.");
-                }
+                    var docDevis = await _context.DocumentsDossiers
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(dd => dd.IdDossier == devisRecord.IdDossier && dd.Type == 2, cancellationToken);
 
-                // 2. On cherche le PDF généré dans documentsDossiers (Type 2 = Devis PDF)
-                var document = await _context.DocumentsDossiers
+                    if (docDevis != null)
+                    {
+                        fileContents = docDevis.Donnees;
+                        fileName = docDevis.Nom ?? $"Devis_{devisRecord.Id}";
+                        extension = docDevis.Extension;
+                    }
+                }
+                break;
+
+            case "recu":
+                var docRecu = await _context.DocumentsDossiers
                     .AsNoTracking()
-                    .FirstOrDefaultAsync(dd => dd.IdDossier == devisRecord.IdDossier && dd.Type == 2, cancellationToken);
+                    .FirstOrDefaultAsync(dd => dd.Id == request.DocumentId, cancellationToken);
 
-                if (document == null)
+                if (docRecu != null)
                 {
-                    throw new FileNotFoundException($"Le fichier PDF pour le devis {request.DocumentId} n'a pas encore été généré.");
+                    fileContents = docRecu.Donnees;
+                    fileName = docRecu.Nom ?? $"Recu_{docRecu.Id}";
+                    extension = docRecu.Extension;
                 }
+                break;
 
-                fileContents = document.Donnees;
-                fileName = document.Nom ?? $"devis_{devisRecord.Id}";
-                extension = document.Extension;
-            }
-            else
-            {
-                // Si le type de document n'est pas reconnu
-                throw new ArgumentException("Type de document non valide. Utilisez 'dossier', 'demande' ou 'devis'.");
-            }
-
-            // Vérifie si le contenu binaire a bien été trouvé en base
-            if (fileContents == null || fileContents.Length == 0)
-            {
-                throw new FileNotFoundException("Le contenu du fichier est vide ou introuvable dans la base de données.");
-            }
-
-            // Construit le résultat final pour le contrôleur
-            return new DownloadDocumentResult
-            {
-                FileContents = fileContents,
-                ContentType = GetMimeType(extension),
-                FileName = fileName.EndsWith($".{extension}", StringComparison.OrdinalIgnoreCase)
-                           ? fileName
-                           : $"{fileName}.{extension}"
-            };
+            default:
+                throw new ArgumentException("Type de document non valide. Utilisez 'dossier', 'demande', 'devis' ou 'recu'.");
         }
 
-        /// <summary>
-        /// Méthode utilitaire pour déterminer le type MIME à partir de l'extension du fichier.
-        /// </summary>
-        private string GetMimeType(string extension)
+        // Vérification finale
+        if (fileContents == null || fileContents.Length == 0)
         {
-            var ext = extension.TrimStart('.').ToLowerInvariant();
-
-            return ext switch
-            {
-                "pdf" => "application/pdf",
-                "jpg" or "jpeg" => "image/jpeg",
-                "png" => "image/png",
-                "doc" => "application/msword",
-                "docx" => "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                _ => "application/octet-stream",
-            };
+            throw new FileNotFoundException($"Le document de type '{type}' avec l'ID {request.DocumentId} est introuvable ou vide.");
         }
+
+        return new DownloadDocumentResult
+        {
+            FileContents = fileContents,
+            ContentType = GetMimeType(extension),
+            FileName = fileName.EndsWith($".{extension}", StringComparison.OrdinalIgnoreCase)
+                       ? fileName
+                       : $"{fileName}.{extension}"
+        };
+    }
+
+    private string GetMimeType(string extension)
+    {
+        var ext = extension.TrimStart('.').ToLowerInvariant();
+        return ext switch
+        {
+            "pdf" => "application/pdf",
+            "jpg" or "jpeg" => "image/jpeg",
+            "png" => "image/png",
+            "doc" => "application/msword",
+            "docx" => "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            _ => "application/octet-stream",
+        };
     }
 }
