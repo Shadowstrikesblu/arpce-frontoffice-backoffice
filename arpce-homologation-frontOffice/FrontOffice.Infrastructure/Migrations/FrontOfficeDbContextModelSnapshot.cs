@@ -947,7 +947,7 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.Property<bool>("EstHomologable")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Fabricant")
                         .HasMaxLength(120)
@@ -1231,28 +1231,28 @@ namespace FrontOffice.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a785cc6c-bdbf-4898-bebe-0c806762bf86"),
+                            Id = new Guid("e8dc86e5-16e3-496e-92ad-02d2604dffdc"),
                             Code = "Virement",
                             Libelle = "Virement bancaire",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("443c6055-b7cd-44f6-82b3-eb98f5210be4"),
+                            Id = new Guid("f99ad3df-ddeb-45a7-beaa-b201979643e6"),
                             Code = "Cheque",
                             Libelle = "Chèque",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("d0a9ec82-2723-42cd-936e-0111dc394da4"),
+                            Id = new Guid("93541e9f-bdd7-4921-abdf-77af253af497"),
                             Code = "Especes",
                             Libelle = "Espèces",
                             MobileBanking = (byte)0
                         },
                         new
                         {
-                            Id = new Guid("d1deecef-e550-4d80-a2bd-5ee6200242b0"),
+                            Id = new Guid("451b7ded-83e9-4916-bc18-6f32435df2d5"),
                             Code = "MobileBanking",
                             Libelle = "Paiement mobile",
                             MobileBanking = (byte)1
