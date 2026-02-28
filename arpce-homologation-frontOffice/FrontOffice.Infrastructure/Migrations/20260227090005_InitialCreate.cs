@@ -739,6 +739,7 @@ namespace FrontOffice.Infrastructure.Migrations
                     IdDemande = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nom = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: true),
                     Libelle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Type = table.Column<byte>(type: "tinyint", nullable: true),
                     Donnees = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     Extension = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
                     FilePath = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
@@ -763,10 +764,10 @@ namespace FrontOffice.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "DateCreation", "DateModification", "Libelle", "MobileBanking", "Remarques", "UtilisateurCreation", "UtilisateurModification" },
                 values: new object[,]
                 {
-                    { new Guid("451b7ded-83e9-4916-bc18-6f32435df2d5"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null },
-                    { new Guid("93541e9f-bdd7-4921-abdf-77af253af497"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
-                    { new Guid("e8dc86e5-16e3-496e-92ad-02d2604dffdc"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
-                    { new Guid("f99ad3df-ddeb-45a7-beaa-b201979643e6"), "Cheque", null, null, "Chèque", (byte)0, null, null, null }
+                    { new Guid("1ee94d95-39e9-46c6-bb40-bc6b5a557b08"), "Cheque", null, null, "Chèque", (byte)0, null, null, null },
+                    { new Guid("92527f30-bc16-4b38-8c26-9cf6e35f70e9"), "Especes", null, null, "Espèces", (byte)0, null, null, null },
+                    { new Guid("cd14cac3-3f11-4bc3-849d-d1ee6818fe5e"), "Virement", null, null, "Virement bancaire", (byte)0, null, null, null },
+                    { new Guid("fbbd6bb3-d687-425b-ad98-667f05156246"), "MobileBanking", null, null, "Paiement mobile", (byte)1, null, null, null }
                 });
 
             migrationBuilder.InsertData(
